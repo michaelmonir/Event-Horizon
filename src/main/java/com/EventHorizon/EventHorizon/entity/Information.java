@@ -33,5 +33,6 @@ public class Information {
     private String payPalAccount;
     @Column(name = "role")
     private String role;
-
+    @Column(name = "active")
+    private int active;
 }

@@ -24,6 +24,7 @@ class InformationRepositoryTest {
                 .password("pass1234")
                 .payPalAccount("faris0007@pay")
                 .userName("faris00")
+                .active(0)
                 .build();
         informationRepository.save(information);
     }
