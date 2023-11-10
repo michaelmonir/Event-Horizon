@@ -30,8 +30,7 @@ public class Event {
             referencedColumnName="id"
     )
     private Location eventLocation;
-    @OneToOne(
-            cascade = CascadeType.ALL
+    @ManyToOne(
     )
     @JoinColumn(
             name="ads_id",

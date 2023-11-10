@@ -14,17 +14,19 @@ public class EventService {
     }
     public boolean updateEvent(int id, Event newEvent){
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
-        if(optionalOldEvent==null) return false;
+        if(optionalOldEvent.isPresent()){
+            Event oldEvent= optionalOldEvent.get();
+            oldEvent.setEventCategory(newEvent.getEventCategory());
+            oldEvent.setEventAds(newEvent.getEventAds());
+            oldEvent.setEventDate(newEvent.getEventDate());
+            oldEvent.setEventLocation(newEvent.getEventLocation());
+            oldEvent.setDescription(newEvent.getDescription());
+            oldEvent.setName(newEvent.getName());
+            eventRepositry.save(oldEvent);
+            return true;
+        }
         else {
-           Event oldEvent= optionalOldEvent.get();
-           oldEvent.setEventCategory(newEvent.getEventCategory());
-           oldEvent.setEventAds(newEvent.getEventAds());
-           oldEvent.setEventDate(newEvent.getEventDate());
-           oldEvent.setEventLocation(newEvent.getEventLocation());
-           oldEvent.setDescription(newEvent.getDescription());
-           oldEvent.setName(newEvent.getName());
-           eventRepositry.save(oldEvent);
-           return true;
+            return false;
         }
     }
 
