@@ -9,9 +9,20 @@ public class EventCreationFacade
     @Autowired
     private EventService eventService;
 
+    public EventCreationFacade(Organizable organizer) {
+        this.organizer = organizer;
+    }
+
     public void updateEvent(int id, EventDTO eventDTO)
     {
         Event event = eventDTO.getEvent();
         this.eventService.updateEvent(id, event);
     }///////////////// handle try catch in the service api: case event doesn't exist
+
+    public Event createEvent(EventDTO eventDTO)
+    {
+        Event event = eventDTO.getEvent();
+        this.eventService.saveEventWhenCreating(event);
+        return event;
+    }///////////////////////
 }
