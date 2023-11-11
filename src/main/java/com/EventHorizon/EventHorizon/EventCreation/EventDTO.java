@@ -10,8 +10,6 @@ public class EventDTO
 {
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
-    @Autowired
-    private LocationRepository locationRepository;
 
     private String name;
     private String description;
