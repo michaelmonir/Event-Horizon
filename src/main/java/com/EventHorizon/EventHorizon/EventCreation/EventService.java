@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.EventCreation.EventCreationService;
+package com.EventHorizon.EventHorizon.EventCreation;
 
 import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
