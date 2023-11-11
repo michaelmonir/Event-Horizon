@@ -1,5 +1,6 @@
-package com.EventHorizon.EventHorizon.EventCreation;
+package com.EventHorizon.EventHorizon.EventCreation.EventService;
 
+import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
@@ -19,7 +20,7 @@ public class EventService {
         return event;
     }
 
-    public void updateEvent(int id, Event newEvent){
+    public Event updateEvent(int id, Event newEvent){
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
 
         if (newEvent.getId() != 0)
@@ -31,6 +32,16 @@ public class EventService {
 
         newEvent.setId(id);
         eventRepositry.save(newEvent);
+        return newEvent;
+    }
+    public void deleteEvent(int id){
+        Optional<Event> optionalOldEvent=eventRepositry.findById(id);
+
+        if(!optionalOldEvent.isPresent())
+            throw new EventNotFoundException();
+
+        eventRepositry.deleteById(id);
+
     }
 
 }

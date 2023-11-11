@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.EventCreation.EventCreationService;
+package com.EventHorizon.EventHorizon.EventCreation.EventService;
 
 import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
 import com.EventHorizon.EventHorizon.EventCreation.Event;
@@ -113,17 +113,18 @@ class EventServiceTest {
                 .priority(2)
                 .build();
         adsOptionRepositry.save(adsOption);
-        Location location1= Location.builder().country("aswan").city("cairo").build();
+        Location location1= Location.builder().country("qula").city("cairo").build();
         Event event=Event.builder()
                 .eventAds(adsOption)
                 .eventLocation(location1)
-                .name("e48")
+                .name("e800")
                 .description("...")
                 .build();
         eventService.saveEventWhenCreating(event);
+        Location location2= Location.builder().country("mun").city("cairo").build();
         Event newEvent=Event.builder()
                 .eventAds(adsOption)
-                .eventLocation(location1)
+                .eventLocation(location2)
                 .name("e500")
                 .description("newevent")
                 .build();
