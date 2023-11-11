@@ -1,6 +1,6 @@
-package com.EventHorizon.EventHorizon.EventCreation.EventCreationService;
+package com.EventHorizon.EventHorizon.EventCreation;
 
-import com.EventHorizon.EventHorizon.EventCreation.Event;
+import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,13 @@ import java.util.Optional;
 public class EventService {
     @Autowired
     private EventRepositry eventRepositry;
-    public void saveEvent(Event event){
+    public Event saveEventWhenCreating(Event event){
+        if (event.getId() != 0) throw new EventAlreadyExisting();
+
         eventRepositry.save(event);
+        return event;
     }
+
     public void updateEvent(int id, Event newEvent){
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
         if(!optionalOldEvent.isPresent())
@@ -21,7 +25,6 @@ public class EventService {
 
         newEvent.setId(id);
         eventRepositry.save(newEvent);
-
     }
 
 }
