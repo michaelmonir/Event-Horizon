@@ -12,7 +12,8 @@ public class EventService {
     @Autowired
     private EventRepositry eventRepositry;
     public Event saveEventWhenCreating(Event event){
-        if (event.getId() != 0) throw new EventAlreadyExisting();
+        if (event.getId() != 0)
+            throw new EventAlreadyExisting();
 
         eventRepositry.save(event);
         return event;
@@ -20,8 +21,13 @@ public class EventService {
 
     public void updateEvent(int id, Event newEvent){
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
+
+        if (newEvent.getId() != 0)
+            throw new EventAlreadyExisting();
+
         if(!optionalOldEvent.isPresent())
             throw new EventNotFoundException();
+
 
         newEvent.setId(id);
         eventRepositry.save(newEvent);
