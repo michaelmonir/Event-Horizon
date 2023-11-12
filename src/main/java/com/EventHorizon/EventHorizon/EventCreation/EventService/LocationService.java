@@ -16,10 +16,11 @@ public class LocationService {
     private LocationRepository locationRepository;
     @Autowired
     private EventRepositry eventRepositry;
-    public void deleteLocationById(int id){
-        Optional<Event> optionalEvent=eventRepositry.findById(id);
 
-        if(!optionalEvent.isPresent())
+    public void deleteLocationById(int id) {
+        Optional<Event> optionalEvent = eventRepositry.findById(id);
+
+        if (!optionalEvent.isPresent())
             throw new EventNotFoundException();
 
         optionalEvent.get().setEventLocation(null);

@@ -16,7 +16,8 @@ import java.util.Optional;
 public class AdsOptionService {
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
-    public AdsOption saveAdsOptionWhenCreating(AdsOption adsOption){
+
+    public AdsOption saveAdsOptionWhenCreating(AdsOption adsOption) {
         if (adsOption.getId() != 0)
             throw new AdsAlreadyFoundException();
 
@@ -24,13 +25,13 @@ public class AdsOptionService {
         return adsOption;
     }
 
-    public AdsOption updateAdsOption(int id, AdsOption adsOption){
-        Optional<AdsOption> optionalOldAds=adsOptionRepositry.findById(id);
+    public AdsOption updateAdsOption(int id, AdsOption adsOption) {
+        Optional<AdsOption> optionalOldAds = adsOptionRepositry.findById(id);
 
         if (adsOption.getId() != 0)
             throw new AdsAlreadyFoundException();
 
-        if(!optionalOldAds.isPresent())
+        if (!optionalOldAds.isPresent())
             throw new AdsNotFoundException();
 
 
@@ -38,11 +39,12 @@ public class AdsOptionService {
         adsOptionRepositry.save(adsOption);
         return adsOption;
     }
-    public AdsOption findAdsOptionById(int id){
-        Optional<AdsOption> adsOption=adsOptionRepositry.findById(id);
+
+    public AdsOption findAdsOptionById(int id) {
+        Optional<AdsOption> adsOption = adsOptionRepositry.findById(id);
 
 
-        if(!adsOption.isPresent())
+        if (!adsOption.isPresent())
             throw new AdsNotFoundException();
 
         return adsOption.get();

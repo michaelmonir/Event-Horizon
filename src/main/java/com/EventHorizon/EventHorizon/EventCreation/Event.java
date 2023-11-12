@@ -26,15 +26,15 @@ public class Event {
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            name="location_id",
-            referencedColumnName="id"
+            name = "location_id",
+            referencedColumnName = "id"
     )
     private Location eventLocation;
     @ManyToOne(
     )
     @JoinColumn(
-            name="ads_id",
-            referencedColumnName="id"
+            name = "ads_id",
+            referencedColumnName = "id"
     )
     private AdsOption eventAds;
 }

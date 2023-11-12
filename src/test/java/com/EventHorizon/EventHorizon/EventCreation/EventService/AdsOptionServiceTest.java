@@ -3,18 +3,15 @@ package com.EventHorizon.EventHorizon.EventCreation.EventService;
 import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsAlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class AdsOptionServiceTest {
     @Autowired
     private AdsOptionService adsOptionService;
-
 
     @Test
     public void testGettingExceptionOnSendingIdWhenCreating() {
@@ -22,12 +19,9 @@ class AdsOptionServiceTest {
         adsOption.setId(5);
         adsOption.setName("Sample Ads Option");
 
-        try {
+        Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
             adsOptionService.saveAdsOptionWhenCreating(adsOption);
-            Assertions.fail();
-        } catch (AdsAlreadyFoundException e) {
-            // Expected behavior
-        }
+        });
     }
 
     @Test
@@ -37,22 +31,17 @@ class AdsOptionServiceTest {
                 .priority(2)
                 .build();
 
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             adsOptionService.saveAdsOptionWhenCreating(adsOption);
             Assertions.assertNotEquals(0, adsOption.getId());
-        } catch (AdsAlreadyFoundException e) {
-            Assertions.fail("Unexpected exception");
-        }
+        });
     }
 
     @Test
     public void editAdsOptionGettingErrorAdsNotFoundException() {
-        try {
+        Assertions.assertThrows(AdsNotFoundException.class, () -> {
             adsOptionService.updateAdsOption(0, new AdsOption());
-            Assertions.fail();
-        } catch (AdsNotFoundException e) {
-            // Expected behavior
-        }
+        });
     }
 
     @Test
@@ -63,12 +52,9 @@ class AdsOptionServiceTest {
                 .build();
         adsOptionService.saveAdsOptionWhenCreating(adsOption);
 
-        try {
+        Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
             adsOptionService.updateAdsOption(34, adsOption);
-            Assertions.fail();
-        } catch (AdsAlreadyFoundException e) {
-            // Expected behavior
-        }
+        });
     }
 
     @Test
@@ -84,15 +70,12 @@ class AdsOptionServiceTest {
                 .priority(3)
                 .build();
 
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             adsOptionService.updateAdsOption(adsOption.getId(), newAdsOption);
             AdsOption updatedAdsOption = adsOptionService.findAdsOptionById(adsOption.getId());
             Assertions.assertNotNull(updatedAdsOption);
             Assertions.assertEquals(newAdsOption.getName(), updatedAdsOption.getName());
             Assertions.assertEquals(newAdsOption.getPriority(), updatedAdsOption.getPriority());
-        } catch (AdsNotFoundException | AdsAlreadyFoundException e) {
-            Assertions.fail("Unexpected exception");
-        }
+        });
     }
-
 }

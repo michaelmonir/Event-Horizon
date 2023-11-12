@@ -71,9 +71,9 @@ public class EventService {
     }
 
     public List<EventHeaderDto> getAllEventsHeaderDto(PageRequest pageRequest) {
-        List<Event> events=eventRepositry.findAll( pageRequest).getContent();
-        List<EventHeaderDto>eventHeaderDtos =new ArrayList<>();
-        for (Event event :events){
+        List<Event> events = eventRepositry.findAll(pageRequest).getContent();
+        List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
+        for (Event event : events) {
             eventHeaderDtos.add(new EventHeaderDto(event));
         }
         return eventHeaderDtos;

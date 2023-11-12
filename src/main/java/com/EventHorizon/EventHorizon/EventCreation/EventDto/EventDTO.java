@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
-public class EventDTO
-{
+public class EventDTO {
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
 
@@ -18,8 +17,7 @@ public class EventDTO
     private int eventAdsId;
     private LocationDTO eventLocation;
 
-    public Event getEvent()
-    {
+    public Event getEvent() {
         Event event = Event.builder()
                 .name(name)
                 .description(description)
