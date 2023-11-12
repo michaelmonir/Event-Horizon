@@ -1,4 +1,5 @@
 package com.EventHorizon.EventHorizon.Users.Organizer;
 
-public class OrganizerMock {
+public class OrganizerMock implements Organizable
+{
 }

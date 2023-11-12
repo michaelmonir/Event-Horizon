@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 @Repository
-public class EventService {
+public class EventCreationRepository {
     @Autowired
     private EventRepositry eventRepositry;
     public Event saveEventWhenCreating(Event event){

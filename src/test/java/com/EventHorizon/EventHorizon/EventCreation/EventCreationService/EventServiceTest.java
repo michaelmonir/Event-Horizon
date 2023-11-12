@@ -2,10 +2,9 @@ package com.EventHorizon.EventHorizon.EventCreation.EventCreationService;
 
 import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
 import com.EventHorizon.EventHorizon.EventCreation.Event;
-import com.EventHorizon.EventHorizon.EventCreation.EventService;
+import com.EventHorizon.EventHorizon.EventCreation.EventCreationRepository;
 import com.EventHorizon.EventHorizon.EventCreation.Location;
 import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
-import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EventServiceTest {
 
     @Autowired
-    private EventService eventService;
+    private EventCreationRepository eventCreationRepository;
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
 
@@ -28,7 +27,7 @@ class EventServiceTest {
         adsOptionRepositry.save(adsOption);
         Location location1= Location.builder().country("Egypt").city("cairo").build();
         Event event=Event.builder().eventAds(adsOption).eventLocation(location1).name("e45").description("...").build();
-        eventService.saveEventWhenCreating(event);
+        eventCreationRepository.saveEventWhenCreating(event);
     }
     @Test
     public void editEvent(){
@@ -36,7 +35,7 @@ class EventServiceTest {
         adsOptionRepositry.save(adsOption);
         Location location1= Location.builder().country("Egypt").city("cairo").build();
         Event event=Event.builder().eventAds(adsOption).eventLocation(location1).name("11").description("...").build();
-        eventService.updateEvent(24,event);
+        eventCreationRepository.updateEvent(24,event);
     }
 
     @Test
@@ -45,7 +44,7 @@ class EventServiceTest {
         adsOptionRepositry.save(adsOption);
         Location location1= Location.builder().country("aswan").city("cairo").build();
         Event event=Event.builder().eventAds(adsOption).eventLocation(location1).name("e45").description("...").id(27).build();
-        eventService.saveEventWhenCreating(event);
+        eventCreationRepository.saveEventWhenCreating(event);
     }
     @Test
     public void editEvent3(){
@@ -53,7 +52,7 @@ class EventServiceTest {
         adsOptionRepositry.save(adsOption);
         Location location1= Location.builder().country("Egypt").city("cairo").build();
         Event event=Event.builder().eventAds(adsOption).eventLocation(location1).name("11").description("...").build();
-        eventService.updateEvent(30,event);
+        eventCreationRepository.updateEvent(30,event);
     }
 
     @Test
@@ -64,7 +63,7 @@ class EventServiceTest {
         event.setName("Michael's Event");
 
         try {
-            this.eventService.saveEventWhenCreating(event);
+            this.eventCreationRepository.saveEventWhenCreating(event);
             Assertions.fail();
         }
         catch (EventAlreadyExisting e)
