@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.EventCreation;
 
+import com.EventHorizon.EventHorizon.EventCreation.EventDto.EventDTO;
 import com.EventHorizon.EventHorizon.EventCreation.EventService.EventService;
 import com.EventHorizon.EventHorizon.Users.Organizer.Organizable;
 import org.springframework.beans.factory.annotation.Autowired;
