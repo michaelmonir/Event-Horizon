@@ -18,8 +18,7 @@ public class ProxyService {
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse signUp(RegisterRequest registerRequest) {
         Information information=Information.builder().
-                firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
+                userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .email(registerRequest.getEmail())
                 .role(registerRequest.getRole())
@@ -41,4 +40,5 @@ public class ProxyService {
         String jwt=jwtService.generateToken(information);
         return AuthenticationResponse.builder().token(jwt).build();
     }
+
 }
