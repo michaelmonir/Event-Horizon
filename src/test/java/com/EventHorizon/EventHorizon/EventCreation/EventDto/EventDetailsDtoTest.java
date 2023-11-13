@@ -5,11 +5,12 @@ import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.EventCreation.Location;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class EventDetailsDtoTest {
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
