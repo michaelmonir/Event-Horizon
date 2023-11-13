@@ -8,6 +8,13 @@ public class LocationDTO
     public String city;
     public String address;
 
+    public LocationDTO(Location location)
+    {
+        this.country = location.getCountry();
+        this.city = location.getCity();
+        this.address = location.getAddress();
+    }
+
     public Location getLocation()
     {
         Location location = new Location(country, city, address);
