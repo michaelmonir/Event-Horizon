@@ -20,18 +20,6 @@ public class SponsorService {
 
     public void add(Sponsor sponsor) {
         try {
-            Optional<Information> information1 =
-                    Optional.ofNullable(informationService.getByEmail(sponsor.getInformation().getEmail()));
-            Optional<Information> information2 =
-                    Optional.ofNullable(informationService.getByUserName(sponsor.getInformation().getUserName()));
-            if(information1.isPresent()){
-                System.out.println("email is already Exist");
-                return;
-            }
-            if(information2.isPresent()){
-                System.out.println("username is already Exist");
-                return;
-            }
             sponsorRepository.save(sponsor);
         } catch (Exception e) {
             System.out.println(e.getMessage());

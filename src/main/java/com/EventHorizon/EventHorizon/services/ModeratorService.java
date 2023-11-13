@@ -19,18 +19,6 @@ public class ModeratorService {
 
     public void add(Moderator moderator) {
         try {
-            Optional<Information> information1 =
-                    Optional.ofNullable(informationService.getByEmail(moderator.getInformation().getEmail()));
-            Optional<Information> information2 =
-                    Optional.ofNullable(informationService.getByUserName(moderator.getInformation().getUserName()));
-            if(information1.isPresent()){
-                System.out.println("email is already Exist");
-                return;
-            }
-            if(information2.isPresent()){
-                System.out.println("username is already Exist");
-                return;
-            }
             moderatorRepository.save(moderator);
         } catch (Exception e) {
             System.out.println(e.getMessage());

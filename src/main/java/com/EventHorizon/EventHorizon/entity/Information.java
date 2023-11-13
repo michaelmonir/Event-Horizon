@@ -17,7 +17,7 @@ public class Information {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_name")
+    @Column(name = "user_name" ,unique = true)
     private String userName;
     @Column(name = "password")
     private String password;
@@ -25,11 +25,11 @@ public class Information {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
     @Column(name = "gender")
     private String gender;
-    @Column(name = "pay_pal_Account")
+    @Column(name = "pay_pal_Account",unique = true)
     private String payPalAccount;
     @Column(name = "role")
     private String role;

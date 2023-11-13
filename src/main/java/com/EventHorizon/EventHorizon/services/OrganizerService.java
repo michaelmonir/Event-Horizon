@@ -21,18 +21,6 @@ public class OrganizerService {
 
     public void add(Organizer organizer) {
         try {
-            Optional<Information> information1 =
-                    Optional.ofNullable(informationService.getByEmail(organizer.getInformation().getEmail()));
-            Optional<Information> information2 =
-                    Optional.ofNullable(informationService.getByUserName(organizer.getInformation().getUserName()));
-            if(information1.isPresent()){
-                System.out.println("email is already Exist");
-                return;
-            }
-            if(information2.isPresent()){
-                System.out.println("username is already Exist");
-                return;
-            }
             organizerRepository.save(organizer);
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -17,21 +17,11 @@ public class ClientService {
 
     public void add(Client client) {
         try {
-            Optional<Information> information1 =
-                    Optional.ofNullable(informationService.getByEmail(client.getInformation().getEmail()));
-            Optional<Information> information2 =
-                    Optional.ofNullable(informationService.getByUserName(client.getInformation().getUserName()));
-            if(information1.isPresent()){
-                System.out.println("email is already Exist");
-                return;
-            }
-            if(information2.isPresent()){
-                System.out.println("username is already Exist");
-                return;
-            }
             clientRepository.save(client);
         } catch (Exception e) {
+            System.out.println("cant insert client ");
             System.out.println(e.getMessage());
+
         }
     }
 
