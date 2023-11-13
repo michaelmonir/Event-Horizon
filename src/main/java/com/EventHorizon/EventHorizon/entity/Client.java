@@ -23,4 +23,5 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id", referencedColumnName = "id")
     private Information information;
+
 }

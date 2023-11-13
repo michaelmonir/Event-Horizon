@@ -1,11 +1,14 @@
 package com.EventHorizon.EventHorizon.security;
 
+import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,8 +36,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
-        jwt=authHeader.substring(7);
-        userEmail=jwtService.extractUserName(jwt);
+        try {
+            jwt=authHeader.substring(7);
+            userEmail=jwtService.extractUserName(jwt);
+        }catch (Exception e){
+            filterChain.doFilter(request,response);
+            throw new ForbiddenException("User is not Authorized");
+        }
         if( userEmail!=null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails=this.userDetailsService.loadUserByUsername(userEmail);
             if(jwtService.isTokenValid(jwt,userDetails)){

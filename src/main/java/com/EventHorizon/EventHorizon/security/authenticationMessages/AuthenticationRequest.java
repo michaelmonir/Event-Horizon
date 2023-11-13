@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.security.controller;
+package com.EventHorizon.EventHorizon.security.authenticationMessages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

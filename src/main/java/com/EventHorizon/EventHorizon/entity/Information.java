@@ -24,25 +24,24 @@ public class Information implements UserDetails {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "user_name" ,unique = true)
+    public String userName;
     @Column(name = "password")
     private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
     @Column(name = "gender")
     private String gender;
-    @Column(name = "pay_pal_Account")
+    @Column(name = "pay_pal_Account",unique = true)
     private String payPalAccount;
     @Column(name = "role")
     private String role;
     @Column(name = "active")
     private int active;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));

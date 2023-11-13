@@ -1,6 +1,7 @@
-package com.EventHorizon.EventHorizon.security;
+package com.EventHorizon.EventHorizon.security.config;
 
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
+import com.EventHorizon.EventHorizon.services.InformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final InformationRepository informationRepository;
+    private final InformationService informationService;
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return informationRepository.findByEmail(username).get();
+                return informationService.getByEmail(username);
             }
         };
     }
