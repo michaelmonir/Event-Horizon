@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.security;
+package com.EventHorizon.EventHorizon.security.config;
 
 import lombok.Data;
 

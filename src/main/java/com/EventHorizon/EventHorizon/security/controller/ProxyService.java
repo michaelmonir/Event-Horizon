@@ -1,45 +1,49 @@
 package com.EventHorizon.EventHorizon.security.controller;
 
+import com.EventHorizon.EventHorizon.DTO.InformationDTO;
 import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.JwtService;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
+import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
+import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
+import com.EventHorizon.EventHorizon.services.InformationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProxyService {
-    private final InformationRepository informationRepository;
+    private final InformationService informationService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    boolean mailInSystem(String mail){
-        Optional<Information> information=informationRepository.findByEmail(mail);
-        return information.isPresent() ;
+    public boolean mailInSystem(String mail){
+        Information information=informationService.getByEmail(mail);
+        return information!=null ;
     }
-    boolean userNameInSystem(String userName){
-        Optional<Information> information=informationRepository.findByUserName(userName);
-        return information.isPresent();
+    public boolean userNameInSystem(String userName){
+        Information information=informationService.getByUserName(userName);
+        return information!=null;
     }
-    public AuthenticationResponse signUp(RegisterRequest registerRequest) {
+    public AuthenticationResponse signUp(InformationDTO registerRequest) {
         Information information=Information.builder().
                 userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .email(registerRequest.getEmail())
                 .role(registerRequest.getRole())
+                .firstName(registerRequest.getFirstName())
+                .lastName(registerRequest.getLastName())
+                .gender(registerRequest.getGender())
+                .payPalAccount(registerRequest.getPayPalAccount())
                 .active(1)
                 .build();
-        informationRepository.save(information);
+        informationService.add(information);
         String jwt=jwtService.generateToken(information);
         return AuthenticationResponse.builder().token(jwt).build();
     }
-
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
              new UsernamePasswordAuthenticationToken(
@@ -47,19 +51,9 @@ public class ProxyService {
                      authenticationRequest.getPassword()
              )
         );
-        Information information =informationRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
+        Information information =informationService.getByEmail(authenticationRequest.getEmail());
         String jwt=jwtService.generateToken(information);
         return AuthenticationResponse.builder().token(jwt).build();
     }
-    public AuthenticationResponse signInWithGmail(AuthenticationRequest authenticationRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()
-                )
-        );
-        Information information =informationRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
-        String jwt=jwtService.generateToken(information);
-        return AuthenticationResponse.builder().token(jwt).build();
-    }
+
 }
