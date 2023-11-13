@@ -1,11 +1,10 @@
 package com.EventHorizon.EventHorizon.EventApis;
 
-import com.EventHorizon.EventHorizon.EventCreation.Event;
-import com.EventHorizon.EventHorizon.EventCreation.EventCreationRepository;
-import com.EventHorizon.EventHorizon.EventCreation.EventDTO;
+import com.EventHorizon.EventHorizon.Entities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventCreationRepository;
+import com.EventHorizon.EventHorizon.DTOs.EventDTO;
 import com.EventHorizon.EventHorizon.Exceptions.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.Users.Organizer.Organizable;
-import com.EventHorizon.EventHorizon.Users.Organizer.OrganizerMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

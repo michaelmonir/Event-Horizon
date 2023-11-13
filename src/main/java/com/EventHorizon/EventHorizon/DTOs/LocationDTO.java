@@ -1,4 +1,6 @@
-package com.EventHorizon.EventHorizon.EventCreation;
+package com.EventHorizon.EventHorizon.DTOs;
+
+import com.EventHorizon.EventHorizon.Entities.Location;
 
 public class LocationDTO
 {

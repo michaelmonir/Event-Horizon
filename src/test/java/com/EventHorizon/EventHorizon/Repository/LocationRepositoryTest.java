@@ -1,11 +1,10 @@
 package com.EventHorizon.EventHorizon.Repository;
 
-import com.EventHorizon.EventHorizon.EventCreation.Location;
+import com.EventHorizon.EventHorizon.Entities.Location;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class LocationRepositoryTest {
 @Autowired

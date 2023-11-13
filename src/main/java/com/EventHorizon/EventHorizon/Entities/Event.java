@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.EventCreation;
+package com.EventHorizon.EventHorizon.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

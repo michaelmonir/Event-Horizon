@@ -1,11 +1,10 @@
 package com.EventHorizon.EventHorizon.Repository;
 
-import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class AdsOptionRepositryTest {
     @Autowired

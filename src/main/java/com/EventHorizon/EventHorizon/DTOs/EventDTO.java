@@ -1,7 +1,7 @@
-package com.EventHorizon.EventHorizon.EventCreation;
+package com.EventHorizon.EventHorizon.DTOs;
 
+import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
-import com.EventHorizon.EventHorizon.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;

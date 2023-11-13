@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.EventCreation;
+package com.EventHorizon.EventHorizon.Entities;
 
 import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
