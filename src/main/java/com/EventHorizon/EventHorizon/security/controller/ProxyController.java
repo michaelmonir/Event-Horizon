@@ -28,6 +28,12 @@ public class ProxyController {
         return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest),HttpStatus.OK);
     }
 
-
+    @PostMapping("/goInWithGmail")
+    public ResponseEntity<AuthenticationResponse> goInWithGmail(@RequestBody RegisterRequest registerRequest){
+        if(proxyService.mailInSystem(registerRequest.getEmail())){
+            throw new ExistingMail("Mail : " +registerRequest.getEmail() +" Is Already Used");
+        }else
+            return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
+    }
 
 }
