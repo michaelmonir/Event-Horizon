@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.security;
 
+import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,8 +36,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
-        jwt=authHeader.substring(7);
-        userEmail=jwtService.extractUserName(jwt);
+        try {
+            jwt=authHeader.substring(7);
+            userEmail=jwtService.extractUserName(jwt);
+        }catch (Exception e){
+            filterChain.doFilter(request,response);
+            throw new ForbiddenException("User is not Authorized");
+        }
         if( userEmail!=null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails=this.userDetailsService.loadUserByUsername(userEmail);
             if(jwtService.isTokenValid(jwt,userDetails)){

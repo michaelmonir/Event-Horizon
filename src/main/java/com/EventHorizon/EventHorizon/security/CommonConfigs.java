@@ -7,7 +7,7 @@ public class CommonConfigs {
     static final String[] AUTH_WHITELIST = {
             "/proxy/**",
             "/v1/main",
-            "/oauth2/authorization/google"
+//            "/oauth2/authorization/google"
     };
 
 }
