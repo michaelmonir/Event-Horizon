@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.Services;
 
 import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
 import com.EventHorizon.EventHorizon.Entities.Event;
+import com.EventHorizon.EventHorizon.RepositoryServices.DetailedEventDTORepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.DTOs.DetailedEventDTO;
 import com.EventHorizon.EventHorizon.Exceptions.*;
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventService
 {
-    private OrganizerRepository organizerRepository = new OrganizerRepositoryMock();
+    @Autowired
+    private DetailedEventDTORepositoryService detailedEventDTORepositoryService;
     @Autowired
     private EventRepositoryService eventRepositoryService;
+
+    private OrganizerRepository organizerRepository = new OrganizerRepositoryMock();
 
     public ViewEventDTO getEventForUser(int eventId) {
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
@@ -23,29 +27,39 @@ public class EventService
         return new ViewEventDTO(event);
     }
 
-    public DetailedEventDTO createEvent(int organizerId, DetailedEventDTO eventDTO) {
-        ////////// expecting repository to return userNotFoundException if user is not found
-        Organizable organizer = this.organizerRepository.findById(organizerId);
-        Event event = eventDTO.getEvent();
-        this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        return new DetailedEventDTO(event);
-    }
-
-    public DetailedEventDTO updateEvent(int organizerId, int id, DetailedEventDTO eventDTO) {
-        Organizable organizer = this.organizerRepository.findById(organizerId);
-        Event event = eventDTO.getEvent();
-        this.checkAndHandleNotOrganizerOfEvent(organizer, event);
-
-        event = this.eventRepositoryService.updateEventAndHandleNotFound(id, event);
-        return new DetailedEventDTO(event);
-    }
-
     public DetailedEventDTO getEventForOrganizer(int organizerId, int eventId) {
         Organizable organizer = this.organizerRepository.findById(organizerId);
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
         this.checkAndHandleNotOrganizerOfEvent(organizer, event);
 
-        return new DetailedEventDTO(event);
+
+        this.eventRepositoryService.mm();
+        DetailedEventDTO resultDTO = this.eventRepositoryService.getDTOfromDetailedEvent(event);
+
+        return resultDTO;
+    }
+
+    public DetailedEventDTO createEvent(int organizerId, DetailedEventDTO eventDTO) {
+        ////////// expecting repository to return userNotFoundException if user is not found
+        Organizable organizer = this.organizerRepository.findById(organizerId);
+        Event event = this.eventRepositoryService.getEventFromDetailedEventDTO(eventDTO);
+
+        this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        DetailedEventDTO resultDTO = this.eventRepositoryService.getDTOfromDetailedEvent(event);
+
+        return resultDTO;
+    }
+
+    public DetailedEventDTO updateEvent(int organizerId, int id, DetailedEventDTO eventDTO) {
+        Organizable organizer = this.organizerRepository.findById(organizerId);
+
+        Event event = this.eventRepositoryService.getEventFromDetailedEventDTO(eventDTO);
+        this.checkAndHandleNotOrganizerOfEvent(organizer, event);
+
+        event = this.eventRepositoryService.updateEventAndHandleNotFound(id, event);
+
+        DetailedEventDTO resultDTO = this.eventRepositoryService.getDTOfromDetailedEvent(event);
+        return resultDTO;
     }
 
     // should handle this in database when merging

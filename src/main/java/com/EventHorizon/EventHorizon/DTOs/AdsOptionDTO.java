@@ -17,17 +17,7 @@ public class AdsOptionDTO
     public int id;
     public String name;
 
-    public AdsOptionDTO(AdsOption adsOption)
+    public AdsOptionDTO()
     {
-        this.id = adsOption.getId();
-        this.name = adsOption.getName();
-    }
-
-    public AdsOption getAdsOption()
-    {
-        Optional<AdsOption> optionalAdsOption = this.adsOptionRepositry.findById(this.id);
-        if (!optionalAdsOption.isPresent())
-            throw new AdsOptionNotFoundException();
-        return optionalAdsOption.get();
     }
 }
