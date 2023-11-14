@@ -1,12 +1,20 @@
 package com.EventHorizon.EventHorizon.DTOs;
 
 import com.EventHorizon.EventHorizon.Entities.Location;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class LocationDTO
 {
     public String country;
     public String city;
     public String address;
+
+    public LocationDTO()
+    {
+
+    }
 
     public LocationDTO(Location location)
     {

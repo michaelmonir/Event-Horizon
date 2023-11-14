@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.ExceptionHandling.EventExceptionHandling;
+package com.EventHorizon.EventHorizon.ExceptionHandling;
 
 
 import com.EventHorizon.EventHorizon.Exceptions.*;
@@ -10,27 +10,26 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @ControllerAdvice
-public class EventRestExceptionHandler
+public class RestExceptionHandler
 {
     @ExceptionHandler
-    public ResponseEntity<EventErrorResponse> handleException(BaseException e)
+    public ResponseEntity<ErrorResponse> handleException(BaseException e)
     {
-        EventErrorResponse error = new EventErrorResponse();
+        ErrorResponse error = new ErrorResponse();
         error.status = e.httpStatus.value();
         error.message = e.message;
         error.timestamp = System.currentTimeMillis();
 
         return new ResponseEntity<>(error, e.httpStatus);
     }
-
     @ExceptionHandler
-    public ResponseEntity<EventErrorResponse> handleException(NotOrganizerOfThisEventException e)
+    public ResponseEntity<ErrorResponse> handleException(Exception e)
     {
-        EventErrorResponse error = new EventErrorResponse();
-        error.status = HttpStatus.NOT_FOUND.value();
-        error.message = "Event Already Existing";
+        ErrorResponse error = new ErrorResponse();
+        error.status = HttpStatus.BAD_REQUEST.value();
+        error.message = "Wrong Event Format";
         error.timestamp = System.currentTimeMillis();
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

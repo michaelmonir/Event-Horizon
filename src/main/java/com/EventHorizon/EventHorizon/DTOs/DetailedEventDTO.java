@@ -2,10 +2,14 @@ package com.EventHorizon.EventHorizon.DTOs;
 
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
+//@Builder
+@EqualsAndHashCode
 public class DetailedEventDTO
 {
     public int id;
