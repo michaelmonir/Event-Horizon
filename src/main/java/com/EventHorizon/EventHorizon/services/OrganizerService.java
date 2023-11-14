@@ -71,4 +71,18 @@ public class OrganizerService {
             return null;
         }
     }
+
+    public Organizer getByInformation(Information information) {
+        try {
+            Optional<Organizer> organizer = Optional.of(organizerRepository.findByInformation(information));
+            if (organizer.isPresent()) {
+                return organizer.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

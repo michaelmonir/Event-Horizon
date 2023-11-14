@@ -35,6 +35,7 @@ class OrganizerRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
+        organizerService.delete(organizer.getId());
     }
 
 
@@ -80,6 +81,7 @@ class OrganizerRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
+        organizerService.delete(organizer.getId());
     }
 
     @Test
@@ -100,5 +102,24 @@ class OrganizerRepositoryTest {
         Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
+        organizerService.delete(o1.getId());
     }
+
+    @Test
+    public void getByInformation() {
+        Information information = Information.builder().
+                firstName("fares").email("fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("client").password("pass1234")
+                .payPalAccount("fares007@pay2").userName("fares007")
+                .build();
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerService.add(organizer);
+
+        Organizer o1 = organizerService.getByInformation(information);
+
+        Assertions.assertEquals(o1, organizer);
+        organizerService.delete(organizer.getId());
+    }
+
 }

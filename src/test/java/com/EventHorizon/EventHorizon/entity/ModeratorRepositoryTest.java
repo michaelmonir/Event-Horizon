@@ -35,6 +35,7 @@ class ModeratorRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
+        moderatorService.delete(moderator.getId());
     }
 
     @Test
@@ -79,6 +80,7 @@ class ModeratorRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
+        moderatorService.delete(moderator.getId());
     }
 
     @Test
@@ -97,5 +99,23 @@ class ModeratorRepositoryTest {
         Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
+        moderatorService.delete(moderator.getId());
+    }
+
+    @Test
+    public void getByInformation() {
+        Information information = Information.builder().
+                firstName("fares").email("fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("client").password("pass1234")
+                .payPalAccount("fares007@pay2").userName("fares007")
+                .build();
+        Moderator moderator = Moderator.builder().information(information).build();
+        moderatorService.add(moderator);
+
+        Moderator m1 = moderatorService.getByInformation(information);
+
+        Assertions.assertEquals(m1, moderator);
+        moderatorService.delete(moderator.getId());
     }
 }

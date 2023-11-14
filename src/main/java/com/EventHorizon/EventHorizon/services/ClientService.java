@@ -68,4 +68,19 @@ public class ClientService {
             return null;
         }
     }
+
+    public Client getByInformation(Information information) {
+        try {
+            Optional<Client> client = Optional.of(clientRepository.findByInformation(information));
+            if (client.isPresent()) {
+                return client.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }

@@ -69,4 +69,18 @@ public class ModeratorService {
             return null;
         }
     }
+
+    public Moderator getByInformation(Information information) {
+        try {
+            Optional<Moderator> moderator = Optional.of(moderatorRepository.findByInformation(information));
+            if (moderator.isPresent()) {
+                return moderator.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

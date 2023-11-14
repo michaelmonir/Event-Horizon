@@ -70,4 +70,19 @@ public class SponsorService {
             return null;
         }
     }
+
+
+    public Sponsor getByInformation(Information information) {
+        try {
+            Optional<Sponsor> sponsor = Optional.of(sponsorRepository.findByInformation(information));
+            if (sponsor.isPresent()) {
+                return sponsor.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

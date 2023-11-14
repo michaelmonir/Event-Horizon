@@ -16,6 +16,7 @@ class ClientRepositoryTest {
     private ClientService clientService;
     @Autowired
     private InformationService informationService;
+
     @Test
     public void add() {
         Information information = Information.builder().
@@ -33,6 +34,7 @@ class ClientRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
+        clientService.delete(client.getId());
     }
 
     @Test
@@ -49,7 +51,7 @@ class ClientRepositoryTest {
         clientService.delete(client.getId());
         Client c1 = clientService.getByID(client.getId());
 
-       Assertions.assertEquals(c1, null);
+        Assertions.assertEquals(c1, null);
     }
 
     @Test
@@ -77,6 +79,7 @@ class ClientRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
+        clientService.delete(client.getId());
     }
 
     @Test
@@ -97,5 +100,23 @@ class ClientRepositoryTest {
         Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
+        clientService.delete(client.getId());
+    }
+
+    @Test
+    public void getByInformation() {
+        Information information = Information.builder().
+                firstName("fares").email("fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("client").password("pass1234")
+                .payPalAccount("fares007@pay2").userName("fares007")
+                .build();
+        Client client = Client.builder().information(information).build();
+        clientService.add(client);
+
+        Client c1 = clientService.getByInformation(information);
+
+        Assertions.assertEquals(c1, client);
+        clientService.delete(client.getId());
     }
 }

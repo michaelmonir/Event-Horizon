@@ -35,6 +35,7 @@ class SponsorRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
+        sponsorService.delete(sponsor.getId());
     }
 
     @Test
@@ -79,6 +80,7 @@ class SponsorRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
+        sponsorService.delete(sponsor.getId());
     }
 
     @Test
@@ -99,5 +101,24 @@ class SponsorRepositoryTest {
         Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
+        sponsorService.delete(sponsor.getId());
     }
+
+    @Test
+    public void getByInformation() {
+        Information information = Information.builder().
+                firstName("fares").email("fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("client").password("pass1234")
+                .payPalAccount("fares007@pay2").userName("fares007")
+                .build();
+        Sponsor sponsor = Sponsor.builder().information(information).build();
+        sponsorService.add(sponsor);
+
+        Sponsor s1 = sponsorService.getByInformation(information);
+
+        Assertions.assertEquals(s1, sponsor);
+        sponsorService.delete(sponsor.getId());
+    }
+
 }

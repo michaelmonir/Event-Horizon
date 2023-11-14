@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
 import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
-import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
+import com.EventHorizon.EventHorizon.entity.*;
+import com.EventHorizon.EventHorizon.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +13,37 @@ import java.util.Optional;
 public class InformationService {
     @Autowired
     InformationRepository informationRepository;
-    public void add(Information information) {
+    @Autowired
+    ClientRepository clientRepository;
+    @Autowired
+    ModeratorRepository moderatorRepository;
+    @Autowired
+    OrganizerRepository organizerRepository;
+    @Autowired
+    SponsorRepository sponsorRepository;
+
+    public void add(Information information,boolean addUser) {
         //// here we implement logic of create user  for ahmed hassan proxy
-
         try {
-
-            informationRepository.save(information);
-
-
+            if(!addUser) {
+                informationRepository.save(information);
+            }
+            else if (information.getRole().equals("Client")) {
+                Client c1 = Client.builder().information(information).build();
+                clientRepository.save(c1);
+            } else if (information.getRole().equals("Moderator")) {
+                Moderator m1 = Moderator.builder().information(information).build();
+                moderatorRepository.save(m1);
+            } else if (information.getRole().equals("Organizer")) {
+                Organizer o1 = Organizer.builder().information(information).build();
+                organizerRepository.save(o1);
+            } else {
+                Sponsor s1 = Sponsor.builder().information(information).build();
+                sponsorRepository.save(s1);
+            }
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
         }
-
     }
 
     public void delete(int id) {
@@ -131,6 +149,16 @@ public class InformationService {
     public List<Information> getByRole(String role) {
         try {
             List<Information> list = informationRepository.findByRole(role);
+            return list;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Information> getBySignIn(int value) {
+        try {
+            List<Information> list = informationRepository.findBySignInWithEmail(value);
             return list;
         } catch (Exception e) {
             System.out.println(e.getMessage());
