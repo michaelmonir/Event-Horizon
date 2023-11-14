@@ -101,7 +101,7 @@ class InformationRepositoryTest {
                 .payPalAccount("13fares007@pay2").userName("13fares007")
                 .build();
         informationService.add(information, false);
-        Information i1 = informationService.getByUserName(information.getUserName());
+        Information i1 = informationService.getByUserName(information.userName);
         Assertions.assertEquals(i1, information);
     }
 
