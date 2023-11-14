@@ -2,11 +2,7 @@ DROP TABLE IF EXISTS information_tbl;
 CREATE TABLE information_tbl (
   id int NOT NULL AUTO_INCREMENT,
    user_name varchar(45) DEFAULT NULL,
-<<<<<<< HEAD
    password varchar(100) DEFAULT NULL,
-=======
-   password varchar(45) DEFAULT NULL,
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b
    active int DEFAULT 1,
    first_name varchar(45) DEFAULT NULL,
    last_name varchar(45) DEFAULT NULL,
@@ -14,10 +10,7 @@ CREATE TABLE information_tbl (
    gender varchar(45) DEFAULT NULL,
    pay_pal_Account varchar(45) DEFAULT NULL,
    role varchar(45) DEFAULT NULL,
-<<<<<<< HEAD
-=======
    sign_in_with_email int DEFAULT 0,
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b
   PRIMARY KEY (id)
 );
 
@@ -36,10 +29,6 @@ CREATE TABLE `organizer_tbl` (
   PRIMARY KEY (`id`),
   foreign key (information_id) references information_tbl (id)
 );
-<<<<<<< HEAD
-
-=======
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b
 
 CREATE TABLE `sponsor_tbl` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -53,9 +42,4 @@ CREATE TABLE `moderator_tbl` (
   `information_id` int,
   PRIMARY KEY (`id`),
   foreign key (information_id) references information_tbl (id)
-<<<<<<< HEAD
 );
-=======
-);
-
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b

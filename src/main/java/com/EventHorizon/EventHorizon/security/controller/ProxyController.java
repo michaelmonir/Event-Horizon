@@ -22,7 +22,7 @@ public class ProxyController {
     }
     @PostMapping("/basicSignIn")
     public ResponseEntity<AuthenticationResponse> basicSignIn(@RequestBody AuthenticationRequest authenticationRequest){
-        return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest),HttpStatus.OK);
+        return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest,0),HttpStatus.OK);
     }
     @PostMapping("/signUpWithGmail")
     public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest){
@@ -31,7 +31,7 @@ public class ProxyController {
     }
     @PostMapping("/signInWithGmail")
     public ResponseEntity<AuthenticationResponse> signInWithGmail(@RequestBody AuthenticationRequest authenticationRequest){
-        return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest),HttpStatus.OK);
+        return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest,1),HttpStatus.OK);
     }
 
 }

@@ -24,13 +24,8 @@ public class Information implements UserDetails {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-<<<<<<< HEAD
     @Column(name = "user_name" ,unique = true)
     public String userName;
-=======
-    @Column(name = "user_name", unique = true)
-    private String userName;
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b
     @Column(name = "password")
     private String password;
     @Column(name = "first_name")
@@ -45,9 +40,10 @@ public class Information implements UserDetails {
     private String payPalAccount;
     @Column(name = "role")
     private String role;
-<<<<<<< HEAD
     @Column(name = "active")
     private int active;
+    @Column(name = "sign_in_with_email")
+    private int signInWithEmail;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
@@ -76,8 +72,5 @@ public class Information implements UserDetails {
     public boolean isEnabled() {
         return true ;
     }
-=======
-    @Column(name = "sign_in_with_email")
-    private int signInWithEmail;
->>>>>>> f1d9b7c430cd0fddfbb63aeff89e643f489e745b
+
 }

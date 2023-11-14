@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.security.authenticationMessages.Authenticat
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
+import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,19 +48,23 @@ public class ProxyService {
                 .gender(registerRequest.getGender())
                 .payPalAccount(registerRequest.getPayPalAccount())
                 .active(1)
+                .signInWithEmail(registerRequest.getSignInWithEmail())
                 .build();
-        informationService.add(information);
+        informationService.add(information,true);
         String jwt=jwtService.generateToken(information);
         return AuthenticationResponse.builder().token(jwt).build();
     }
-    public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest,int withGmail) {
+        Information information =informationService.getByEmail(authenticationRequest.getEmail());
+        if(information.getSignInWithEmail()!=withGmail){
+            throw new ForbiddenException("Invalid Request");
+        }
         authenticationManager.authenticate(
              new UsernamePasswordAuthenticationToken(
                      authenticationRequest.getEmail(),
                      authenticationRequest.getPassword()
              )
         );
-        Information information =informationService.getByEmail(authenticationRequest.getEmail());
         String jwt=jwtService.generateToken(information);
         return AuthenticationResponse.builder().token(jwt).build();
     }

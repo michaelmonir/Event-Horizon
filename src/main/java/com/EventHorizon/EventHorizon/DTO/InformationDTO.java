@@ -32,6 +32,7 @@ public class InformationDTO {
     private String payPalAccount;
 
     private String role;
+    int signInWithEmail;
 
     public static InformationDTO toDTO(Information information) {
         return InformationDTO.builder()
@@ -42,6 +43,8 @@ public class InformationDTO {
                 .gender(information.getGender())
                 .userName(information.userName)
                 .role(information.getRole())
-                .payPalAccount(information.getPayPalAccount()).build();
+                .signInWithEmail(information.getSignInWithEmail())
+                .payPalAccount(information.getPayPalAccount())
+                .build();
     }
 }
