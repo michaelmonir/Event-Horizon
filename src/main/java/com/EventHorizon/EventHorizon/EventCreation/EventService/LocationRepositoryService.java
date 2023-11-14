@@ -1,17 +1,16 @@
 package com.EventHorizon.EventHorizon.EventCreation.EventService;
 
 import com.EventHorizon.EventHorizon.EventCreation.Event;
-import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Repository
-public class LocationService {
+@Service
+public class LocationRepositoryService {
     @Autowired
     private LocationRepository locationRepository;
     @Autowired

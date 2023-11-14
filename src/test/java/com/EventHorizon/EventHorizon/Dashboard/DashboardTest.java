@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Dashboard;
 
 import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.EventCreation.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.EventCreation.EventService.EventService;
+import com.EventHorizon.EventHorizon.EventCreation.EventService.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
 import org.junit.jupiter.api.Assertions;
@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -20,14 +18,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class DashboardTest {
     @InjectMocks
     private Dashboard dashboard;
 
     @Mock
-    private EventService eventService;
+    private EventRepositoryService eventRepositoryService;
 
     @Test
     public void testGetPageThrowsExceptionForInvalidPageIndex() {
@@ -51,12 +48,12 @@ class DashboardTest {
 
         int pageIndex = 0;
         int pageSize = 10;
-        Mockito.when(eventService.getAllEventsHeaderDto(Mockito.any(PageRequest.class)))
+        Mockito.when(eventRepositoryService.getAllEventsHeaderDto(Mockito.any(PageRequest.class)))
                 .thenReturn(mockEventHeaderDtos);
 
         List<EventHeaderDto> result = dashboard.getPage(pageIndex, pageSize);
         // Verify that the service method was called with the correct parameters
-        Mockito.verify(eventService).getAllEventsHeaderDto(
+        Mockito.verify(eventRepositoryService).getAllEventsHeaderDto(
                 Mockito.eq(PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate")))
         );
         Assertions.assertEquals(mockEventHeaderDtos, result);
@@ -66,7 +63,7 @@ class DashboardTest {
     public void testGetPageReturnsEmptyListWhenServiceReturnsEmptyList() {
         int pageIndex = 0;
         int pageSize = 10;
-        Mockito.when(eventService.getAllEventsHeaderDto(Mockito.any(PageRequest.class)))
+        Mockito.when(eventRepositoryService.getAllEventsHeaderDto(Mockito.any(PageRequest.class)))
                 .thenReturn(Collections.emptyList());
         List<EventHeaderDto> result = dashboard.getPage(pageIndex, pageSize);
         Assertions.assertTrue(result.isEmpty());

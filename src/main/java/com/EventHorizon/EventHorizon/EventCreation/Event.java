@@ -18,6 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String name;
     private String description;
     private String eventCategory;
@@ -34,7 +35,8 @@ public class Event {
     )
     @JoinColumn(
             name = "ads_id",
-            referencedColumnName = "id"
+            referencedColumnName = "id",
+            nullable = false
     )
     private AdsOption eventAds;
 }

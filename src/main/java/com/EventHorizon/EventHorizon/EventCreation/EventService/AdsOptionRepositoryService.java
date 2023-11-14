@@ -1,19 +1,15 @@
 package com.EventHorizon.EventHorizon.EventCreation.EventService;
 
 import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
-import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.Exceptions.AdsAlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
-import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
-import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-@Repository
-public class AdsOptionService {
+@Service
+public class AdsOptionRepositoryService {
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
 

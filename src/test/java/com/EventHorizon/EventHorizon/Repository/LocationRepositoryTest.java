@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Repository;
 
 import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
+import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.EventCreation.Location;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,27 @@ class LocationRepositoryTest {
         Optional<Location> findedLocation=locationRepository.findById(location1.getId());
         Assertions.assertEquals(findedLocation.isPresent(),true);
     }
+    @Test
+    public void createLocationWithoutCity() {
 
+        Location location = Location.builder()
+                .country("Egypt").build();
+
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            locationRepository.save(location);
+        });
+    }
+    @Test
+    public void createLocationWithoutCountry() {
+
+        Location location = Location.builder()
+                .city("Alex").build();
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            locationRepository.save(location);
+        });
+    }
 
 
 }

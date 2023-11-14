@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AdsOptionServiceTest {
+class AdsOptionRepositoryServiceTest {
     @Autowired
-    private AdsOptionService adsOptionService;
+    private AdsOptionRepositoryService adsOptionRepositoryService;
 
     @Test
     public void testGettingExceptionOnSendingIdWhenCreating() {
@@ -20,7 +20,7 @@ class AdsOptionServiceTest {
         adsOption.setName("Sample Ads Option");
 
         Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
-            adsOptionService.saveAdsOptionWhenCreating(adsOption);
+            adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
         });
     }
 
@@ -32,7 +32,7 @@ class AdsOptionServiceTest {
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
-            adsOptionService.saveAdsOptionWhenCreating(adsOption);
+            adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
             Assertions.assertNotEquals(0, adsOption.getId());
         });
     }
@@ -40,7 +40,7 @@ class AdsOptionServiceTest {
     @Test
     public void editAdsOptionGettingErrorAdsNotFoundException() {
         Assertions.assertThrows(AdsNotFoundException.class, () -> {
-            adsOptionService.updateAdsOption(0, new AdsOption());
+            adsOptionRepositoryService.updateAdsOption(0, new AdsOption());
         });
     }
 
@@ -50,10 +50,10 @@ class AdsOptionServiceTest {
                 .name("Sample Ads Option")
                 .priority(2)
                 .build();
-        adsOptionService.saveAdsOptionWhenCreating(adsOption);
+        adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
 
         Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
-            adsOptionService.updateAdsOption(34, adsOption);
+            adsOptionRepositoryService.updateAdsOption(34, adsOption);
         });
     }
 
@@ -63,7 +63,7 @@ class AdsOptionServiceTest {
                 .name("Sample Ads Option")
                 .priority(2)
                 .build();
-        adsOptionService.saveAdsOptionWhenCreating(adsOption);
+        adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
 
         AdsOption newAdsOption = AdsOption.builder()
                 .name("Updated Ads Option")
@@ -71,8 +71,8 @@ class AdsOptionServiceTest {
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
-            adsOptionService.updateAdsOption(adsOption.getId(), newAdsOption);
-            AdsOption updatedAdsOption = adsOptionService.findAdsOptionById(adsOption.getId());
+            adsOptionRepositoryService.updateAdsOption(adsOption.getId(), newAdsOption);
+            AdsOption updatedAdsOption = adsOptionRepositoryService.findAdsOptionById(adsOption.getId());
             Assertions.assertNotNull(updatedAdsOption);
             Assertions.assertEquals(newAdsOption.getName(), updatedAdsOption.getName());
             Assertions.assertEquals(newAdsOption.getPriority(), updatedAdsOption.getPriority());

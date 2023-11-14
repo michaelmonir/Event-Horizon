@@ -1,29 +1,37 @@
 package com.EventHorizon.EventHorizon.EventCreation.EventService;
 
+import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
 import com.EventHorizon.EventHorizon.EventCreation.Event;
 import com.EventHorizon.EventHorizon.EventCreation.Location;
+import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class LocationServiceTest {
+class LocationRepositoryServiceTest {
     @Autowired
-    private EventService eventService;
+    private EventRepositoryService eventRepositoryService;
     @Autowired
-    private LocationService locationService;
+    private LocationRepositoryService locationRepositoryService;
+    @Autowired
+    private AdsOptionRepositry adsOptionRepositry;
     @Test
     public void testDeletionOfLocationByEcventId(){
+        AdsOption adsOption = AdsOption.builder()
+                .name("p")
+                .priority(1).build();
+        adsOptionRepositry.save(adsOption);
         Location location= Location.builder()
                 .country("mozmbeq")
                 .city("Alex").build();
         Event event=Event.builder()
                 .name("micol")
                 .eventLocation(location)
+                .eventAds(adsOption)
                 .description("neo").build();
-         eventService.saveEventWhenCreating(event);
-        locationService.deleteLocationById(event.getId());
+         eventRepositoryService.saveEventWhenCreating(event);
+        locationRepositoryService.deleteLocationById(event.getId());
     }
 
 }

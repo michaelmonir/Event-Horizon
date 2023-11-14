@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Dashboard;
 
 
 import com.EventHorizon.EventHorizon.EventCreation.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.EventCreation.EventService.EventService;
+import com.EventHorizon.EventHorizon.EventCreation.EventService.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 public class Dashboard {
     private List<EventHeaderDto> eventHeaderDtos;
     @Autowired
-    private EventService eventService;
+    private EventRepositoryService eventRepositoryService;
     int pageSize;
     PageRequest pageWithRecords;
 
@@ -27,7 +27,7 @@ public class Dashboard {
             throw new InvalidPageSize();
         this.pageSize = pageSize;
         this.pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
-        eventHeaderDtos = eventService.getAllEventsHeaderDto(pageWithRecords);
+        eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageWithRecords);
         return eventHeaderDtos;
     }
 }

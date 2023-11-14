@@ -19,11 +19,11 @@ import java.util.List;
 
 
 @SpringBootTest
-class EventServiceTest {
+class EventRepositoryServiceTest {
 
 
     @Autowired
-    private EventService eventService;
+    private EventRepositoryService eventRepositoryService;
 
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
@@ -35,7 +35,7 @@ class EventServiceTest {
         event.setName("Michael's Event");
 
         Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-            eventService.saveEventWhenCreating(event);
+            eventRepositoryService.saveEventWhenCreating(event);
         });
     }
 
@@ -55,7 +55,7 @@ class EventServiceTest {
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
-            eventService.saveEventWhenCreating(event);
+            eventRepositoryService.saveEventWhenCreating(event);
             Assertions.assertNotEquals(0, event.getId());
         });
     }
@@ -76,7 +76,7 @@ class EventServiceTest {
                 .build();
 
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventService.updateEvent(0, event);
+            eventRepositoryService.updateEvent(0, event);
         });
     }
 
@@ -97,7 +97,7 @@ class EventServiceTest {
                 .build();
 
         Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-            eventService.updateEvent(34, event);
+            eventRepositoryService.updateEvent(34, event);
         });
     }
 
@@ -115,7 +115,7 @@ class EventServiceTest {
                 .name("e800")
                 .description("...")
                 .build();
-        eventService.saveEventWhenCreating(event);
+        eventRepositoryService.saveEventWhenCreating(event);
         Location location2 = Location.builder().country("mun").city("cairo").build();
         Event newEvent = Event.builder()
                 .eventAds(adsOption)
@@ -125,7 +125,7 @@ class EventServiceTest {
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
-            eventService.updateEvent(event.getId(), newEvent);
+            eventRepositoryService.updateEvent(event.getId(), newEvent);
             Assertions.assertEquals(event.getId(), newEvent.getId());
         });
     }
@@ -133,7 +133,7 @@ class EventServiceTest {
     @Test
     public void testDeleteEventThrowsExceptionWhenEventNotFound() {
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventService.deleteEvent(0);
+            eventRepositoryService.deleteEvent(0);
         });
     }
 
@@ -153,17 +153,17 @@ class EventServiceTest {
                 .description("...")
                 .build();
 
-        eventService.saveEventWhenCreating(event);
+        eventRepositoryService.saveEventWhenCreating(event);
 
         Assertions.assertDoesNotThrow(() -> {
-            eventService.deleteEvent(event.getId());
+            eventRepositoryService.deleteEvent(event.getId());
         });
     }
 
     @Test
     public void testGetEventDetailsDtoThrowsExceptionWhenEventNotFound() {
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventService.getEventDeatilsDto(0);
+            eventRepositoryService.getEventDeatilsDto(0);
         });
     }
 
@@ -183,10 +183,10 @@ class EventServiceTest {
                 .description("...")
                 .build();
 
-        eventService.saveEventWhenCreating(event);
+        eventRepositoryService.saveEventWhenCreating(event);
 
         EventDetailsDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
-                eventService.getEventDeatilsDto(event.getId())
+                eventRepositoryService.getEventDeatilsDto(event.getId())
         );
 
         Assertions.assertEquals(event.getName(), eventDetailsDto.getName());
@@ -196,7 +196,7 @@ class EventServiceTest {
     @Test
     public void testGetEventHeaderDtoThrowsExceptionWhenEventNotFound() {
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventService.getEventHeaderDto(0);
+            eventRepositoryService.getEventHeaderDto(0);
         });
     }
 
@@ -216,10 +216,10 @@ class EventServiceTest {
                 .description("...")
                 .build();
 
-        eventService.saveEventWhenCreating(event);
+        eventRepositoryService.saveEventWhenCreating(event);
 
         EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
-                eventService.getEventHeaderDto(event.getId())
+                eventRepositoryService.getEventHeaderDto(event.getId())
         );
 
         Assertions.assertEquals(event.getName(), eventHeaderDto.getName());
@@ -249,14 +249,14 @@ class EventServiceTest {
                 .description("...")
                 .build();
 
-        eventService.saveEventWhenCreating(event1);
-        eventService.saveEventWhenCreating(event2);
+        eventRepositoryService.saveEventWhenCreating(event1);
+        eventRepositoryService.saveEventWhenCreating(event2);
 
         int pageIndex = 0;
         int pageSize = 10;
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
 
-        List<EventHeaderDto> eventHeaderDtos = eventService.getAllEventsHeaderDto(pageRequest);
+        List<EventHeaderDto> eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageRequest);
 
         Assertions.assertFalse(eventHeaderDtos.isEmpty());
     }
