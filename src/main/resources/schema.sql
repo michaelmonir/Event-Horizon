@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS information_tbl;
 CREATE TABLE information_tbl (
   id int NOT NULL AUTO_INCREMENT,
    user_name varchar(45) DEFAULT NULL,
-   password varchar(45) DEFAULT NULL,
+   password varchar(100) DEFAULT NULL,
    active int DEFAULT 1,
    first_name varchar(45) DEFAULT NULL,
    last_name varchar(45) DEFAULT NULL,
@@ -43,4 +43,3 @@ CREATE TABLE `moderator_tbl` (
   PRIMARY KEY (`id`),
   foreign key (information_id) references information_tbl (id)
 );
-
