@@ -20,10 +20,10 @@ class ClientRepositoryTest {
     @Test
     public void add() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("1fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("1fares007@pay2").userName("1fares007")
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
@@ -34,16 +34,15 @@ class ClientRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
-        clientService.delete(client.getId());
     }
 
     @Test
     public void delete() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("2fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("2fares007@pay2").userName("2fares007")
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
@@ -57,18 +56,18 @@ class ClientRepositoryTest {
     @Test
     public void update() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("3fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("3fares007@pay2").userName("3fares007")
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
         Information information2 = Information.builder().
-                firstName("faris").email("faris007@gmail.com")
+                firstName("faris").email("4faris007@gmail.com")
                 .gender("male").lastName("mohamed2")
                 .role("client").password("pass1234")
-                .payPalAccount("faris007@pay2").userName("faris007")
+                .payPalAccount("4faris007@pay2").userName("4faris007")
                 .build();
         Client client2 = Client.builder().information(information2).build();
         clientService.update(client.getId(), client2);
@@ -79,16 +78,15 @@ class ClientRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
-        clientService.delete(client.getId());
     }
 
     @Test
     public void getByID() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("5fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("5fares007@pay2").userName("5fares007")
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
@@ -97,19 +95,18 @@ class ClientRepositoryTest {
 
 
         Information i1 = informationService.getByID(c1.getInformation().getId());
-        Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
+        Assertions.assertEquals("5fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
-        clientService.delete(client.getId());
     }
 
     @Test
     public void getByInformation() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("6fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("6fares007@pay2").userName("6fares007")
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
@@ -117,6 +114,5 @@ class ClientRepositoryTest {
         Client c1 = clientService.getByInformation(information);
 
         Assertions.assertEquals(c1, client);
-        clientService.delete(client.getId());
     }
 }

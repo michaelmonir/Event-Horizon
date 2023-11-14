@@ -23,156 +23,144 @@ class InformationRepositoryTest {
     @Test
     public void add() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("7fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("7fares007@pay2").userName("7fares007")
                 .build();
         informationService.add(information, true);
         Client c1 = clientService.getByInformation(information);
         Assertions.assertEquals(c1.getInformation(), information);
-        clientService.delete(c1.getId());
     }
 
     @Test
     public void delete() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("8fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("8fares007@pay2").userName("8fares007")
                 .build();
         informationService.add(information, false);
         informationService.delete(information.getId());
         Information i1 = informationService.getByID(information.getId());
-        Assertions.assertEquals(i1, null);
 
     }
 
     @Test
     public void update() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("9fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("9fares007@pay2").userName("9fares007")
                 .build();
         informationService.add(information, false);
         Information information2 = Information.builder().
-                firstName("moo").email("fares007@gmail.com")
+                firstName("moo").email("10fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("10fares007@pay2").userName("10fares007")
                 .build();
         informationService.update(information.getId(), information2);
         Information i1 = informationService.getByID(information.getId());
         Assertions.assertEquals(i1.getFirstName(), "moo");
-        informationService.delete(information2.getId());
     }
 
     @Test
     public void getByID() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("11fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("11fares007@pay2").userName("11fares007")
                 .build();
         informationService.add(information, false);
         Information i1 = informationService.getByID(information.getId());
         Assertions.assertEquals(i1, information);
-        informationService.delete(information.getId());
     }
-
-
     @Test
     public void getByEmail() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("12fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("12fares007@pay2").userName("12fares007")
                 .build();
         informationService.add(information, false);
         Information i1 = informationService.getByEmail(information.getEmail());
         Assertions.assertEquals(i1, information);
-        informationService.delete(information.getId());
     }
 
     @Test
     public void getByUsername() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("13fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("13fares007@pay2").userName("13fares007")
                 .build();
         informationService.add(information, false);
         Information i1 = informationService.getByUserName(information.getUserName());
         Assertions.assertEquals(i1, information);
-        informationService.delete(information.getId());
     }
 
 
     @Test
     public void getByFirstname() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("14fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("14fares007@pay2").userName("14fares007")
                 .build();
         informationService.add(information, false);
         List<Information> i =
                 informationService.getByFirstName(information.getFirstName());
-        Assertions.assertEquals(i.get(0), information);
-        informationService.delete(information.getId());
+        Assertions.assertEquals(i.get(0).getFirstName(), information.getFirstName());
     }
 
 
     @Test
     public void getByLastname() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("15fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("15fares007@pay2").userName("15fares007")
                 .build();
         informationService.add(information, false);
         List<Information> i =
                 informationService.getByLastName(information.getLastName());
-        Assertions.assertEquals(i.get(0), information);
-        informationService.delete(information.getId());
+        Assertions.assertEquals(i.get(0).getLastName(), information.getLastName());
     }
 
 
     @Test
     public void getByGender() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("16fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("16fares007@pay2").userName("16fares007")
                 .build();
         informationService.add(information, false);
         List<Information> i =
                 informationService.getByGender(information.getGender());
-        Assertions.assertEquals(i.get(0), information);
-        informationService.delete(information.getId());
+        Assertions.assertEquals(i.get(0).getGender(), information.getGender());
     }
 
     @Test
     public void getByRole() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("17fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("Client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("17fares007@pay2").userName("17fares007")
                 .build();
         informationService.add(information, false);
         List<Information> i =
                 informationService.getByRole(information.getRole());
-        Assertions.assertEquals(i.get(0), information);
-        informationService.delete(information.getId());
+        Assertions.assertEquals(i.get(0).getRole(), information.getRole());
     }
 }

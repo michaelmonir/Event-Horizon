@@ -21,10 +21,10 @@ class ModeratorRepositoryTest {
     @Test
     public void add() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("18fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("moderator").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("18fares007@pay2").userName("18fares007")
                 .build();
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorService.add(moderator);
@@ -35,16 +35,15 @@ class ModeratorRepositoryTest {
         Assertions.assertEquals(information.getEmail(), i1.getEmail());
         Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
         Assertions.assertEquals(information.getLastName(), i1.getLastName());
-        moderatorService.delete(moderator.getId());
     }
 
     @Test
     public void delete() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("19fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("moderator").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("19fares007@pay2").userName("19fares007")
                 .build();
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorService.add(moderator);
@@ -58,18 +57,18 @@ class ModeratorRepositoryTest {
     @Test
     public void update() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("20fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("moderator").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("20fares007@pay2").userName("20fares007")
                 .build();
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorService.add(moderator);
         Information information2 = Information.builder().
-                firstName("faris").email("faris007@gmail.com")
+                firstName("faris").email("21faris007@gmail.com")
                 .gender("male").lastName("mohamed2")
                 .role("moderator").password("pass1234")
-                .payPalAccount("faris007@pay2").userName("faris007")
+                .payPalAccount("21faris007@pay2").userName("21faris007")
                 .build();
         Moderator moderator2 = Moderator.builder().information(information2).build();
         moderatorService.update(moderator.getId(), moderator2);
@@ -80,35 +79,33 @@ class ModeratorRepositoryTest {
         Assertions.assertEquals(information2.getEmail(), i1.getEmail());
         Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
         Assertions.assertEquals("mohamed2", i1.getLastName());
-        moderatorService.delete(moderator.getId());
     }
 
     @Test
     public void getByID() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("22fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("moderator").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("22fares007@pay2").userName("22fares007")
                 .build();
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorService.add(moderator);
         Moderator m1 = moderatorService.getByID(moderator.getId());
 
         Information i1 = informationService.getByID(m1.getInformation().getId());
-        Assertions.assertEquals("fares007@gmail.com", i1.getEmail());
+        Assertions.assertEquals("22fares007@gmail.com", i1.getEmail());
         Assertions.assertEquals("fares", i1.getFirstName());
         Assertions.assertEquals("mohamed", i1.getLastName());
-        moderatorService.delete(moderator.getId());
     }
 
     @Test
     public void getByInformation() {
         Information information = Information.builder().
-                firstName("fares").email("fares007@gmail.com")
+                firstName("fares").email("23fares007@gmail.com")
                 .gender("male").lastName("mohamed")
                 .role("client").password("pass1234")
-                .payPalAccount("fares007@pay2").userName("fares007")
+                .payPalAccount("23fares007@pay2").userName("23fares007")
                 .build();
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorService.add(moderator);
@@ -116,6 +113,5 @@ class ModeratorRepositoryTest {
         Moderator m1 = moderatorService.getByInformation(information);
 
         Assertions.assertEquals(m1, moderator);
-        moderatorService.delete(moderator.getId());
     }
 }
