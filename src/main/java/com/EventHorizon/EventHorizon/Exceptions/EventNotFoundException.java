@@ -1,5 +1,12 @@
 package com.EventHorizon.EventHorizon.Exceptions;
 
-public class EventNotFoundException extends RuntimeException{
+import org.springframework.http.HttpStatus;
 
+public class EventNotFoundException extends BaseException
+{
+    public EventNotFoundException()
+    {
+        this.httpStatus = HttpStatus.NOT_FOUND;
+        this.message = "Event Not Found";
+    }
 }

@@ -25,7 +25,6 @@ public class EventOperationsController
         return this.eventService.getEventForOrganizer(organizerId, eventId);
     }
 
-
     @PostMapping("/{organizerId}")
     public DetailedEventDTO createEvent(@PathVariable int organizerId, @RequestBody DetailedEventDTO detailedEventDTO)
     {
