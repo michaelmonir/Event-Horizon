@@ -1,4 +1,10 @@
 package com.EventHorizon.EventHorizon.Exceptions;
 
-public class AdsAlreadyFoundException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class AdsAlreadyFoundException extends ParentException{
+    public AdsAlreadyFoundException() {
+        this.message=" Ads Already Found";
+        this.httpStatus= HttpStatus.CONFLICT;
+    }
 }
