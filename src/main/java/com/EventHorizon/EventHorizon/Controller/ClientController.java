@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
+@RequestMapping("/client")
 @RestController
 public class ClientController {
 
