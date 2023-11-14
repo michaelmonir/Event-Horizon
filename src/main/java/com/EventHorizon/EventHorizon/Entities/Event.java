@@ -18,6 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String name;
     private String description;
     private String eventCategory;
@@ -26,15 +27,16 @@ public class Event {
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            name="location_id",
-            referencedColumnName="id"
+            name = "location_id",
+            referencedColumnName = "id"
     )
     private Location eventLocation;
     @ManyToOne(
     )
     @JoinColumn(
-            name="ads_id",
-            referencedColumnName="id"
+            name = "ads_id",
+            referencedColumnName = "id",
+            nullable = false
     )
     private AdsOption eventAds;
 }

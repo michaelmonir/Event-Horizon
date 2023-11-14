@@ -2,12 +2,10 @@ package com.EventHorizon.EventHorizon.ServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.AdsOptionDTO;
 import com.EventHorizon.EventHorizon.DTOs.DetailedEventDTO;
-import com.EventHorizon.EventHorizon.DTOs.LocationDTO;
 import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Entities.Location;
-import com.EventHorizon.EventHorizon.RepositoryServices.DetailedEventDTORepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import org.junit.jupiter.api.Assertions;
@@ -24,8 +22,6 @@ public class EventServiceTest
     private EventRepositoryService eventRepositoryService;
     @InjectMocks
     private EventService eventService;
-    @Mock
-    private DetailedEventDTORepositoryService detailedEventDTORepositoryService;
 
     private Event customEvent;
     private ViewEventDTO customViewEventDTO;
@@ -41,15 +37,15 @@ public class EventServiceTest
                 .build();
 
         this.customViewEventDTO = new ViewEventDTO();
-        this.customViewEventDTO.id = 1;
-        this.customViewEventDTO.name = "My Event";
-        this.customViewEventDTO.eventLocationDTO = new LocationDTO();
+        this.customViewEventDTO.setId(1);
+        this.customViewEventDTO.setName("My Event");
+        this.customViewEventDTO.setEventLocation(new Location());
 
 
         this.customDetailedEventDTO = new DetailedEventDTO();
         this.customDetailedEventDTO.id = 1;
         this.customDetailedEventDTO.name = "My Event";
-        this.customDetailedEventDTO.eventLocation = new LocationDTO();
+        this.customDetailedEventDTO.eventLocation = new Location();
         this.customDetailedEventDTO.eventAds = new AdsOptionDTO();
     }
 

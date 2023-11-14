@@ -2,11 +2,10 @@ package com.EventHorizon.EventHorizon.Services;
 
 import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
 import com.EventHorizon.EventHorizon.Entities.Event;
-import com.EventHorizon.EventHorizon.RepositoryServices.DetailedEventDTORepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.DTOs.DetailedEventDTO;
 import com.EventHorizon.EventHorizon.Exceptions.*;
 import com.EventHorizon.EventHorizon.Repository.*;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Users.Organizer.Organizable;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventService
 {
-    @Autowired
-    private DetailedEventDTORepositoryService detailedEventDTORepositoryService;
     @Autowired
     private EventRepositoryService eventRepositoryService;
 
@@ -32,8 +29,6 @@ public class EventService
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
         this.checkAndHandleNotOrganizerOfEvent(organizer, event);
 
-
-        this.eventRepositoryService.mm();
         DetailedEventDTO resultDTO = this.eventRepositoryService.getDTOfromDetailedEvent(event);
 
         return resultDTO;
