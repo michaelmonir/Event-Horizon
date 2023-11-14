@@ -1,8 +1,9 @@
 package com.EventHorizon.EventHorizon.entity;
 
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
-import com.EventHorizon.EventHorizon.services.InformationService;
+import com.EventHorizon.EventHorizon.services.*;
 import jakarta.persistence.Entity;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,90 +16,151 @@ import java.util.List;
 class InformationRepositoryTest {
     @Autowired
     private InformationService informationService;
+    @Autowired
+    ClientService clientService;
+
 
     @Test
     public void add() {
         Information information = Information.builder().
-                firstName("mamfadasdsado")
-                .email("faris0asdsad07@dasdasdsad.com")
-                .gender("lronaasdasdldo@asdsad.com")
-                .lastName("moaadssadhmed")
-                .role("organizsasadasddsadasder")
-                .password("passadad1234")
-                .payPalAccount("fasdsadaaris0dasdsad007@pay")
-                .userName("faris0sadassdsaddsad0")
+                firstName("fares").email("7fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("7fares007@pay2").userName("7fares007")
                 .build();
-        informationService.add(information);
+        informationService.add(information, true);
+        Client c1 = clientService.getByInformation(information);
+        Assertions.assertEquals(c1.getInformation(), information);
     }
 
     @Test
     public void delete() {
-        informationService.delete(8);
+        Information information = Information.builder().
+                firstName("fares").email("8fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("8fares007@pay2").userName("8fares007")
+                .build();
+        informationService.add(information, false);
+        informationService.delete(information.getId());
+        Information i1 = informationService.getByID(information.getId());
+
     }
 
     @Test
     public void update() {
         Information information = Information.builder().
-                firstName("admina")
-                .email("admina")
-                .gender("admina")
-                .lastName("admina")
-                .role("admina")
-                .password("admina")
-                .payPalAccount("@admina")
-                .userName("admina")
+                firstName("fares").email("9fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("9fares007@pay2").userName("9fares007")
                 .build();
-        informationService.update(1, information);
+        informationService.add(information, false);
+        Information information2 = Information.builder().
+                firstName("moo").email("10fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("10fares007@pay2").userName("10fares007")
+                .build();
+        informationService.update(information.getId(), information2);
+        Information i1 = informationService.getByID(information.getId());
+        Assertions.assertEquals(i1.getFirstName(), "moo");
     }
 
     @Test
     public void getByID() {
-        Information i = informationService.getByID(1);
-        System.out.println("i = " + i);
+        Information information = Information.builder().
+                firstName("fares").email("11fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("11fares007@pay2").userName("11fares007")
+                .build();
+        informationService.add(information, false);
+        Information i1 = informationService.getByID(information.getId());
+        Assertions.assertEquals(i1, information);
     }
-
-
     @Test
     public void getByEmail() {
-        Information i = informationService.getByEmail("admina");
-        System.out.println("i = " + i);
+        Information information = Information.builder().
+                firstName("fares").email("12fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("12fares007@pay2").userName("12fares007")
+                .build();
+        informationService.add(information, false);
+        Information i1 = informationService.getByEmail(information.getEmail());
+        Assertions.assertEquals(i1, information);
     }
 
     @Test
     public void getByUsername() {
-        Information i =
-                informationService.getByUserName("hamo");
-        System.out.println("i = " + i);
+        Information information = Information.builder().
+                firstName("fares").email("13fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("13fares007@pay2").userName("13fares007")
+                .build();
+        informationService.add(information, false);
+        Information i1 = informationService.getByUserName(information.getUserName());
+        Assertions.assertEquals(i1, information);
     }
 
 
     @Test
     public void getByFirstname() {
+        Information information = Information.builder().
+                firstName("fares").email("14fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("14fares007@pay2").userName("14fares007")
+                .build();
+        informationService.add(information, false);
         List<Information> i =
-                informationService.getByFirstName("leo");
-        System.out.println("i = " + i);
+                informationService.getByFirstName(information.getFirstName());
+        Assertions.assertEquals(i.get(0).getFirstName(), information.getFirstName());
     }
 
 
     @Test
     public void getByLastname() {
+        Information information = Information.builder().
+                firstName("fares").email("15fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("15fares007@pay2").userName("15fares007")
+                .build();
+        informationService.add(information, false);
         List<Information> i =
-                informationService.getByLastName("hamo");
-        System.out.println("i = " + i);
+                informationService.getByLastName(information.getLastName());
+        Assertions.assertEquals(i.get(0).getLastName(), information.getLastName());
     }
 
 
     @Test
     public void getByGender() {
+        Information information = Information.builder().
+                firstName("fares").email("16fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("16fares007@pay2").userName("16fares007")
+                .build();
+        informationService.add(information, false);
         List<Information> i =
-                informationService.getByGender("male");
-        System.out.println("i = " + i);
+                informationService.getByGender(information.getGender());
+        Assertions.assertEquals(i.get(0).getGender(), information.getGender());
     }
 
     @Test
     public void getByRole() {
+        Information information = Information.builder().
+                firstName("fares").email("17fares007@gmail.com")
+                .gender("male").lastName("mohamed")
+                .role("Client").password("pass1234")
+                .payPalAccount("17fares007@pay2").userName("17fares007")
+                .build();
+        informationService.add(information, false);
         List<Information> i =
-                informationService.getByRole("client");
-        System.out.println("i = " + i);
+                informationService.getByRole(information.getRole());
+        Assertions.assertEquals(i.get(0).getRole(), information.getRole());
     }
 }

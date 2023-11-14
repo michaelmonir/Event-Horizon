@@ -5,7 +5,6 @@ import com.EventHorizon.EventHorizon.repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.controller.ProxyService;
-import com.EventHorizon.EventHorizon.services.InformationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

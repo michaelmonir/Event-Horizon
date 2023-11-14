@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Client;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Moderator;
@@ -31,7 +32,7 @@ public class ModeratorService {
             if (moderator.isPresent()) {
                 moderatorRepository.deleteById(id);
             } else {
-                System.out.println("NOT-FOUND");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -48,7 +49,7 @@ public class ModeratorService {
                 newOne.setId(oldOne.getId());
                 moderatorRepository.save(newOne);
             } else {
-                System.out.println("cant find");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -58,8 +59,27 @@ public class ModeratorService {
     public Moderator getByID(int id) {
         try {
             Optional<Moderator> moderator = moderatorRepository.findById(id);
-            return moderator.orElse(null);
+            if (moderator.isPresent()) {
+                return moderator.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Moderator getByInformation(Information information) {
+        try {
+            Optional<Moderator> moderator = Optional.of(moderatorRepository.findByInformation(information));
+            if (moderator.isPresent()) {
+                return moderator.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }

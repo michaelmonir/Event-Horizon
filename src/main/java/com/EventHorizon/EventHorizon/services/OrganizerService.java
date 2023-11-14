@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Moderator;
 import com.EventHorizon.EventHorizon.entity.Organizer;
@@ -33,7 +34,7 @@ public class OrganizerService {
             if (organizer.isPresent()) {
                 organizerRepository.deleteById(id);
             } else {
-                System.out.println("NOT-FOUND");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -50,7 +51,7 @@ public class OrganizerService {
                 newOne.setId(oldOne.getId());
                 organizerRepository.save(newOne);
             } else {
-                System.out.println("cant find");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -60,10 +61,28 @@ public class OrganizerService {
     public Organizer getByID(int id) {
         try {
             Optional<Organizer> organizer = organizerRepository.findById(id);
-            return organizer.orElse(null);
+            if (organizer.isPresent()) {
+                return organizer.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
 
+    public Organizer getByInformation(Information information) {
+        try {
+            Optional<Organizer> organizer = Optional.of(organizerRepository.findByInformation(information));
+            if (organizer.isPresent()) {
+                return organizer.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

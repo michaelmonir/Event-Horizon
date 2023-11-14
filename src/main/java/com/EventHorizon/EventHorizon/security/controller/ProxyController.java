@@ -18,12 +18,6 @@ public class ProxyController {
 
     @PostMapping("/basicSignUp")
     public ResponseEntity<AuthenticationResponse> basicSignUp(@RequestBody InformationDTO registerRequest){
-        if(proxyService.mailInSystem(registerRequest.getEmail())){
-            throw new ExistingMail("Mail : " +registerRequest.getEmail() +" Is Already Used");
-        }
-        if(proxyService.userNameInSystem(registerRequest.getUserName())){
-            throw new ExistingMail("UserName : " +registerRequest.getUserName() +" Is Already Used");
-        }
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
     @PostMapping("/basicSignIn")
@@ -32,12 +26,7 @@ public class ProxyController {
     }
     @PostMapping("/signUpWithGmail")
     public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest){
-        if(proxyService.mailInSystem(registerRequest.getEmail())){
-            throw new ExistingMail("Mail : " +registerRequest.getEmail() +" Is Already Used");
-        }
-        if(proxyService.userNameInSystem(registerRequest.getUserName())){
-            throw new ExistingMail("UserName : " +registerRequest.getUserName() +" Is Already Used");
-        }
+
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
     @PostMapping("/signInWithGmail")

@@ -25,4 +25,6 @@ public interface InformationRepository extends JpaRepository<Information, Intege
 
    List<Information> findByRole(String role);
 
+   List<Information> findBySignInWithEmail(int value);
+
 }

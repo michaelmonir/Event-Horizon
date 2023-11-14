@@ -5,6 +5,8 @@ import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.security.JwtService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
+import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
+import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +31,14 @@ public class ProxyService {
         return information!=null;
     }
     public AuthenticationResponse signUp(InformationDTO registerRequest) {
-        Information information=Information.builder().
-                userName(registerRequest.getUserName())
+        if(mailInSystem(registerRequest.getEmail())){
+            throw new ExistingMail("Mail : " +registerRequest.getEmail() +" Is Already Used");
+        }
+        if(userNameInSystem(registerRequest.getUserName())){
+            throw new ExistingUserName("UserName : " +registerRequest.getUserName() +" Is Already Used");
+        }
+        Information information=Information.builder()
+                .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .email(registerRequest.getEmail())
                 .role(registerRequest.getRole())

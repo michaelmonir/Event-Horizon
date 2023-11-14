@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Organizer;
 import com.EventHorizon.EventHorizon.entity.Sponsor;
@@ -32,7 +33,7 @@ public class SponsorService {
             if (sponsor.isPresent()) {
                 sponsorRepository.deleteById(id);
             } else {
-                System.out.println("NOT-FOUND");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -49,7 +50,7 @@ public class SponsorService {
                 newOne.setId(oldOne.getId());
                 sponsorRepository.save(newOne);
             } else {
-                System.out.println("cant find");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -59,8 +60,28 @@ public class SponsorService {
     public Sponsor getByID(int id) {
         try {
             Optional<Sponsor> sponsor = sponsorRepository.findById(id);
-            return sponsor.orElse(null);
+            if (sponsor.isPresent()) {
+                return sponsor.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public Sponsor getByInformation(Information information) {
+        try {
+            Optional<Sponsor> sponsor = Optional.of(sponsorRepository.findByInformation(information));
+            if (sponsor.isPresent()) {
+                return sponsor.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
