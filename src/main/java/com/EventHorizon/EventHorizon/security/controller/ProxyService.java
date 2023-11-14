@@ -56,7 +56,7 @@ public class ProxyService {
     }
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest,int withGmail) {
         Information information =informationService.getByEmail(authenticationRequest.getEmail());
-        if(information.getSignInWithEmail()!=withGmail){
+        if(information.getSignInWithEmail()!=withGmail) {
             throw new ForbiddenException("Invalid Request");
         }
         authenticationManager.authenticate(

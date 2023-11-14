@@ -28,13 +28,13 @@ public class InformationService {
             if(!addUser) {
                 informationRepository.save(information);
             }
-            else if (information.getRole().equals("Client")) {
+            else if (information.getRole().equals("ROLE_CLIENT")) {
                 Client c1 = Client.builder().information(information).build();
                 clientRepository.save(c1);
-            } else if (information.getRole().equals("Moderator")) {
+            } else if (information.getRole().equals("ROLE_MODERATOR")) {
                 Moderator m1 = Moderator.builder().information(information).build();
                 moderatorRepository.save(m1);
-            } else if (information.getRole().equals("Organizer")) {
+            } else if (information.getRole().equals("ROLE_ORGANIZER")) {
                 Organizer o1 = Organizer.builder().information(information).build();
                 organizerRepository.save(o1);
             } else {
