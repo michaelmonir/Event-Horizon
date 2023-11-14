@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,19 @@ import java.util.Optional;
 public class InformationService {
     @Autowired
     InformationRepository informationRepository;
-
     public void add(Information information) {
+        //// here we implement logic of create user  for ahmed hassan proxy
+
         try {
+
             informationRepository.save(information);
+
+
         } catch (Exception e) {
+
             System.out.println(e.getMessage());
         }
+
     }
 
     public void delete(int id) {
@@ -27,7 +34,7 @@ public class InformationService {
             if (information.isPresent()) {
                 informationRepository.deleteById(id);
             } else {
-                System.out.println("NOT-FOUND");
+
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -42,7 +49,7 @@ public class InformationService {
                 newOne.setId(oldOne.getId());
                 informationRepository.save(newOne);
             } else {
-                System.out.println("cant find");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -55,8 +62,7 @@ public class InformationService {
             if (information.isPresent()) {
                 return information.orElse(null);
             } else {
-                System.out.println("NOT-FOUND");
-                return null;
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -67,7 +73,11 @@ public class InformationService {
     public Information getByEmail(String email) {
         try {
             Optional<Information> information = Optional.ofNullable(informationRepository.findByEmail(email));
-            return information.orElse(null);
+            if (information.isPresent()) {
+                return information.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -77,7 +87,11 @@ public class InformationService {
     public Information getByUserName(String username) {
         try {
             Optional<Information> information = Optional.ofNullable(informationRepository.findByUserName(username));
-            return information.orElse(null);
+            if (information.isPresent()) {
+                return information.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

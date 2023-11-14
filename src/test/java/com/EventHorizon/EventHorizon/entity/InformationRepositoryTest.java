@@ -19,9 +19,9 @@ class InformationRepositoryTest {
     @Test
     public void add() {
         Information information = Information.builder().
-                firstName("mamfadasdsado")
-                .email("faris0asdsad07@dasdasdsad.com")
-                .gender("lronaasdasdldo@asdsad.com")
+                firstName("farisaaa")
+                .email("farisaaa@dasdasdsad.com")
+                .gender("farisaaa@asdsad.com")
                 .lastName("moaadssadhmed")
                 .role("organizsasadasddsadasder")
                 .password("passadad1234")
@@ -33,7 +33,7 @@ class InformationRepositoryTest {
 
     @Test
     public void delete() {
-        informationService.delete(8);
+        informationService.delete(14);
     }
 
     @Test
@@ -48,12 +48,12 @@ class InformationRepositoryTest {
                 .payPalAccount("@admina")
                 .userName("admina")
                 .build();
-        informationService.update(1, information);
+        informationService.update(70, information);
     }
 
     @Test
     public void getByID() {
-        Information i = informationService.getByID(1);
+        Information i = informationService.getByID(50);
         System.out.println("i = " + i);
     }
 

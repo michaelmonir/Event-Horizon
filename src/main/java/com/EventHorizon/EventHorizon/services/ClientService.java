@@ -1,12 +1,15 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Client;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
+
+
 
 @Service
 public class ClientService {
@@ -19,9 +22,7 @@ public class ClientService {
         try {
             clientRepository.save(client);
         } catch (Exception e) {
-            System.out.println("cant insert client ");
             System.out.println(e.getMessage());
-
         }
     }
 
@@ -31,13 +32,12 @@ public class ClientService {
             if (client.isPresent()) {
                 clientRepository.deleteById(id);
             } else {
-                System.out.println("NOT-FOUND");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void update(int id, Client newOne) {
         try {
@@ -48,7 +48,7 @@ public class ClientService {
                 newOne.setId(oldOne.getId());
                 clientRepository.save(newOne);
             } else {
-                System.out.println("cant find");
+                throw new NotFoundException();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -58,8 +58,13 @@ public class ClientService {
     public Client getByID(int id) {
         try {
             Optional<Client> client = clientRepository.findById(id);
-            return client.orElse(null);
+            if (client.isPresent()) {
+                return client.orElse(null);
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
