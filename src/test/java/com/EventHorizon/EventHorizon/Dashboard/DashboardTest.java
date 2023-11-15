@@ -1,8 +1,9 @@
 package com.EventHorizon.EventHorizon.Dashboard;
 
-import com.EventHorizon.EventHorizon.EventCreation.Event;
-import com.EventHorizon.EventHorizon.EventCreation.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.EventCreation.EventService.EventRepositoryService;
+
+import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
+import com.EventHorizon.EventHorizon.Entities.Event;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

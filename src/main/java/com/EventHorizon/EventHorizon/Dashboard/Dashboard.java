@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.Dashboard;
 
 
-import com.EventHorizon.EventHorizon.EventCreation.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.EventCreation.EventService.EventRepositoryService;
+import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
 import org.springframework.beans.factory.annotation.Autowired;

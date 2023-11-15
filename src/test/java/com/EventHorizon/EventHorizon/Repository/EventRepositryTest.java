@@ -1,10 +1,12 @@
 package com.EventHorizon.EventHorizon.Repository;
 
-import com.EventHorizon.EventHorizon.EventCreation.AdsOption;
-import com.EventHorizon.EventHorizon.EventCreation.Event;
-import com.EventHorizon.EventHorizon.EventCreation.Location;
+import com.EventHorizon.EventHorizon.Entities.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event;
+import com.EventHorizon.EventHorizon.Entities.Location;
+
 import com.EventHorizon.EventHorizon.Exceptions.EventAlreadyExisting;
 import org.hibernate.PersistentObjectException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
