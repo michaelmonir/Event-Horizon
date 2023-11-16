@@ -15,6 +15,17 @@ public class EventHorizonApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EventHorizonApplication.class, args);
 	}
+	@Bean
+	public CommandLineRunner commandLineRunner(EmailSenderService emailSenderService){
+		return runner->{
+			emailSenderService.sendMail(
+					"es-AhmedMo.Saleh2025@alexu.edu.eg",
+					"hi",
+					"hi"
+			);
+			System.out.println("hi");
+		};
+	}
 }
 
 
