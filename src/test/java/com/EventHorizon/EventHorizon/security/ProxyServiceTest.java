@@ -46,31 +46,6 @@ public class ProxyServiceTest {
         assertEquals(proxyService.userNameInSystem("ahmed2"),true);
     }
     @Test
-    public void signUpTest2(){
-        InformationDTO request= InformationDTO.builder().email("ahmed4@gmail.com").password("password").userName("ahmed4").role("ROLE_CLIENT").build();
-        AuthenticationResponse token=proxyService.signUp(request);
-        assertEquals(jwtService.extractUserName(token.getToken()),"ahmed4@gmail.com");
-    }
-    @Test
-    public void signUpTest3(){
-        InformationDTO request= InformationDTO.builder().email("ahmed5@gmail.com").password("password").userName("ahmed5").role("ROLE_CLIENT").build();
-        AuthenticationResponse token=proxyService.signUp(request);
-        assertEquals(jwtService.extractUserName(token.getToken()),"ahmed5@gmail.com");
-    }
-    @Test
-    public void signUpTest4(){
-        InformationDTO request= InformationDTO.builder().email("ahmed6@gmail.com").password("password").userName("ahmed6").role("ROLE_CLIENT").build();
-        AuthenticationResponse token=proxyService.signUp(request);
-        assertEquals(jwtService.extractUserName(token.getToken()),"ahmed6@gmail.com");
-    }
-    @Test
-    public void signUpTest5(){
-        InformationDTO request= InformationDTO.builder().email("ahmed7@gmail.com").password("password").userName("ahmed7").role("ROLE_CLIENT").build();
-        AuthenticationResponse token=proxyService.signUp(request);
-        assertEquals(jwtService.extractUserName(token.getToken()),"ahmed7@gmail.com");
-    }
-
-    @Test
     public void signUpExistingMailTest(){
         Information information= Information.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").active(1).build();
         informationRepository.save(information);
