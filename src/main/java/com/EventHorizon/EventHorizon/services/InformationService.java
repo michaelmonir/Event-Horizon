@@ -14,7 +14,7 @@ public class InformationService {
     @Autowired
     InformationRepository informationRepository;
     @Autowired
-    ClientRepository clientRepository;
+    ClientRepository clientRepository ;
     @Autowired
     ModeratorRepository moderatorRepository;
     @Autowired
@@ -48,11 +48,25 @@ public class InformationService {
 
     public void delete(int id) {
         try {
-            Optional<Information> information = informationRepository.findById(id);
-            if (information.isPresent()) {
+
+            Optional<Information> informationOp = informationRepository.findById(id);
+            if (informationOp.isPresent()) {
+                Information information=informationOp.get();
+                if (information.getRole().equals("ROLE_CLIENT")) {
+                    Client c1 = clientRepository.findByInformation(information);
+                    clientRepository.delete(c1);
+                } else if (information.getRole().equals("ROLE_MODERATOR")) {
+                    Moderator m1 = moderatorRepository.findByInformation(information);
+                    moderatorRepository.delete(m1);
+                } else if (information.getRole().equals("ROLE_ORGANIZER")) {
+                    Organizer o1 = organizerRepository.findByInformation(information);
+                    organizerRepository.delete(o1);
+                } else {
+                    Sponsor s1 = sponsorRepository.findByInformation(information);
+                    sponsorRepository.delete(s1);
+                }
                 informationRepository.deleteById(id);
             } else {
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

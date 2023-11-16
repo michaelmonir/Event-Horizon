@@ -44,6 +44,10 @@ public class Information implements UserDetails {
     private int active;
     @Column(name = "sign_in_with_email")
     private int signInWithEmail;
+    @Column(name = "verify_code")
+    private String verifyCode;
+    @Column(name = "enable")
+    private int enable;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));

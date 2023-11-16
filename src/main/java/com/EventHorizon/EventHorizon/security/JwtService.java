@@ -21,10 +21,15 @@ public class JwtService {
     public String extractUserName(String jwt) {
         return extractClaim(jwt,Claims::getSubject);
     }
+    public String extractVerifyCode(String jwt) {
+        final Claims claims=extractAllClaims(jwt);
+        return (String)claims.get("verifyCode");
+    }
     public <T> T extractClaim(String token, Function<Claims,T>claimsResolver){
         final Claims claims=extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()

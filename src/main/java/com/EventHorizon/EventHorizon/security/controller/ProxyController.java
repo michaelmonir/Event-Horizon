@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.security.controller;
 import com.EventHorizon.EventHorizon.DTO.InformationDTO;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
+import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class ProxyController {
 
     private final ProxyService proxyService;
-
     @PostMapping("/basicSignUp")
     public ResponseEntity<AuthenticationResponse> basicSignUp(@RequestBody InformationDTO registerRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
+    }
+    @GetMapping("/verifyMail")
+    public ResponseEntity<Boolean> verifyMail(@RequestBody VerifyRequest verifyRequest){
+        return new ResponseEntity<>(proxyService.verifyCode(verifyRequest),HttpStatus.OK);
     }
     @PostMapping("/basicSignIn")
     public ResponseEntity<AuthenticationResponse> basicSignIn(@RequestBody AuthenticationRequest authenticationRequest){
@@ -26,7 +30,6 @@ public class ProxyController {
     }
     @PostMapping("/signUpWithGmail")
     public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest){
-
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
     @PostMapping("/signInWithGmail")

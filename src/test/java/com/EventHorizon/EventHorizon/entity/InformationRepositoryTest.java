@@ -25,7 +25,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("7fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("7fares007@pay2").userName("7fares007")
                 .build();
         informationService.add(information, true);
@@ -38,7 +38,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("8fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("8fares007@pay2").userName("8fares007")
                 .build();
         informationService.add(information, false);
@@ -52,14 +52,14 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("9fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("9fares007@pay2").userName("9fares007")
                 .build();
         informationService.add(information, false);
         Information information2 = Information.builder().
                 firstName("moo").email("10fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("10fares007@pay2").userName("10fares007")
                 .build();
         informationService.update(information.getId(), information2);
@@ -72,7 +72,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("11fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("11fares007@pay2").userName("11fares007")
                 .build();
         informationService.add(information, false);
@@ -84,7 +84,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("12fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("12fares007@pay2").userName("12fares007")
                 .build();
         informationService.add(information, false);
@@ -97,7 +97,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("13fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("13fares007@pay2").userName("13fares007")
                 .build();
         informationService.add(information, false);
@@ -111,7 +111,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("14fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("14fares007@pay2").userName("14fares007")
                 .build();
         informationService.add(information, false);
@@ -126,7 +126,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("15fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("15fares007@pay2").userName("15fares007")
                 .build();
         informationService.add(information, false);
@@ -141,7 +141,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("16fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("16fares007@pay2").userName("16fares007")
                 .build();
         informationService.add(information, false);
@@ -155,7 +155,7 @@ class InformationRepositoryTest {
         Information information = Information.builder().
                 firstName("fares").email("17fares007@gmail.com")
                 .gender("male").lastName("mohamed")
-                .role("Client").password("pass1234")
+                .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("17fares007@pay2").userName("17fares007")
                 .build();
         informationService.add(information, false);
