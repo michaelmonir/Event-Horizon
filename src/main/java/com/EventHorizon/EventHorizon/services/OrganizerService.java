@@ -2,10 +2,9 @@ package com.EventHorizon.EventHorizon.services;
 
 import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.entity.Moderator;
 import com.EventHorizon.EventHorizon.entity.Organizer;
-import com.EventHorizon.EventHorizon.repository.ModeratorRepository;
 import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

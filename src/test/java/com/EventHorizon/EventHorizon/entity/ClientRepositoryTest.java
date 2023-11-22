@@ -1,19 +1,16 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.repository.ClientRepository;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
-import com.EventHorizon.EventHorizon.services.ClientService;
-import com.EventHorizon.EventHorizon.services.InformationService;
+import com.EventHorizon.EventHorizon.services.UserService;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ClientRepositoryTest {
     @Autowired
-    private ClientService clientService;
+    private UserService clientService;
     @Autowired
     private InformationService informationService;
 

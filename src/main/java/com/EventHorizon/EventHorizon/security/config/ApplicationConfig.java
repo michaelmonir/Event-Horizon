@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.security.config;
 
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
-import com.EventHorizon.EventHorizon.services.InformationService;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

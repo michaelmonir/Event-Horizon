@@ -1,16 +1,12 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.repository.ClientRepository;
-import com.EventHorizon.EventHorizon.repository.SponsorRepository;
-import com.EventHorizon.EventHorizon.services.InformationService;
-import com.EventHorizon.EventHorizon.services.OrganizerService;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
 import com.EventHorizon.EventHorizon.services.SponsorService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SponsorRepositoryTest {
     @Autowired

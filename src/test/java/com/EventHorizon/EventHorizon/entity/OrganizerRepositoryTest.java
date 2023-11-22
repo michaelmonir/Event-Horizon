@@ -1,15 +1,12 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
-import com.EventHorizon.EventHorizon.services.InformationService;
-import com.EventHorizon.EventHorizon.services.ModeratorService;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
 import com.EventHorizon.EventHorizon.services.OrganizerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class OrganizerRepositoryTest {
     @Autowired

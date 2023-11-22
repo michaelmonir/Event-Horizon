@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Controller;
 
 import com.EventHorizon.EventHorizon.DTO.ClientDTO;
 import com.EventHorizon.EventHorizon.entity.Client;
-import com.EventHorizon.EventHorizon.services.ClientService;
+import com.EventHorizon.EventHorizon.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ClientController {
 
-    private ClientService clientService;
+    private UserService clientService;
 
     @Autowired
-    public ClientController(ClientService clientService) {
+    public ClientController(UserService clientService) {
         this.clientService = clientService;
     }
 

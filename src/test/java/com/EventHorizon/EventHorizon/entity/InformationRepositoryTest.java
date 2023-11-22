@@ -1,12 +1,10 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
-import com.EventHorizon.EventHorizon.services.*;
-import jakarta.persistence.Entity;
+import com.EventHorizon.EventHorizon.services.InformationServiceModified.InformationService;
+import com.EventHorizon.EventHorizon.services.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -17,7 +15,7 @@ class InformationRepositoryTest {
     @Autowired
     private InformationService informationService;
     @Autowired
-    ClientService clientService;
+    UserService clientService;
 
 
     @Test
