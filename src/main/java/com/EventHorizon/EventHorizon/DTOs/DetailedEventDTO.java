@@ -1,13 +1,14 @@
 package com.EventHorizon.EventHorizon.DTOs;
 
 import com.EventHorizon.EventHorizon.Entities.Location;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-//@Builder
 @EqualsAndHashCode
-//@NoArgsConstructor
 public class DetailedEventDTO
 {
     public int id;

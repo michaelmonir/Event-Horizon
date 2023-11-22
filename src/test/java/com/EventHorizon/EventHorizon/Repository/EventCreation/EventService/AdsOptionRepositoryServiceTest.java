@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.Repository.EventCreation.EventService;
 
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
-import com.EventHorizon.EventHorizon.Exceptions.AdsAlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.AdsNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
+import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.AdsOptionRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class AdsOptionRepositoryServiceTest {
         adsOption.setId(5);
         adsOption.setName("Sample Ads Option");
 
-        Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
+        Assertions.assertThrows(AdsOptionAlreadyExistException.class, () -> {
             adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
         });
     }
@@ -40,7 +40,7 @@ class AdsOptionRepositoryServiceTest {
 
     @Test
     public void editAdsOptionGettingErrorAdsNotFoundException() {
-        Assertions.assertThrows(AdsNotFoundException.class, () -> {
+        Assertions.assertThrows(AdsOptionNotFoundException.class, () -> {
             adsOptionRepositoryService.updateAdsOption(0, new AdsOption());
         });
     }
@@ -53,7 +53,7 @@ class AdsOptionRepositoryServiceTest {
                 .build();
         adsOptionRepositoryService.saveAdsOptionWhenCreating(adsOption);
 
-        Assertions.assertThrows(AdsAlreadyFoundException.class, () -> {
+        Assertions.assertThrows(AdsOptionAlreadyExistException.class, () -> {
             adsOptionRepositoryService.updateAdsOption(34, adsOption);
         });
     }

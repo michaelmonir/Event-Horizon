@@ -1,5 +1,6 @@
-package com.EventHorizon.EventHorizon.Exceptions;
+package com.EventHorizon.EventHorizon.Exceptions.EventExceptions;
 
+import com.EventHorizon.EventHorizon.Exceptions.BaseException;
 import org.springframework.http.HttpStatus;
 
 public class WrongEventIdException extends BaseException
