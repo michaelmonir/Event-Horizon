@@ -18,19 +18,13 @@ import lombok.NoArgsConstructor;
 
 public class InformationDTO {
     private int id;
-
     private String userName;
-
     private String firstName;
-
     private String lastName;
     private String password;
     private String email;
-
     private String gender;
-
     private String payPalAccount;
-
     private String role;
     int signInWithEmail;
 
