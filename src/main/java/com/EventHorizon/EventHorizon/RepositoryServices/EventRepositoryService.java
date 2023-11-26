@@ -1,13 +1,15 @@
 package com.EventHorizon.EventHorizon.RepositoryServices;
 
-import com.EventHorizon.EventHorizon.DTOs.DetailedEventDTO;
+import com.EventHorizon.EventHorizon.DTOs.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.Event;
-import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
+import com.EventHorizon.EventHorizon.DTOs.ViewEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.AdsOptionDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class EventRepositoryService {
     private EventRepositry eventRepositry;
     @Autowired
     private AdsOptionRepositoryService adsOptionRepositoryService;
+    @Autowired
+    private AdsOptionDtoMapper adsOptionDtoMapper;
 
     public Event getEventAndHandleNotFound(int id) {
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
@@ -57,13 +61,13 @@ public class EventRepositoryService {
         eventRepositry.deleteById(id);
     }
 
-    public ViewEventDTO getViewEventDTO(int id) {
+    public ViewEventDto getViewEventDTO(int id) {
         Optional<Event> optionalOldEvent = eventRepositry.findById(id);
 
         if (!optionalOldEvent.isPresent())
             throw new EventNotFoundException();
 
-        return new ViewEventDTO(optionalOldEvent.get());
+        return new ViewEventDto(optionalOldEvent.get());
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {
@@ -84,9 +88,9 @@ public class EventRepositoryService {
         return eventHeaderDtos;
     }
 
-    public DetailedEventDTO getDTOfromDetailedEvent(Event event)
+    public DetailedEventDto getDTOfromDetailedEvent(Event event)
     {
-        DetailedEventDTO dto = new DetailedEventDTO();
+        DetailedEventDto dto = new DetailedEventDto();
         dto.id = event.getId();
         dto.name = event.getName();
         dto.description = event.getDescription();
@@ -94,11 +98,11 @@ public class EventRepositoryService {
         dto.eventDate = event.getEventDate();
 
         dto.eventLocation = event.getEventLocation();
-        dto.eventAds = this.adsOptionRepositoryService.getDTOFromAdsOption(event.getEventAds());
+        dto.eventAds = new AdsOptionDto(event.getEventAds());
         return dto;
     }
 
-    public Event getEventFromDetailedEventDTO(DetailedEventDTO dto)
+    public Event getEventFromDetailedEventDTO(DetailedEventDto dto)
     {
         Event event = Event.builder()
                 .id(dto.id)
@@ -106,7 +110,7 @@ public class EventRepositoryService {
                 .description(dto.description)
                 .eventCategory(dto.eventCategory)
                 .eventDate(dto.eventDate)
-                .eventAds(this.adsOptionRepositoryService.getAdsOptionFromDTO(dto.eventAds))
+                .eventAds(this.adsOptionDtoMapper.getAdsOptionFromDTO(dto.eventAds))
                 .eventLocation(dto.eventLocation)
                 .build();
         return event;

@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.EventCreation.EventService;
 
-import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
+import com.EventHorizon.EventHorizon.DTOs.ViewEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event;
@@ -184,7 +184,7 @@ class EventRepositoryServiceTest {
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
 
-        ViewEventDTO eventDetailsDto = Assertions.assertDoesNotThrow(() ->
+        ViewEventDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
                 eventRepositoryService.getViewEventDTO(event.getId())
         );
 

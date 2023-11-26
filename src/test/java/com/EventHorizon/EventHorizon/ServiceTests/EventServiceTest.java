@@ -1,9 +1,8 @@
 package com.EventHorizon.EventHorizon.ServiceTests;
 
-import com.EventHorizon.EventHorizon.DTOs.AdsOptionDTO;
-import com.EventHorizon.EventHorizon.DTOs.DetailedEventDTO;
-import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
+import com.EventHorizon.EventHorizon.DTOs.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Entities.Location;
@@ -16,8 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 @SpringBootTest
 public class EventServiceTest
 {
@@ -27,25 +24,25 @@ public class EventServiceTest
     private EventService eventService;
 
     private Event customEvent;
-    private ViewEventDTO customViewEventDTO;
-    private DetailedEventDTO customDetailedEventDTO;
+    private ViewEventDto customViewEventDto;
+    private DetailedEventDto customDetailedEventDto;
 
     @Test
     public void gettingEventForUser() {
         this.initializeMocksAndCustomDTOs();
 
-        ViewEventDTO viewEventDTO = this.eventService.getEventForUser(1);
-        ViewEventDTO expectedViewEventDTO = this.customViewEventDTO;
+        ViewEventDto viewEventDTO = this.eventService.getEventForUser(1);
+        ViewEventDto expectedViewEventDto = this.customViewEventDto;
 
-        Assertions.assertTrue(viewEventDTO.equals(expectedViewEventDTO));
+        Assertions.assertTrue(viewEventDTO.equals(expectedViewEventDto));
     }
 
     @Test
     public void gettingOrganizerEvent() {
         this.initializeMocksAndCustomDTOs();
         this.eventService.getEventForUser(1);
-        DetailedEventDTO detailedEventDTO = this.eventService.getEventForOrganizer(1, 1);
-        DetailedEventDTO expectedViewEventDTO = this.customDetailedEventDTO;
+        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(1, 1);
+        DetailedEventDto expectedViewEventDTO = this.customDetailedEventDto;
 
         Assertions.assertTrue(expectedViewEventDTO.equals(detailedEventDTO));
     }
@@ -54,8 +51,8 @@ public class EventServiceTest
     public void createEvent() {
         this.initializeMocksAndCustomDTOs();
 
-        DetailedEventDTO detailedEventDTO = this.customDetailedEventDTO;
-        DetailedEventDTO resultEventDTO = this.eventService.createEvent(1, detailedEventDTO);
+        DetailedEventDto detailedEventDTO = this.customDetailedEventDto;
+        DetailedEventDto resultEventDTO = this.eventService.createEvent(1, detailedEventDTO);
 
         Assertions.assertTrue(detailedEventDTO.equals(resultEventDTO));
     }
@@ -64,8 +61,8 @@ public class EventServiceTest
     public void updateEvent() {
         this.initializeMocksAndCustomDTOs();
 
-        DetailedEventDTO detailedEventDTO = this.customDetailedEventDTO;
-        DetailedEventDTO resultEventDTO = this.eventService.updateEvent(1, 1, detailedEventDTO);
+        DetailedEventDto detailedEventDTO = this.customDetailedEventDto;
+        DetailedEventDto resultEventDTO = this.eventService.updateEvent(1, 1, detailedEventDTO);
 
         Assertions.assertTrue(detailedEventDTO.equals(resultEventDTO));
     }
@@ -92,10 +89,10 @@ public class EventServiceTest
         Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(int.class), Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
         Mockito.when(this.eventRepositoryService.getDTOfromDetailedEvent(Mockito.any(Event.class)))
-                .thenReturn(this.customDetailedEventDTO);
+                .thenReturn(this.customDetailedEventDto);
         Mockito.when(this.eventRepositoryService.getDTOfromDetailedEvent(Mockito.any(Event.class)))
-                .thenReturn(this.customDetailedEventDTO);
-        Mockito.when(this.eventRepositoryService.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDTO.class)))
+                .thenReturn(this.customDetailedEventDto);
+        Mockito.when(this.eventRepositoryService.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDto.class)))
                 .thenReturn(this.customEvent);
     }
     private void initializeCustomDTOs() {
@@ -112,16 +109,16 @@ public class EventServiceTest
                 .build();
     }
     private void initializeViewEventDTO(){
-        this.customViewEventDTO = new ViewEventDTO();
-        this.customViewEventDTO.setId(1);
-        this.customViewEventDTO.setName("My Event");
-        this.customViewEventDTO.setEventLocation(new Location());
+        this.customViewEventDto = ViewEventDto.builder()
+                .id(1)
+                .name("My Event").build();
+        this.customViewEventDto.setEventLocation(new Location());
     }
     private void initializeDetailedEventDTO() {
-        this.customDetailedEventDTO = new DetailedEventDTO();
-        this.customDetailedEventDTO.id = 1;
-        this.customDetailedEventDTO.name = "My Event";
-        this.customDetailedEventDTO.eventLocation = new Location();
-        this.customDetailedEventDTO.eventAds = new AdsOptionDTO();
+        this.customDetailedEventDto = DetailedEventDto.builder()
+                .id(1)
+                .name("My Event")
+                .eventLocation(new Location())
+                .eventAds(new AdsOptionDto()).build();
     }
 }

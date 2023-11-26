@@ -2,12 +2,18 @@ package com.EventHorizon.EventHorizon.DTOs;
 
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Entities.Location;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class ViewEventDTO {
+public class ViewEventDto {
     private int id;
     private String name;
     private String description;
@@ -15,12 +21,8 @@ public class ViewEventDTO {
     private Date eventDate;
     private Location eventLocation;
 
-    public ViewEventDTO()
-    {
 
-    }
-
-    public ViewEventDTO(Event event) {
+    public ViewEventDto(Event event) {
         this.id = event.getId();
         this.name = event.getName();
         this.eventCategory = event.getEventCategory();

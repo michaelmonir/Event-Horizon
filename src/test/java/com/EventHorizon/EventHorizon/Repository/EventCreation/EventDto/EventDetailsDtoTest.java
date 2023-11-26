@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.EventCreation.EventDto;
 
-import com.EventHorizon.EventHorizon.DTOs.ViewEventDTO;
+import com.EventHorizon.EventHorizon.DTOs.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Entities.Location;
@@ -31,7 +31,7 @@ class EventDetailsDtoTest {
                 .eventDate(eventDate)
                 .build();
 
-        ViewEventDTO eventDetailsDto = new ViewEventDTO(event);
+        ViewEventDto eventDetailsDto = new ViewEventDto(event);
 
         // Verify that the values are mapped correctly
         Assertions.assertEquals(event.getName(), eventDetailsDto.getName());

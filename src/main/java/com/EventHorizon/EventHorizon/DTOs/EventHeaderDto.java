@@ -2,9 +2,16 @@ package com.EventHorizon.EventHorizon.DTOs;
 
 import com.EventHorizon.EventHorizon.Entities.Event;
 import com.EventHorizon.EventHorizon.Entities.Location;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class EventHeaderDto {
     private String name;

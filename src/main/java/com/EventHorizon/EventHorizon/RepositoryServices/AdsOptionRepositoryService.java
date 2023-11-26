@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.RepositoryServices;
 
-import com.EventHorizon.EventHorizon.DTOs.AdsOptionDTO;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
@@ -47,19 +46,5 @@ public class AdsOptionRepositoryService {
         return adsOption.get();
     }
 
-    public AdsOption getAdsOptionFromDTO(AdsOptionDTO adsOptionDTO)
-    {
-        Optional<AdsOption> optionalAdsOption = this.adsOptionRepositry.findById(adsOptionDTO.id);
-        if (!optionalAdsOption.isPresent())
-            throw new AdsOptionNotFoundException();
-        return optionalAdsOption.get();
-    }
 
-    public AdsOptionDTO getDTOFromAdsOption(AdsOption adsOption)
-    {
-        AdsOptionDTO adsOptionDTO = new AdsOptionDTO();
-        adsOptionDTO.id = adsOption.getId();
-        adsOptionDTO.name = adsOption.getName();
-        return adsOptionDTO;
-    }
 }

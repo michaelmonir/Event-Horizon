@@ -1,20 +1,25 @@
 package com.EventHorizon.EventHorizon.DTOs;
 
+import com.EventHorizon.EventHorizon.Entities.AdsOption;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @EqualsAndHashCode
-public class AdsOptionDTO
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class AdsOptionDto
 {
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
 
     public int id;
     public String name;
-
-    public AdsOptionDTO()
-    {
+    public AdsOptionDto(AdsOption adsOption){
+        this.id=adsOption.getId();
+        this.name=adsOption.getName();
     }
+
 }
