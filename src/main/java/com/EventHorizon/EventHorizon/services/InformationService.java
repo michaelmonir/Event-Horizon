@@ -3,6 +3,8 @@ package com.EventHorizon.EventHorizon.services;
 import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.entity.*;
 import com.EventHorizon.EventHorizon.repository.*;
+import com.EventHorizon.EventHorizon.services.InformationServiceComponent.InformationServiceFactory;
+import com.EventHorizon.EventHorizon.services.InformationServiceComponent.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,51 +16,25 @@ public class InformationService {
     @Autowired
     InformationRepository informationRepository;
     @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    ModeratorRepository moderatorRepository;
-    @Autowired
-    OrganizerRepository organizerRepository;
-    @Autowired
-    SponsorRepository sponsorRepository;
+    InformationServiceFactory informationServiceFactory;
 
     public void add(Information information) {
-        if (information.getRole().equals("ROLE_CLIENT")) {
-            Client c1 = Client.builder().information(information).build();
-            clientRepository.save(c1);
-        } else if (information.getRole().equals("ROLE_MODERATOR")) {
-            Moderator m1 = Moderator.builder().information(information).build();
-            moderatorRepository.save(m1);
-        } else if (information.getRole().equals("ROLE_ORGANIZER")) {
-            Organizer o1 = Organizer.builder().information(information).build();
-            organizerRepository.save(o1);
-        } else {
-            Sponsor s1 = Sponsor.builder().information(information).build();
-            sponsorRepository.save(s1);
-        }
+        UserInformationService myService =
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        myService.add(information);
     }
 
     public void delete(int id) {
         Optional<Information> informationOp = informationRepository.findById(id);
         if (informationOp.isPresent()) {
-            Information information = informationOp.get();
-            if (information.getRole().equals("ROLE_CLIENT")) {
-                Client c1 = clientRepository.findByInformation(information);
-                clientRepository.delete(c1);
-            } else if (information.getRole().equals("ROLE_MODERATOR")) {
-                Moderator m1 = moderatorRepository.findByInformation(information);
-                moderatorRepository.delete(m1);
-            } else if (information.getRole().equals("ROLE_ORGANIZER")) {
-                Organizer o1 = organizerRepository.findByInformation(information);
-                organizerRepository.delete(o1);
-            } else {
-                Sponsor s1 = sponsorRepository.findByInformation(information);
-                sponsorRepository.delete(s1);
-            }
+            UserInformationService myService =
+                    informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
+            myService.delete(informationOp.get());
         } else {
             throw new InformationNotFoundException();
         }
     }
+
 
     public void update(int id, Information newOne) {
             Optional<Information> old = informationRepository.findById(id);
