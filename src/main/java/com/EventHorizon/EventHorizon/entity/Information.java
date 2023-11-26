@@ -1,10 +1,7 @@
 package com.EventHorizon.EventHorizon.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "information_tbl")
+@EqualsAndHashCode
 public class Information implements UserDetails {
     @Id
     @Column(name = "id", nullable = false)
@@ -36,7 +34,7 @@ public class Information implements UserDetails {
     private String email;
     @Column(name = "gender")
     private String gender;
-    @Column(name = "pay_pal_Account", unique = true)
+    @Column(name = "pay_pal_Account")
     private String payPalAccount;
     @Column(name = "role")
     private String role;

@@ -14,34 +14,24 @@ class SponsorRepositoryTest {
     private SponsorService sponsorService;
     @Autowired
     private InformationService informationService;
-
+    @Autowired
+    InformationCreator informationCreator;
     @Test
     public void add() {
-        Information information = Information.builder().
-                firstName("fares").email("30fares007@gmail.com")
-                .gender("male").lastName("mohamed")
-                .role("sponsor").password("pass1234")
-                .payPalAccount("30fares007@pay2").userName("30fares007")
-                .build();
+        Information information = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorService.add(sponsor);
 
         Sponsor s1 = sponsorService.getByID(sponsor.getId());
         Information i1 = informationService.getByID(s1.getInformation().getId());
 
-        Assertions.assertEquals(information.getEmail(), i1.getEmail());
-        Assertions.assertEquals(information.getFirstName(), i1.getFirstName());
-        Assertions.assertEquals(information.getLastName(), i1.getLastName());
+        Assertions.assertTrue(information.equals(i1));
+
     }
 
     @Test
     public void delete() {
-        Information information = Information.builder().
-                firstName("fares").email("31fares007@gmail.com")
-                .gender("male").lastName("mohamed")
-                .role("sponsor").password("pass1234")
-                .payPalAccount("31fares007@pay2").userName("31fares007")
-                .build();
+        Information information = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorService.add(sponsor);
 
@@ -56,39 +46,21 @@ class SponsorRepositoryTest {
 
     @Test
     public void update() {
-        Information information = Information.builder().
-                firstName("fares").email("32fares007@gmail.com")
-                .gender("male").lastName("mohamed")
-                .role("sponsor").password("pass1234")
-                .payPalAccount("32fares007@pay2").userName("32fares007")
-                .build();
+        Information information = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorService.add(sponsor);
-        Information information2 = Information.builder().
-                firstName("faris").email("33faris007@gmail.com")
-                .gender("male").lastName("mohamed2")
-                .role("sponsor").password("pass1234")
-                .payPalAccount("33faris007@pay2").userName("33faris007")
-                .build();
+        Information information2 = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor2 = Sponsor.builder().information(information2).build();
         sponsorService.update(sponsor.getId(), sponsor2);
         Sponsor s1 = sponsorService.getByID(sponsor.getId());
         Information i1 = informationService.getByID(s1.getInformation().getId());
 
-
-        Assertions.assertEquals(information2.getEmail(), i1.getEmail());
-        Assertions.assertEquals(information2.getFirstName(), i1.getFirstName());
-        Assertions.assertEquals("mohamed2", i1.getLastName());
+        Assertions.assertTrue(information2.equals(i1));
     }
 
     @Test
     public void getByID() {
-        Information information = Information.builder().
-                firstName("fares").email("34fares007@gmail.com")
-                .gender("male").lastName("mohamed")
-                .role("sponsor").password("pass1234")
-                .payPalAccount("34fares007@pay2").userName("34fares007")
-                .build();
+        Information information = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorService.add(sponsor);
 
@@ -96,19 +68,14 @@ class SponsorRepositoryTest {
 
 
         Information i1 = informationService.getByID(s1.getInformation().getId());
-        Assertions.assertEquals("34fares007@gmail.com", i1.getEmail());
-        Assertions.assertEquals("fares", i1.getFirstName());
-        Assertions.assertEquals("mohamed", i1.getLastName());
+
+        Assertions.assertTrue(information.equals(i1));
+
     }
 
     @Test
     public void getByInformation() {
-        Information information = Information.builder().
-                firstName("fares").email("35fares007@gmail.com")
-                .gender("male").lastName("mohamed")
-                .role("client").password("pass1234")
-                .payPalAccount("35fares007@pay2").userName("35fares007")
-                .build();
+        Information information = informationCreator.getInformation("ROLE_SPONSOR");
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorService.add(sponsor);
 
