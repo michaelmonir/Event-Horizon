@@ -1,10 +1,9 @@
 package com.EventHorizon.EventHorizon.security;
 
 import com.EventHorizon.EventHorizon.DTO.InformationDTO;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.security.JwtService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
@@ -12,7 +11,6 @@ import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
 import com.EventHorizon.EventHorizon.services.InformationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +35,7 @@ public class ProxyService {
         try {
             Information information = informationService.getByEmail(mail);
             return true;
-        } catch (NotFoundException e) {
+        } catch (InformationNotFoundException e) {
             return false;
         }
 
@@ -47,7 +45,7 @@ public class ProxyService {
             Information information = informationService.getByUserName(userName);
             return true;
         }
-        catch (NotFoundException e) {
+        catch (InformationNotFoundException e) {
             return false;
         }
     }
@@ -57,7 +55,7 @@ public class ProxyService {
             if (information.getEnable() == 0) {
                 informationService.delete(information.getId());
             }
-        } catch (NotFoundException e) {
+        } catch (InformationNotFoundException e) {
 
         }
     }

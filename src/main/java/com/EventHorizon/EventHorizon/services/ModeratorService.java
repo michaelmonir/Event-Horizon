@@ -1,11 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
-import com.EventHorizon.EventHorizon.entity.Client;
+import com.EventHorizon.EventHorizon.Exceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Moderator;
-import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import com.EventHorizon.EventHorizon.repository.ModeratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +25,7 @@ public class ModeratorService {
         if (moderator.isPresent()) {
             moderatorRepository.deleteById(id);
         } else {
-            throw new NotFoundException();
+            throw new ModeratorNotFoundException();
         }
     }
 
@@ -41,7 +38,7 @@ public class ModeratorService {
             newOne.setId(oldOne.getId());
             moderatorRepository.save(newOne);
         } else {
-            throw new NotFoundException();
+            throw new ModeratorNotFoundException();
         }
     }
 
@@ -50,7 +47,7 @@ public class ModeratorService {
         if (moderator.isPresent()) {
             return moderator.get();
         } else {
-            throw new NotFoundException();
+            throw new ModeratorNotFoundException();
         }
     }
 
@@ -59,7 +56,7 @@ public class ModeratorService {
         if (moderator.isPresent()) {
             return moderator.get();
         } else {
-            throw new NotFoundException();
+            throw new ModeratorNotFoundException();
         }
     }
 }

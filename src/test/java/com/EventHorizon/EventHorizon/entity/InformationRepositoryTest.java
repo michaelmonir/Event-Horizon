@@ -1,13 +1,10 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
+import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.services.*;
-import jakarta.persistence.Entity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -45,7 +42,7 @@ class InformationRepositoryTest {
         informationService.add(information);
         informationService.delete(information.getId());
         Assertions.assertThrows(
-                NotFoundException.class, () -> {
+                InformationNotFoundException.class, () -> {
                     informationService.getByID(information.getId());
                 }
         );

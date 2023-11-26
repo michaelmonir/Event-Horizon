@@ -1,11 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.entity.Organizer;
 import com.EventHorizon.EventHorizon.entity.Sponsor;
-import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import com.EventHorizon.EventHorizon.repository.SponsorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +26,7 @@ public class SponsorService {
         if (sponsor.isPresent()) {
             sponsorRepository.deleteById(id);
         } else {
-            throw new NotFoundException();
+            throw new SponsorNotFoundException();
         }
     }
 
@@ -42,7 +39,7 @@ public class SponsorService {
             newOne.setId(oldOne.getId());
             sponsorRepository.save(newOne);
         } else {
-            throw new NotFoundException();
+            throw new SponsorNotFoundException();
         }
     }
 
@@ -51,7 +48,7 @@ public class SponsorService {
         if (sponsor.isPresent()) {
             return sponsor.get();
         } else {
-            throw new NotFoundException();
+            throw new SponsorNotFoundException();
         }
     }
 
@@ -61,7 +58,7 @@ public class SponsorService {
         if (sponsor.isPresent()) {
             return sponsor.get();
         } else {
-            throw new NotFoundException();
+            throw new SponsorNotFoundException();
         }
     }
 }

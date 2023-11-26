@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.entity.*;
 import com.EventHorizon.EventHorizon.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class InformationService {
                 sponsorRepository.delete(s1);
             }
         } else {
-            throw new AlreadyFoundException();
+            throw new InformationNotFoundException();
         }
     }
 
@@ -68,7 +67,7 @@ public class InformationService {
                 newOne.setId(oldOne.getId());
                 informationRepository.save(newOne);
             } else {
-                throw new NotFoundException();
+                throw new InformationNotFoundException();
             }
     }
 
@@ -77,7 +76,7 @@ public class InformationService {
         if (information.isPresent()) {
             return information.get();
         } else {
-            throw new NotFoundException();
+            throw new InformationNotFoundException();
         }
     }
 
@@ -86,7 +85,7 @@ public class InformationService {
         if (information.isPresent()) {
             return information.get();
         } else {
-            throw new NotFoundException();
+            throw new InformationNotFoundException();
         }
     }
 
@@ -95,7 +94,7 @@ public class InformationService {
         if (information.isPresent()) {
             return information.get();
         } else {
-            throw new NotFoundException();
+            throw new InformationNotFoundException();
         }
     }
 

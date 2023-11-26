@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.entity.Client;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
@@ -28,7 +27,7 @@ public class ClientService {
         if (client.isPresent()) {
             clientRepository.deleteById(id);
         } else {
-            throw new NotFoundException();
+            throw new ClientNotFoundException();
         }
     }
 
@@ -40,7 +39,7 @@ public class ClientService {
             newOne.setId(oldOne.getId());
             clientRepository.save(newOne);
         } else {
-            throw new NotFoundException();
+            throw new ClientNotFoundException();
         }
     }
 
@@ -49,7 +48,7 @@ public class ClientService {
         if (client.isPresent()) {
             return client.get();
         } else {
-            throw new NotFoundException();
+            throw new ClientNotFoundException();
         }
     }
 
@@ -58,7 +57,7 @@ public class ClientService {
         if (client.isPresent()) {
             return client.get();
         } else {
-            throw new NotFoundException();
+            throw new ClientNotFoundException();
         }
     }
 }

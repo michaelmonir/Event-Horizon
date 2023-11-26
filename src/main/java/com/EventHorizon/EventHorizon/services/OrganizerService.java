@@ -1,11 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.OrganizerNotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.entity.Moderator;
 import com.EventHorizon.EventHorizon.entity.Organizer;
-import com.EventHorizon.EventHorizon.repository.ModeratorRepository;
 import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +27,7 @@ public class OrganizerService {
             if (organizer.isPresent()) {
                 organizerRepository.deleteById(id);
             } else {
-                throw new NotFoundException();
+                throw new OrganizerNotFoundException();
             }
     }
 
@@ -43,7 +40,7 @@ public class OrganizerService {
             newOne.setId(oldOne.getId());
             organizerRepository.save(newOne);
         } else {
-            throw new NotFoundException();
+            throw new OrganizerNotFoundException();
         }
     }
 
@@ -52,7 +49,7 @@ public class OrganizerService {
         if (organizer.isPresent()) {
             return organizer.get();
         } else {
-            throw new NotFoundException();
+            throw new OrganizerNotFoundException();
         }
     }
 
@@ -61,7 +58,7 @@ public class OrganizerService {
         if (organizer.isPresent()) {
             return organizer.get();
         } else {
-            throw new NotFoundException();
+            throw new OrganizerNotFoundException();
         }
     }
 }

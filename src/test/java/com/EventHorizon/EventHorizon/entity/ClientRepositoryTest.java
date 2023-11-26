@@ -1,11 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.DTO.InformationDTO;
-import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
-import com.EventHorizon.EventHorizon.repository.ClientRepository;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
-import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
+import com.EventHorizon.EventHorizon.Exceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.services.ClientService;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ClientRepositoryTest {
     @Autowired
@@ -52,7 +46,7 @@ class ClientRepositoryTest {
         clientService.add(client);
         clientService.delete(client.getId());
         Assertions.assertThrows(
-                NotFoundException.class, () -> {
+                ClientNotFoundException.class, () -> {
                     clientService.getByID(client.getId());
                 }
         );
