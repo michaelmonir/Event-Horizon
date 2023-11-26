@@ -40,6 +40,7 @@ public class ProxyService {
         } catch (NotFoundException e) {
             return false;
         }
+
     }
     public boolean userNameInSystem(String userName){
         try {
@@ -101,7 +102,7 @@ public class ProxyService {
 
         information.setVerifyCode(createCode());
 
-        informationService.add(information,true);
+        informationService.add(information);
         String jwt=generateToken(information);
         System.out.println(jwtService.extractVerifyCode(jwt));
         if(registerRequest.getSignInWithEmail()==1)

@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
 import com.EventHorizon.EventHorizon.services.*;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("7fares007@pay2").userName("7fares007")
                 .build();
-        informationService.add(information, true);
+        informationService.add(information);
         Client c1 = clientService.getByInformation(information);
         Assertions.assertEquals(c1.getInformation(), information);
     }
@@ -41,10 +42,13 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("8fares007@pay2").userName("8fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         informationService.delete(information.getId());
-        Information i1 = informationService.getByID(information.getId());
-
+        Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    informationService.getByID(information.getId());
+                }
+        );
     }
 
     @Test
@@ -55,7 +59,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("9fares007@pay2").userName("9fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         Information information2 = Information.builder().
                 firstName("moo").email("10fares007@gmail.com")
                 .gender("male").lastName("mohamed")
@@ -75,7 +79,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("11fares007@pay2").userName("11fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         Information i1 = informationService.getByID(information.getId());
         Assertions.assertEquals(i1, information);
     }
@@ -87,7 +91,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("12fares007@pay2").userName("12fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         Information i1 = informationService.getByEmail(information.getEmail());
         Assertions.assertEquals(i1, information);
     }
@@ -100,7 +104,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("13fares007@pay2").userName("13fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         Information i1 = informationService.getByUserName(information.userName);
         Assertions.assertEquals(i1, information);
     }
@@ -114,7 +118,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("14fares007@pay2").userName("14fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         List<Information> i =
                 informationService.getByFirstName(information.getFirstName());
         Assertions.assertEquals(i.get(0).getFirstName(), information.getFirstName());
@@ -129,7 +133,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("15fares007@pay2").userName("15fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         List<Information> i =
                 informationService.getByLastName(information.getLastName());
         Assertions.assertEquals(i.get(0).getLastName(), information.getLastName());
@@ -144,7 +148,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("16fares007@pay2").userName("16fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         List<Information> i =
                 informationService.getByGender(information.getGender());
         Assertions.assertEquals(i.get(0).getGender(), information.getGender());
@@ -158,7 +162,7 @@ class InformationRepositoryTest {
                 .role("ROLE_CLIENT").password("pass1234")
                 .payPalAccount("17fares007@pay2").userName("17fares007")
                 .build();
-        informationService.add(information, false);
+        informationService.add(information);
         List<Information> i =
                 informationService.getByRole(information.getRole());
         Assertions.assertEquals(i.get(0).getRole(), information.getRole());

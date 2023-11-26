@@ -21,11 +21,7 @@ public class SponsorService {
     InformationService informationService;
 
     public void add(Sponsor sponsor) {
-        try {
-            sponsorRepository.save(sponsor);
-        } catch (Exception e) {
-            throw new AlreadyFoundException();
-        }
+        sponsorRepository.save(sponsor);
     }
 
     public void delete(int id) {

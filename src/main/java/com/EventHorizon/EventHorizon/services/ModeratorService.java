@@ -20,11 +20,7 @@ public class ModeratorService {
     InformationService informationService;
 
     public void add(Moderator moderator) {
-        try {
             moderatorRepository.save(moderator);
-        } catch (Exception e) {
-            throw new AlreadyFoundException();
-        }
     }
 
     public void delete(int id) {

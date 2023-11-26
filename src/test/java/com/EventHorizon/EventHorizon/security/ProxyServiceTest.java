@@ -46,7 +46,7 @@ public class ProxyServiceTest {
     }
     @Test
     public void signUpExistingMailTest(){
-        Information information= Information.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").active(1).build();
+        Information information= Information.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").active(1).enable(1).build();
         informationRepository.save(information);
         Assertions.assertThrows(
                 ExistingMail.class, () -> {

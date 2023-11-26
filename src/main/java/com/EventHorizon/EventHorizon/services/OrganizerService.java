@@ -22,11 +22,7 @@ public class OrganizerService {
     InformationService informationService;
 
     public void add(Organizer organizer) {
-        try {
-            organizerRepository.save(organizer);
-        } catch (Exception e) {
-            throw new AlreadyFoundException();
-        }
+        organizerRepository.save(organizer);
     }
 
     public void delete(int id) {

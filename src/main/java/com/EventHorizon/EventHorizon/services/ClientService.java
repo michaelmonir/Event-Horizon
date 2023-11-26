@@ -20,11 +20,7 @@ public class ClientService {
     InformationService informationService;
 
     public void add(Client client) {
-        try {
-            clientRepository.save(client);
-        } catch (Exception e) {
-            throw new AlreadyFoundException();
-        }
+        clientRepository.save(client);
     }
 
     public void delete(int id) {
