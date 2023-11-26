@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.security;
 
 import com.EventHorizon.EventHorizon.DTO.InformationDTO;
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.security.JwtService;
@@ -32,18 +33,31 @@ public class ProxyService {
     private final AuthenticationManager authenticationManager;
     private final EmailSenderService emailSenderService;
 
-    public boolean mailInSystem(String mail){
-        Information information=informationService.getByEmail(mail);
-        return information!=null;
+    public boolean mailInSystem(String mail) {
+        try {
+            Information information = informationService.getByEmail(mail);
+            return true;
+        } catch (NotFoundException e) {
+            return false;
+        }
     }
     public boolean userNameInSystem(String userName){
-        Information information=informationService.getByUserName(userName);
-        return information!=null ;
+        try {
+            Information information = informationService.getByUserName(userName);
+            return true;
+        }
+        catch (NotFoundException e) {
+            return false;
+        }
     }
-    public void removeIfNotEnabled(String mail){
-        Information information=informationService.getByEmail(mail);
-        if(information!=null && information.getEnable()==0){
-            informationService.delete(information.getId());
+    public void removeIfNotEnabled(String mail) {
+        try {
+            Information information = informationService.getByEmail(mail);
+            if (information.getEnable() == 0) {
+                informationService.delete(information.getId());
+            }
+        } catch (NotFoundException e) {
+
         }
     }
     public void handleException(String mail,String userName){
