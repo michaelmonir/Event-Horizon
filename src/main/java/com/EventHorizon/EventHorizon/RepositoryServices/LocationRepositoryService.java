@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.Event;
-import com.EventHorizon.EventHorizon.Exceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;

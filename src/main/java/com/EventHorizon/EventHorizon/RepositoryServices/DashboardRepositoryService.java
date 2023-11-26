@@ -1,10 +1,10 @@
-package com.EventHorizon.EventHorizon.Dashboard;
+package com.EventHorizon.EventHorizon.RepositoryServices;
 
 
 import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
-import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
-import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class Dashboard {
+public class DashboardRepositoryService {
     private List<EventHeaderDto> eventHeaderDtos;
     @Autowired
     private EventRepositoryService eventRepositoryService;

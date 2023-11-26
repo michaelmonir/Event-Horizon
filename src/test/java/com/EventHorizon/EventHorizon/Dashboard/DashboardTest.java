@@ -3,9 +3,10 @@ package com.EventHorizon.EventHorizon.Dashboard;
 
 import com.EventHorizon.EventHorizon.DTOs.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.Event;
+import com.EventHorizon.EventHorizon.RepositoryServices.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
-import com.EventHorizon.EventHorizon.Exceptions.InvalidPageIndex;
-import com.EventHorizon.EventHorizon.Exceptions.InvalidPageSize;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSize;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +23,7 @@ import java.util.List;
 @SpringBootTest
 class DashboardTest {
     @InjectMocks
-    private Dashboard dashboard;
+    private DashboardRepositoryService dashboard;
 
     @Mock
     private EventRepositoryService eventRepositoryService;

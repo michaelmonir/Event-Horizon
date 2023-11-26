@@ -2,9 +2,8 @@ package com.EventHorizon.EventHorizon.RepositoryServices;
 
 import com.EventHorizon.EventHorizon.DTOs.AdsOptionDTO;
 import com.EventHorizon.EventHorizon.Entities.AdsOption;
-import com.EventHorizon.EventHorizon.Exceptions.AdsAlreadyFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.AdsNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.AdsOptionNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
+import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class AdsOptionRepositoryService {
 
     public AdsOption saveAdsOptionWhenCreating(AdsOption adsOption) {
         if (adsOption.getId() != 0)
-            throw new AdsAlreadyFoundException();
+            throw new AdsOptionAlreadyExistException();
 
         adsOptionRepositry.save(adsOption);
         return adsOption;
@@ -27,10 +26,10 @@ public class AdsOptionRepositoryService {
         Optional<AdsOption> optionalOldAds = adsOptionRepositry.findById(id);
 
         if (adsOption.getId() != 0)
-            throw new AdsAlreadyFoundException();
+            throw new AdsOptionAlreadyExistException();
 
         if (!optionalOldAds.isPresent())
-            throw new AdsNotFoundException();
+            throw new AdsOptionNotFoundException();
 
 
         adsOption.setId(id);
@@ -43,7 +42,7 @@ public class AdsOptionRepositoryService {
 
 
         if (!adsOption.isPresent())
-            throw new AdsNotFoundException();
+            throw new AdsOptionNotFoundException();
 
         return adsOption.get();
     }
