@@ -1,6 +1,11 @@
 package com.EventHorizon.EventHorizon.security;
+import com.EventHorizon.EventHorizon.DTO.InformationDTO;
+import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
+import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import io.jsonwebtoken.Claims;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
@@ -9,42 +14,43 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class JWTServiceTest {
+    @Autowired
+    JwtService jwtService;
+
     @Test
     public void testTokenUserName(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZG1vaGFtZWQxNEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTcxNjUsImV4cCI6MTcwMDg5NzE2NX0.lg03uCb570KRY8fszSQyaOMql82mbJYgCQAyZTpr87s";
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiMjI0NTM1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTRAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MTYyLCJleHAiOjEwMDE3MDA5OTkxNjJ9.azPfzNnM1YbefcC6127ZNtEhI7wOsSAANrenI_NMYu8";
         assertEquals(jwtService.extractUserName(token),"ahmedmohamed14@gmail.com");
     }
     @Test
     public void testTokenUserName2(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTY4NTMsImV4cCI6MTcwMDg5Njg1M30.TtS--nhZ9iAE75HspP9f1-7eMfgxajufuRwjbyZC-7c";
-        assertEquals(jwtService.extractUserName(token),"ahmed@gmail.com");
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiNDIwODg1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTVAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MjI3LCJleHAiOjEwMDE3MDA5OTkyMjd9.ExJGNsWqmvIvp0Zwr1dbFCx48RaPJk8FpQAHMX9yXO4";
+        assertEquals(jwtService.extractUserName(token),"ahmedmohamed15@gmail.com");
     }
 
     @Test
     public void testTokenIssuedAtDate(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZG1vaGFtZWQxNEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTcxNjUsImV4cCI6MTcwMDg5NzE2NX0.lg03uCb570KRY8fszSQyaOMql82mbJYgCQAyZTpr87s";
-        assertEquals(jwtService.extractClaim(token, Claims::getIssuedAt),new Date(1699897165000l));
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiMjI0NTM1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTRAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MTYyLCJleHAiOjEwMDE3MDA5OTkxNjJ9.azPfzNnM1YbefcC6127ZNtEhI7wOsSAANrenI_NMYu8";
+        System.out.println(jwtService.extractClaim(token, Claims::getIssuedAt).getTime());
+        assertEquals(jwtService.extractClaim(token, Claims::getIssuedAt),new Date(1700999162000l));
     }
     @Test
     public void testTokenIssuedAtDate2(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTY4NTMsImV4cCI6MTcwMDg5Njg1M30.TtS--nhZ9iAE75HspP9f1-7eMfgxajufuRwjbyZC-7c";
-        assertEquals(jwtService.extractClaim(token, Claims::getIssuedAt),new Date(1699896853000l));
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiNDIwODg1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTVAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MjI3LCJleHAiOjEwMDE3MDA5OTkyMjd9.ExJGNsWqmvIvp0Zwr1dbFCx48RaPJk8FpQAHMX9yXO4";
+
+        assertEquals(jwtService.extractClaim(token, Claims::getIssuedAt),new Date(1700999227000l));
     }
     @Test
     public void testTokenExpirationDate(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZG1vaGFtZWQxNEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTcxNjUsImV4cCI6MTcwMDg5NzE2NX0.lg03uCb570KRY8fszSQyaOMql82mbJYgCQAyZTpr87s";
-        assertEquals(jwtService.extractClaim(token, Claims::getExpiration),new Date(1700897165000l));
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiMjI0NTM1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTRAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MTYyLCJleHAiOjEwMDE3MDA5OTkxNjJ9.azPfzNnM1YbefcC6127ZNtEhI7wOsSAANrenI_NMYu8";
+
+        assertEquals(jwtService.extractClaim(token, Claims::getExpiration),new Date(1001700999162000l));
     }
     @Test
     public void testTokenExpirationDate2(){
-        JwtService jwtService = new JwtService();
-        String token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZEBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTY4NTMsImV4cCI6MTcwMDg5Njg1M30.TtS--nhZ9iAE75HspP9f1-7eMfgxajufuRwjbyZC-7c";
-        assertEquals(jwtService.extractClaim(token, Claims::getExpiration),new Date(1700896853000l));
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJ2ZXJpZnlDb2RlIjoiNDIwODg1Iiwic3ViIjoiYWhtZWRtb2hhbWVkMTVAZ21haWwuY29tIiwiaWF0IjoxNzAwOTk5MjI3LCJleHAiOjEwMDE3MDA5OTkyMjd9.ExJGNsWqmvIvp0Zwr1dbFCx48RaPJk8FpQAHMX9yXO4";
+
+        assertEquals(jwtService.extractClaim(token, Claims::getExpiration),new Date(1001700999227000l));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.security.controller;
+package com.EventHorizon.EventHorizon.security;
 
 import com.EventHorizon.EventHorizon.DTO.InformationDTO;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
@@ -94,7 +94,9 @@ public class ProxyService {
         {
             information.setEnable(1);
         }else{
-            emailSenderService.sendMail(information.getEmail(),"Verification Code","Verification Code : "+information.getVerifyCode());
+            emailSenderService.sendMail(information.getEmail(),"Verification Code","Hello\t"+information.userName +"\n\n"+"Thanks for signing up with EventHorizon\n\n" +
+                    "To verify your email please use the next code"+"\n\n"+"Verification Code :\t"+information.getVerifyCode()+"\n\n"+"We look forward to see you in next event\n\n"+"Sincerely,\n" +
+                    "EventHorizon Team");
         }
         return AuthenticationResponse.builder().token(jwt).build();
     }

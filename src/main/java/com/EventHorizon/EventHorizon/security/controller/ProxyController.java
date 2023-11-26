@@ -1,10 +1,10 @@
 package com.EventHorizon.EventHorizon.security.controller;
 
 import com.EventHorizon.EventHorizon.DTO.InformationDTO;
+import com.EventHorizon.EventHorizon.security.ProxyService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

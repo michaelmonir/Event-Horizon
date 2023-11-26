@@ -3,7 +3,6 @@ import com.EventHorizon.EventHorizon.DTO.InformationDTO;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
-import com.EventHorizon.EventHorizon.security.controller.ProxyService;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import org.junit.jupiter.api.Assertions;
