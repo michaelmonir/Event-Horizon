@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import com.EventHorizon.EventHorizon.services.ModeratorService;
@@ -50,9 +51,12 @@ class OrganizerRepositoryTest {
         organizerService.add(organizer);
 
         organizerService.delete(organizer.getId());
-        Organizer o1 = organizerService.getByID(organizer.getId());
 
-        Assertions.assertEquals(o1, null);
+        Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    organizerService.getByID(organizer.getId());
+                }
+        );
     }
 
     @Test

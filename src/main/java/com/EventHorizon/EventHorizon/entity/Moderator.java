@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Table(name = "moderator_tbl")
-public class Moderator {
+public class Moderator extends User {
 
     @Id
     @Column(name = "id", nullable = false)

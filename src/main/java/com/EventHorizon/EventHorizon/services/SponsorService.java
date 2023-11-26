@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Organizer;
@@ -23,66 +24,48 @@ public class SponsorService {
         try {
             sponsorRepository.save(sponsor);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new AlreadyFoundException();
         }
     }
 
     public void delete(int id) {
-        try {
-            Optional<Sponsor> sponsor = sponsorRepository.findById(id);
-            if (sponsor.isPresent()) {
-                sponsorRepository.deleteById(id);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Optional<Sponsor> sponsor = sponsorRepository.findById(id);
+        if (sponsor.isPresent()) {
+            sponsorRepository.deleteById(id);
+        } else {
+            throw new NotFoundException();
         }
     }
 
 
     public void update(int id, Sponsor newOne) {
-        try {
-            Optional<Sponsor> old = sponsorRepository.findById(id);
-            if (old.isPresent()) {
-                Sponsor oldOne = old.get();
-                informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-                newOne.setId(oldOne.getId());
-                sponsorRepository.save(newOne);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Optional<Sponsor> old = sponsorRepository.findById(id);
+        if (old.isPresent()) {
+            Sponsor oldOne = old.get();
+            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
+            newOne.setId(oldOne.getId());
+            sponsorRepository.save(newOne);
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Sponsor getByID(int id) {
-        try {
-            Optional<Sponsor> sponsor = sponsorRepository.findById(id);
-            if (sponsor.isPresent()) {
-                return sponsor.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Sponsor> sponsor = sponsorRepository.findById(id);
+        if (sponsor.isPresent()) {
+            return sponsor.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
 
     public Sponsor getByInformation(Information information) {
-        try {
-            Optional<Sponsor> sponsor = Optional.of(sponsorRepository.findByInformation(information));
-            if (sponsor.isPresent()) {
-                return sponsor.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Sponsor> sponsor = Optional.of(sponsorRepository.findByInformation(information));
+        if (sponsor.isPresent()) {
+            return sponsor.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 }

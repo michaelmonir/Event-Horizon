@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import com.EventHorizon.EventHorizon.repository.ModeratorRepository;
 import com.EventHorizon.EventHorizon.services.ClientService;
@@ -49,9 +50,11 @@ class ModeratorRepositoryTest {
         moderatorService.add(moderator);
 
         moderatorService.delete(moderator.getId());
-        Moderator m1 = moderatorService.getByID(moderator.getId());
-
-        Assertions.assertEquals(m1, null);
+        Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    moderatorService.getByID(moderator.getId());
+                }
+        );
     }
 
     @Test

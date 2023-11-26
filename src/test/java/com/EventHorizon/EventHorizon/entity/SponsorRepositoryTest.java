@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import com.EventHorizon.EventHorizon.repository.SponsorRepository;
 import com.EventHorizon.EventHorizon.services.InformationService;
@@ -49,9 +50,12 @@ class SponsorRepositoryTest {
         sponsorService.add(sponsor);
 
         sponsorService.delete(sponsor.getId());
-        Sponsor s1 = sponsorService.getByID(sponsor.getId());
 
-        Assertions.assertEquals(s1, null);
+        Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    sponsorService.getByID(sponsor.getId());
+                }
+        );
     }
 
     @Test

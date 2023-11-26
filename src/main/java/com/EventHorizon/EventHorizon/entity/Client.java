@@ -14,7 +14,7 @@ import org.hibernate.annotations.Cascade;
 @Builder
 @Table(name = "client_tbl")
 
-public class Client {
+public class Client extends User {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

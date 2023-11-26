@@ -14,7 +14,7 @@ public class InformationService {
     @Autowired
     InformationRepository informationRepository;
     @Autowired
-    ClientRepository clientRepository ;
+    ClientRepository clientRepository;
     @Autowired
     ModeratorRepository moderatorRepository;
     @Autowired
@@ -22,13 +22,12 @@ public class InformationService {
     @Autowired
     SponsorRepository sponsorRepository;
 
-    public void add(Information information,boolean addUser) {
+    public void add(Information information, boolean addUser) {
         //// here we implement logic of create user  for ahmed hassan proxy
         try {
-            if(!addUser) {
+            if (!addUser) {
                 informationRepository.save(information);
-            }
-            else if (information.getRole().equals("ROLE_CLIENT")) {
+            } else if (information.getRole().equals("ROLE_CLIENT")) {
                 Client c1 = Client.builder().information(information).build();
                 clientRepository.save(c1);
             } else if (information.getRole().equals("ROLE_MODERATOR")) {
@@ -51,7 +50,7 @@ public class InformationService {
 
             Optional<Information> informationOp = informationRepository.findById(id);
             if (informationOp.isPresent()) {
-                Information information=informationOp.get();
+                Information information = informationOp.get();
                 if (information.getRole().equals("ROLE_CLIENT")) {
                     Client c1 = clientRepository.findByInformation(information);
                     clientRepository.delete(c1);
@@ -89,94 +88,54 @@ public class InformationService {
     }
 
     public Information getByID(int id) {
-        try {
-            Optional<Information> information = informationRepository.findById(id);
-            if (information.isPresent()) {
-                return information.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Information> information = informationRepository.findById(id);
+        if (information.isPresent()) {
+            return information.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Information getByEmail(String email) {
-        try {
-            Optional<Information> information = Optional.ofNullable(informationRepository.findByEmail(email));
-            if (information.isPresent()) {
-                return information.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Information> information = Optional.ofNullable(informationRepository.findByEmail(email));
+        if (information.isPresent()) {
+            return information.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Information getByUserName(String username) {
-        try {
-            Optional<Information> information = Optional.ofNullable(informationRepository.findByUserName(username));
-            if (information.isPresent()) {
-                return information.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Information> information = Optional.ofNullable(informationRepository.findByUserName(username));
+        if (information.isPresent()) {
+            return information.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public List<Information> getByLastName(String lastname) {
-        try {
-            List<Information> list = informationRepository.findByLastName(lastname);
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        List<Information> list = informationRepository.findByLastName(lastname);
+        return list;
     }
 
     public List<Information> getByFirstName(String firstname) {
-        try {
-            List<Information> list = informationRepository.findByFirstName(firstname);
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        List<Information> list = informationRepository.findByFirstName(firstname);
+        return list;
     }
 
     public List<Information> getByGender(String gender) {
-        try {
-            List<Information> list = informationRepository.findByGender(gender);
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        List<Information> list = informationRepository.findByGender(gender);
+        return list;
     }
 
     public List<Information> getByRole(String role) {
-        try {
-            List<Information> list = informationRepository.findByRole(role);
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        List<Information> list = informationRepository.findByRole(role);
+        return list;
     }
 
     public List<Information> getBySignIn(int value) {
-        try {
-            List<Information> list = informationRepository.findBySignInWithEmail(value);
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        List<Information> list = informationRepository.findBySignInWithEmail(value);
+        return list;
     }
 }

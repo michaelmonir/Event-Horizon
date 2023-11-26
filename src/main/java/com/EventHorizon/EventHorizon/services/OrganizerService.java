@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Moderator;
@@ -24,65 +25,47 @@ public class OrganizerService {
         try {
             organizerRepository.save(organizer);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new AlreadyFoundException();
         }
     }
 
     public void delete(int id) {
-        try {
             Optional<Organizer> organizer = organizerRepository.findById(id);
             if (organizer.isPresent()) {
                 organizerRepository.deleteById(id);
             } else {
                 throw new NotFoundException();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
 
     public void update(int id, Organizer newOne) {
-        try {
-            Optional<Organizer> old = organizerRepository.findById(id);
-            if (old.isPresent()) {
-                Organizer oldOne = old.get();
-                informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-                newOne.setId(oldOne.getId());
-                organizerRepository.save(newOne);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Optional<Organizer> old = organizerRepository.findById(id);
+        if (old.isPresent()) {
+            Organizer oldOne = old.get();
+            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
+            newOne.setId(oldOne.getId());
+            organizerRepository.save(newOne);
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Organizer getByID(int id) {
-        try {
-            Optional<Organizer> organizer = organizerRepository.findById(id);
-            if (organizer.isPresent()) {
-                return organizer.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Organizer> organizer = organizerRepository.findById(id);
+        if (organizer.isPresent()) {
+            return organizer.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Organizer getByInformation(Information information) {
-        try {
-            Optional<Organizer> organizer = Optional.of(organizerRepository.findByInformation(information));
-            if (organizer.isPresent()) {
-                return organizer.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Organizer> organizer = Optional.of(organizerRepository.findByInformation(information));
+        if (organizer.isPresent()) {
+            return organizer.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 }

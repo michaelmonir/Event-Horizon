@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.Exceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.entity.Client;
 import com.EventHorizon.EventHorizon.entity.Information;
@@ -22,65 +23,46 @@ public class ClientService {
         try {
             clientRepository.save(client);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new AlreadyFoundException();
         }
     }
 
     public void delete(int id) {
-        try {
-            Optional<Client> client = clientRepository.findById(id);
-            if (client.isPresent()) {
-                clientRepository.deleteById(id);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Optional<Client> client = clientRepository.findById(id);
+        if (client.isPresent()) {
+            clientRepository.deleteById(id);
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public void update(int id, Client newOne) {
-        try {
-            Optional<Client> old = clientRepository.findById(id);
-            if (old.isPresent()) {
-                Client oldOne = old.get();
-                informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-                newOne.setId(oldOne.getId());
-                clientRepository.save(newOne);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Optional<Client> old = clientRepository.findById(id);
+        if (old.isPresent()) {
+            Client oldOne = old.get();
+            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
+            newOne.setId(oldOne.getId());
+            clientRepository.save(newOne);
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Client getByID(int id) {
-        try {
-            Optional<Client> client = clientRepository.findById(id);
-            if (client.isPresent()) {
-                return client.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Client> client = clientRepository.findById(id);
+        if (client.isPresent()) {
+            return client.get();
+        } else {
+            throw new NotFoundException();
         }
     }
 
     public Client getByInformation(Information information) {
-        try {
-            Optional<Client> client = Optional.of(clientRepository.findByInformation(information));
-            if (client.isPresent()) {
-                return client.orElse(null);
-            } else {
-                throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+        Optional<Client> client = Optional.of(clientRepository.findByInformation(information));
+        if (client.isPresent()) {
+            return client.get();
+        } else {
+            throw new NotFoundException();
         }
     }
-
 }

@@ -1,7 +1,11 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.DTO.InformationDTO;
+import com.EventHorizon.EventHorizon.Exceptions.NotFoundException;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import com.EventHorizon.EventHorizon.repository.InformationRepository;
+import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
+import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import com.EventHorizon.EventHorizon.services.ClientService;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import org.junit.jupiter.api.Assertions;
@@ -46,11 +50,12 @@ class ClientRepositoryTest {
                 .build();
         Client client = Client.builder().information(information).build();
         clientService.add(client);
-
         clientService.delete(client.getId());
-        Client c1 = clientService.getByID(client.getId());
-
-        Assertions.assertEquals(c1, null);
+        Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    clientService.getByID(client.getId());
+                }
+        );
     }
 
     @Test
