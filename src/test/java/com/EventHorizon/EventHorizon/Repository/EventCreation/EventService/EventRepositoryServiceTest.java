@@ -5,11 +5,15 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
+import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,10 @@ class EventRepositoryServiceTest {
 
     @Autowired
     private AdsOptionRepositry adsOptionRepositry;
+    @Autowired
+    private OrganizerRepository organizerRepository;
+    @Autowired
+    InformationCreator informationCreator;
 
     @Test
     public void testGettingExceptionOnSendingIdWhenCreating() {
@@ -40,6 +48,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -50,6 +61,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location1)
                 .name("e45")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
 
@@ -61,6 +73,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventNotFoundException() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -71,6 +86,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location1)
                 .name("11")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
 
@@ -81,6 +97,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -91,6 +110,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location1)
                 .name("e45")
+                .eventOrganizer(organizer)
                 .description("...")
                 .id(27)
                 .build();
@@ -102,6 +122,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventwithoutError() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -112,6 +135,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location1)
                 .name("e800")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -120,6 +144,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location2)
                 .name("e500")
+                .eventOrganizer(organizer)
                 .description("newevent")
                 .build();
 
@@ -138,6 +163,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -149,6 +177,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location)
                 .name("EventToDelete")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
 
@@ -168,6 +197,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -178,6 +210,7 @@ class EventRepositoryServiceTest {
         Event event = Event.builder()
                 .eventAds(adsOption)
                 .eventLocation(location)
+                .eventOrganizer(organizer)
                 .name("EventDetailsDtoTest")
                 .description("...")
                 .build();
@@ -201,6 +234,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -213,6 +249,7 @@ class EventRepositoryServiceTest {
                 .eventLocation(location)
                 .name("EventHeaderDtoTest")
                 .description("...")
+                .eventOrganizer(organizer)
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -226,6 +263,9 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -237,6 +277,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location1)
                 .name("Event1")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
 
@@ -245,6 +286,7 @@ class EventRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventLocation(location2)
                 .name("Event2")
+                .eventOrganizer(organizer)
                 .description("...")
                 .build();
 

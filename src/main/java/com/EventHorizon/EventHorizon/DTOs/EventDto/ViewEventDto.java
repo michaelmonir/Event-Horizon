@@ -1,11 +1,9 @@
 package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
+import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -13,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode
 public class ViewEventDto {
     private int id;
     private String name;
@@ -20,6 +19,7 @@ public class ViewEventDto {
     private String eventCategory;
     private Date eventDate;
     private Location eventLocation;
+    private OrganizerHeaderDto eventOrganizer;
 
 
     public ViewEventDto(Event event) {
@@ -29,6 +29,7 @@ public class ViewEventDto {
         this.eventDate = event.getEventDate();
         this.description = event.getDescription();
         this.eventLocation = event.getEventLocation();
+        this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
     }
 
     @Override

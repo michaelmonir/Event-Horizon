@@ -8,7 +8,8 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
-import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.services.EventService;
 import com.EventHorizon.EventHorizon.services.OrganizerService;
 import com.EventHorizon.EventHorizon.services.UserEventService;
@@ -28,6 +29,10 @@ public class EventServiceTest
     private UserEventService userEventService;
     @Mock
     private OrganizerService organizerService;
+    @Mock
+    private DelaitedEventDtoMapper delaitedEventDtoMapper;
+    @Mock
+    private ViewEventDtoMapper viewEventDtoMapper;
     @InjectMocks
     private EventService eventService;
 
@@ -97,12 +102,16 @@ public class EventServiceTest
                 .thenReturn(this.customEvent);
         Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(int.class), Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
-        Mockito.when(this.eventRepositoryService.getDTOfromDetailedEvent(Mockito.any(Event.class)))
+        Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
                 .thenReturn(this.customDetailedEventDto);
-        Mockito.when(this.eventRepositoryService.getDTOfromDetailedEvent(Mockito.any(Event.class)))
+        Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
                 .thenReturn(this.customDetailedEventDto);
-        Mockito.when(this.eventRepositoryService.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDto.class)))
+        Mockito.when(this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDto.class)))
                 .thenReturn(this.customEvent);
+        Mockito.when(this.viewEventDtoMapper.getEventFromViewEventDTO(Mockito.any(ViewEventDto.class)))
+                .thenReturn(this.customEvent);
+        Mockito.when(this.viewEventDtoMapper.getDTOfromViewEvent(Mockito.any(Event.class)))
+                .thenReturn(this.customViewEventDto);
         Mockito.when(this.organizerService.getByID(Mockito.any(int.class)))
                 .thenReturn(this.customOrganizer);
     }

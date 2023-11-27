@@ -66,7 +66,9 @@ CREATE TABLE IF NOT EXISTS Event (
     event_date datetime(6),
     location_id INT,
     ads_id INT NOT NULL,
+    organizer_id INT NOT NULL,
     FOREIGN KEY (location_id) REFERENCES Location(id) ON DELETE SET NULL,
-    FOREIGN KEY (ads_id) REFERENCES AdsOption(id)
+    FOREIGN KEY (ads_id) REFERENCES AdsOption(id),
+    FOREIGN KEY (organizer_id) REFERENCES organizer_tbl(id)
 );
 

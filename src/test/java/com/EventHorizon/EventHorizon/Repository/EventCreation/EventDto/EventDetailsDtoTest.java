@@ -4,16 +4,28 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 
 @SpringBootTest
 class EventDetailsDtoTest {
+    @Autowired
+    private InformationCreator informationCreator;
+    @Autowired
+    private OrganizerRepository organizerRepository;
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
@@ -27,6 +39,7 @@ class EventDetailsDtoTest {
                 .eventLocation(location)
                 .name("EventDetailsDtoTest")
                 .description("...")
+                .eventOrganizer(organizer)
                 .eventCategory("Category1")
                 .eventDate(eventDate)
                 .build();

@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,4 +40,12 @@ public class Event {
             nullable = false
     )
     private AdsOption eventAds;
+    @ManyToOne(
+    )
+    @JoinColumn(
+            name = "organizer_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    private Organizer eventOrganizer;
 }

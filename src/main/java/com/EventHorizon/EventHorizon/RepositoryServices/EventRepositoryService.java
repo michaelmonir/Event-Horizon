@@ -88,32 +88,5 @@ public class EventRepositoryService {
         return eventHeaderDtos;
     }
 
-    public DetailedEventDto getDTOfromDetailedEvent(Event event)
-    {
-        DetailedEventDto dto = new DetailedEventDto();
-        dto.id = event.getId();
-        dto.name = event.getName();
-        dto.description = event.getDescription();
-        dto.eventCategory = event.getEventCategory();
-        dto.eventDate = event.getEventDate();
-
-        dto.eventLocation = event.getEventLocation();
-        dto.eventAds = new AdsOptionDto(event.getEventAds());
-        return dto;
-    }
-
-    public Event getEventFromDetailedEventDTO(DetailedEventDto dto)
-    {
-        Event event = Event.builder()
-                .id(dto.id)
-                .name(dto.name)
-                .description(dto.description)
-                .eventCategory(dto.eventCategory)
-                .eventDate(dto.eventDate)
-                .eventAds(this.adsOptionDtoMapper.getAdsOptionFromDTO(dto.eventAds))
-                .eventLocation(dto.eventLocation)
-                .build();
-        return event;
-    }
 }
 
