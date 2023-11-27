@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Services.InformationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 
 public class InformationController {
-
+    @Autowired
     private InformationService informationService;
     @GetMapping("/getInformationViewDto")
     public ResponseEntity<ViewInformationDTO>getInformation(@RequestParam String email){

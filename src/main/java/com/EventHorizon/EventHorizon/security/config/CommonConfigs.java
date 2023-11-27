@@ -6,8 +6,14 @@ import lombok.Data;
 public class CommonConfigs {
     static final String[] AUTH_WHITELIST = {
             "/proxy/**",
-            "/v1/main",
-//            "/oauth2/authorization/google"
+            "/information/**",
+            "/event/eventForUser/**",
+            "/event/EventHeaders/**",
     };
-
+    static final String[] AUTH_ORGANIZER = {
+            "/event/EventForOrganizer/**",
+            "/event/createEvent/**",
+            "/event/updateEvent/**",
+            "/event/deleteEvent/**",
+    };
 }
