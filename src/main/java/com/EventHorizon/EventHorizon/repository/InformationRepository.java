@@ -1,13 +1,10 @@
 package com.EventHorizon.EventHorizon.repository;
 
-import com.EventHorizon.EventHorizon.entity.Client;
-import com.EventHorizon.EventHorizon.entity.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 

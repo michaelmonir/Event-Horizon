@@ -1,6 +1,8 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.Exceptions.ClientNotFoundException;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.services.ClientService;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import org.junit.jupiter.api.Assertions;

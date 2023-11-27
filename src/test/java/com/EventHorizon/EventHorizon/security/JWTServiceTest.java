@@ -1,9 +1,5 @@
 package com.EventHorizon.EventHorizon.security;
-import com.EventHorizon.EventHorizon.DTO.InformationDTO;
-import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import io.jsonwebtoken.Claims;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

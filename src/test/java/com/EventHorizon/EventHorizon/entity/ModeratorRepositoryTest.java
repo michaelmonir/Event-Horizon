@@ -1,7 +1,8 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.Exceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.ModeratorNotFoundException;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import com.EventHorizon.EventHorizon.services.ModeratorService;
 import org.junit.jupiter.api.Assertions;

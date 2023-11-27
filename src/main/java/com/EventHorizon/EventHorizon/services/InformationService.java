@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
-import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
-import com.EventHorizon.EventHorizon.entity.*;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.repository.*;
 import com.EventHorizon.EventHorizon.services.InformationServiceComponent.InformationServiceFactory;
 import com.EventHorizon.EventHorizon.services.InformationServiceComponent.UserInformationService;

@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import org.springframework.stereotype.Service;
 
 @Service

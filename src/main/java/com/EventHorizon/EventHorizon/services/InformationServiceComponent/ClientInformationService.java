@@ -1,9 +1,8 @@
 package com.EventHorizon.EventHorizon.services.InformationServiceComponent;
 
-import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
-import com.EventHorizon.EventHorizon.entity.Client;
-import com.EventHorizon.EventHorizon.entity.Information;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

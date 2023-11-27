@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.SponsorNotFoundException;
-import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.entity.Sponsor;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.repository.SponsorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

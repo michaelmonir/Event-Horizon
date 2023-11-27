@@ -1,6 +1,8 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.Exceptions.SponsorNotFoundException;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.services.InformationService;
 import com.EventHorizon.EventHorizon.services.SponsorService;
 import org.junit.jupiter.api.Assertions;

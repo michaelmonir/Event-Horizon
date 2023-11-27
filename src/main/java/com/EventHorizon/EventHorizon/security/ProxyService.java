@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.security;
 
-import com.EventHorizon.EventHorizon.DTO.InformationDTO;
-import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
-import com.EventHorizon.EventHorizon.entity.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;

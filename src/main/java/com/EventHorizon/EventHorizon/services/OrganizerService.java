@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.services;
 
-import com.EventHorizon.EventHorizon.Exceptions.OrganizerNotFoundException;
-import com.EventHorizon.EventHorizon.entity.Information;
-import com.EventHorizon.EventHorizon.entity.Organizer;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.OrganizerNotFoundException;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

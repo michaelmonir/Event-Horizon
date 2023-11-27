@@ -1,8 +1,7 @@
 package com.EventHorizon.EventHorizon.services.InformationServiceComponent;
 
-import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
-import com.EventHorizon.EventHorizon.entity.Information;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 @Qualifier
