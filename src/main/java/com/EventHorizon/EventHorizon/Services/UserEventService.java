@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserEventService {
     public void checkAndHandleNotOrganizerOfEvent(Organizer organizer, Event event) {
-        if (false)
+        if (!event.getEventOrganizer().equals(organizer))
             throw new NotOrganizerOfThisEventException();
     }
 
-    public boolean userAllowedViewingListOfPages(int userId)
-    {
+    public boolean userAllowedViewingListOfPages(int userId) {
         return true;
     }
 }
