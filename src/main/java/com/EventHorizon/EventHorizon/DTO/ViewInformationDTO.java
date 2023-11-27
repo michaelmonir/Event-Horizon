@@ -22,7 +22,7 @@ public class ViewInformationDTO {
 
     private UserDTO userDTO;
 
-    ViewInformationDTO(Information information) {
+    public ViewInformationDTO(Information information) {
         this.id = information.getId();
         this.email = information.getEmail();
         this.firstName = information.getFirstName();
@@ -31,5 +31,6 @@ public class ViewInformationDTO {
         this.gender = information.getGender();
         this.role = information.getRole();
         this.payPalAccount = information.getPayPalAccount();
+        this.userDTO = userDTO;
     }
 }

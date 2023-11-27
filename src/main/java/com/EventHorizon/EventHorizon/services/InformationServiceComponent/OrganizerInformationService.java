@@ -1,5 +1,7 @@
 package com.EventHorizon.EventHorizon.services.InformationServiceComponent;
 
+import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.entity.Organizer;
 import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
@@ -15,8 +17,8 @@ public class OrganizerInformationService implements UserInformationService{
     @Override
     public void add(Information information)
     {
-        Organizer organizer = organizerRepository.findByInformation(information);
-        organizerRepository.delete(organizer);
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
     }
     @Override
     public void delete( Information information)
@@ -24,5 +26,14 @@ public class OrganizerInformationService implements UserInformationService{
         Organizer organizer = organizerRepository.findByInformation(information);
         organizerRepository.delete(organizer);
     }
+
+    @Override
+    public Information update(UpdateInformationDTO updateInformationDTO, Information information) {
+        Organizer organizer = organizerRepository.findByInformation(information);
+        organizer.setInformation(updateInformationDTO.toInformation(information));
+        organizerRepository.save(organizer);
+        return  (organizer.getInformation());
+    }
+
 
 }

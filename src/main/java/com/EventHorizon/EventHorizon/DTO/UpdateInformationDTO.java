@@ -20,12 +20,19 @@ public class UpdateInformationDTO {
 
     private UserDTO userDTO;
 
-    UpdateInformationDTO(Information information) {
+    public UpdateInformationDTO(Information information) {
         this.id = information.getId();
         this.firstName = information.getFirstName();
         this.lastName = information.getLastName();
         this.gender = information.getGender();
         this.payPalAccount = information.getPayPalAccount();
-    }
 
+    }
+    public Information toInformation(Information information){
+        information.setFirstName(this.firstName);
+        information.setLastName(this.lastName);
+        information.setGender(this.gender);
+        information.setPayPalAccount(this.payPalAccount);
+        return information;
+    }
 }

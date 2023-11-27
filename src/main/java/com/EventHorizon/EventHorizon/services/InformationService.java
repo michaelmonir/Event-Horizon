@@ -1,5 +1,7 @@
 package com.EventHorizon.EventHorizon.services;
 
+import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Exceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.entity.*;
 import com.EventHorizon.EventHorizon.repository.*;
@@ -97,5 +99,20 @@ public class InformationService {
     public List<Information> getBySignIn(int value) {
         List<Information> list = informationRepository.findBySignInWithEmail(value);
         return list;
+    }
+
+    public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO){
+        Optional<Information> informationOp = informationRepository.findById(updateInformationDTO.getId());
+        if (informationOp.isPresent()) {
+            UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
+            return getViewInformationDTO( myService.update(updateInformationDTO,informationOp.get()));
+        } else {
+            throw new InformationNotFoundException();
+        }
+    }
+
+    public ViewInformationDTO getViewInformationDTO(Information information) {
+        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        return new ViewInformationDTO(information);
     }
 }

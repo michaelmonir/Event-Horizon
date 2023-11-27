@@ -1,5 +1,7 @@
 package com.EventHorizon.EventHorizon.services.InformationServiceComponent;
 
+import com.EventHorizon.EventHorizon.DTO.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTO.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.entity.Client;
 import com.EventHorizon.EventHorizon.entity.Information;
 import com.EventHorizon.EventHorizon.repository.ClientRepository;
@@ -23,4 +25,13 @@ public class ClientInformationService implements UserInformationService {
         Client c1 = clientRepository.findByInformation(information);
         clientRepository.delete(c1);
     }
+
+    @Override
+    public Information update(UpdateInformationDTO updateInformationDTO, Information information) {
+        Client client = clientRepository.findByInformation(information);
+        client.setInformation(updateInformationDTO.toInformation(information));
+        clientRepository.save(client);
+        return (client.getInformation());
+    }
+
 }

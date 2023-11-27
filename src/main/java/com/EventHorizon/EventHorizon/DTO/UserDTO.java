@@ -1,5 +1,7 @@
 package com.EventHorizon.EventHorizon.DTO;
 
-public class UserDTO {
+import com.EventHorizon.EventHorizon.entity.User;
 
+public abstract class UserDTO {
+    abstract void fromUser(User user);
 }

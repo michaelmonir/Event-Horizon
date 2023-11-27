@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ProxyErrorResponse {
-
     private int status;
     private String message;
     private long timeStamp;
