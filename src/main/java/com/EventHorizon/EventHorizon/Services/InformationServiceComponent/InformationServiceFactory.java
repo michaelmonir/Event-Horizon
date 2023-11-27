@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.services.InformationServiceComponent;
+package com.EventHorizon.EventHorizon.Services.InformationServiceComponent;
 
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.RoleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package com.EventHorizon.EventHorizon.services;
+package com.EventHorizon.EventHorizon.Services;
 
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
-import com.EventHorizon.EventHorizon.repository.ModeratorRepository;
+import com.EventHorizon.EventHorizon.Repository.ModeratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

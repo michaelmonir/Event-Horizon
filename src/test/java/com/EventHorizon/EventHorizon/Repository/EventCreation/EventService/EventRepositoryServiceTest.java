@@ -13,7 +13,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdExce
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
-import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

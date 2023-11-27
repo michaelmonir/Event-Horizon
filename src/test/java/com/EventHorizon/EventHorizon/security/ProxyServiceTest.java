@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.security;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.repository.InformationRepository;
+import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;

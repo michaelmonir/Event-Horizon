@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.repository;
+package com.EventHorizon.EventHorizon.Repository;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;

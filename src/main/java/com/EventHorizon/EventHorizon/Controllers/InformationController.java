@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Controllers;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
-import com.EventHorizon.EventHorizon.services.InformationService;
+import com.EventHorizon.EventHorizon.Services.InformationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

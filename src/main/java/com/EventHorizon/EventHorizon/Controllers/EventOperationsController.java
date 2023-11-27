@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
-import com.EventHorizon.EventHorizon.services.EventService;
+import com.EventHorizon.EventHorizon.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
-import com.EventHorizon.EventHorizon.services.*;
+import com.EventHorizon.EventHorizon.Services.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

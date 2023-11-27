@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.repository;
+package com.EventHorizon.EventHorizon.Repository;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyReque
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
-import com.EventHorizon.EventHorizon.services.InformationService;
+import com.EventHorizon.EventHorizon.Services.InformationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

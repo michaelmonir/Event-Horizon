@@ -9,7 +9,7 @@ import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
-import com.EventHorizon.EventHorizon.repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

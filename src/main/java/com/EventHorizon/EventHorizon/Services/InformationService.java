@@ -1,12 +1,12 @@
-package com.EventHorizon.EventHorizon.services;
+package com.EventHorizon.EventHorizon.Services;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
-import com.EventHorizon.EventHorizon.repository.*;
-import com.EventHorizon.EventHorizon.services.InformationServiceComponent.InformationServiceFactory;
-import com.EventHorizon.EventHorizon.services.InformationServiceComponent.UserInformationService;
+import com.EventHorizon.EventHorizon.Repository.*;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
