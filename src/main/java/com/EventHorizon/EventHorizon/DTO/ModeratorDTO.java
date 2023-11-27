@@ -13,14 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ModeratorDTO {
+public class ModeratorDTO  extends UserDTO  {
     private int id;
-    private InformationDTO informationDTO;
 
-
-    public static ModeratorDTO toDTO(Moderator moderator) {
-        return ModeratorDTO.builder()
-                .id(moderator.getId())
-                .informationDTO(InformationDTO.toDTO(moderator.getInformation())).build();
-    }
 }

@@ -13,17 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrganizerDTO {
+public class OrganizerDTO   extends UserDTO {
 
     private int id;
     private double rate;
-    private InformationDTO informationDTO;
-
-
-    public static OrganizerDTO toDTO(Organizer organizer) {
-        return OrganizerDTO.builder()
-                .id(organizer.getId())
-                .rate(organizer.getRate())
-                .informationDTO(InformationDTO.toDTO(organizer.getInformation())).build();
-    }
 }

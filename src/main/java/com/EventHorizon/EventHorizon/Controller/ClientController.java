@@ -18,14 +18,9 @@ public class ClientController {
     }
 
     @GetMapping("/clients/{id}")
-    public ClientDTO findById(@PathVariable Integer id) {
+    public void findById(@PathVariable Integer id) {
         Client client = clientService.getByID(id);
-        if (client != null) {
-            return ClientDTO.toDTO(client);
-        } else {
-            System.out.println("cant find this client");
-            return null;
-        }
+
     }
 
     @PostMapping("/clients")    //// need mapper dto

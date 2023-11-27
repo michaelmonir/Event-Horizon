@@ -12,15 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SponsorDTO {
+public class SponsorDTO   extends UserDTO {
     private int id;
-    private InformationDTO informationDTO;
-
-
-    public static SponsorDTO toDTO(Sponsor sponsor) {
-        return SponsorDTO.builder()
-                .id(sponsor.getId())
-                .informationDTO(InformationDTO.toDTO(sponsor.getInformation())).build();
-    }
-
 }
