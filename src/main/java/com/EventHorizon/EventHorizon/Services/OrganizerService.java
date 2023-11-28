@@ -15,8 +15,6 @@ public class OrganizerService {
 
     @Autowired
     OrganizerRepository organizerRepository;
-    @Autowired
-    InformationService informationService;
 
     public void add(Organizer organizer) {
         organizerRepository.save(organizer);
@@ -31,18 +29,6 @@ public class OrganizerService {
             }
     }
 
-
-    public void update(int id, Organizer newOne) {
-        Optional<Organizer> old = organizerRepository.findById(id);
-        if (old.isPresent()) {
-            Organizer oldOne = old.get();
-            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-            newOne.setId(oldOne.getId());
-            organizerRepository.save(newOne);
-        } else {
-            throw new OrganizerNotFoundException();
-        }
-    }
 
     public Organizer getByID(int id) {
         Optional<Organizer> organizer = organizerRepository.findById(id);

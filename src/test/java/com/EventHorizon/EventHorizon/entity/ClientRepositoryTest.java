@@ -43,21 +43,6 @@ class ClientRepositoryTest {
     }
 
     @Test
-    public void update() {
-        Information information = informationCreator.getInformation("ROLE_CLIENT");
-
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
-        Information information2 = informationCreator.getInformation("ROLE_CLIENT");
-        Client client2 = Client.builder().information(information2).build();
-        clientService.update(client.getId(), client2);
-        Client c1 = clientService.getByID(client.getId());
-        Information i1 = informationService.getByID(c1.getInformation().getId());
-
-        Assertions.assertTrue(information2.equals(i1));
-    }
-
-    @Test
     public void getByID() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         Client client = Client.builder().information(information).build();

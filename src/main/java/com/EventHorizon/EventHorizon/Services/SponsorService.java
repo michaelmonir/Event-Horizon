@@ -14,8 +14,7 @@ public class SponsorService {
 
     @Autowired
     SponsorRepository sponsorRepository;
-    @Autowired
-    InformationService informationService;
+
 
     public void add(Sponsor sponsor) {
         sponsorRepository.save(sponsor);
@@ -30,18 +29,6 @@ public class SponsorService {
         }
     }
 
-
-    public void update(int id, Sponsor newOne) {
-        Optional<Sponsor> old = sponsorRepository.findById(id);
-        if (old.isPresent()) {
-            Sponsor oldOne = old.get();
-            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-            newOne.setId(oldOne.getId());
-            sponsorRepository.save(newOne);
-        } else {
-            throw new SponsorNotFoundException();
-        }
-    }
 
     public Sponsor getByID(int id) {
         Optional<Sponsor> sponsor = sponsorRepository.findById(id);

@@ -4,35 +4,33 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Services.OrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
 
-public class OrganizerInformationService implements UserInformationService{
+public class OrganizerInformationService implements UserInformationService {
 
     @Autowired
-    OrganizerRepository organizerRepository;
+    OrganizerService organizerService;
 
     @Override
-    public void add(Information information)
-    {
+    public void add(Information information) {
         Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
+        organizerService.add(organizer);
     }
+
     @Override
-    public void delete( Information information)
-    {
-        Organizer organizer = organizerRepository.findByInformation(information);
-        organizerRepository.delete(organizer);
+    public void delete(Information information) {
+        Organizer organizer = organizerService.getByInformation(information);
+        organizerService.delete(organizer.getId());
     }
 
     @Override
     public Information update(UpdateInformationDTO updateInformationDTO, Information information) {
-        Organizer organizer = organizerRepository.findByInformation(information);
+        Organizer organizer = organizerService.getByInformation(information);
         organizer.setInformation(updateInformationDTO.toInformation(information));
-        organizerRepository.save(organizer);
-        return  (organizer.getInformation());
+        organizerService.add(organizer);
+        return (organizer.getInformation());
     }
-
-
 }

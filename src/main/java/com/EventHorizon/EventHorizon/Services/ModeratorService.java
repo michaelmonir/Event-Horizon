@@ -13,8 +13,7 @@ import java.util.Optional;
 public class ModeratorService {
     @Autowired
     ModeratorRepository moderatorRepository;
-    @Autowired
-    InformationService informationService;
+
 
     public void add(Moderator moderator) {
             moderatorRepository.save(moderator);
@@ -29,18 +28,6 @@ public class ModeratorService {
         }
     }
 
-
-    public void update(int id, Moderator newOne) {
-        Optional<Moderator> old = moderatorRepository.findById(id);
-        if (old.isPresent()) {
-            Moderator oldOne = old.get();
-            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-            newOne.setId(oldOne.getId());
-            moderatorRepository.save(newOne);
-        } else {
-            throw new ModeratorNotFoundException();
-        }
-    }
 
     public Moderator getByID(int id) {
         Optional<Moderator> moderator = moderatorRepository.findById(id);

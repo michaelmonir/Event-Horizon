@@ -23,7 +23,7 @@ public class InformationDTO {
     private String role;
     int signInWithEmail;
 
-    InformationDTO(Information information) {
+    public InformationDTO(Information information) {
         this.id = information.getId();
         this.email = information.getEmail();
         this.firstName = information.getFirstName();

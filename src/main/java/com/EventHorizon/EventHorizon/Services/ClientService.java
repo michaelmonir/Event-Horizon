@@ -15,8 +15,6 @@ import java.util.Optional;
 public class ClientService {
     @Autowired
     ClientRepository clientRepository;
-    @Autowired
-    InformationService informationService;
 
     public void add(Client client) {
         clientRepository.save(client);
@@ -26,18 +24,6 @@ public class ClientService {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()) {
             clientRepository.deleteById(id);
-        } else {
-            throw new ClientNotFoundException();
-        }
-    }
-
-    public void update(int id, Client newOne) {
-        Optional<Client> old = clientRepository.findById(id);
-        if (old.isPresent()) {
-            Client oldOne = old.get();
-            informationService.update(oldOne.getInformation().getId(), newOne.getInformation());
-            newOne.setId(oldOne.getId());
-            clientRepository.save(newOne);
         } else {
             throw new ClientNotFoundException();
         }

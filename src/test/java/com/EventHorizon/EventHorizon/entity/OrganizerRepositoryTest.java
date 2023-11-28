@@ -1,6 +1,9 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.OrganizerNotFoundException;
 import com.EventHorizon.EventHorizon.Services.InformationService;
@@ -49,21 +52,6 @@ class OrganizerRepositoryTest {
         );
     }
 
-    @Test
-    public void update() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerService.add(organizer);
-        Information information2 = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer2 = Organizer.builder().information(information2).build();
-        organizerService.update(organizer.getId(), organizer2);
-        Organizer o1 = organizerService.getByID(organizer.getId());
-        Information i1 = informationService.getByID(o1.getInformation().getId());
-
-
-        Assertions.assertTrue(information2.equals(i1));
-
-    }
 
     @Test
     public void getByID() {
@@ -90,4 +78,19 @@ class OrganizerRepositoryTest {
         Assertions.assertEquals(o1, organizer);
     }
 
+    @Test
+    public void updateWithDtoTest() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information2 = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerService.add(organizer);
+        information2.setId(information.getId());
+        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
+        ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
+        Information i3 = informationService.getByEmail(information.getEmail());
+        Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
+        Assertions.assertEquals(i3.getGender(), information2.getGender());
+        Assertions.assertEquals(i3.userName, information.userName);
+        Assertions.assertEquals(i3.getId(), information.getId());
+    }
 }

@@ -1,9 +1,12 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Services.*;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +62,7 @@ class InformationRepositoryTest {
         Information i1 = informationService.getByID(information.getId());
         Assertions.assertEquals(i1, information);
     }
+
     @Test
     public void getByEmail() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
@@ -112,5 +116,43 @@ class InformationRepositoryTest {
         List<Information> i =
                 informationService.getByRole(information.getRole());
         Assertions.assertEquals(i.get(0).getRole(), information.getRole());
+    }
+    @Test
+    public void getBySignInTest() {
+        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        informationService.add(information);
+        List<Information> i =
+                informationService.getBySignIn(0);
+        Assertions.assertEquals(i.get(0).getSignInWithEmail(), information.getSignInWithEmail());
+    }
+
+
+    @Test
+    public void updateWithDtoTest() {
+        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        Information information2 = informationCreator.getInformation("ROLE_CLIENT");
+        Client client = Client.builder().information(information).build();
+        clientService.add(client);
+        information2.setId(information.getId());
+        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
+        ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
+        Information i3 = informationService.getByEmail(information.getEmail());
+        Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
+        Assertions.assertEquals(i3.getGender(), information2.getGender());
+        Assertions.assertEquals(i3.userName, information.userName);
+        Assertions.assertEquals(i3.getId(), information.getId());
+    }
+
+
+    @Test
+    public void getViewInformationDTOTest() {
+        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        ViewInformationDTO informationDTO = informationService.getViewInformationDTO(information);
+        Assert.assertEquals(information.userName, informationDTO.getUserName());
+        Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
+        Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
+        Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
+        Assert.assertEquals(information.getGender(), informationDTO.getGender());
+        Assert.assertEquals(information.getRole(), informationDTO.getRole());
     }
 }
