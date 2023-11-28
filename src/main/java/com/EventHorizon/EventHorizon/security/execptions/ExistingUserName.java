@@ -5,14 +5,5 @@ public class ExistingUserName extends RuntimeException{
         super(message);
     }
 
-    public ExistingUserName(String message, Throwable cause) {
-        super(message, cause);
-    }
 
-    public ExistingUserName(Throwable cause) {
-        super(cause);
-    }
-    public ExistingUserName(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

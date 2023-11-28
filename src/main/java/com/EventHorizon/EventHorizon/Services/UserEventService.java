@@ -11,8 +11,4 @@ public class UserEventService {
         if (!event.getEventOrganizer().equals(organizer))
             throw new NotOrganizerOfThisEventException();
     }
-
-    public boolean userAllowedViewingListOfPages(int userId) {
-        return true;
-    }
 }
