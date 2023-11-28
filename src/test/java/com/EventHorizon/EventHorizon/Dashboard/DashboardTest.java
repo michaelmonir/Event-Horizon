@@ -93,4 +93,12 @@ class DashboardTest {
             dashboard.getPage(pageIndex, pageSize);
         });
     }
+    @Test
+    public void testGetPageNotReturnError() {
+        int pageIndex = 10;
+        int pageSize = 25;
+        Assertions.assertDoesNotThrow(() -> {
+            dashboard.getPage(pageIndex, pageSize);
+        });
+    }
 }

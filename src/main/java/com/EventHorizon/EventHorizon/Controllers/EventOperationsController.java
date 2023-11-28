@@ -20,13 +20,14 @@ public class EventOperationsController {
 
     @GetMapping("eventForUser/{eventId}")//any
     public ApiResponse getEventForUser(@PathVariable int eventId) {
-        ViewEventDto viewEventDTO=this.eventService.getEventForUser(eventId);
-        return new ApiResponse<>( "Found Successfully",viewEventDTO);
+        ViewEventDto viewEventDTO = this.eventService.getEventForUser(eventId);
+        return new ApiResponse<>("Found Successfully", viewEventDTO);
     }
+
     @GetMapping("EventForOrganizer/{organizerId}/{eventId}")//organizer,admin
     public ApiResponse getEventForOrganizer(@PathVariable int organizerId, @PathVariable int eventId) {
-        DetailedEventDto detailedEventDTO=this.eventService.getEventForOrganizer(organizerId, eventId);
-        return new ApiResponse<>( "Found Successfully",detailedEventDTO);
+        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId);
+        return new ApiResponse<>("Found Successfully", detailedEventDTO);
     }
 
 //    @PostMapping("createEvent")//organizer,admin
@@ -51,29 +52,31 @@ public class EventOperationsController {
     }
 
     @GetMapping("")//organizer,admin
-    public ApiResponse<Integer> donothin()
-    {
+    public ApiResponse<Integer> donothin() {
         System.out.println("m");
         System.out.println("m");
         System.out.println("m");
         return new ApiResponse<>(HttpStatus.NOT_FOUND, "", 5);
     }
+
     @PutMapping("updateEvent/{organizerId}/{eventId}")//organizer,admin
     public ApiResponse updateEvent
             (@PathVariable int organizerId, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
         detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
-        return new ApiResponse<>( "Updated Successfully",detailedEventDTO);
+        return new ApiResponse<>("Updated Successfully", detailedEventDTO);
     }
+
     @DeleteMapping("deleteEvent/{organizerId}/{eventId}") //organizer,admin
     public ApiResponse deleteEvent
             (@PathVariable int organizerId, @PathVariable int eventId) {
-        this.eventService.deleteEvent(organizerId,eventId);
-        return new ApiResponse<>( "Deleted Successfully");
+        this.eventService.deleteEvent(organizerId, eventId);
+        return new ApiResponse<>("Deleted Successfully");
     }
-    @GetMapping("EventHeaders/{pageIndex}/{pageSize}")//any
-    public ApiResponse getEventHeaders(@PathVariable int pageIndex, @PathVariable int pageSize) {
-        List<EventHeaderDto> eventHeaders =this.eventService.getEventHeadersList(pageIndex,pageSize);
-        return new ApiResponse<>( "Found Successfully",eventHeaders);
+
+    @GetMapping("dashboard/{pageIndex}/{pageSize}")//any
+    public ResponseEntity<List<EventHeaderDto>> getEventHeaders(@PathVariable int pageIndex, @PathVariable int pageSize) {
+        List<EventHeaderDto> eventHeaders = this.eventService.getEventHeadersList(pageIndex, pageSize);
+        return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
 
 }

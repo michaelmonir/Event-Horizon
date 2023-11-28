@@ -16,7 +16,7 @@ public class OrganizerHeaderDto {
 
     public OrganizerHeaderDto(Organizer organizer) {
         this.id = organizer.getId();
-        this.name = organizer.getInformation().getUsername();
+        this.name = organizer.getInformation().userName;
     }
 
 }

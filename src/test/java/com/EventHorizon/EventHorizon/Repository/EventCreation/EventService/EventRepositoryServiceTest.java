@@ -10,6 +10,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdException;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
@@ -300,5 +301,44 @@ class EventRepositoryServiceTest {
         List<EventHeaderDto> eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageRequest);
 
         Assertions.assertFalse(eventHeaderDtos.isEmpty());
+    }
+    @Test
+    public void testGetAllEventsHeaderDtoReturnsErrors() {
+        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
+        AdsOption adsOption = AdsOption.builder()
+                .name("p")
+                .priority(2)
+                .build();
+        adsOptionRepositry.save(adsOption);
+
+        Location location1 = Location.builder().country("Egypt").city("Cairo").build();
+        Event event1 = Event.builder()
+                .eventAds(adsOption)
+                .eventLocation(location1)
+                .name("Event1")
+                .eventOrganizer(organizer)
+                .description("...")
+                .build();
+
+        Location location2 = Location.builder().country("USA").city("New York").build();
+        Event event2 = Event.builder()
+                .eventAds(adsOption)
+                .eventLocation(location2)
+                .name("Event2")
+                .eventOrganizer(organizer)
+                .description("...")
+                .build();
+
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event1);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event2);
+
+        int pageIndex = 10;
+        int pageSize = 10;
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        Assertions.assertDoesNotThrow(()-> {
+            List<EventHeaderDto> eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageRequest);
+        });
     }
 }
