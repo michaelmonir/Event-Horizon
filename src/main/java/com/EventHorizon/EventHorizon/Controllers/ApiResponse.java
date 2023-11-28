@@ -20,5 +20,9 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
-
+    public ApiResponse(HttpStatus httpStatus, String message, T data) {
+        this.status= HttpStatus.OK;
+        this.message = message;
+        this.data = data;
+    }
 }

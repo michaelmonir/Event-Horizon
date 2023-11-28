@@ -5,12 +5,15 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/event/")
+@CrossOrigin("*")
 public class EventOperationsController {
     @Autowired
     private EventService eventService;
@@ -26,10 +29,34 @@ public class EventOperationsController {
         return new ApiResponse<>( "Found Successfully",detailedEventDTO);
     }
 
+//    @PostMapping("createEvent")//organizer,admin
+//    public ApiResponse createEvent(@RequestBody DetailedEventDto detailedEventDTO) {
+//        int organizerId = 1;
+//        System.out.println("event");
+//        System.out.println("event");
+//        System.out.println("event");
+//        detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
+//        return new ApiResponse<>( "Created Successfully",detailedEventDTO);
+//    }
+
     @PostMapping("createEvent/{organizerId}")//organizer,admin
-    public ApiResponse createEvent(@PathVariable int organizerId, @RequestBody DetailedEventDto detailedEventDTO) {
-        detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
-        return new ApiResponse<>( "Created Successfully",detailedEventDTO);
+    public ResponseEntity<DetailedEventDto> createEvent(@PathVariable int organizerId, @RequestBody DetailedEventDto detailedEventDto) {
+        System.out.println(detailedEventDto);
+        System.out.println("event");
+        System.out.println("event");
+        System.out.println("event");
+        detailedEventDto = this.eventService.createEvent(organizerId, detailedEventDto);
+//        return new ApiResponse<>( "Created Successfully",detailedEventDto);
+        return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
+    }
+
+    @GetMapping("")//organizer,admin
+    public ApiResponse<Integer> donothin()
+    {
+        System.out.println("m");
+        System.out.println("m");
+        System.out.println("m");
+        return new ApiResponse<>(HttpStatus.NOT_FOUND, "", 5);
     }
     @PutMapping("updateEvent/{organizerId}/{eventId}")//organizer,admin
     public ApiResponse updateEvent

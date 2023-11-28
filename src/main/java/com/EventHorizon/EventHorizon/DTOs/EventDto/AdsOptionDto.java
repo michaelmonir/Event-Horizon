@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Data
 public class AdsOptionDto
 {
-    @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
-
     public int id;
     public String name;
     public AdsOptionDto(AdsOption adsOption){
