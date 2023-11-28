@@ -8,21 +8,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/information")
+@RequestMapping("/information/")
 @RestController
+@CrossOrigin("*")
 
 public class InformationController {
     @Autowired
     private InformationService informationService;
-    @GetMapping("/getInformationViewDto")
+    @GetMapping("getInformationViewDto")
     public ResponseEntity<ViewInformationDTO>getInformation(@RequestParam String email){
         return new ResponseEntity<ViewInformationDTO>(informationService.getViewInformationDTO(informationService.getByEmail(email)), HttpStatus.OK);
     }
-    @GetMapping("/getInformationUpdateDto")
+    @GetMapping("getInformationUpdateDto")
     public ResponseEntity<UpdateInformationDTO>getInformationUpdateDto(@RequestParam String email){
         return new ResponseEntity<UpdateInformationDTO>(new UpdateInformationDTO(informationService.getByEmail(email)), HttpStatus.OK);
     }
-    @PutMapping("/updateInformation")
+    @PutMapping("updateInformation")
     public ResponseEntity<ViewInformationDTO>updateInformation(@RequestBody UpdateInformationDTO updateInformationDTO){
         return new ResponseEntity<ViewInformationDTO>(informationService.updateWithDto(updateInformationDTO), HttpStatus.OK);
     }
