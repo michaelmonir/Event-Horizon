@@ -39,7 +39,7 @@ public class ClientService {
     }
 
     public Client getByInformation(Information information) {
-        Optional<Client> client = Optional.of(clientRepository.findByInformation(information));
+        Optional<Client> client = Optional.ofNullable(clientRepository.findByInformation(information));
         if (client.isPresent()) {
             return client.get();
         } else {

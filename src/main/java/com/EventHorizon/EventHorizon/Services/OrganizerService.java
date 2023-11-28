@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Services;
 
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.OrganizerNotFoundException;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
@@ -21,12 +22,12 @@ public class OrganizerService {
     }
 
     public void delete(int id) {
-            Optional<Organizer> organizer = organizerRepository.findById(id);
-            if (organizer.isPresent()) {
-                organizerRepository.deleteById(id);
-            } else {
-                throw new OrganizerNotFoundException();
-            }
+        Optional<Organizer> organizer = organizerRepository.findById(id);
+        if (organizer.isPresent()) {
+            organizerRepository.deleteById(id);
+        } else {
+            throw new OrganizerNotFoundException();
+        }
     }
 
 
@@ -40,7 +41,7 @@ public class OrganizerService {
     }
 
     public Organizer getByInformation(Information information) {
-        Optional<Organizer> organizer = Optional.of(organizerRepository.findByInformation(information));
+        Optional<Organizer> organizer = Optional.ofNullable(organizerRepository.findByInformation(information));
         if (organizer.isPresent()) {
             return organizer.get();
         } else {

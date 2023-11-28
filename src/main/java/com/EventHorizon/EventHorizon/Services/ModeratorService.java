@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Services;
 
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
@@ -39,7 +40,7 @@ public class ModeratorService {
     }
 
     public Moderator getByInformation(Information information) {
-        Optional<Moderator> moderator = Optional.of(moderatorRepository.findByInformation(information));
+        Optional<Moderator> moderator = Optional.ofNullable(moderatorRepository.findByInformation(information));
         if (moderator.isPresent()) {
             return moderator.get();
         } else {

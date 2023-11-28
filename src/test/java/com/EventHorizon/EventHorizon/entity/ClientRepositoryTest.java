@@ -18,13 +18,14 @@ class ClientRepositoryTest {
     private InformationService informationService;
     @Autowired
     InformationCreator informationCreator;
+
     @Test
     public void add() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
+        informationService.add(information);
 
-        Client c1 = clientService.getByID(client.getId());
+        Client c1 = clientService.getByInformation(information);
+
         Information i1 = informationService.getByID(c1.getInformation().getId());
         Assertions.assertTrue(information.equals(i1));
     }
@@ -32,12 +33,13 @@ class ClientRepositoryTest {
     @Test
     public void delete() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
-        clientService.delete(client.getId());
+        informationService.add(information);
+
+        informationService.delete(information.getId());
+
         Assertions.assertThrows(
                 ClientNotFoundException.class, () -> {
-                    clientService.getByID(client.getId());
+                    clientService.getByID(information.getId());
                 }
         );
     }
@@ -45,11 +47,10 @@ class ClientRepositoryTest {
     @Test
     public void getByID() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
+        informationService.add(information);
 
-        Client c1 = clientService.getByID(client.getId());
-
+        Client c = clientService.getByInformation(information);
+        Client c1=clientService.getByID(c.getId());
 
         Information i1 = informationService.getByID(c1.getInformation().getId());
         Assertions.assertTrue(information.equals(i1));
@@ -58,11 +59,10 @@ class ClientRepositoryTest {
     @Test
     public void getByInformation() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
+        informationService.add(information);
 
         Client c1 = clientService.getByInformation(information);
 
-        Assertions.assertEquals(c1, client);
+        Assertions.assertEquals(c1.getInformation(), information);
     }
 }

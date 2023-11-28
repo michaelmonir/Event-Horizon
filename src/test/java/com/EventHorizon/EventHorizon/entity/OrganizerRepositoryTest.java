@@ -22,13 +22,13 @@ class OrganizerRepositoryTest {
     private InformationService informationService;
     @Autowired
     InformationCreator informationCreator;
+
     @Test
     public void add() {
         Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerService.add(organizer);
+        informationService.add(information);
 
-        Organizer o1 = organizerService.getByID(organizer.getId());
+        Organizer o1 = organizerService.getByInformation(information);
         Information i1 = informationService.getByID(o1.getInformation().getId());
 
 
@@ -40,14 +40,11 @@ class OrganizerRepositoryTest {
     @Test
     public void delete() {
         Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerService.add(organizer);
-
-        organizerService.delete(organizer.getId());
-
+        informationService.add(information);
+        informationService.delete(information.getId());
         Assertions.assertThrows(
                 OrganizerNotFoundException.class, () -> {
-                    organizerService.getByID(organizer.getId());
+                    organizerService.getByID(information.getId());
                 }
         );
     }
@@ -56,12 +53,10 @@ class OrganizerRepositoryTest {
     @Test
     public void getByID() {
         Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer client = Organizer.builder().information(information).build();
-        organizerService.add(client);
+        informationService.add(information);
 
-        Organizer o1 = organizerService.getByID(client.getId());
-
-
+        Organizer o = organizerService.getByInformation(information);
+        Organizer o1=organizerService.getByID(o.getId());
         Information i1 = informationService.getByID(o1.getInformation().getId());
 
         Assertions.assertTrue(information.equals(i1));
@@ -70,27 +65,10 @@ class OrganizerRepositoryTest {
     @Test
     public void getByInformation() {
         Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerService.add(organizer);
+        informationService.add(information);
 
         Organizer o1 = organizerService.getByInformation(information);
 
-        Assertions.assertEquals(o1, organizer);
-    }
-
-    @Test
-    public void updateWithDtoTest() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        Information information2 = informationCreator.getInformation("ROLE_ORGANIZER");
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerService.add(organizer);
-        information2.setId(information.getId());
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
-        ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
-        Information i3 = informationService.getByEmail(information.getEmail());
-        Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
-        Assertions.assertEquals(i3.getGender(), information2.getGender());
-        Assertions.assertEquals(i3.userName, information.userName);
-        Assertions.assertEquals(i3.getId(), information.getId());
+        Assertions.assertEquals(o1.getInformation(), information);
     }
 }

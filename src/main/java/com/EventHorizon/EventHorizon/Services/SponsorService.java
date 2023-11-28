@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Services;
 
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
@@ -41,7 +42,7 @@ public class SponsorService {
 
 
     public Sponsor getByInformation(Information information) {
-        Optional<Sponsor> sponsor = Optional.of(sponsorRepository.findByInformation(information));
+        Optional<Sponsor> sponsor = Optional.ofNullable(sponsorRepository.findByInformation(information));
         if (sponsor.isPresent()) {
             return sponsor.get();
         } else {

@@ -21,13 +21,13 @@ class SponsorRepositoryTest {
     private InformationService informationService;
     @Autowired
     InformationCreator informationCreator;
+
     @Test
     public void add() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        Sponsor sponsor = Sponsor.builder().information(information).build();
-        sponsorService.add(sponsor);
+        informationService.add(information);
 
-        Sponsor s1 = sponsorService.getByID(sponsor.getId());
+        Sponsor s1 = sponsorService.getByInformation(information);
         Information i1 = informationService.getByID(s1.getInformation().getId());
 
         Assertions.assertTrue(information.equals(i1));
@@ -37,28 +37,24 @@ class SponsorRepositoryTest {
     @Test
     public void delete() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        Sponsor sponsor = Sponsor.builder().information(information).build();
-        sponsorService.add(sponsor);
-
-        sponsorService.delete(sponsor.getId());
+        informationService.add(information);
+        informationService.delete(information.getId());
 
         Assertions.assertThrows(
                 SponsorNotFoundException.class, () -> {
-                    sponsorService.getByID(sponsor.getId());
+                    sponsorService.getByID(information.getId());
                 }
         );
     }
 
 
-
     @Test
     public void getByID() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        Sponsor sponsor = Sponsor.builder().information(information).build();
-        sponsorService.add(sponsor);
+        informationService.add(information);
 
-        Sponsor s1 = sponsorService.getByID(sponsor.getId());
-
+        Sponsor s = sponsorService.getByInformation(information);
+        Sponsor s1 = sponsorService.getByID(s.getId());
 
         Information i1 = informationService.getByID(s1.getInformation().getId());
 
@@ -69,26 +65,10 @@ class SponsorRepositoryTest {
     @Test
     public void getByInformation() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        Sponsor sponsor = Sponsor.builder().information(information).build();
-        sponsorService.add(sponsor);
+        informationService.add(information);
 
         Sponsor s1 = sponsorService.getByInformation(information);
 
-        Assertions.assertEquals(s1, sponsor);
-    }
-    @Test
-    public void updateWithDtoTest() {
-        Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        Information information2 = informationCreator.getInformation("ROLE_SPONSOR");
-        Sponsor sponsor = Sponsor.builder().information(information).build();
-        sponsorService.add(sponsor);
-        information2.setId(information.getId());
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
-        ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
-        Information i3 = informationService.getByEmail(information.getEmail());
-        Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
-        Assertions.assertEquals(i3.getGender(), information2.getGender());
-        Assertions.assertEquals(i3.userName, information.userName);
-        Assertions.assertEquals(i3.getId(), information.getId());
+        Assertions.assertEquals(s1.getInformation(), information);
     }
 }

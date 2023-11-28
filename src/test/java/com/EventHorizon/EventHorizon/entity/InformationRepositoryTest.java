@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Services.*;
 import org.junit.Assert;
@@ -25,6 +26,7 @@ class InformationRepositoryTest {
     InformationCreator informationCreator;
 
     @Test
+    ////// add information from factory and check if information added
     public void add() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
@@ -42,6 +44,11 @@ class InformationRepositoryTest {
                     informationService.getByID(information.getId());
                 }
         );
+        Assertions.assertThrows(
+                ClientNotFoundException.class, () -> {
+                    clientService.getByInformation(information);
+                }
+        );
     }
 
     @Test
@@ -51,7 +58,6 @@ class InformationRepositoryTest {
         Information information2 = informationCreator.getInformation("ROLE_CLIENT");
         informationService.update(information.getId(), information2);
         Information i1 = informationService.getByID(information.getId());
-
         Assertions.assertTrue(information2.equals(i1));
     }
 
@@ -131,11 +137,13 @@ class InformationRepositoryTest {
     public void updateWithDtoTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         Information information2 = informationCreator.getInformation("ROLE_CLIENT");
-        Client client = Client.builder().information(information).build();
-        clientService.add(client);
+        informationService.add(information);
         information2.setId(information.getId());
+
         UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
+
         ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
+
         Information i3 = informationService.getByEmail(information.getEmail());
         Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
         Assertions.assertEquals(i3.getGender(), information2.getGender());

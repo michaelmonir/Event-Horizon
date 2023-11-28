@@ -20,25 +20,20 @@ public class informationDtos {
     @Test
     void ToInformationDto() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        InformationDTO informationDTO=new InformationDTO(information);
-
-
-
-
+        InformationDTO informationDTO = new InformationDTO(information);
         Assert.assertEquals(information.userName, informationDTO.getUserName());
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
         Assert.assertEquals(information.getGender(), informationDTO.getGender());
         Assert.assertEquals(information.getRole(), informationDTO.getRole());
+        Assert.assertEquals(information.getSignInWithEmail(), informationDTO.getSignInWithEmail());
     }
 
     @Test
     void ToUpdatedDto() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         UpdateInformationDTO informationDTO=new UpdateInformationDTO(information);
-
-
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getGender(), informationDTO.getGender());
