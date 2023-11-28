@@ -16,12 +16,12 @@ public class InformationController {
     @Autowired
     private InformationService informationService;
     @GetMapping("getInformationViewDto")
-    public ResponseEntity<ViewInformationDTO>getInformation(@RequestParam String email){
-        return new ResponseEntity<ViewInformationDTO>(informationService.getViewInformationDTO(informationService.getByEmail(email)), HttpStatus.OK);
+    public ResponseEntity<ViewInformationDTO>getInformation(@RequestParam Integer id){
+        return new ResponseEntity<ViewInformationDTO>(informationService.getViewInformationDTO(informationService.getByID(id)), HttpStatus.OK);
     }
     @GetMapping("getInformationUpdateDto")
-    public ResponseEntity<UpdateInformationDTO>getInformationUpdateDto(@RequestParam String email){
-        return new ResponseEntity<UpdateInformationDTO>(new UpdateInformationDTO(informationService.getByEmail(email)), HttpStatus.OK);
+    public ResponseEntity<UpdateInformationDTO>getInformationUpdateDto(@RequestParam Integer id){
+        return new ResponseEntity<UpdateInformationDTO>(new UpdateInformationDTO(informationService.getByID(id)), HttpStatus.OK);
     }
     @PutMapping("updateInformation")
     public ResponseEntity<ViewInformationDTO>updateInformation(@RequestBody UpdateInformationDTO updateInformationDTO){

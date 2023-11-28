@@ -111,7 +111,7 @@ public class ProxyService {
                     "To verify your email please use the next code"+"\n\n"+"Verification Code :\t"+information.getVerifyCode()+"\n\n"+"We look forward to see you in next event\n\n"+"Sincerely,\n" +
                     "EventHorizon Team");
         }
-        return AuthenticationResponse.builder().token(jwt).build();
+        return AuthenticationResponse.builder().id(information.getId()).token(jwt).build();
     }
 
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest,int withGmail) {
@@ -129,7 +129,7 @@ public class ProxyService {
             throw new ForbiddenException("Invalid Request");
         }
         String jwt=generateToken(information);
-        return AuthenticationResponse.builder().token(jwt).build();
+        return AuthenticationResponse.builder().id(information.getId()).token(jwt).build();
     }
     private void putEnable(String mail){
         Information information=informationService.getByEmail(mail);

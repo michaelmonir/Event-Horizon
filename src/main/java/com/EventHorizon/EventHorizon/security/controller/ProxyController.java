@@ -23,9 +23,7 @@ public class ProxyController {
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
     @PostMapping("verifyMail")
-    public ResponseEntity<Boolean> verifyMail(
-            @RequestBody VerifyRequest verifyRequest
-    ){
+    public ResponseEntity<Boolean> verifyMail(@RequestBody VerifyRequest verifyRequest){
         return new ResponseEntity<>(proxyService.verifyCode(verifyRequest),HttpStatus.OK);
     }
     @PostMapping("basicSignIn")
@@ -36,7 +34,6 @@ public class ProxyController {
     public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
-
     @PostMapping("signInWithGmail")
     public ResponseEntity<AuthenticationResponse> signInWithGmail(@RequestBody AuthenticationRequest authenticationRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest,1),HttpStatus.OK);
