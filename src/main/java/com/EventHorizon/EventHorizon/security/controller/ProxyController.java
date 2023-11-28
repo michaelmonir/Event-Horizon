@@ -11,28 +11,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/proxy")
+@RequestMapping("/proxy/")
+@CrossOrigin("*")
+
 @RequiredArgsConstructor
 public class ProxyController {
 
     private final ProxyService proxyService;
-    @PostMapping("/basicSignUp")
+    @PostMapping("basicSignUp")
     public ResponseEntity<AuthenticationResponse> basicSignUp(@RequestBody InformationDTO registerRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
-    @GetMapping("/verifyMail")
-    public ResponseEntity<Boolean> verifyMail(@RequestBody VerifyRequest verifyRequest){
+    @PostMapping("verifyMail")
+    public ResponseEntity<Boolean> verifyMail(
+            @RequestBody VerifyRequest verifyRequest
+    ){
         return new ResponseEntity<>(proxyService.verifyCode(verifyRequest),HttpStatus.OK);
     }
-    @PostMapping("/basicSignIn")
+    @PostMapping("basicSignIn")
     public ResponseEntity<AuthenticationResponse> basicSignIn(@RequestBody AuthenticationRequest authenticationRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest,0),HttpStatus.OK);
     }
-    @PostMapping("/signUpWithGmail")
+    @PostMapping("signUpWithGmail")
     public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest),HttpStatus.OK);
     }
-    @PostMapping("/signInWithGmail")
+
+    @PostMapping("signInWithGmail")
     public ResponseEntity<AuthenticationResponse> signInWithGmail(@RequestBody AuthenticationRequest authenticationRequest){
         return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest,1),HttpStatus.OK);
     }
