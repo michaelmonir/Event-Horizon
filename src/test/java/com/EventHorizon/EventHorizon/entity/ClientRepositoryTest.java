@@ -23,9 +23,7 @@ class ClientRepositoryTest {
     public void add() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
-
         Client c1 = clientService.getByInformation(information);
-
         Information i1 = informationService.getByID(c1.getInformation().getId());
         Assertions.assertTrue(information.equals(i1));
     }

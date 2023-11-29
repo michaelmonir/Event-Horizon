@@ -52,4 +52,14 @@ public class informationDtos {
         Assert.assertEquals(information.getGender(), informationDTO.getGender());
         Assert.assertEquals(information.getRole(), informationDTO.getRole());
     }
+
+    @Test
+    void ToInformationTest() {
+        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information);
+        Information information1 = updateInformationDTO.toInformation(information);
+        Assert.assertEquals(information1.getRole(), information.getRole());
+
+    }
+
 }

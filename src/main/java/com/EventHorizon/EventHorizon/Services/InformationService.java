@@ -101,11 +101,11 @@ public class InformationService {
         return list;
     }
 
-    public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO){
+    public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Optional<Information> informationOp = informationRepository.findById(updateInformationDTO.getId());
         if (informationOp.isPresent()) {
             UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
-            return getViewInformationDTO( myService.update(updateInformationDTO,informationOp.get()));
+            return getViewInformationDTO(myService.update(updateInformationDTO, informationOp.get()));
         } else {
             throw new InformationNotFoundException();
         }
