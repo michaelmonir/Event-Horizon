@@ -7,7 +7,7 @@ public class UserNotFoundException extends BaseException
 {
     public UserNotFoundException()
     {
-        this.httpStatus = HttpStatus.FORBIDDEN;
+        this.httpStatus = HttpStatus.NOT_FOUND;
         this.message = "User not found";
     }
 }
