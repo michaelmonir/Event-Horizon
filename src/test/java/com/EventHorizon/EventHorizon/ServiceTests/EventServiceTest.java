@@ -6,11 +6,13 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Services.EventService;
+import com.EventHorizon.EventHorizon.Services.InformationService;
 import com.EventHorizon.EventHorizon.Services.OrganizerService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
@@ -33,6 +35,8 @@ public class EventServiceTest
     private DelaitedEventDtoMapper delaitedEventDtoMapper;
     @Mock
     private ViewEventDtoMapper viewEventDtoMapper;
+    @Mock
+    private InformationService informationService;
     @InjectMocks
     private EventService eventService;
 
@@ -40,6 +44,7 @@ public class EventServiceTest
     private ViewEventDto customViewEventDto;
     private DetailedEventDto customDetailedEventDto;
     private Organizer customOrganizer;
+    private Information customInformation;
 
     @Test
     public void gettingEventForUser() {
@@ -114,9 +119,12 @@ public class EventServiceTest
                 .thenReturn(this.customViewEventDto);
         Mockito.when(this.organizerService.getByID(Mockito.any(int.class)))
                 .thenReturn(this.customOrganizer);
+        Mockito.when(this.informationService.getByID(Mockito.any(int.class)))
+                .thenReturn(this.customInformation);
     }
     private void initializeCustomDTOs() {
         this.initializeCustomEvent();
+        this.initializeCustomInformation();
         this.initializeCustomOrganizer();
         this.initializeViewEventDTO();
         this.initializeDetailedEventDTO();
@@ -129,9 +137,15 @@ public class EventServiceTest
                 .eventAds(new AdsOption())
                 .build();
     }
+    private void initializeCustomInformation() {
+        this.customInformation=Information.builder()
+                .id(1)
+                .build();
+    }
     private void initializeCustomOrganizer() {
         this.customOrganizer=Organizer.builder()
                 .id(1)
+                .information(customInformation)
                 .build();
     }
     private void initializeViewEventDTO(){
