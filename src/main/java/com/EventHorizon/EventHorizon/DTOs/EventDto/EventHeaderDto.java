@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode
 public class EventHeaderDto {
+    private int id;
     private String name;
     private String eventCategory;
     private Date eventDate;
@@ -20,6 +21,7 @@ public class EventHeaderDto {
     private OrganizerHeaderDto eventOrganizer;
 
     public EventHeaderDto(Event event) {
+        this.id = event.getId();
         this.name = event.getName();
         this.eventCategory = event.getEventCategory();
         this.eventDate = event.getEventDate();
@@ -30,11 +32,12 @@ public class EventHeaderDto {
     @Override
     public String toString() {
         return "EventHeaderDto{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", eventCategory='" + eventCategory + '\'' +
                 ", eventDate=" + eventDate +
                 ", eventLocation=" + eventLocation +
+                ", eventOrganizer=" + eventOrganizer +
                 '}';
     }
-
 }

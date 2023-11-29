@@ -8,7 +8,7 @@ public class CommonConfigs {
             "/proxy/**",
             "/information/**",
             "/event/eventForUser/**",
-            "/event/EventHeaders/**",
+            "/event/dashboard/**",
     };
     static final String[] AUTH_ORGANIZER = {
             "/event/EventForOrganizer/**",

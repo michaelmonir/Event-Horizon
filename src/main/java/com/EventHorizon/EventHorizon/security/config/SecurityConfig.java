@@ -28,12 +28,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         c->c
-                               .requestMatchers(CommonConfigs.AUTH_WHITELIST)
-                               .permitAll()
-                               .requestMatchers(CommonConfigs.AUTH_ORGANIZER)
-                               .hasAnyRole("ORGANIZER","ADMIN")
+//                               .requestMatchers(CommonConfigs.AUTH_WHITELIST)
+//                               .permitAll()
+//                               .requestMatchers(CommonConfigs.AUTH_ORGANIZER)
+//                               .hasAnyRole("ORGANIZER","ADMIN")
                                 .anyRequest()
-                                .authenticated()
+                                .permitAll()
                 ).sessionManagement(
                         s->s
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
