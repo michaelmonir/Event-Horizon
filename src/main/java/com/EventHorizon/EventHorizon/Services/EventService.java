@@ -12,9 +12,7 @@ import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.UserInformationService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +25,6 @@ public class EventService {
     @Autowired
     private DashboardRepositoryService dashboardRepositoryService;
     @Autowired
-    private OrganizerService organizerService;
-    @Autowired
     private UserEventService userEventService;
     @Autowired
     private DelaitedEventDtoMapper delaitedEventDtoMapper;
@@ -36,6 +32,8 @@ public class EventService {
     private InformationService informationService;
     @Autowired
     private ViewEventDtoMapper viewEventDtoMapper;
+    @Autowired
+    private OrganizerInformationService organizerInformationService;
 
     public ViewEventDto getEventForUser(int eventId) {
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
@@ -61,7 +59,6 @@ public class EventService {
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
 
-        OrganizerInformationService organizerInformationService = new OrganizerInformationService();
         User user = organizerInformationService.getUserByInformation(information);
 
         return (Organizer)user;

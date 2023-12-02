@@ -21,21 +21,19 @@ class InformationRepositoryTest {
     @Autowired
     private InformationService informationService;
     @Autowired
-    ClientService clientService;
-    @Autowired
     InformationCreator informationCreator;
 
     @Test
     ////// add information from factory and check if information added
-    public void add() {
+    public void addInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
-        Client c1 = clientService.getByInformation(information);
-        Assertions.assertEquals(c1.getInformation(), information);
+        Information information2 = informationService.getByID(information.getId());
+        Assertions.assertEquals(information2, information);
     }
 
     @Test
-    public void delete() {
+    public void deleteInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         informationService.delete(information.getId());
@@ -44,15 +42,10 @@ class InformationRepositoryTest {
                     informationService.getByID(information.getId());
                 }
         );
-        Assertions.assertThrows(
-                ClientNotFoundException.class, () -> {
-                    clientService.getByInformation(information);
-                }
-        );
     }
 
     @Test
-    public void update() {
+    public void updateInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         Information information2 = informationCreator.getInformation("ROLE_CLIENT");
@@ -62,7 +55,7 @@ class InformationRepositoryTest {
     }
 
     @Test
-    public void getByID() {
+    public void getByIdInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         Information i1 = informationService.getByID(information.getId());
@@ -70,7 +63,7 @@ class InformationRepositoryTest {
     }
 
     @Test
-    public void getByEmail() {
+    public void getByEmailInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         Information i1 = informationService.getByEmail(information.getEmail());
@@ -78,7 +71,7 @@ class InformationRepositoryTest {
     }
 
     @Test
-    public void getByUsername() {
+    public void getByUsernameInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         Information i1 = informationService.getByUserName(information.userName);
@@ -87,7 +80,7 @@ class InformationRepositoryTest {
 
 
     @Test
-    public void getByFirstname() {
+    public void getByFirstnameInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         List<Information> i =
@@ -97,7 +90,7 @@ class InformationRepositoryTest {
 
 
     @Test
-    public void getByLastname() {
+    public void getByLastnameInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         List<Information> i =
@@ -107,7 +100,7 @@ class InformationRepositoryTest {
 
 
     @Test
-    public void getByGender() {
+    public void getByGenderInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         List<Information> i =
@@ -116,7 +109,7 @@ class InformationRepositoryTest {
     }
 
     @Test
-    public void getByRole() {
+    public void getByRoleInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         List<Information> i =
@@ -124,7 +117,7 @@ class InformationRepositoryTest {
         Assertions.assertEquals(i.get(0).getRole(), information.getRole());
     }
     @Test
-    public void getBySignInTest() {
+    public void getBySignInTestInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
         List<Information> i =
@@ -134,7 +127,7 @@ class InformationRepositoryTest {
 
 
     @Test
-    public void updateWithDtoTest() {
+    public void updateWithDtoInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         Information information2 = informationCreator.getInformation("ROLE_CLIENT");
         informationService.add(information);
@@ -153,7 +146,7 @@ class InformationRepositoryTest {
 
 
     @Test
-    public void getViewInformationDTOTest() {
+    public void getViewInformationDTOInformationTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
         ViewInformationDTO informationDTO = new ViewInformationDTO(information);
         Assert.assertEquals(information.userName, informationDTO.getUserName());

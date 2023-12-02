@@ -27,26 +27,25 @@ public class InformationService {
     }
 
     public void delete(int id) {
-        Optional<Information> informationOp = informationRepository.findById(id);
-        if (!informationOp.isPresent())
-            throw new InformationNotFoundException();
-
+        Information information = this.getByID(id);
         UserInformationService myService =
-                informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
-        myService.delete(informationOp.get());
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        myService.delete(information);
     }
 
 
     public void update(int id, Information newOne) {
-            Optional<Information> old = informationRepository.findById(id);
-            if (old.isPresent()) {
-                Information oldOne = old.get();
-                newOne.setId(oldOne.getId());
-                informationRepository.save(newOne);
-            } else {
-                throw new InformationNotFoundException();
-            }
+        Information oldOne = this.getByID(id);
+        newOne.setId(oldOne.getId());
+        informationRepository.save(newOne);
     }
+
+    public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
+        Information information = this.getByID(updateInformationDTO.getId());
+        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        return new ViewInformationDTO(myService.update(updateInformationDTO, information));
+    }
+
 
     public Information getByID(int id) {
         Optional<Information> information = informationRepository.findById(id);
@@ -96,11 +95,4 @@ public class InformationService {
         return list;
     }
 
-    public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
-        Optional<Information> informationOp = informationRepository.findById(updateInformationDTO.getId());
-        if (!informationOp.isPresent())
-            throw new InformationNotFoundException();
-        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
-        return new ViewInformationDTO(myService.update(updateInformationDTO, informationOp.get()));
-    }
 }

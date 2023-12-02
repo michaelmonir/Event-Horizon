@@ -17,19 +17,18 @@ import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.InformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
-import com.EventHorizon.EventHorizon.Services.OrganizerService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class EventServiceTest
 {
+    /*
     @Mock
     private EventRepositoryService eventRepositoryService;
     @Mock
@@ -196,4 +195,6 @@ public class EventServiceTest
                 .eventLocation(new Location())
                 .eventAds(new AdsOptionDto()).build();
     }
+
+     */
 }

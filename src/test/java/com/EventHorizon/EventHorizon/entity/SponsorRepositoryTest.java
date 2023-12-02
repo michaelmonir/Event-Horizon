@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.Services.InformationService;
-import com.EventHorizon.EventHorizon.Services.SponsorService;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.SponsorInformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,43 +13,40 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SponsorRepositoryTest {
     @Autowired
-    private SponsorService sponsorService;
-    @Autowired
-    private InformationService informationService;
+    private SponsorInformationService sponsorInformationService;
     @Autowired
     InformationCreator informationCreator;
 
     @Test
-    public void add() {
+    public void addSponsorTest() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        informationService.add(information);
+        sponsorInformationService.add(information);
 
-        Sponsor s1 = sponsorService.getByInformation(information);
-        Information i1 = informationService.getByID(s1.getInformation().getId());
+        Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);
 
-        Assertions.assertTrue(information.equals(i1));
+        Assertions.assertTrue(information.equals(s1.getInformation()));
 
     }
 
     @Test
-    public void delete() {
+    public void deleteSponsorTest() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        informationService.add(information);
-        informationService.delete(information.getId());
+        sponsorInformationService.add(information);
+        sponsorInformationService.delete(information);
 
         Assertions.assertThrows(
                 SponsorNotFoundException.class, () -> {
-                    sponsorService.getByInformation(information);
+                    sponsorInformationService.getUserByInformation(information);
                 }
         );
     }
 
     @Test
-    public void getByInformation() {
+    public void getByInformationSponsorTest() {
         Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        informationService.add(information);
+        sponsorInformationService.add(information);
 
-        Sponsor s1 = sponsorService.getByInformation(information);
+        Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);
 
         Assertions.assertEquals(s1.getInformation(), information);
     }

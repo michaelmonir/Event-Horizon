@@ -1,10 +1,11 @@
 package com.EventHorizon.EventHorizon.entity;
 
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Services.ClientService;
 import com.EventHorizon.EventHorizon.Services.InformationService;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +14,36 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ClientRepositoryTest {
     @Autowired
-    private ClientService clientService;
-    @Autowired
-    private InformationService informationService;
+    private ClientInformationService clientInformationService;
+
     @Autowired
     InformationCreator informationCreator;
 
     @Test
-    public void add() {
+    public void addClientTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        informationService.add(information);
-        Client c1 = clientService.getByInformation(information);
-        Information i1 = informationService.getByID(c1.getInformation().getId());
-        Assertions.assertTrue(information.equals(i1));
+        clientInformationService.add(information);
+        Client c1 = (Client) clientInformationService.getUserByInformation(information);
+        Assertions.assertTrue(information.equals(c1.getInformation()));
     }
 
     @Test
-    public void delete() {
+    public void deleteClientTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        informationService.add(information);
-
-        informationService.delete(information.getId());
-
+        clientInformationService.add(information);
+        clientInformationService.delete(information);
         Assertions.assertThrows(
                 ClientNotFoundException.class, () -> {
-                    clientService.getByInformation(information);
+                    clientInformationService.getUserByInformation(information);
                 }
         );
     }
-
     @Test
-    public void getByInformation() {
+    public void getByInformationClientTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        informationService.add(information);
-
-        Client c1 = clientService.getByInformation(information);
-
+        clientInformationService.add(information);
+        Client c1 = (Client) clientInformationService.getUserByInformation(information);
         Assertions.assertEquals(c1.getInformation(), information);
     }
+
 }
