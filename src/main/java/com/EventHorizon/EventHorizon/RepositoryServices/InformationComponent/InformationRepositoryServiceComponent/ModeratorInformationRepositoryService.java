@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.InformationServiceComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 
-public class ModeratorInformationService implements UserInformationService{
+public class ModeratorInformationRepositoryService implements UserInformationRepositoryService {
     @Autowired
     ModeratorRepository moderatorRepository;
 

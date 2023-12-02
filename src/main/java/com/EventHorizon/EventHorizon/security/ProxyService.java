@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyReque
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
 import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
-import com.EventHorizon.EventHorizon.Services.InformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +25,7 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class ProxyService {
-    private final InformationService informationService;
+    private final InformationRepositoryService informationService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;

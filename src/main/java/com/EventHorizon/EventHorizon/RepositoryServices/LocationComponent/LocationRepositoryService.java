@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices;
+package com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;

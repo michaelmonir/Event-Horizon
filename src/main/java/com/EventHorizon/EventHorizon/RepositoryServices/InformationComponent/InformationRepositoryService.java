@@ -1,12 +1,12 @@
-package com.EventHorizon.EventHorizon.Services;
+package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.*;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.UserInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +14,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InformationService {
+public class InformationRepositoryService {
     @Autowired
     InformationRepository informationRepository;
     @Autowired
-    InformationServiceFactory informationServiceFactory;
+    InformationRepositoryServiceFactory informationServiceFactory;
 
     public void add(Information information) {
-        UserInformationService myService =
+        UserInformationRepositoryService myService =
                 informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.add(information);
     }
 
     public void delete(int id) {
         Information information = this.getByID(id);
-        UserInformationService myService =
+        UserInformationRepositoryService myService =
                 informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.delete(information);
     }
@@ -42,7 +42,7 @@ public class InformationService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Information information = this.getByID(updateInformationDTO.getId());
-        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
 

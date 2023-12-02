@@ -1,21 +1,21 @@
-package com.EventHorizon.EventHorizon.Services.InformationServiceComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent;
 
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.RoleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
-public class InformationServiceFactory{
+public class InformationRepositoryServiceFactory {
 
     @Autowired
-    private ClientInformationService clientInformationService;
+    private ClientInformationRepositoryService clientInformationService;
     @Autowired
-    private ModeratorInformationService moderatorInformationService;
+    private ModeratorInformationRepositoryService moderatorInformationService;
     @Autowired
-    private OrganizerInformationService organizerInformationService;
+    private OrganizerInformationRepositoryService organizerInformationService;
     @Autowired
-    private SponsorInformationService sponsorInformationService;
+    private SponsorInformationRepositoryService sponsorInformationService;
 
-    public UserInformationService getUserInformationServiceByRole(String role)
+    public UserInformationRepositoryService getUserInformationServiceByRole(String role)
     {
         if (role.equals("ROLE_CLIENT"))
             return this.clientInformationService;

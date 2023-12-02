@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.security.config;
 
-import com.EventHorizon.EventHorizon.Services.InformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final InformationService informationService;
+    private final InformationRepositoryService informationService;
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserDetailsService() {

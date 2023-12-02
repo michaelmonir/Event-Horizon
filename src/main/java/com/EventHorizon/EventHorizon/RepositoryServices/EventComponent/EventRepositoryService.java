@@ -1,7 +1,5 @@
-package com.EventHorizon.EventHorizon.RepositoryServices;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;

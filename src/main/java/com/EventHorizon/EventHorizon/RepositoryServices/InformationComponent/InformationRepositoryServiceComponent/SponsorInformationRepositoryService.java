@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.InformationServiceComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class SponsorInformationService implements UserInformationService {
+public class SponsorInformationRepositoryService implements UserInformationRepositoryService {
     @Autowired
     SponsorRepository sponsorRepository;
 

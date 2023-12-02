@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.InformationServiceComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 
-public class ClientInformationService implements UserInformationService {
+public class ClientInformationRepositoryService implements UserInformationRepositoryService {
 
     @Autowired
     private ClientRepository clientRepository;

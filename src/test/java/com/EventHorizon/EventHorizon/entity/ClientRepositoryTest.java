@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ClientInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ClientRepositoryTest {
     @Autowired
-    private ClientInformationService clientInformationService;
+    private ClientInformationRepositoryService clientInformationService;
 
     @Autowired
     InformationCreator informationCreator;

@@ -5,13 +5,13 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
-import com.EventHorizon.EventHorizon.RepositoryServices.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +28,11 @@ public class EventService {
     @Autowired
     private DelaitedEventDtoMapper delaitedEventDtoMapper;
     @Autowired
-    private InformationService informationService;
+    private InformationRepositoryService informationService;
     @Autowired
     private ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
-    private OrganizerInformationService organizerInformationService;
+    private OrganizerInformationRepositoryService organizerInformationService;
 
     public ViewEventDto getEventForUser(int eventId) {
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
@@ -83,7 +83,7 @@ public class EventService {
         this.eventRepositoryService.deleteEvent(eventId);
     }
 
-    private Organizer getOrganizerFromInformationId(int inforamtionID) {
+    public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
 
         return (Organizer)organizerInformationService.getUserByInformation(information);

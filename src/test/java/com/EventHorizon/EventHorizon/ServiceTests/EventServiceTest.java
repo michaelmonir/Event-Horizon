@@ -6,17 +6,14 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Services.EventService;
-import com.EventHorizon.EventHorizon.Services.InformationService;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,11 +32,13 @@ public class EventServiceTest
     @Mock
     private ViewEventDtoMapper viewEventDtoMapper;
     @Mock
-    private InformationService informationService;
+    private InformationRepositoryService informationService;
     @InjectMocks
     private EventService eventService;
     @Mock
-    private OrganizerInformationService organizerInformationService;
+    private OrganizerInformationRepositoryService organizerInformationService;
+    @Mock
+    private UserEventService userEventService;
 
     private Event customEvent;
     private ViewEventDto customViewEventDto;
@@ -129,8 +128,7 @@ public class EventServiceTest
         Mockito.when(this.informationService.getByID(Mockito.any(int.class)))
                 .thenReturn(this.customInformation);
     }
-    private void initializeOrganizerInformationService()
-    {
+    private void initializeOrganizerInformationService() {
         Mockito.when(this.organizerInformationService.getUserByInformation(Mockito.any(Information.class)))
                 .thenReturn(this.customOrganizer);
     }

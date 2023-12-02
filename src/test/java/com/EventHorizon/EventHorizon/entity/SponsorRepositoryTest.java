@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.SponsorInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SponsorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SponsorRepositoryTest {
     @Autowired
-    private SponsorInformationService sponsorInformationService;
+    private SponsorInformationRepositoryService sponsorInformationService;
     @Autowired
     InformationCreator informationCreator;
 

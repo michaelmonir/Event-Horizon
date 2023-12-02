@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
-import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ModeratorInformationService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ModeratorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ModeratorRepositoryTest {
     @Autowired
-    private ModeratorInformationService moderatorInformationService;
+    private ModeratorInformationRepositoryService moderatorInformationService;
     @Autowired
     private InformationCreator informationCreator;
 
