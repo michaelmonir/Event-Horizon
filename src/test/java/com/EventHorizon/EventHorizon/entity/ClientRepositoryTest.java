@@ -1,10 +1,8 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Services.InformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

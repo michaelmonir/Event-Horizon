@@ -6,7 +6,6 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
-import com.EventHorizon.EventHorizon.Exceptions.UserNotAnOrganizerException;
 import com.EventHorizon.EventHorizon.RepositoryServices.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
@@ -56,14 +55,6 @@ public class EventService {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
 
-    public Organizer getOrganizerFromInformationId(int inforamtionID) {
-        Information information = informationService.getByID(inforamtionID);
-
-        User user = organizerInformationService.getUserByInformation(information);
-
-        return (Organizer)user;
-    }
-
     public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
         Event event = this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
@@ -90,5 +81,11 @@ public class EventService {
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
         this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         this.eventRepositoryService.deleteEvent(eventId);
+    }
+
+    private Organizer getOrganizerFromInformationId(int inforamtionID) {
+        Information information = informationService.getByID(inforamtionID);
+
+        return (Organizer)organizerInformationService.getUserByInformation(information);
     }
 }

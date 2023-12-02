@@ -9,7 +9,6 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
-import com.EventHorizon.EventHorizon.Exceptions.UserNotAnOrganizerException;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
@@ -17,6 +16,7 @@ import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.InformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,13 +28,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class EventServiceTest
 {
-    /*
     @Mock
     private EventRepositoryService eventRepositoryService;
-    @Mock
-    private UserEventService userEventService;
-    @Mock
-    private OrganizerService organizerService;
     @Mock
     private DelaitedEventDtoMapper delaitedEventDtoMapper;
     @Mock
@@ -44,9 +39,7 @@ public class EventServiceTest
     @InjectMocks
     private EventService eventService;
     @Mock
-    private InformationServiceFactory informationServiceFactory;
-    @Mock
-    private ClientInformationService clientInformationService;
+    private OrganizerInformationService organizerInformationService;
 
     private Event customEvent;
     private ViewEventDto customViewEventDto;
@@ -95,25 +88,6 @@ public class EventServiceTest
     }
 
     @Test
-    public void getOrganizerFromInformationId() {
-        this.initializeMocksAndCustomDTOs();
-        Client client = Client.builder()
-                        .information(this.customInformation)
-                        .build();
-        Mockito.when(informationServiceFactory.getUserInformationServiceByRole(Mockito.any(String.class)))
-                .thenReturn(this.clientInformationService);
-
-//        Mockito.when(clientInformationService.getUserByInformation(Mockito.any(Information.class)))
-//                .thenReturn(client);
-
-        Assertions.assertThrows(
-                UserNotAnOrganizerException.class, () -> {
-                    this.eventService.getOrganizerFromInformationId(this.customInformation.getId());
-                }
-        );
-    }
-
-    @Test
     public void deleteEvent() {
         this.initializeMocksAndCustomDTOs();
         this.eventService.deleteEvent(1, 1);
@@ -126,6 +100,7 @@ public class EventServiceTest
         this.initializeDetailedEventDtoMapper();
         this.initializeEventDtoMapper();
         this.initializerInformationService();
+        this.initializeOrganizerInformationService();
     }
 
     private void initializeEventRepositoryServiceMockito() {
@@ -153,6 +128,11 @@ public class EventServiceTest
     private void initializerInformationService() {
         Mockito.when(this.informationService.getByID(Mockito.any(int.class)))
                 .thenReturn(this.customInformation);
+    }
+    private void initializeOrganizerInformationService()
+    {
+        Mockito.when(this.organizerInformationService.getUserByInformation(Mockito.any(Information.class)))
+                .thenReturn(this.customOrganizer);
     }
 
 
@@ -195,6 +175,4 @@ public class EventServiceTest
                 .eventLocation(new Location())
                 .eventAds(new AdsOptionDto()).build();
     }
-
-     */
 }
