@@ -26,7 +26,7 @@ public class RestExceptionHandler
     {
         ErrorResponse error = new ErrorResponse();
         error.status = HttpStatus.BAD_REQUEST.value();
-        error.message = "Wrong Event Format";
+        error.message = "Unexpected Error";
         error.timestamp = System.currentTimeMillis();
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

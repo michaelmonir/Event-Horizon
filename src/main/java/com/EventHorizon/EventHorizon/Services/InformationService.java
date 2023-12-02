@@ -28,13 +28,12 @@ public class InformationService {
 
     public void delete(int id) {
         Optional<Information> informationOp = informationRepository.findById(id);
-        if (informationOp.isPresent()) {
-            UserInformationService myService =
-                    informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
-            myService.delete(informationOp.get());
-        } else {
+        if (!informationOp.isPresent())
             throw new InformationNotFoundException();
-        }
+
+        UserInformationService myService =
+                informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
+        myService.delete(informationOp.get());
     }
 
 
@@ -51,29 +50,25 @@ public class InformationService {
 
     public Information getByID(int id) {
         Optional<Information> information = informationRepository.findById(id);
-        if (information.isPresent()) {
-            return information.get();
-        } else {
+        if (!information.isPresent())
             throw new InformationNotFoundException();
-        }
+
+        return information.get();
     }
 
     public Information getByEmail(String email) {
         Optional<Information> information = Optional.ofNullable(informationRepository.findByEmail(email));
-        if (information.isPresent()) {
-            return information.get();
-        } else {
+        if (!information.isPresent())
             throw new InformationNotFoundException();
-        }
+        return information.get();
     }
 
     public Information getByUserName(String username) {
         Optional<Information> information = Optional.ofNullable(informationRepository.findByUserName(username));
-        if (information.isPresent()) {
-            return information.get();
-        } else {
+        if (!information.isPresent())
             throw new InformationNotFoundException();
-        }
+
+        return information.get();
     }
 
     public List<Information> getByLastName(String lastname) {
@@ -103,16 +98,9 @@ public class InformationService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Optional<Information> informationOp = informationRepository.findById(updateInformationDTO.getId());
-        if (informationOp.isPresent()) {
-            UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
-            return getViewInformationDTO(myService.update(updateInformationDTO, informationOp.get()));
-        } else {
+        if (!informationOp.isPresent())
             throw new InformationNotFoundException();
-        }
-    }
-
-    public ViewInformationDTO getViewInformationDTO(Information information) {
-        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
-        return new ViewInformationDTO(information);
+        UserInformationService myService = informationServiceFactory.getUserInformationServiceByRole(informationOp.get().getRole());
+        return new ViewInformationDTO(myService.update(updateInformationDTO, informationOp.get()));
     }
 }

@@ -29,16 +29,6 @@ public class ModeratorService {
         }
     }
 
-
-    public Moderator getByID(int id) {
-        Optional<Moderator> moderator = moderatorRepository.findById(id);
-        if (moderator.isPresent()) {
-            return moderator.get();
-        } else {
-            throw new ModeratorNotFoundException();
-        }
-    }
-
     public Moderator getByInformation(Information information) {
         Optional<Moderator> moderator = Optional.ofNullable(moderatorRepository.findByInformation(information));
         if (moderator.isPresent()) {

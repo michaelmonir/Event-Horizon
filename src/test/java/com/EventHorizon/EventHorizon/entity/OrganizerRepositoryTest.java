@@ -31,9 +31,7 @@ class OrganizerRepositoryTest {
         Organizer o1 = organizerService.getByInformation(information);
         Information i1 = informationService.getByID(o1.getInformation().getId());
 
-
         Assertions.assertTrue(information.equals(i1));
-
     }
 
 
@@ -44,22 +42,9 @@ class OrganizerRepositoryTest {
         informationService.delete(information.getId());
         Assertions.assertThrows(
                 OrganizerNotFoundException.class, () -> {
-                    organizerService.getByID(information.getId());
+                    organizerService.getByInformation(information);
                 }
         );
-    }
-
-
-    @Test
-    public void getByID() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
-        informationService.add(information);
-
-        Organizer o = organizerService.getByInformation(information);
-        Organizer o1=organizerService.getByID(o.getId());
-        Information i1 = informationService.getByID(o1.getInformation().getId());
-
-        Assertions.assertTrue(information.equals(i1));
     }
 
     @Test

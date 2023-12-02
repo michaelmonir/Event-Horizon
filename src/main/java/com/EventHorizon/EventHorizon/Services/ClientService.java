@@ -29,15 +29,6 @@ public class ClientService {
         }
     }
 
-    public Client getByID(int id) {
-        Optional<Client> client = clientRepository.findById(id);
-        if (client.isPresent()) {
-            return client.get();
-        } else {
-            throw new ClientNotFoundException();
-        }
-    }
-
     public Client getByInformation(Information information) {
         Optional<Client> client = Optional.ofNullable(clientRepository.findByInformation(information));
         if (client.isPresent()) {

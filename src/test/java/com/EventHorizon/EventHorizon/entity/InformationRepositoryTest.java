@@ -155,7 +155,7 @@ class InformationRepositoryTest {
     @Test
     public void getViewInformationDTOTest() {
         Information information = informationCreator.getInformation("ROLE_CLIENT");
-        ViewInformationDTO informationDTO = informationService.getViewInformationDTO(information);
+        ViewInformationDTO informationDTO = new ViewInformationDTO(information);
         Assert.assertEquals(information.userName, informationDTO.getUserName());
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());

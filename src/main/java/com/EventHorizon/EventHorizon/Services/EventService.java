@@ -5,11 +5,16 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
+import com.EventHorizon.EventHorizon.Exceptions.UserNotAnOrganizerException;
 import com.EventHorizon.EventHorizon.RepositoryServices.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.UserInformationService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +35,7 @@ public class EventService {
     @Autowired
     private InformationService informationService;
     @Autowired
-    ViewEventDtoMapper viewEventDtoMapper;
+    private ViewEventDtoMapper viewEventDtoMapper;
 
     public ViewEventDto getEventForUser(int eventId) {
         Event event = this.eventRepositoryService.getEventAndHandleNotFound(eventId);
@@ -55,8 +60,11 @@ public class EventService {
 
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
-        Organizer organizer = organizerService.getByInformation(information);
-        return organizer;
+
+        OrganizerInformationService organizerInformationService = new OrganizerInformationService();
+        User user = organizerInformationService.getUserByInformation(information);
+
+        return (Organizer)user;
     }
 
     public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {

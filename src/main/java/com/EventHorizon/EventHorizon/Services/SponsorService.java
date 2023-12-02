@@ -31,16 +31,6 @@ public class SponsorService {
     }
 
 
-    public Sponsor getByID(int id) {
-        Optional<Sponsor> sponsor = sponsorRepository.findById(id);
-        if (sponsor.isPresent()) {
-            return sponsor.get();
-        } else {
-            throw new SponsorNotFoundException();
-        }
-    }
-
-
     public Sponsor getByInformation(Information information) {
         Optional<Sponsor> sponsor = Optional.ofNullable(sponsorRepository.findByInformation(information));
         if (sponsor.isPresent()) {

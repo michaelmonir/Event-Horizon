@@ -6,13 +6,17 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Exceptions.UserNotAnOrganizerException;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.InformationService;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.ClientInformationService;
+import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.InformationServiceFactory;
 import com.EventHorizon.EventHorizon.Services.OrganizerService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -39,6 +44,10 @@ public class EventServiceTest
     private InformationService informationService;
     @InjectMocks
     private EventService eventService;
+    @Mock
+    private InformationServiceFactory informationServiceFactory;
+    @Mock
+    private ClientInformationService clientInformationService;
 
     private Event customEvent;
     private ViewEventDto customViewEventDto;
@@ -87,41 +96,67 @@ public class EventServiceTest
     }
 
     @Test
-    public void deleteEvent()
-    {
+    public void getOrganizerFromInformationId() {
         this.initializeMocksAndCustomDTOs();
-        this.eventService.deleteEvent(1, 1);
+        Client client = Client.builder()
+                        .information(this.customInformation)
+                        .build();
+        Mockito.when(informationServiceFactory.getUserInformationServiceByRole(Mockito.any(String.class)))
+                .thenReturn(this.clientInformationService);
+
+//        Mockito.when(clientInformationService.getUserByInformation(Mockito.any(Information.class)))
+//                .thenReturn(client);
+
+        Assertions.assertThrows(
+                UserNotAnOrganizerException.class, () -> {
+                    this.eventService.getOrganizerFromInformationId(this.customInformation.getId());
+                }
+        );
     }
 
-    public void getEventHeaderList()
-    {
-
+    @Test
+    public void deleteEvent() {
+        this.initializeMocksAndCustomDTOs();
+        this.eventService.deleteEvent(1, 1);
     }
 
     private void initializeMocksAndCustomDTOs() {
         this.initializeCustomDTOs();
 
+        this.initializeEventRepositoryServiceMockito();
+        this.initializeDetailedEventDtoMapper();
+        this.initializeEventDtoMapper();
+        this.initializerInformationService();
+    }
+
+    private void initializeEventRepositoryServiceMockito() {
         Mockito.when(this.eventRepositoryService.getEventAndHandleNotFound(Mockito.any(int.class)))
                 .thenReturn(this.customEvent);
         Mockito.when(this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
         Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(int.class), Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
+    }
+    private void initializeDetailedEventDtoMapper() {
         Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
                 .thenReturn(this.customDetailedEventDto);
         Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
                 .thenReturn(this.customDetailedEventDto);
         Mockito.when(this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDto.class)))
                 .thenReturn(this.customEvent);
+    }
+    private void initializeEventDtoMapper() {
         Mockito.when(this.viewEventDtoMapper.getEventFromViewEventDTO(Mockito.any(ViewEventDto.class)))
                 .thenReturn(this.customEvent);
         Mockito.when(this.viewEventDtoMapper.getDTOfromViewEvent(Mockito.any(Event.class)))
                 .thenReturn(this.customViewEventDto);
-        Mockito.when(this.organizerService.getByID(Mockito.any(int.class)))
-                .thenReturn(this.customOrganizer);
+    }
+    private void initializerInformationService() {
         Mockito.when(this.informationService.getByID(Mockito.any(int.class)))
                 .thenReturn(this.customInformation);
     }
+
+
     private void initializeCustomDTOs() {
         this.initializeCustomEvent();
         this.initializeCustomInformation();

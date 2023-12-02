@@ -17,7 +17,7 @@ public class InformationController {
     private InformationService informationService;
     @GetMapping("getInformationViewDto")
     public ResponseEntity<ViewInformationDTO>getInformation(@RequestParam Integer id){
-        return new ResponseEntity<ViewInformationDTO>(informationService.getViewInformationDTO(informationService.getByID(id)), HttpStatus.OK);
+        return new ResponseEntity<ViewInformationDTO>(new ViewInformationDTO(informationService.getByID(id)), HttpStatus.OK);
     }
     @GetMapping("getInformationUpdateDto")
     public ResponseEntity<UpdateInformationDTO>getInformationUpdateDto(@RequestParam Integer id){

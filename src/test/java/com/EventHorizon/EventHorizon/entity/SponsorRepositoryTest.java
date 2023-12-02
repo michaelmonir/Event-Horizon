@@ -1,9 +1,6 @@
 package com.EventHorizon.EventHorizon.entity;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.Services.InformationService;
@@ -42,24 +39,9 @@ class SponsorRepositoryTest {
 
         Assertions.assertThrows(
                 SponsorNotFoundException.class, () -> {
-                    sponsorService.getByID(information.getId());
+                    sponsorService.getByInformation(information);
                 }
         );
-    }
-
-
-    @Test
-    public void getByID() {
-        Information information = informationCreator.getInformation("ROLE_SPONSOR");
-        informationService.add(information);
-
-        Sponsor s = sponsorService.getByInformation(information);
-        Sponsor s1 = sponsorService.getByID(s.getId());
-
-        Information i1 = informationService.getByID(s1.getInformation().getId());
-
-        Assertions.assertTrue(information.equals(i1));
-
     }
 
     @Test

@@ -37,21 +37,9 @@ class ClientRepositoryTest {
 
         Assertions.assertThrows(
                 ClientNotFoundException.class, () -> {
-                    clientService.getByID(information.getId());
+                    clientService.getByInformation(information);
                 }
         );
-    }
-
-    @Test
-    public void getByID() {
-        Information information = informationCreator.getInformation("ROLE_CLIENT");
-        informationService.add(information);
-
-        Client c = clientService.getByInformation(information);
-        Client c1=clientService.getByID(c.getId());
-
-        Information i1 = informationService.getByID(c1.getInformation().getId());
-        Assertions.assertTrue(information.equals(i1));
     }
 
     @Test

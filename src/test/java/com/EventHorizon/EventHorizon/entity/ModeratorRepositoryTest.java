@@ -21,7 +21,7 @@ class ModeratorRepositoryTest {
     @Autowired
     private InformationService informationService;
     @Autowired
-    InformationCreator informationCreator;
+    private InformationCreator informationCreator;
 
     @Test
     public void add() {
@@ -42,22 +42,9 @@ class ModeratorRepositoryTest {
 
         Assertions.assertThrows(
                 ModeratorNotFoundException.class, () -> {
-                    moderatorService.getByID(information.getId());
+                    moderatorService.getByInformation(information);
                 }
         );
-    }
-
-
-    @Test
-    public void getByID() {
-        Information information = informationCreator.getInformation("ROLE_MODERATOR");
-        informationService.add(information);
-        Moderator m = moderatorService.getByInformation(information);
-        Moderator m1=moderatorService.getByID(m.getId());
-        Information i1 = informationService.getByID(m1.getInformation().getId());
-
-        Assertions.assertTrue(information.equals(i1));
-
     }
 
     @Test
