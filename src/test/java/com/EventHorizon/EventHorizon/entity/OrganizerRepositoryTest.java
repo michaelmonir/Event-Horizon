@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.OrganizerNotFoundException;
-import com.EventHorizon.EventHorizon.Services.InformationService;
 import com.EventHorizon.EventHorizon.Services.InformationServiceComponent.OrganizerInformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
