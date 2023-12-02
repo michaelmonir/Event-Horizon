@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Services.ClientService;
 import com.EventHorizon.EventHorizon.Services.InformationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
