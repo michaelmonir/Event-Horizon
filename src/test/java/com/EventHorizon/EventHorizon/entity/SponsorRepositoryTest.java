@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.entity;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SponsorInformationRepositoryService;
@@ -18,7 +19,7 @@ class SponsorRepositoryTest {
 
     @Test
     public void addSponsorTest() {
-        Information information = informationCreator.getInformation("ROLE_SPONSOR");
+        Information information = informationCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
 
         Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);
@@ -29,7 +30,7 @@ class SponsorRepositoryTest {
 
     @Test
     public void deleteSponsorTest() {
-        Information information = informationCreator.getInformation("ROLE_SPONSOR");
+        Information information = informationCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
         sponsorInformationService.delete(information);
 
@@ -42,7 +43,7 @@ class SponsorRepositoryTest {
 
     @Test
     public void getByInformationSponsorTest() {
-        Information information = informationCreator.getInformation("ROLE_SPONSOR");
+        Information information = informationCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
 
         Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);

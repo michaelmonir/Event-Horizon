@@ -30,7 +30,7 @@ public class InformationDTO {
         this.userName = information.userName;
         this.lastName = information.getLastName();
         this.gender = information.getGender();
-        this.role = information.getRole();
+        this.role = information.getRole().toString();
         this.signInWithEmail = information.getSignInWithEmail();
         this.payPalAccount = information.getPayPalAccount();
     }

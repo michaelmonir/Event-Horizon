@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.security;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
@@ -30,7 +31,7 @@ public class ProxyServiceTest {
     }
     @Test
     public void mailInSystemTest2(){
-        Information information= Information.builder().email("ahmed@gmail.com").password("password").userName("ahmed").role("ROLE_CLIENT").active(1).build();
+        Information information= Information.builder().email("ahmed@gmail.com").password("password").userName("ahmed").role(Role.CLIENT).active(1).build();
         informationRepository.save(information);
         assertEquals(proxyService.mailInSystem("ahmed@gmail.com"),true);
     }
@@ -40,13 +41,13 @@ public class ProxyServiceTest {
     }
     @Test
     public void userNameInSystemTest2(){
-        Information information= Information.builder().email("ahmed2@gmail.com").password("password").userName("ahmed2").role("ROLE_CLIENT").active(1).build();
+        Information information= Information.builder().email("ahmed2@gmail.com").password("password").userName("ahmed2").role(Role.CLIENT).active(1).build();
         informationRepository.save(information);
         assertEquals(proxyService.userNameInSystem("ahmed2"),true);
     }
     @Test
     public void signUpExistingMailTest(){
-        Information information= Information.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").active(1).enable(1).build();
+        Information information= Information.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role(Role.CLIENT).active(1).enable(1).build();
         informationRepository.save(information);
         Assertions.assertThrows(
                 ExistingMail.class, () -> {
@@ -57,7 +58,7 @@ public class ProxyServiceTest {
     }
     @Test
     public void signUpExistingUserNameTest(){
-        Information information= Information.builder().email("ahmed9@gmail.com").password("password").userName("ahmed9").role("ROLE_CLIENT").active(1).build();
+        Information information= Information.builder().email("ahmed9@gmail.com").password("password").userName("ahmed9").role(Role.CLIENT).active(1).build();
         informationRepository.save(information);
         Assertions.assertThrows(
                 ExistingUserName.class, () -> {

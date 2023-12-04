@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.security;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
@@ -103,16 +104,17 @@ public class ProxyService {
         return AuthenticationResponse.builder()
                 .id(information.getId())
                 .token(jwt)
-                .role(information.getRole())
+                .role(information.getRole().toString())
                 .build();
     }
 
     private Information createInformation(InformationDTO registerRequest) {
+
         return Information.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .email(registerRequest.getEmail())
-                .role(registerRequest.getRole())
+                .role(Role.fromString(registerRequest.getRole()))
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
                 .gender(registerRequest.getGender())

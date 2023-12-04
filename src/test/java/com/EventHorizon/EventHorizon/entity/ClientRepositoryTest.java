@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.entity;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ClientInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +20,7 @@ class ClientRepositoryTest {
 
     @Test
     public void addClientTest() {
-        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        Information information = informationCreator.getInformation(Role.CLIENT);
         clientInformationService.add(information);
         Client c1 = (Client) clientInformationService.getUserByInformation(information);
         Assertions.assertTrue(information.equals(c1.getInformation()));
@@ -27,7 +28,7 @@ class ClientRepositoryTest {
 
     @Test
     public void deleteClientTest() {
-        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        Information information = informationCreator.getInformation(Role.CLIENT);
         clientInformationService.add(information);
         clientInformationService.delete(information);
         Assertions.assertThrows(
@@ -38,7 +39,7 @@ class ClientRepositoryTest {
     }
     @Test
     public void getByInformationClientTest() {
-        Information information = informationCreator.getInformation("ROLE_CLIENT");
+        Information information = informationCreator.getInformation(Role.CLIENT);
         clientInformationService.add(information);
         Client c1 = (Client) clientInformationService.getUserByInformation(information);
         Assertions.assertEquals(c1.getInformation(), information);

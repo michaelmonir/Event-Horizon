@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
@@ -48,7 +49,7 @@ class DashboardTest {
 
     @Test
     public void testGetPageReturnsCorrectPages() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         Event event1 = new Event();

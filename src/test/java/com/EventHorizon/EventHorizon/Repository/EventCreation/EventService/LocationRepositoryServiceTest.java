@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent.LocationRepositoryService;
@@ -28,7 +29,7 @@ class LocationRepositoryServiceTest {
     InformationCreator informationCreator;
     @Test
     public void testDeletionOfLocationByEcventId(){
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()

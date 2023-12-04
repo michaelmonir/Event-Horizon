@@ -37,7 +37,7 @@ public class Information implements UserDetails {
     @Column(name = "pay_pal_Account")
     private String payPalAccount;
     @Column(name = "role")
-    private String role;
+    private Role role;
     @Column(name = "active")
     private int active;
     @Column(name = "sign_in_with_email")

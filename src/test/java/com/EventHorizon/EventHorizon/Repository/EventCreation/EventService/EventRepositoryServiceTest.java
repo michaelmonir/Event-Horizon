@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
@@ -47,7 +48,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -72,7 +73,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventNotFoundException() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -96,7 +97,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -123,7 +124,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventwithoutError() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -165,7 +166,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -199,7 +200,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -236,7 +237,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -265,7 +266,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -305,7 +306,7 @@ class EventRepositoryServiceTest {
     }
     @Test
     public void testGetAllEventsHeaderDtoReturnsErrors() {
-        Information information = informationCreator.getInformation("ROLE_ORGANIZER");
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()

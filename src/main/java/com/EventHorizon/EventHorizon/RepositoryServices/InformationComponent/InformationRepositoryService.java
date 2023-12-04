@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
@@ -22,14 +23,14 @@ public class InformationRepositoryService {
 
     public void add(Information information) {
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.add(information);
     }
 
     public void delete(int id) {
         Information information = this.getByID(id);
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.delete(information);
     }
 
@@ -42,7 +43,7 @@ public class InformationRepositoryService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Information information = this.getByID(updateInformationDTO.getId());
-        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
+        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
 
@@ -90,7 +91,7 @@ public class InformationRepositoryService {
         return list;
     }
 
-    public List<Information> getByRole(String role) {
+    public List<Information> getByRole(Role role) {
         List<Information> list = informationRepository.findByRole(role);
         return list;
     }

@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Repository;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,7 @@ public interface InformationRepository extends JpaRepository<Information, Intege
 
    List<Information> findByGender(String gender);
 
-   List<Information> findByRole(String role);
+   List<Information> findByRole(Role role);
 
    List<Information> findBySignInWithEmail(int value);
 

@@ -19,7 +19,6 @@ public class ViewInformationDTO {
     private String gender;
     private String payPalAccount;
     private String role;
-
     private UserDTO userDTO;
 
     public ViewInformationDTO(Information information) {
@@ -29,8 +28,7 @@ public class ViewInformationDTO {
         this.userName = information.userName;
         this.lastName = information.getLastName();
         this.gender = information.getGender();
-        this.role = information.getRole();
+        this.role = information.getRole().toString();
         this.payPalAccount = information.getPayPalAccount();
-        this.userDTO = userDTO;
     }
 }
