@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ModeratorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities.UserEntities;
+package com.EventHorizon.EventHorizon.Entities.enums;
 
 public enum Role {
     CLIENT("ROLE_CLIENT"),

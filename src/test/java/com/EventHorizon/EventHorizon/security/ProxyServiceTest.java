@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.security;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;

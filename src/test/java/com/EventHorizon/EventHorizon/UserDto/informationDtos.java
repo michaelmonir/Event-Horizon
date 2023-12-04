@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

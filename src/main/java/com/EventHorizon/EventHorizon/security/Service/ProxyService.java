@@ -2,7 +2,8 @@ package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Role;
+import com.EventHorizon.EventHorizon.Entities.enums.Gender;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
@@ -122,7 +123,7 @@ public class ProxyService {
                 .role(Role.fromString(registerRequest.getRole()))
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
-                .gender(registerRequest.getGender())
+                .gender(Gender.fromString(registerRequest.getGender()))
                 .payPalAccount(registerRequest.getPayPalAccount())
                 .active(0)
                 .signInWithEmail(registerRequest.getSignInWithEmail())

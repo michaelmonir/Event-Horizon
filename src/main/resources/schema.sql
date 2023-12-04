@@ -7,7 +7,7 @@ CREATE TABLE information_tbl (
    first_name varchar(45) DEFAULT NULL,
    last_name varchar(45) DEFAULT NULL,
    email varchar(45) DEFAULT NULL,
-   gender varchar(45) DEFAULT NULL,
+   gender int DEFAULT NULL,
    pay_pal_Account varchar(45) DEFAULT NULL,
    role int DEFAULT NULL,
    sign_in_with_email int DEFAULT 0,

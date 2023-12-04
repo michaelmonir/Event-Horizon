@@ -27,7 +27,7 @@ public class ViewInformationDTO {
         this.firstName = information.getFirstName();
         this.userName = information.userName;
         this.lastName = information.getLastName();
-        this.gender = information.getGender();
+        this.gender = information.getGender().toString();
         this.role = information.getRole().toString();
         this.payPalAccount = information.getPayPalAccount();
     }

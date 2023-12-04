@@ -1,12 +1,13 @@
 package com.EventHorizon.EventHorizon.Entities.UserEntities;
 
+import com.EventHorizon.EventHorizon.Entities.enums.Gender;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Information implements UserDetails {
     @Column(name = "email", unique = true)
     private String email;
     @Column(name = "gender")
-    private String gender;
+    private Gender gender;
     @Column(name = "pay_pal_Account")
     private String payPalAccount;
     @Column(name = "role")
