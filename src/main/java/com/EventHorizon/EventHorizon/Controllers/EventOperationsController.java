@@ -4,6 +4,9 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Services.EventService;
+import com.EventHorizon.EventHorizon.security.Service.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ import java.util.List;
 public class EventOperationsController {
     @Autowired
     private EventService eventService;
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("eventForUser/{eventId}")//any
     public ResponseEntity<ViewEventDto> getEventForUser(@PathVariable int eventId) {
@@ -24,29 +29,41 @@ public class EventOperationsController {
         return new ResponseEntity<>(viewEventDTO, HttpStatus.OK);
     }
 
-    @GetMapping("EventForOrganizer/{organizerId}/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedEventDto> getEventForOrganizer(@PathVariable int organizerId, @PathVariable int eventId) {
+    @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
+    public ResponseEntity<DetailedEventDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId) {
+        final String authHeader = request.getHeader("Authorization");
+        String token = authHeader.substring(7);
+        int organizerId = jwtService.extractId(token);
         DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @PostMapping("createEvent/{organizerId}")//organizer,admin
+    @PostMapping("createEvent")//organizer,admin
     public ResponseEntity<DetailedEventDto> createEvent
-            (@PathVariable int organizerId, @RequestBody DetailedEventDto detailedEventDto) {
+            (HttpServletRequest request, @RequestBody DetailedEventDto detailedEventDto) {
+        final String authHeader = request.getHeader("Authorization");
+        String token = authHeader.substring(7);
+        int organizerId = jwtService.extractId(token);
         detailedEventDto = this.eventService.createEvent(organizerId, detailedEventDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 
-    @PutMapping("updateEvent/{organizerId}/{eventId}")//organizer,admin
+    @PutMapping("updateEvent/{eventId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> updateEvent
-            (@PathVariable int organizerId, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+        final String authHeader = request.getHeader("Authorization");
+        String token = authHeader.substring(7);
+        int organizerId = jwtService.extractId(token);
         detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteEvent/{organizerId}/{eventId}") //organizer,admin
+    @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
     public ResponseEntity deleteEvent
-            (@PathVariable int organizerId, @PathVariable int eventId) {
+            (HttpServletRequest request, @PathVariable int eventId) {
+        final String authHeader = request.getHeader("Authorization");
+        String token = authHeader.substring(7);
+        int organizerId = jwtService.extractId(token);
         this.eventService.deleteEvent(organizerId, eventId);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -56,5 +73,8 @@ public class EventOperationsController {
         List<EventHeaderDto> eventHeaders = this.eventService.getEventHeadersList(pageIndex, pageSize);
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
-
+    @GetMapping("test")
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("test", HttpStatus.OK);
+    }
 }

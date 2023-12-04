@@ -21,7 +21,3 @@ public class EmailSenderService {
         javaMailSender.send(message);
     }
 }
-
-//"Hello\t" + information.userName + "\n\n" + "Thanks for signing up with EventHorizon\n\n" +
-//        "To verify your email please use the next code" + "\n\n" + "Verification Code :\t" + verifyCode + "\n\n" + "We look forward to see you in next event\n\n" + "Sincerely,\n" +
-//        "EventHorizon Team"

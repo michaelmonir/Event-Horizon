@@ -5,6 +5,8 @@ import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +45,10 @@ public class ProxyController {
     public ResponseEntity<AuthenticationResponse> signInWithGmail(@RequestBody AuthenticationRequest authenticationRequest) {
         return new ResponseEntity<AuthenticationResponse>(proxyService.signIn(authenticationRequest, 1), HttpStatus.OK);
     }
-
+    @GetMapping("test")
+    public ResponseEntity<String> test(@NonNull HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        System.out.println(authHeader);
+        return new ResponseEntity<String>("test", HttpStatus.OK);
+    }
 }

@@ -25,6 +25,10 @@ public class JwtService {
         final Claims claims=extractAllClaims(jwt);
         return (String)claims.get("verifyCode");
     }
+    public int extractId(String jwt) {
+        final Claims claims=extractAllClaims(jwt);
+        return (int)claims.get("id");
+    }
     public <T> T extractClaim(String token, Function<Claims,T>claimsResolver){
         final Claims claims=extractAllClaims(token);
         return claimsResolver.apply(claims);

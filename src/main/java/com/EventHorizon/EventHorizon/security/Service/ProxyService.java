@@ -80,21 +80,26 @@ public class ProxyService {
         return code.toString();
     }
 
-    String generateToken(Information information, String verifyCode) {
+    String generateTokenForSignUp(Information information, String verifyCode) {
         Map<String, Object> map = new HashMap<>();
         map.put("verifyCode", verifyCode);
+        map.put("id", information.getId());
         return jwtService.generateToken(map, information);
     }
-
+    String generateTokenForSignIn(Information information) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", information.getId());
+        return jwtService.generateToken(map, information);
+    }
     public AuthenticationResponse signUp(InformationDTO registerRequest) {
         removeIfNotEnabled(registerRequest.getEmail());
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
         Information information = createInformation(registerRequest);
-//        information.setVerifyCode(createCode());
         String verifyCode = createCode();
         informationService.add(information);
-        String jwt = generateToken(information, verifyCode);
+        String jwt = generateTokenForSignUp(information, verifyCode);
         System.out.println(jwtService.extractVerifyCode(jwt));
+
         if (registerRequest.getSignInWithEmail() == 1) {
             information.setActive(1);
             information.setEnable(1);
@@ -138,7 +143,8 @@ public class ProxyService {
         if (information.getSignInWithEmail() != withGmail) {
             throw new ForbiddenException();
         }
-        String jwt = jwtService.generateToken(information);
+        String jwt = generateTokenForSignIn(information);
+
         return AuthenticationResponse.builder()
                 .id(information.getId())
                 .token(jwt)
