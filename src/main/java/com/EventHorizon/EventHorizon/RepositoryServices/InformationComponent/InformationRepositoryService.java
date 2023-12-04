@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.*;
+import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +60,11 @@ public class InformationRepositoryService {
         if (!information.isPresent())
             throw new InformationNotFoundException();
         return information.get();
+    }
+
+    public boolean existsByEmail(String email) {
+        Optional<Information> information = Optional.ofNullable(informationRepository.findByEmail(email));
+        return information.isPresent();
     }
 
     public Information getByUserName(String username) {

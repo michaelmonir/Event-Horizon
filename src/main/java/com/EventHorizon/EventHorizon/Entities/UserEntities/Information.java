@@ -48,7 +48,7 @@ public class Information implements UserDetails {
     private int enable;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.toString()));
     }
     @Override
     public String getUsername() {
@@ -62,7 +62,7 @@ public class Information implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return active==1;
+        return true;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Information implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active==1 ;
+        return enable==1&&active==1 ;
     }
 
 }
