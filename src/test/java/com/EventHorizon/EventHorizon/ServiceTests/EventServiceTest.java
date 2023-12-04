@@ -81,7 +81,7 @@ public class EventServiceTest
         this.initializeMocksAndCustomDTOs();
 
         DetailedEventDto detailedEventDTO = this.customDetailedEventDto;
-        DetailedEventDto resultEventDTO = this.eventService.updateEvent(1, 1, detailedEventDTO);
+        DetailedEventDto resultEventDTO = this.eventService.updateEvent(1, detailedEventDTO);
 
         Assertions.assertTrue(detailedEventDTO.equals(resultEventDTO));
     }
@@ -107,7 +107,7 @@ public class EventServiceTest
                 .thenReturn(this.customEvent);
         Mockito.when(this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
-        Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(int.class), Mockito.any(Event.class)))
+        Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(Event.class)))
                 .thenReturn(this.customEvent);
     }
     private void initializeDetailedEventDtoMapper() {

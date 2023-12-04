@@ -9,7 +9,6 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
@@ -91,7 +90,7 @@ class EventRepositoryServiceTest {
                 .build();
 
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventRepositoryService.updateEventAndHandleNotFound(0, event);
+            eventRepositoryService.updateEventAndHandleNotFound(event);
         });
     }
 
@@ -115,8 +114,10 @@ class EventRepositoryServiceTest {
                 .id(27)
                 .build();
 
-        Assertions.assertThrows(WrongEventIdException.class, () -> {
-            eventRepositoryService.updateEventAndHandleNotFound(34, event);
+        Event otherEvent = event; otherEvent.setId(34);
+
+        Assertions.assertThrows(EventNotFoundException.class, () -> {
+            eventRepositoryService.updateEventAndHandleNotFound(otherEvent);
         });
     }
 
@@ -141,6 +142,7 @@ class EventRepositoryServiceTest {
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         Location location2 = Location.builder().country("mun").city("cairo").build();
         Event newEvent = Event.builder()
+                .id(event.getId())
                 .eventAds(adsOption)
                 .eventLocation(location2)
                 .name("e500")
@@ -149,7 +151,7 @@ class EventRepositoryServiceTest {
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.updateEventAndHandleNotFound(event.getId(), newEvent);
+            eventRepositoryService.updateEventAndHandleNotFound(newEvent);
             Assertions.assertEquals(event.getId(), newEvent.getId());
         });
     }

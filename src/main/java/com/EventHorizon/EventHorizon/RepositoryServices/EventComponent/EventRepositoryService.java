@@ -5,7 +5,6 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.WrongEventIdException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.AdsOptionDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,8 @@ public class EventRepositoryService {
         return event;
     }
 
-    public Event updateEventAndHandleNotFound(int id, Event newEvent) {
-        if (newEvent.getId() != 0)
-            throw new WrongEventIdException();
-
+    public Event updateEventAndHandleNotFound(Event newEvent) {
+        int id = newEvent.getId();
         this.getEventAndHandleNotFound(id);
 
         newEvent.setId(id);

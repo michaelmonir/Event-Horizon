@@ -65,12 +65,12 @@ public class EventService {
         return resultDTO;
     }
 
-    public DetailedEventDto updateEvent(int informationId, int id, DetailedEventDto eventDTO) {
+    public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
         Event event = this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
 
-        event = this.eventRepositoryService.updateEventAndHandleNotFound(id, event);
+        event = this.eventRepositoryService.updateEventAndHandleNotFound(event);
 
         DetailedEventDto resultDTO = delaitedEventDtoMapper.getDTOfromDetailedEvent(event);
         return resultDTO;
