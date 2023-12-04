@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.security;
+package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
@@ -9,9 +9,9 @@ import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.Inf
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingMail;
-import com.EventHorizon.EventHorizon.security.execptions.ExistingUserName;
-import com.EventHorizon.EventHorizon.security.execptions.ForbiddenException;
+import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
+import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingUserName;
+import com.EventHorizon.EventHorizon.Exceptions.Securiity.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,10 +63,10 @@ public class ProxyService {
 
     public void handleException(String mail, String userName) {
         if (mailInSystem(mail)) {
-            throw new ExistingMail("Mail : " + mail + " Is Already Used");
+            throw new ExistingMail();
         }
         if (userNameInSystem(userName)) {
-            throw new ExistingUserName("UserName : " + userName + " Is Already Used");
+            throw new ExistingUserName();
         }
     }
 
@@ -133,10 +133,10 @@ public class ProxyService {
                 )
         );
         if (information.getEnable() == 0) {
-            throw new ForbiddenException("Invalid Request");
+            throw new ForbiddenException();
         }
         if (information.getSignInWithEmail() != withGmail) {
-            throw new ForbiddenException("Invalid Request");
+            throw new ForbiddenException();
         }
         String jwt = jwtService.generateToken(information);
         return AuthenticationResponse.builder()

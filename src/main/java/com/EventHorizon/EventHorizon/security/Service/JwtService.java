@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.security;
+package com.EventHorizon.EventHorizon.security.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

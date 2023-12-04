@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.security.controller;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
-import com.EventHorizon.EventHorizon.security.ProxyService;
+import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;

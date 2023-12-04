@@ -1,4 +1,5 @@
 package com.EventHorizon.EventHorizon.security;
+import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
