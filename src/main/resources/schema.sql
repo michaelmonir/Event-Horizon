@@ -9,9 +9,8 @@ CREATE TABLE information_tbl (
    email varchar(45) DEFAULT NULL,
    gender varchar(45) DEFAULT NULL,
    pay_pal_Account varchar(45) DEFAULT NULL,
-   role varchar(45) DEFAULT NULL,
+   role int DEFAULT NULL,
    sign_in_with_email int DEFAULT 0,
-   verify_code varchar(7) DEFAULT NULL,
    enable int DEFAULT 0,
    PRIMARY KEY (id)
 );

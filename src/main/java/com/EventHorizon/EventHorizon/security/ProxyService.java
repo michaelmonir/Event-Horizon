@@ -80,9 +80,9 @@ public class ProxyService {
         return code.toString();
     }
 
-    String generateToken(Information information) {
+    String generateToken(Information information, String verifyCode) {
         Map<String, Object> map = new HashMap<>();
-        map.put("verifyCode", information.getVerifyCode());
+        map.put("verifyCode", verifyCode);
         return jwtService.generateToken(map, information);
     }
 
@@ -90,16 +90,17 @@ public class ProxyService {
         removeIfNotEnabled(registerRequest.getEmail());
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
         Information information = createInformation(registerRequest);
-        information.setVerifyCode(createCode());
+//        information.setVerifyCode(createCode());
+        String verifyCode = createCode();
         informationService.add(information);
-        String jwt = generateToken(information);
+        String jwt = generateToken(information, verifyCode);
         System.out.println(jwtService.extractVerifyCode(jwt));
         if (registerRequest.getSignInWithEmail() == 1) {
+            information.setActive(1);
             information.setEnable(1);
         } else {
-            emailSenderService.sendMail(information.getEmail(), "Verification Code", "Hello\t" + information.userName + "\n\n" + "Thanks for signing up with EventHorizon\n\n" +
-                    "To verify your email please use the next code" + "\n\n" + "Verification Code :\t" + information.getVerifyCode() + "\n\n" + "We look forward to see you in next event\n\n" + "Sincerely,\n" +
-                    "EventHorizon Team");
+            emailSenderService.sendMail(information.getEmail(),
+                    "Verification Code", information.userName, verifyCode);
         }
         return AuthenticationResponse.builder()
                 .id(information.getId())
@@ -109,7 +110,6 @@ public class ProxyService {
     }
 
     private Information createInformation(InformationDTO registerRequest) {
-
         return Information.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -119,7 +119,7 @@ public class ProxyService {
                 .lastName(registerRequest.getLastName())
                 .gender(registerRequest.getGender())
                 .payPalAccount(registerRequest.getPayPalAccount())
-                .active(1)
+                .active(0)
                 .signInWithEmail(registerRequest.getSignInWithEmail())
                 .build();
     }
@@ -138,7 +138,7 @@ public class ProxyService {
         if (information.getSignInWithEmail() != withGmail) {
             throw new ForbiddenException("Invalid Request");
         }
-        String jwt = generateToken(information);
+        String jwt = jwtService.generateToken(information);
         return AuthenticationResponse.builder()
                 .id(information.getId())
                 .token(jwt)
@@ -149,6 +149,7 @@ public class ProxyService {
     private void putEnable(String mail) {
         Information information = informationService.getByEmail(mail);
         information.setEnable(1);
+        information.setActive(1);
         informationService.update(information.getId(), information);
     }
 
