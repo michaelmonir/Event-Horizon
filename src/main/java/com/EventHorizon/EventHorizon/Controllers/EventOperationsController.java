@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Services.EventService;
+import com.EventHorizon.EventHorizon.Services.UserTokenInformationService;
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
@@ -21,7 +22,7 @@ public class EventOperationsController {
     @Autowired
     private EventService eventService;
     @Autowired
-    private JwtService jwtService;
+    private UserTokenInformationService userTokenInformationService;
 
     @GetMapping("eventForUser/{eventId}")//any
     public ResponseEntity<ViewEventDto> getEventForUser(@PathVariable int eventId) {
@@ -31,9 +32,8 @@ public class EventOperationsController {
 
     @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId) {
-        final String authHeader = request.getHeader("Authorization");
-        String token = authHeader.substring(7);
-        int organizerId = jwtService.extractId(token);
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
@@ -41,9 +41,8 @@ public class EventOperationsController {
     @PostMapping("createEvent")//organizer,admin
     public ResponseEntity<DetailedEventDto> createEvent
             (HttpServletRequest request, @RequestBody DetailedEventDto detailedEventDto) {
-        final String authHeader = request.getHeader("Authorization");
-        String token = authHeader.substring(7);
-        int organizerId = jwtService.extractId(token);
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         detailedEventDto = this.eventService.createEvent(organizerId, detailedEventDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
@@ -51,9 +50,8 @@ public class EventOperationsController {
     @PutMapping("updateEvent/{eventId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> updateEvent
             (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
-        final String authHeader = request.getHeader("Authorization");
-        String token = authHeader.substring(7);
-        int organizerId = jwtService.extractId(token);
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
@@ -61,9 +59,8 @@ public class EventOperationsController {
     @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
     public ResponseEntity deleteEvent
             (HttpServletRequest request, @PathVariable int eventId) {
-        final String authHeader = request.getHeader("Authorization");
-        String token = authHeader.substring(7);
-        int organizerId = jwtService.extractId(token);
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         this.eventService.deleteEvent(organizerId, eventId);
         return new ResponseEntity(HttpStatus.OK);
     }
