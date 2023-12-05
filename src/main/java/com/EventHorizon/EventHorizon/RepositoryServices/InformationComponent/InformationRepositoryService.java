@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
@@ -86,7 +87,7 @@ public class InformationRepositoryService {
         return list;
     }
 
-    public List<Information> getByGender(String gender) {
+    public List<Information> getByGender(Gender gender) {
         List<Information> list = informationRepository.findByGender(gender);
         return list;
     }

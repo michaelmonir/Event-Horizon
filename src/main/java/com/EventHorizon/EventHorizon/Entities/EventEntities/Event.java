@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class Event {
     private String name;
     private String description;
     private String eventCategory;
+    private EventType eventType;
     private Date eventDate;
     @OneToOne(
             cascade = CascadeType.ALL

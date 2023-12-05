@@ -152,7 +152,7 @@ class InformationRepositoryTest {
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
-        Assert.assertEquals(information.getGender(), informationDTO.getGender());
+        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
         Assert.assertEquals(information.getRole().toString(), informationDTO.getRole());
     }
 }

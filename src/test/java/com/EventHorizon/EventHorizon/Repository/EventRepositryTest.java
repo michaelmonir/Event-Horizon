@@ -23,7 +23,7 @@ class EventRepositryTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    private InformationCreator informationCreator;
 
 
     @Test
