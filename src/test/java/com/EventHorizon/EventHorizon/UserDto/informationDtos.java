@@ -25,7 +25,7 @@ public class informationDtos {
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
-        Assert.assertEquals(information.getGender(), informationDTO.getGender());
+        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
         Assert.assertEquals(information.getRole().toString(), informationDTO.getRole());
         Assert.assertEquals(information.getSignInWithEmail(), informationDTO.getSignInWithEmail());
     }
@@ -36,7 +36,7 @@ public class informationDtos {
         UpdateInformationDTO informationDTO=new UpdateInformationDTO(information);
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
-        Assert.assertEquals(information.getGender(), informationDTO.getGender());
+        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
     }
 
 
@@ -49,7 +49,7 @@ public class informationDtos {
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
-        Assert.assertEquals(information.getGender(), informationDTO.getGender());
+        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
         Assert.assertEquals(information.getRole().toString(), informationDTO.getRole());
     }
 
