@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class LaunchedEventRepositoryService {
+public class LaunchedEventRepositoryService  {
     @Autowired
     private LaunchedEventRepository launchedEventRepositry;
     @Autowired
@@ -26,7 +26,7 @@ public class LaunchedEventRepositoryService {
 
     public LaunchedEvent getEventAndHandleNotFound(int id) {
         Optional<LaunchedEvent> optionalOldEvent=launchedEventRepositry.findById(id);
-        if(!optionalOldEvent.isPresent())
+        if(optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
         return optionalOldEvent.get();
     }
@@ -51,7 +51,7 @@ public class LaunchedEventRepositoryService {
     public void deleteEvent(int id) {
         Optional<LaunchedEvent> optionalOldEvent = launchedEventRepositry.findById(id);
 
-        if (!optionalOldEvent.isPresent())
+        if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
 
         launchedEventRepositry.deleteById(id);
@@ -60,7 +60,7 @@ public class LaunchedEventRepositoryService {
     public ViewEventDto getViewEventDTO(int id) {
         Optional<LaunchedEvent> optionalOldEvent = launchedEventRepositry.findById(id);
 
-        if (!optionalOldEvent.isPresent())
+        if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
 
         return new ViewEventDto(optionalOldEvent.get());
@@ -69,7 +69,7 @@ public class LaunchedEventRepositoryService {
     public EventHeaderDto getEventHeaderDto(int id) {
         Optional<LaunchedEvent> optionalOldEvent = launchedEventRepositry.findById(id);
 
-        if (!optionalOldEvent.isPresent())
+        if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
 
         return new EventHeaderDto(optionalOldEvent.get());

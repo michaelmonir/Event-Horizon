@@ -234,18 +234,16 @@ class LaunchedEventRepositoryServiceTest {
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = Event.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...").build();
-        tempEvent = event;
     }
 
     private void createLocation() {
-        Location location = Location.builder()
+        tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        tempLocation = location;
     }
 
 }
