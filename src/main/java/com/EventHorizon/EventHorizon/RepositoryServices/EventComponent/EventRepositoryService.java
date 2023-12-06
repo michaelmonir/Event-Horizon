@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExis
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.AdsOptionDtoMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class EventRepositoryService {
     private AdsOptionRepositoryService adsOptionRepositoryService;
     @Autowired
     private AdsOptionDtoMapper adsOptionDtoMapper;
+    @Autowired
+    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
     public Event getEventAndHandleNotFound(int id) {
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
@@ -34,6 +37,7 @@ public class EventRepositoryService {
         if (event.getId() != 0)
             throw new EventAlreadyExisting();
 
+        this.eventSeatArchiveRepositoryService.setEventForItsSeatArchives(event);
         eventRepositry.save(event);
         return event;
     }

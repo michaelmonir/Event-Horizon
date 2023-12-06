@@ -71,3 +71,15 @@ CREATE TABLE IF NOT EXISTS Event (
     FOREIGN KEY (organizer_id) REFERENCES organizer_tbl(id)
 );
 
+create table if not exists seat_type(
+    	id INT PRIMARY KEY AUTO_INCREMENT,
+        event_id INT NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        price INT NOT NULL,
+        FOREIGN KEY (event_id) REFERENCES event(id)
+    );
+
+
+--create table if not exists seat_type(
+--    	id INT PRIMARY KEY AUTO_INCREMENT
+--    	);

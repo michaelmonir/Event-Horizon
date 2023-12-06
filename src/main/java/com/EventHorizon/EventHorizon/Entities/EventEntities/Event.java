@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -48,4 +50,7 @@ public class Event {
             nullable = false
     )
     private Organizer eventOrganizer;
+
+    @OneToMany(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private List<SeatType> seatTypes;
 }
