@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
@@ -46,6 +47,12 @@ public class InformationRepositoryService {
         Information information = this.getByID(updateInformationDTO.getId());
         UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
+    }
+
+    public User getUserByInformation(Information information) {
+        UserInformationRepositoryService myService =
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+        return myService.getUserByInformation(information);
     }
 
 
@@ -100,6 +107,12 @@ public class InformationRepositoryService {
     public List<Information> getBySignIn(int value) {
         List<Information> list = informationRepository.findBySignInWithEmail(value);
         return list;
+    }
+
+    public UserInformationRepositoryService getService(Role role) {
+        UserInformationRepositoryService myService =
+                informationServiceFactory.getUserInformationServiceByRole(role.toString());
+        return myService;
     }
 
 }

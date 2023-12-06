@@ -4,12 +4,17 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 
+import java.util.List;
+
 public interface UserInformationRepositoryService {
 
     void add(Information information);
 
     void delete(Information information);
+
     Information update(UpdateInformationDTO updateInformationDTO, Information information);
 
     User getUserByInformation(Information information);
+
+    List<?extends User> findAllOfUsers();
 }

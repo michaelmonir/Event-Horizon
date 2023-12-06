@@ -9,6 +9,7 @@ import com.EventHorizon.EventHorizon.Repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,4 +49,12 @@ public class ClientInformationRepositoryService implements UserInformationReposi
             throw new ClientNotFoundException();
         return client.get();
     }
+
+    @Override
+    public List<? extends User> findAllOfUsers() {
+        return clientRepository.findAll();
+    }
+
+
+
 }
