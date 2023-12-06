@@ -35,12 +35,17 @@ class EventRepositoryServiceTest {
     @Autowired
     InformationCreator informationCreator;
 
+    private Event tempEvent;
+    private AdsOption tempAdsOption;
+    private Organizer tempOrganizer;
+    private Location tempLocation;
+
+
     @Test
     public void testGettingExceptionOnSendingIdWhenCreating() {
         Event event = new Event();
         event.setId(5);
         event.setName("Michael's Event");
-
         Assertions.assertThrows(EventAlreadyExisting.class, () -> {
             eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         });
@@ -48,112 +53,45 @@ class EventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location1 = Location.builder().country("Egypt").city("Cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("e45")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-            Assertions.assertNotEquals(0, event.getId());
+            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
+            Assertions.assertNotEquals(0, tempEvent.getId());
         });
     }
 
-    @Test
-    public void editEventGettingErrorEventNotFoundException() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location1 = Location.builder().country("Egypt").city("Cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("11")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-
-        Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventRepositoryService.updateEventAndHandleNotFound(event);
-        });
-    }
 
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location1 = Location.builder().country("aswan").city("cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("e45")
-                .eventOrganizer(organizer)
-                .description("...")
-                .id(27)
-                .build();
 
-        Event otherEvent = event; otherEvent.setId(34);
-
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        tempEvent.setId(34);
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventRepositoryService.updateEventAndHandleNotFound(otherEvent);
+            eventRepositoryService.updateEventAndHandleNotFound(tempEvent);
         });
     }
 
     @Test
     public void editEventwithoutError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location1 = Location.builder().country("qula").city("cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("e800")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
         Location location2 = Location.builder().country("mun").city("cairo").build();
         Event newEvent = Event.builder()
-                .id(event.getId())
-                .eventAds(adsOption)
+                .id(tempEvent.getId())
+                .eventAds(tempAdsOption)
                 .eventLocation(location2)
                 .name("e500")
-                .eventOrganizer(organizer)
-                .description("newevent")
+                .eventOrganizer(tempOrganizer)
                 .build();
-
         Assertions.assertDoesNotThrow(() -> {
             eventRepositoryService.updateEventAndHandleNotFound(newEvent);
-            Assertions.assertEquals(event.getId(), newEvent.getId());
+            Assertions.assertEquals(tempEvent.getId(), newEvent.getId());
         });
     }
 
@@ -166,28 +104,13 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
 
-        Location location = Location.builder().country("Egypt").city("Cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location)
-                .name("EventToDelete")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.deleteEvent(event.getId());
+            eventRepositoryService.deleteEvent(tempEvent.getId());
         });
     }
 
@@ -200,32 +123,18 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
 
-        Location location = Location.builder().country("Egypt").city("Cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location)
-                .eventOrganizer(organizer)
-                .name("EventDetailsDtoTest")
-                .description("...")
-                .build();
-
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
 
         ViewEventDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
-                eventRepositoryService.getViewEventDTO(event.getId())
+                eventRepositoryService.getViewEventDTO(tempEvent.getId())
         );
 
-        Assertions.assertEquals(event.getName(), eventDetailsDto.getName());
-        Assertions.assertEquals(event.getDescription(), eventDetailsDto.getDescription());
+        Assertions.assertEquals(tempEvent.getName(), eventDetailsDto.getName());
+        Assertions.assertEquals(tempEvent.getDescription(), eventDetailsDto.getDescription());
     }
 
     @Test
@@ -237,110 +146,94 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-
-        Location location = Location.builder().country("Egypt").city("Cairo").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location)
-                .name("EventHeaderDtoTest")
-                .description("...")
-                .eventOrganizer(organizer)
-                .build();
-
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
         EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
-                eventRepositoryService.getEventHeaderDto(event.getId())
+                eventRepositoryService.getEventHeaderDto(tempEvent.getId())
         );
-
-        Assertions.assertEquals(event.getName(), eventHeaderDto.getName());
+        Assertions.assertEquals(tempEvent.getName(), eventHeaderDto.getName());
     }
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-
-        Location location1 = Location.builder().country("Egypt").city("Cairo").build();
-        Event event1 = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("Event1")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-
-        Location location2 = Location.builder().country("USA").city("New York").build();
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
         Event event2 = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location2)
+                .eventAds(tempAdsOption)
                 .name("Event2")
-                .eventOrganizer(organizer)
-                .description("...")
+                .eventOrganizer(tempOrganizer)
                 .build();
 
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event1);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event2);
 
         int pageIndex = 0;
         int pageSize = 10;
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
-
         List<EventHeaderDto> eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageRequest);
-
         Assertions.assertFalse(eventHeaderDtos.isEmpty());
     }
+
     @Test
     public void testGetAllEventsHeaderDtoReturnsErrors() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
 
-        Location location1 = Location.builder().country("Egypt").city("Cairo").build();
-        Event event1 = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location1)
-                .name("Event1")
-                .eventOrganizer(organizer)
-                .description("...")
-                .build();
-
-        Location location2 = Location.builder().country("USA").city("New York").build();
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
         Event event2 = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location2)
+                .eventAds(tempAdsOption)
                 .name("Event2")
-                .eventOrganizer(organizer)
-                .description("...")
+                .eventOrganizer(tempOrganizer)
                 .build();
 
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event1);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event2);
 
         int pageIndex = 10;
         int pageSize = 10;
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
-        Assertions.assertDoesNotThrow(()-> {
+        Assertions.assertDoesNotThrow(() -> {
             List<EventHeaderDto> eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageRequest);
         });
+    }
+
+    private void insialize() {
+        createOrganizer();
+        createAdsOption();
+        createLocation();
+        createEvent();
+    }
+
+    private void createOrganizer() {
+        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Organizer organizer = Organizer.builder().information(information).build();
+        organizerRepository.save(organizer);
+        tempOrganizer = organizer;
+    }
+
+    public void createAdsOption() {
+        AdsOption adsOption = AdsOption.builder()
+                .name("p")
+                .priority(1)
+                .build();
+        adsOptionRepositry.save(adsOption);
+        tempAdsOption = adsOption;
+
+    }
+
+    private void createEvent() {
+        Event event = Event.builder()
+                .name("e5")
+                .eventOrganizer(tempOrganizer)
+                .description("...").build();
+        tempEvent = event;
+    }
+
+    private void createLocation() {
+        Location location = Location.builder()
+                .country("Egypt")
+                .city("Alex").build();
+        tempLocation = location;
     }
 }

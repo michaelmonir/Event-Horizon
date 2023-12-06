@@ -25,122 +25,69 @@ class EventRepositryTest {
     @Autowired
     private InformationCreator informationCreator;
 
+    private Event tempEvent;
+    private AdsOption tempAdsOption;
+    private Organizer tempOrganizer;
+    private Location tempLocation;
+
 
     @Test
-    public void createEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location = Location.builder()
-                .country("Egypt")
-                .city("Alex").build();
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .name("e5")
-                .eventLocation(location)
-                .eventOrganizer(organizer)
-                .description("...").build();
-        eventRepositry.save(event);
-        Assertions.assertNotEquals(0, event.getId());
+    public void createNewEvent() {
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositry.save(tempEvent);
+        Assertions.assertNotEquals(0, tempEvent.getId());
 
     }
 
     @Test
     public void testManyToOneRelationBetwenAdsAndEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .name("e5")
-                .eventOrganizer(organizer)
-                .description("...").build();
-        eventRepositry.save(event);
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        eventRepositry.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
-                .description("...")
-                .eventOrganizer(organizer)
-                .eventAds(adsOption).build();
+                .eventAds(tempAdsOption)
+                .eventOrganizer(tempOrganizer).build();
         eventRepositry.save(event2);
-        Assertions.assertEquals(event.getEventAds().getId(), event2.getEventAds().getId());
+        Assertions.assertEquals(tempEvent.getEventAds().getId(), event2.getEventAds().getId());
     }
 
     @Test
     public void testOneToOneRelationBetwenLocationAndEventWithError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location = Location.builder()
-                .country("Egypt")
-                .city("Alex").build();
-        Event event = Event.builder()
-                .eventLocation(location)
-                .name("e5")
-                .eventAds(adsOption)
-                .eventOrganizer(organizer)
-                .description("...").build();
-        eventRepositry.save(event);
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
+        eventRepositry.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
-                .description("...")
-                .eventAds(adsOption)
-                .eventOrganizer(organizer)
-                .eventLocation(location).build();
+                .eventAds(tempAdsOption)
+                .eventOrganizer(tempOrganizer)
+                .eventLocation(tempLocation).build();
         Assertions.assertThrows(RuntimeException.class, () -> {
             eventRepositry.save(event2);
         });
-
-
     }
 
     @Test
     public void testOneToOneRelationBetwenLocationAndEventWithoutError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location1 = Location.builder()
-                .country("Egypt")
-                .city("Alex").build();
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        tempEvent.setEventLocation(tempLocation);
         Location location2 = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        Event event = Event.builder()
-                .eventLocation(location1)
-                .name("e5")
-                .eventAds(adsOption)
-                .eventOrganizer(organizer)
-                .description("...").build();
-        eventRepositry.save(event);
+        eventRepositry.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
-                .description("...")
-                .eventAds(adsOption)
-                .eventOrganizer(organizer)
+                .eventAds(tempAdsOption)
+                .eventOrganizer(tempOrganizer)
                 .eventLocation(location2).build();
 
         Assertions.assertDoesNotThrow(() -> {
             eventRepositry.save(event2);
-            Assertions.assertNotEquals(event.getEventLocation().getId(), event2.getEventLocation().getId());
+            Assertions.assertNotEquals(tempEvent.getEventLocation().getId(), event2.getEventLocation().getId());
         });
 
     }
@@ -153,41 +100,20 @@ class EventRepositryTest {
 
     @Test
     public void findExistedEventById() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Event event = Event.builder()
-                .name("e5")
-                .eventAds(adsOption)
-                .eventOrganizer(organizer)
-                .description("...").build();
-        eventRepositry.save(event);
-        Optional<Event> findedEvent = eventRepositry.findById(event.getId());
+        insialize();
+        tempEvent.setEventAds(tempAdsOption);
+        eventRepositry.save(tempEvent);
+        Optional<Event> findedEvent = eventRepositry.findById(tempEvent.getId());
         Assertions.assertEquals(findedEvent.isPresent(), true);
     }
 
     @Test
     public void createEventWithoutName() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location = Location.builder()
-                .country("Egypt")
-                .city("Alex").build();
+        insialize();
         Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location)
-                .eventOrganizer(organizer)
+                .eventAds(tempAdsOption)
+                .eventLocation(tempLocation)
+                .eventOrganizer(tempOrganizer)
                 .description("...").build();
 
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -197,21 +123,49 @@ class EventRepositryTest {
 
     @Test
     public void createEventWithoutAdsOption() {
+        insialize();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            eventRepositry.save(tempEvent);
+        });
+    }
+
+    private void insialize() {
+        createOrganizer();
+        createAdsOption();
+        createLocation();
+        createEvent();
+    }
+
+    private void createOrganizer() {
         Information information = informationCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
+        tempOrganizer = organizer;
+    }
+
+    public void createAdsOption() {
+        AdsOption adsOption = AdsOption.builder()
+                .name("p")
+                .priority(1)
+                .build();
+        adsOptionRepositry.save(adsOption);
+        tempAdsOption = adsOption;
+
+    }
+
+    private void createEvent() {
+        Event event = Event.builder()
+                .name("e5")
+                .eventOrganizer(tempOrganizer)
+                .description("...").build();
+        tempEvent = event;
+    }
+
+    private void createLocation() {
         Location location = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        Event event = Event.builder()
-                .name("a")
-                .eventLocation(location)
-                .eventOrganizer(organizer)
-                .description("...").build();
-
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            eventRepositry.save(event);
-        });
+        tempLocation = location;
     }
 
 }
