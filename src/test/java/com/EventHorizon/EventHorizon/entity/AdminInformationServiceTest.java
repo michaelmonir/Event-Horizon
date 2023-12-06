@@ -3,11 +3,10 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AdminNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,10 +22,10 @@ public class AdminInformationServiceTest {
     @Autowired
     private InformationRepository informationRepository;
     @Autowired
-    private  InformationCreator informationCreator;
+    private InformationCreator informationCreator;
 
     @Test
-    public void updateAdminDataTest(){
+    public void updateAdminDataTest() {
         Information information = informationCreator.getInformation(Role.ADMIN);
         informationRepository.save(information);
         information.setFirstName("newFirstName");
@@ -35,8 +34,9 @@ public class AdminInformationServiceTest {
         informationService.updateWithDto(updateInformationDTO);
         assertEquals(information, informationService.getByID(information.getId()));
     }
+
     @Test
-    public void noAdminExceptionTest(){
+    public void noAdminExceptionTest() {
         Information information = informationCreator.getInformation(Role.ADMIN);
         informationRepository.save(information);
         informationRepository.deleteById(information.getId());
@@ -44,6 +44,16 @@ public class AdminInformationServiceTest {
         assertThrows(
                 InformationNotFoundException.class, () -> {
                     informationService.updateWithDto(updateInformationDTO);
+                }
+        );
+    }
+
+    @Test
+    public void NotAdminOperationExceptionTest() {
+        Information information = informationCreator.getInformation(Role.ADMIN);
+        assertThrows(
+                NotAdminOperationException.class, () -> {
+                    informationService.add(information);
                 }
         );
     }

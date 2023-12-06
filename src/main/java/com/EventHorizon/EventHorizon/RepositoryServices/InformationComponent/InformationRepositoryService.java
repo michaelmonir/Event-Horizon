@@ -6,6 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SuperUserInformationRepositoryService;
@@ -18,12 +19,16 @@ import java.util.Optional;
 
 @Service
 public class InformationRepositoryService {
+
     @Autowired
     InformationRepository informationRepository;
     @Autowired
     InformationRepositoryServiceFactory informationServiceFactory;
 
     public void add(Information information) {
+        if (information.getRole() == Role.ADMIN) {
+            throw new NotAdminOperationException();
+        }
         UserInformationRepositoryService myService =
                 (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.add(information);
@@ -31,11 +36,13 @@ public class InformationRepositoryService {
 
     public void delete(int id) {
         Information information = this.getByID(id);
+        if (information.getRole() == Role.ADMIN) {
+            throw new NotAdminOperationException();
+        }
         UserInformationRepositoryService myService =
                 (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.delete(information);
     }
-
 
     public void update(int id, Information newOne) {
         Information oldOne = this.getByID(id);
@@ -48,7 +55,6 @@ public class InformationRepositoryService {
         SuperUserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
-
 
     public Information getByID(int id) {
         Optional<Information> information = informationRepository.findById(id);
