@@ -8,6 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SuperUserInformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,14 @@ public class InformationRepositoryService {
 
     public void add(Information information) {
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.add(information);
     }
 
     public void delete(int id) {
         Information information = this.getByID(id);
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         myService.delete(information);
     }
 
@@ -44,7 +45,7 @@ public class InformationRepositoryService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Information information = this.getByID(updateInformationDTO.getId());
-        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+        SuperUserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
 

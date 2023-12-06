@@ -11,7 +11,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UsersRepositoryServices.OrganizerInformationRepositoryService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 
