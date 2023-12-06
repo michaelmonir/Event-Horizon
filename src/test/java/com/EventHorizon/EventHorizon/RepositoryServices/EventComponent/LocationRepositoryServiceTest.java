@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Repository.EventCreation.EventService;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent.LocationRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
@@ -18,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class LocationRepositoryServiceTest {
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private EventRepositry eventRepositry;
     @Autowired
     private LocationRepositoryService locationRepositoryService;
     @Autowired
@@ -45,7 +46,7 @@ class LocationRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventOrganizer(organizer)
                 .description("neo").build();
-         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        eventRepositry.save(event);
         locationRepositoryService.deleteLocationById(event.getId());
     }
 

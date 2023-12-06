@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Repository.EventCreation.EventService;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
@@ -9,6 +9,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
@@ -21,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EventRepositoryServiceTest {
 
 
+    @Autowired
+    private EventRepositry eventRepositry;
     @Autowired
     private EventRepositoryService eventRepositoryService;
     @Autowired
@@ -36,78 +39,27 @@ class EventRepositoryServiceTest {
     private Location tempLocation;
 
 
-    @Test
-    public void testGettingExceptionOnSendingIdWhenCreating() {
-        Event event = new Event();
-        event.setId(5);
-        event.setName("Michael's Event");
-        Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        });
-    }
 
     @Test
-    public void addEventNotGettingError() {
+    public void findEventByIdWithoutError() {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
         tempEvent.setEventLocation(tempLocation);
+        eventRepositry.save(tempEvent);
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
-            Assertions.assertNotEquals(0, tempEvent.getId());
+            Assertions.assertEquals(eventRepositoryService.getEventAndHandleNotFound(tempEvent.getId()), tempEvent);
         });
     }
-
-
     @Test
-    public void editEventGettingErrorEventAlreadyExisting() {
-
+    public void addEventGettingError() {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
         tempEvent.setEventLocation(tempLocation);
-        tempEvent.setId(34);
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventRepositoryService.updateEventAndHandleNotFound(tempEvent);
+            eventRepositoryService.getEventAndHandleNotFound(tempEvent.getId());
         });
     }
 
-    @Test
-    public void editEventwithoutError() {
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
-        Location location2 = Location.builder().country("mun").city("cairo").build();
-        Event newEvent = Event.builder()
-                .id(tempEvent.getId())
-                .eventAds(tempAdsOption)
-                .eventLocation(location2)
-                .name("e500")
-                .eventOrganizer(tempOrganizer)
-                .build();
-        Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.updateEventAndHandleNotFound(newEvent);
-            Assertions.assertEquals(tempEvent.getId(), newEvent.getId());
-        });
-    }
-
-    @Test
-    public void testDeleteEventThrowsExceptionWhenEventNotFound() {
-        Assertions.assertThrows(EventNotFoundException.class, () -> {
-            eventRepositoryService.deleteEvent(0);
-        });
-    }
-
-    @Test
-    public void testDeleteEventDeletesEventSuccessfully() {
-
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempEvent);
-        Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.deleteEvent(tempEvent.getId());
-        });
-    }
 
 
     private void insialize() {

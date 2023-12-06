@@ -18,42 +18,12 @@ import java.util.Optional;
 public class EventRepositoryService {
     @Autowired
     private EventRepositry eventRepositry;
-    @Autowired
-    private AdsOptionRepositoryService adsOptionRepositoryService;
-    @Autowired
-    private AdsOptionDtoMapper adsOptionDtoMapper;
 
     public Event getEventAndHandleNotFound(int id) {
         Optional<Event> optionalOldEvent=eventRepositry.findById(id);
-        if(!optionalOldEvent.isPresent())
+        if(optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
         return optionalOldEvent.get();
-    }
-
-    public Event saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
-        if (event.getId() != 0)
-            throw new EventAlreadyExisting();
-
-        eventRepositry.save(event);
-        return event;
-    }
-
-    public Event updateEventAndHandleNotFound(Event newEvent) {
-        int id = newEvent.getId();
-        this.getEventAndHandleNotFound(id);
-
-        newEvent.setId(id);
-        eventRepositry.save(newEvent);
-        return newEvent;
-    }
-
-    public void deleteEvent(int id) {
-        Optional<Event> optionalOldEvent = eventRepositry.findById(id);
-
-        if (!optionalOldEvent.isPresent())
-            throw new EventNotFoundException();
-
-        eventRepositry.deleteById(id);
     }
 
 }

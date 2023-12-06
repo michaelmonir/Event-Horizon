@@ -3,9 +3,11 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +20,8 @@ class ViewEventDtoMapperTest {
     @Mock
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
+    @Mock
+    private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Mock
     private EventRepositoryService eventRepositoryService;
 
@@ -44,9 +48,10 @@ class ViewEventDtoMapperTest {
 
         AdsOption adsOption = new AdsOption();
         event.setEventAds(adsOption);
+        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(event).build();
         Mockito.when(eventRepositoryService.getEventAndHandleNotFound(dto.getId())).thenReturn(event);
 
-        Event result = eventDtoMapper.getEventFromViewEventDTO(dto);
+        LaunchedEvent result = eventDtoMapper.getEventFromViewEventDTO(dto);
 
         Assertions.assertEquals(dto.getId(), result.getId());
         Assertions.assertEquals(dto.getName(), result.getName());
@@ -74,16 +79,16 @@ class ViewEventDtoMapperTest {
         organizer.setInformation(information);
         event.setEventOrganizer(organizer);
 
+        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(event).build();
+        ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(launchedEvent);
 
-        ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(event);
 
-
-        Assertions.assertEquals(event.getId(), result.getId());
-        Assertions.assertEquals(event.getName(), result.getName());
-        Assertions.assertEquals(event.getDescription(), result.getDescription());
-        Assertions.assertEquals(event.getEventCategory(), result.getEventCategory());
-        Assertions.assertEquals(event.getEventDate(), result.getEventDate());
-        Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
+        Assertions.assertEquals(launchedEvent.getId(), result.getId());
+        Assertions.assertEquals(launchedEvent.getName(), result.getName());
+        Assertions.assertEquals(launchedEvent.getDescription(), result.getDescription());
+        Assertions.assertEquals(launchedEvent.getEventCategory(), result.getEventCategory());
+        Assertions.assertEquals(launchedEvent.getEventDate(), result.getEventDate());
+        Assertions.assertEquals(launchedEvent.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
         Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }

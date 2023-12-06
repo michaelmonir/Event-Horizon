@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import org.junit.jupiter.api.Assertions;
@@ -13,13 +14,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 @SpringBootTest
-class DelaitedEventDtoMapperTest {
+class DetailedLaunchedEventDtoMapperTest {
     @Mock
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
     @InjectMocks
-    private DelaitedEventDtoMapper delaitedEventDtoMapper;
+    private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
 
 
     @Test
@@ -35,13 +38,14 @@ class DelaitedEventDtoMapperTest {
         AdsOption adsOption = new AdsOption();
         Mockito.when(adsOptionDtoMapper.getAdsOptionFromDTO(dto.getEventAds())).thenReturn(adsOption);
 
-        Event result = delaitedEventDtoMapper.getEventFromDetailedEventDTO(dto);
+        LaunchedEvent result = detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(dto);
 
         Assertions.assertEquals(dto.getId(), result.getId());
         Assertions.assertEquals(dto.getName(), result.getName());
         Assertions.assertEquals(dto.getDescription(), result.getDescription());
         Assertions.assertEquals(dto.getEventCategory(), result.getEventCategory());
         Assertions.assertEquals(dto.getEventDate(), result.getEventDate());
+        Assertions.assertEquals(dto.getLaunchedDate(), result.getLaunchedDate());
         Assertions.assertEquals(adsOption, result.getEventAds());
         Assertions.assertEquals(dto.getEventLocation(), result.getEventLocation());
     }
@@ -61,18 +65,17 @@ class DelaitedEventDtoMapperTest {
         information.setId(1);
         information.setUserName("ahmed");
         organizer.setInformation(information);
+        LaunchedEvent launchedEvent= LaunchedEvent.builder().event(event).id(1).launchedDate(new Date()).build();
+        DetailedLaunchedEventDto result = detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(launchedEvent);
 
-        DelaitedEventDtoMapper delaitedEventDtoMapper = new DelaitedEventDtoMapper();
-
-        DetailedLaunchedEventDto result = delaitedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        Assertions.assertEquals(event.getId(), result.getId());
-        Assertions.assertEquals(event.getName(), result.getName());
-        Assertions.assertEquals(event.getDescription(), result.getDescription());
-        Assertions.assertEquals(event.getEventCategory(), result.getEventCategory());
-        Assertions.assertEquals(event.getEventDate(), result.getEventDate());
-        Assertions.assertEquals(event.getEventAds().getId(), result.getEventAds().getId());
-        Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
+        Assertions.assertEquals(launchedEvent.getId(), result.getId());
+        Assertions.assertEquals(launchedEvent.getName(), result.getName());
+        Assertions.assertEquals(launchedEvent.getDescription(), result.getDescription());
+        Assertions.assertEquals(launchedEvent.getEventCategory(), result.getEventCategory());
+        Assertions.assertEquals(launchedEvent.getEventDate(), result.getEventDate());
+        Assertions.assertEquals(launchedEvent.getEventAds().getId(), result.getEventAds().getId());
+        Assertions.assertEquals(launchedEvent.getEventLocation(), result.getEventLocation());
+        Assertions.assertEquals(launchedEvent.getLaunchedDate(), result.getLaunchedDate());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
         Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }
