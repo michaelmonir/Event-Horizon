@@ -9,11 +9,13 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent.LocationRepositoryService;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
 
 @SpringBootTest
 class LocationRepositoryServiceTest {
@@ -26,10 +28,10 @@ class LocationRepositoryServiceTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCustomCreator;
     @Test
     public void testDeletionOfLocationByEcventId(){
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -44,7 +46,9 @@ class LocationRepositoryServiceTest {
                 .eventLocation(location)
                 .eventAds(adsOption)
                 .eventOrganizer(organizer)
-                .description("neo").build();
+                .description("neo")
+                .seatTypes(new ArrayList<>())
+                .build();
          eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         locationRepositoryService.deleteLocationById(event.getId());
     }

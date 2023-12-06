@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.Dashboard
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSize;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class DashboardTest {
     @Mock
     private EventRepositoryService eventRepositoryService;
     @Autowired
-    private InformationCreator informationCreator;
+    private InformationCustomCreator informationCustomCreator;
     @Autowired
     private OrganizerRepository organizerRepository;
 
@@ -49,7 +49,7 @@ class DashboardTest {
 
     @Test
     public void testGetPageReturnsCorrectPages() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         Event event1 = new Event();

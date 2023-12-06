@@ -12,13 +12,15 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExis
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -33,7 +35,7 @@ class EventRepositoryServiceTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCustomCreator;
 
     @Test
     public void testGettingExceptionOnSendingIdWhenCreating() {
@@ -48,7 +50,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -63,6 +65,7 @@ class EventRepositoryServiceTest {
                 .name("e45")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
@@ -73,7 +76,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventNotFoundException() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -97,7 +100,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -124,7 +127,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void editEventwithoutError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -139,6 +142,7 @@ class EventRepositoryServiceTest {
                 .name("e800")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         Location location2 = Location.builder().country("mun").city("cairo").build();
@@ -149,6 +153,7 @@ class EventRepositoryServiceTest {
                 .name("e500")
                 .eventOrganizer(organizer)
                 .description("newevent")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         Assertions.assertDoesNotThrow(() -> {
@@ -166,7 +171,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -182,6 +187,7 @@ class EventRepositoryServiceTest {
                 .name("EventToDelete")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -200,7 +206,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -216,6 +222,7 @@ class EventRepositoryServiceTest {
                 .eventOrganizer(organizer)
                 .name("EventDetailsDtoTest")
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -237,7 +244,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -253,6 +260,7 @@ class EventRepositoryServiceTest {
                 .name("EventHeaderDtoTest")
                 .description("...")
                 .eventOrganizer(organizer)
+                .seatTypes(new ArrayList<>())
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -266,7 +274,7 @@ class EventRepositoryServiceTest {
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -282,6 +290,7 @@ class EventRepositoryServiceTest {
                 .name("Event1")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         Location location2 = Location.builder().country("USA").city("New York").build();
@@ -291,6 +300,7 @@ class EventRepositoryServiceTest {
                 .name("Event2")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event1);
@@ -306,7 +316,7 @@ class EventRepositoryServiceTest {
     }
     @Test
     public void testGetAllEventsHeaderDtoReturnsErrors() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -322,6 +332,7 @@ class EventRepositoryServiceTest {
                 .name("Event1")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         Location location2 = Location.builder().country("USA").city("New York").build();
@@ -331,6 +342,7 @@ class EventRepositoryServiceTest {
                 .name("Event2")
                 .eventOrganizer(organizer)
                 .description("...")
+                .seatTypes(new ArrayList<>())
                 .build();
 
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event1);

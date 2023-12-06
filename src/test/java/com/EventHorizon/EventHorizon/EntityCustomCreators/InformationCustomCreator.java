@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.entity;
+package com.EventHorizon.EventHorizon.EntityCustomCreators;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InformationCreator {
+public class InformationCustomCreator {
     int valueOfTest = 0;
 
     public Information getInformation(Role role) {

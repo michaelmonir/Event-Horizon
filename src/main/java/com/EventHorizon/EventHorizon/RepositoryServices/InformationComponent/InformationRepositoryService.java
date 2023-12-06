@@ -24,14 +24,14 @@ public class InformationRepositoryService {
 
     public void add(Information information) {
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.add(information);
     }
 
     public void delete(int id) {
         Information information = this.getByID(id);
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.delete(information);
     }
 
@@ -44,7 +44,7 @@ public class InformationRepositoryService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Information information = this.getByID(updateInformationDTO.getId());
-        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
 

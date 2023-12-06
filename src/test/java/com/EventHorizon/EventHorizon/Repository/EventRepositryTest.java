@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +23,12 @@ class EventRepositryTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCustomCreator;
 
 
     @Test
     public void createEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -52,7 +52,7 @@ class EventRepositryTest {
 
     @Test
     public void testManyToOneRelationBetwenAdsAndEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -77,7 +77,7 @@ class EventRepositryTest {
 
     @Test
     public void testOneToOneRelationBetwenLocationAndEventWithError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -110,7 +110,7 @@ class EventRepositryTest {
 
     @Test
     public void testOneToOneRelationBetwenLocationAndEventWithoutError() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -153,7 +153,7 @@ class EventRepositryTest {
 
     @Test
     public void findExistedEventById() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -173,7 +173,7 @@ class EventRepositryTest {
 
     @Test
     public void createEventWithoutName() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         AdsOption adsOption = AdsOption.builder()
@@ -197,7 +197,7 @@ class EventRepositryTest {
 
     @Test
     public void createEventWithoutAdsOption() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
         Location location = Location.builder()

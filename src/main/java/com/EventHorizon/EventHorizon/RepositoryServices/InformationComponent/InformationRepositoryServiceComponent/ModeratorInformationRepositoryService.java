@@ -18,9 +18,10 @@ public class ModeratorInformationRepositoryService implements UserInformationRep
     ModeratorRepository moderatorRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorRepository.save(moderator);
+        return moderator;
     }
 
     @Override

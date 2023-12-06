@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ModeratorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
@@ -14,11 +15,11 @@ class ModeratorRepositoryTest {
     @Autowired
     private ModeratorInformationRepositoryService moderatorInformationService;
     @Autowired
-    private InformationCreator informationCreator;
+    private InformationCustomCreator informationCustomCreator;
 
     @Test
     public void addModeratorTest() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
+        Information information = informationCustomCreator.getInformation(Role.MODERATOR);
         moderatorInformationService.add(information);
         Moderator m1 = (Moderator) moderatorInformationService.getUserByInformation(information);
         Assertions.assertTrue(information.equals(m1.getInformation()));
@@ -26,7 +27,7 @@ class ModeratorRepositoryTest {
 
     @Test
     public void deleteModeratorTest() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
+        Information information = informationCustomCreator.getInformation(Role.MODERATOR);
         moderatorInformationService.add(information);
         moderatorInformationService.delete(information);
 
@@ -39,7 +40,7 @@ class ModeratorRepositoryTest {
 
     @Test
     public void getByInformationModeratorTest() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
+        Information information = informationCustomCreator.getInformation(Role.MODERATOR);
         moderatorInformationService.add(information);
         Moderator m1 = (Moderator) moderatorInformationService.getUserByInformation(information);
 

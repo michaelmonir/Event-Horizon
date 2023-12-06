@@ -7,11 +7,11 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 public class SeatTypeRepositoryTest
 {
     @Autowired
-    private InformationCreator informationCreator;
+    private InformationCustomCreator informationCustomCreator;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -33,32 +33,25 @@ public class SeatTypeRepositoryTest
     private EventRepositoryService eventRepositoryService;
     @Autowired
     private SeatTypeRepository seatTypeRepository;
+    @Autowired
+    private EventCustomCreator eventCustomCreator;
+    @Autowired
+    private SeatTypeCustomCreator seatTypeCustomCreator;
+    @Autowired
+    private UserCustomCreator userCustomCreator;
+    @Autowired
+    private AdsOptionCustomCreator adsOptionCustomCreator;
 
     @Test
     public void testCreatingSeatType()
     {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(2)
-                .build();
-        adsOptionRepositry.save(adsOption);
-        Location location = Location.builder().country("qula").city("cairo").build();
-
-        SeatType seatType = new SeatType("seattype1", 1);
+        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         List <SeatType> seatTypes = new ArrayList<>();
         seatTypes.add(seatType);
 
-        Event event = Event.builder()
-                .eventAds(adsOption)
-                .eventLocation(location)
-                .name("e800")
-                .eventOrganizer(organizer)
-                .description("...")
-                .seatTypes(seatTypes)
-                .build();
+        Event event = this.eventCustomCreator.getEvent();
+        event.setSeatTypes(seatTypes);
+
         Assertions.assertDoesNotThrow(() -> {
             eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         });
