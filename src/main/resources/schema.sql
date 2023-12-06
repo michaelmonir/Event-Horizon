@@ -76,7 +76,8 @@ create table if not exists seat_type(
         event_id INT NOT NULL,
         name VARCHAR(255) NOT NULL,
         price INT NOT NULL,
-        FOREIGN KEY (event_id) REFERENCES event(id)
+        FOREIGN KEY (event_id) REFERENCES event(id),
+        CHECK price >= 0
     );
 
 

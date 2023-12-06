@@ -10,6 +10,6 @@ public class EventSeatArchiveRepositoryService {
     public void setEventForItsSeatArchives(Event event)
     {
         for (SeatType seatType : event.getSeatTypes())
-            seatType.event = event;
+            seatType.setEvent(event);
     }
 }

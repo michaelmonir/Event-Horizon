@@ -17,12 +17,12 @@ public class SeatType
 
     @ManyToOne()
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    public Event event;
+    private Event event;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
     @Column(nullable = false)
-    public int price;
+    private int price;
 
     public SeatType(String name, int price) {
         this.name = name;
