@@ -1,21 +1,18 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DelaitedEventDtoMapperTest {
     @Mock
@@ -28,7 +25,7 @@ class DelaitedEventDtoMapperTest {
     @Test
     public void testGetEventFromDetailedEventDTO() {
 
-        DetailedEventDto dto = new DetailedEventDto();
+        DetailedLaunchedEventDto dto = new DetailedLaunchedEventDto();
         dto.setId(1);
         dto.setName("Test Event");
         dto.setDescription("Test Description");
@@ -67,7 +64,7 @@ class DelaitedEventDtoMapperTest {
 
         DelaitedEventDtoMapper delaitedEventDtoMapper = new DelaitedEventDtoMapper();
 
-        DetailedEventDto result = delaitedEventDtoMapper.getDTOfromDetailedEvent(event);
+        DetailedLaunchedEventDto result = delaitedEventDtoMapper.getDTOfromDetailedEvent(event);
 
         Assertions.assertEquals(event.getId(), result.getId());
         Assertions.assertEquals(event.getName(), result.getName());

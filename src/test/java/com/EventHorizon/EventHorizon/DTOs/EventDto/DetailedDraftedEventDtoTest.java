@@ -1,15 +1,11 @@
-package com.EventHorizon.EventHorizon.Repository.EventCreation.EventDto;
+package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class EventDetailsDtoTest {
+class DetailedDraftedEventDtoTest {
     @Autowired
     private InformationCreator informationCreator;
     @Autowired
@@ -31,15 +28,16 @@ class EventDetailsDtoTest {
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(tempEvent).build();
-        ViewEventDto eventDetailsDto = new ViewEventDto(launchedEvent);
+        DraftedEvent draftedEvent=DraftedEvent.builder().event(tempEvent).build();
+        DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto(draftedEvent);
 
         // Verify that the values are mapped correctly
-        Assertions.assertEquals(launchedEvent.getName(), eventDetailsDto.getName());
-        Assertions.assertEquals(launchedEvent.getDescription(), eventDetailsDto.getDescription());
-        Assertions.assertEquals(launchedEvent.getEventCategory(), eventDetailsDto.getEventCategory());
-        Assertions.assertEquals(launchedEvent.getEventDate(), eventDetailsDto.getEventDate());
-        Assertions.assertEquals(launchedEvent.getEventLocation(), eventDetailsDto.getEventLocation());
+        Assertions.assertEquals(draftedEvent.getName(), detailedDraftedEventDto.getName());
+        Assertions.assertEquals(draftedEvent.getDescription(), detailedDraftedEventDto.getDescription());
+        Assertions.assertEquals(draftedEvent.getEventCategory(), detailedDraftedEventDto.getEventCategory());
+        Assertions.assertEquals(draftedEvent.getEventDate(), detailedDraftedEventDto.getEventDate());
+        Assertions.assertEquals(draftedEvent.getEventLocation(), detailedDraftedEventDto.getEventLocation());
+        
     }
     private void insialize() {
         createOrganizer();
@@ -56,16 +54,15 @@ class EventDetailsDtoTest {
     }
 
     public void createAdsOption() {
-        AdsOption adsOption = AdsOption.builder()
+        tempAdsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
                 .build();
-        tempAdsOption = adsOption;
 
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = Event.builder()
                 .eventAds(tempAdsOption)
                 .eventLocation(tempLocation)
                 .name("EventDetailsDtoTest")
@@ -74,14 +71,13 @@ class EventDetailsDtoTest {
                 .eventCategory("Category1")
                 .eventDate(new Date())
                 .build();
-        tempEvent = event;
     }
 
     private void createLocation() {
-        Location location = Location.builder()
+        tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        tempLocation = location;
     }
+
 
 }

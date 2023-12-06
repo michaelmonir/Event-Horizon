@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.Repository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +23,7 @@ class LaunchedEventRepositoryTest {
     private LaunchedEventRepository launchedEventRepository;
 
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -45,7 +44,7 @@ class LaunchedEventRepositoryTest {
     @Test
     public void findNotExistedLaunchedEventById() {
         Optional<LaunchedEvent> event = launchedEventRepository.findById(0);
-        Assertions.assertEquals(event.isPresent(), false);
+        assertFalse(event.isPresent());
     }
     @Test
     public void findExistedLaunchedEventById() {
@@ -54,7 +53,7 @@ class LaunchedEventRepositoryTest {
                 .event(tempEvent).build();
         launchedEventRepository.save(launchedEvent);
         Optional<LaunchedEvent> findedEvent = launchedEventRepository.findById(launchedEvent.getId());
-        Assertions.assertEquals(findedEvent.isPresent(), true);
+        assertTrue(findedEvent.isPresent());
     }
     @Test
     public void createLaunchedEventWithoutEvent() {
@@ -108,17 +107,16 @@ class LaunchedEventRepositoryTest {
                 .name("p")
                 .priority(1)
                 .build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         tempAdsOption=adsOption;
 
     }
     private void createEvent(){
-        Event event = Event.builder()
+        tempEvent= Event.builder()
                 .name("e5")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer)
                 .description("...").build();
-        tempEvent=event;
     }
 
 }

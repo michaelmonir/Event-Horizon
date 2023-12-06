@@ -19,7 +19,7 @@ class EventRepositryTest {
     @Autowired
     private EventRepositry eventRepositry;
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -95,7 +95,7 @@ class EventRepositryTest {
     @Test
     public void findNotExistedEventById() {
         Optional<Event> event = eventRepositry.findById(0);
-        Assertions.assertEquals(event.isPresent(), false);
+        Assertions.assertFalse(event.isPresent());
     }
 
     @Test
@@ -104,7 +104,7 @@ class EventRepositryTest {
         tempEvent.setEventAds(tempAdsOption);
         eventRepositry.save(tempEvent);
         Optional<Event> findedEvent = eventRepositry.findById(tempEvent.getId());
-        Assertions.assertEquals(findedEvent.isPresent(), true);
+        Assertions.assertTrue(findedEvent.isPresent());
     }
 
     @Test
@@ -148,24 +148,22 @@ class EventRepositryTest {
                 .name("p")
                 .priority(1)
                 .build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         tempAdsOption = adsOption;
 
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = Event.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...").build();
-        tempEvent = event;
     }
 
     private void createLocation() {
-        Location location = Location.builder()
+        tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        tempLocation = location;
     }
 
 }

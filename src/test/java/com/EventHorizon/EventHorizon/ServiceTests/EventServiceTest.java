@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.ServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
@@ -42,7 +42,7 @@ public class EventServiceTest
 
     private Event customEvent;
     private ViewEventDto customViewEventDto;
-    private DetailedEventDto customDetailedEventDto;
+    private DetailedLaunchedEventDto customDetailedLaunchedEventDto;
     private Organizer customOrganizer;
     private Information customInformation;
 
@@ -60,30 +60,30 @@ public class EventServiceTest
     public void gettingOrganizerEvent() {
         this.initializeMocksAndCustomDTOs();
         this.eventService.getEventForUser(1);
-        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(1, 1);
-        DetailedEventDto expectedViewEventDTO = this.customDetailedEventDto;
+        DetailedLaunchedEventDto detailedLaunchedEventDTO = this.eventService.getEventForOrganizer(1, 1);
+        DetailedLaunchedEventDto expectedViewEventDTO = this.customDetailedLaunchedEventDto;
 
-        Assertions.assertTrue(expectedViewEventDTO.equals(detailedEventDTO));
+        Assertions.assertTrue(expectedViewEventDTO.equals(detailedLaunchedEventDTO));
     }
 
     @Test
     public void createEvent() {
         this.initializeMocksAndCustomDTOs();
 
-        DetailedEventDto detailedEventDTO = this.customDetailedEventDto;
-        DetailedEventDto resultEventDTO = this.eventService.createEvent(1, detailedEventDTO);
+        DetailedLaunchedEventDto detailedLaunchedEventDTO = this.customDetailedLaunchedEventDto;
+        DetailedLaunchedEventDto resultEventDTO = this.eventService.createEvent(1, detailedLaunchedEventDTO);
 
-        Assertions.assertTrue(detailedEventDTO.equals(resultEventDTO));
+        Assertions.assertTrue(detailedLaunchedEventDTO.equals(resultEventDTO));
     }
 
     @Test
     public void updateEvent() {
         this.initializeMocksAndCustomDTOs();
 
-        DetailedEventDto detailedEventDTO = this.customDetailedEventDto;
-        DetailedEventDto resultEventDTO = this.eventService.updateEvent(1, detailedEventDTO);
+        DetailedLaunchedEventDto detailedLaunchedEventDTO = this.customDetailedLaunchedEventDto;
+        DetailedLaunchedEventDto resultEventDTO = this.eventService.updateEvent(1, detailedLaunchedEventDTO);
 
-        Assertions.assertTrue(detailedEventDTO.equals(resultEventDTO));
+        Assertions.assertTrue(detailedLaunchedEventDTO.equals(resultEventDTO));
     }
 
     @Test
@@ -112,10 +112,10 @@ public class EventServiceTest
     }
     private void initializeDetailedEventDtoMapper() {
         Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
-                .thenReturn(this.customDetailedEventDto);
+                .thenReturn(this.customDetailedLaunchedEventDto);
         Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
-                .thenReturn(this.customDetailedEventDto);
-        Mockito.when(this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(Mockito.any(DetailedEventDto.class)))
+                .thenReturn(this.customDetailedLaunchedEventDto);
+        Mockito.when(this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(Mockito.any(DetailedLaunchedEventDto.class)))
                 .thenReturn(this.customEvent);
     }
     private void initializeEventDtoMapper() {
@@ -167,7 +167,7 @@ public class EventServiceTest
         this.customViewEventDto.setEventLocation(new Location());
     }
     private void initializeDetailedEventDTO() {
-        this.customDetailedEventDto = DetailedEventDto.builder()
+        this.customDetailedLaunchedEventDto = DetailedLaunchedEventDto.builder()
                 .id(1)
                 .name("My Event")
                 .eventLocation(new Location())

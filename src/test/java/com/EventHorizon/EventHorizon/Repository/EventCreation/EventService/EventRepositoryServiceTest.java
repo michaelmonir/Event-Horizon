@@ -1,7 +1,5 @@
 package com.EventHorizon.EventHorizon.Repository.EventCreation.EventService;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
@@ -10,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
+import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
@@ -18,8 +16,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import java.util.List;
 
 @SpringBootTest
 class EventRepositoryServiceTest {
@@ -29,7 +25,7 @@ class EventRepositoryServiceTest {
     private EventRepositoryService eventRepositoryService;
 
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -134,7 +130,7 @@ class EventRepositoryServiceTest {
                 .name("p")
                 .priority(1)
                 .build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         tempAdsOption = adsOption;
 
     }

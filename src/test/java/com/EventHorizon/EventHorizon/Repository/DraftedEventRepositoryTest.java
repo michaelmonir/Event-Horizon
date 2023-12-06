@@ -21,7 +21,7 @@ class DraftedEventRepositoryTest {
     private DraftedEventRepository draftedEventRepository;
 
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -42,7 +42,7 @@ class DraftedEventRepositoryTest {
     @Test
     public void findNotExistedDraftedEventById() {
         Optional<DraftedEvent> event = draftedEventRepository.findById(0);
-        Assertions.assertEquals(event.isPresent(), false);
+        assertFalse(event.isPresent());
     }
     @Test
     public void findExistedDraftedEventById() {
@@ -51,7 +51,7 @@ class DraftedEventRepositoryTest {
                 .event(tempEvent).build();
         draftedEventRepository.save(draftedEvent);
         Optional<DraftedEvent> findedEvent = draftedEventRepository.findById(draftedEvent.getId());
-        Assertions.assertEquals(findedEvent.isPresent(), true);
+        assertTrue(findedEvent.isPresent());
     }
     @Test
     public void createDraftedEventWithoutEvent() {
@@ -105,17 +105,16 @@ class DraftedEventRepositoryTest {
                 .name("p")
                 .priority(1)
                 .build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         tempAdsOption=adsOption;
 
     }
     private void createEvent(){
-        Event event = Event.builder()
+        tempEvent= Event.builder()
                 .name("e5")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer)
                 .description("...").build();
-        tempEvent=event;
     }
 
 }

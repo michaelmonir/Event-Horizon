@@ -11,7 +11,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
+import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +29,7 @@ class LaunchedEventRepositoryServiceTest {
     private LaunchedEventRepositoryService launchedEventRepositoryService;
 
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
@@ -228,7 +228,7 @@ class LaunchedEventRepositoryServiceTest {
                 .name("p")
                 .priority(1)
                 .build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         tempAdsOption = adsOption;
 
     }
