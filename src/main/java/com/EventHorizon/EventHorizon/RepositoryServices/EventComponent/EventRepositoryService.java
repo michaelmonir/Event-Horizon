@@ -56,32 +56,5 @@ public class EventRepositoryService {
         eventRepositry.deleteById(id);
     }
 
-    public ViewEventDto getViewEventDTO(int id) {
-        Optional<Event> optionalOldEvent = eventRepositry.findById(id);
-
-        if (!optionalOldEvent.isPresent())
-            throw new EventNotFoundException();
-
-        return new ViewEventDto(optionalOldEvent.get());
-    }
-
-    public EventHeaderDto getEventHeaderDto(int id) {
-        Optional<Event> optionalOldEvent = eventRepositry.findById(id);
-
-        if (!optionalOldEvent.isPresent())
-            throw new EventNotFoundException();
-
-        return new EventHeaderDto(optionalOldEvent.get());
-    }
-
-    public List<EventHeaderDto> getAllEventsHeaderDto(PageRequest pageRequest) {
-        List<Event> events = eventRepositry.findAll(pageRequest).getContent();
-        List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
-        for (Event event : events) {
-            eventHeaderDtos.add(new EventHeaderDto(event));
-        }
-        return eventHeaderDtos;
-    }
-
 }
 
