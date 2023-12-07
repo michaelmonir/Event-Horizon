@@ -3,9 +3,14 @@ package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.OrganizerSeatArchiveRepository;
+import com.EventHorizon.EventHorizon.Repository.SeatArchive.SponsorSeatArchiveRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,21 +25,19 @@ import java.util.List;
 public class OrganizerSeatArchiveRepositoryTest
 {
     @Autowired
-    OrganizerSeatArchiveRepository organizerSeatArchiveRepository;
+    UserCustomCreator userCustomCreator;
     @Autowired
-    SeatTypeCustomCreator seatTypeCustomCreator;
-    @Autowired
-    EventCustomCreator eventCustomCreator;
-    @Autowired
-    EventRepositoryService eventRepositoryService;
+    SponsorSeatArchiveRepository sponsorSeatArchiveRepository;
 
     @Test
     public void saveSuccessfully() {
 
         SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
-        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 1);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
 
-        Assertions.assertDoesNotThrow(()->this.organizerSeatArchiveRepository.save(organizerSeatArchive));
+        SponsorSeatArchive organizerSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
+
+        Assertions.assertDoesNotThrow(()->this.sponsorSeatArchiveRepository.save(organizerSeatArchive));
     }
 
     @Test
