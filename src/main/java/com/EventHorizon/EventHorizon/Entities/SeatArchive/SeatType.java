@@ -4,11 +4,12 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "seat_type")
 @Data
-@NoArgsConstructor
+@ToString
 public class SeatType
 {
     @Id
@@ -17,12 +18,17 @@ public class SeatType
 
     @ManyToOne()
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    private Event event;
+    public Event event;
 
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private int price;
+
+    @OneToOne(mappedBy = "seatType")
+    private OrganizerSeatArchive organizerSeatArchive;
+
+    protected SeatType(){}
 
     public SeatType(String name, int price) {
         this.name = name;

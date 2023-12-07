@@ -51,6 +51,6 @@ public class Event {
     )
     private Organizer eventOrganizer;
 
-    @OneToMany(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<SeatType> seatTypes;
 }

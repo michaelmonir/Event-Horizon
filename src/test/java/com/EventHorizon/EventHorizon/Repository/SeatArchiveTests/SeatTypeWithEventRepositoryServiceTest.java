@@ -18,13 +18,13 @@ import java.util.List;
 public class SeatTypeWithEventRepositoryServiceTest
 {
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    EventRepositoryService eventRepositoryService;
     @Autowired
-    private EventCustomCreator eventCustomCreator;
+    EventCustomCreator eventCustomCreator;
     @Autowired
-    private SeatTypeCustomCreator seatTypeCustomCreator;
+    SeatTypeCustomCreator seatTypeCustomCreator;
     @Autowired
-    private EventRepositry eventRepositry;
+    EventRepositry eventRepositry;
 
     @Test
     public void creatingSeatTypeUsingRepositoryService()
