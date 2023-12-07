@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DraftedEventRepositoryServiceTest {
@@ -74,15 +76,7 @@ class DraftedEventRepositoryServiceTest {
         tempEvent.setEventLocation(tempLocation);
         tempDraftedEvent=DraftedEvent.builder().event(tempEvent).build();
         draftedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempDraftedEvent);
-        Location location2 = Location.builder().country("mun").city("cairo").build();
-        Event newEvent = Event.builder()
-                .id(tempEvent.getId())
-                .eventAds(tempAdsOption)
-                .eventLocation(location2)
-                .name("e500")
-                .eventOrganizer(tempOrganizer)
-                .build();
-        DraftedEvent newTempDraftedEvent=DraftedEvent.builder().event(newEvent).build();
+        DraftedEvent newTempDraftedEvent=DraftedEvent.builder().event(createSecoundevent()).build();
         newTempDraftedEvent.setId(tempDraftedEvent.getId());
         Assertions.assertDoesNotThrow(() -> {
             draftedEventRepositoryService.updateEventAndHandleNotFound(newTempDraftedEvent);
@@ -146,5 +140,16 @@ class DraftedEventRepositoryServiceTest {
         tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
+    }
+    private Event createSecoundevent(){
+        Location location2 = Location.builder().country("mun").city("cairo").build();
+        return Event.builder()
+                .id(tempEvent.getId())
+                .eventAds(tempAdsOption)
+                .eventLocation(location2)
+                .name("e500")
+                .eventDate(new Date(System.currentTimeMillis() + 100000))
+                .eventOrganizer(tempOrganizer)
+                .build();
     }
 }

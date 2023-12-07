@@ -18,17 +18,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
 
     @Autowired
     private DraftedEventRepository draftedEventRepository;
-    @Autowired
-    private AdsOptionRepositoryService adsOptionRepositoryService;
-    @Autowired
-    private AdsOptionDtoMapper adsOptionDtoMapper;
 
-    public DraftedEvent getEventAndHandleNotFound(int id) {
-        Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
-        if (optionalOldEvent.isEmpty())
-            throw new EventNotFoundException();
-        return optionalOldEvent.get();
-    }
 
     public DraftedEvent saveEventWhenCreatingAndHandleAlreadyExisting(SuperEvent event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
@@ -42,19 +32,14 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     public DraftedEvent updateEventAndHandleNotFound(SuperEvent event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         int id = draftedEvent.getId();
-        this.getEventAndHandleNotFound(id);
-
+        getEventAndHandleNotFound(id);
         draftedEvent.setId(id);
         draftedEventRepository.save(draftedEvent);
         return draftedEvent;
     }
 
     public void deleteEvent(int id) {
-        Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
-
-        if (optionalOldEvent.isEmpty())
-            throw new EventNotFoundException();
-
+        getEventAndHandleNotFound(id);
         draftedEventRepository.deleteById(id);
     }
 
@@ -67,6 +52,12 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     public Event getEventFromSuperEvent(SuperEvent superEvent) {
         DraftedEvent draftedEvent = (DraftedEvent) superEvent;
         return draftedEvent.getEvent();
+    }
+    public DraftedEvent getEventAndHandleNotFound(int id) {
+        Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
+        if (optionalOldEvent.isEmpty())
+            throw new EventNotFoundException();
+        return optionalOldEvent.get();
     }
 
 
