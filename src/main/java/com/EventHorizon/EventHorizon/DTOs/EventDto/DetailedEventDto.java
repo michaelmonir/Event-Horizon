@@ -13,13 +13,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public abstract class DetailedEventDto {
-    private int id;
-    private String name;
-    private String description;
-    private String eventCategory;
-    private Date eventDate;
-    private EventType eventType;
-    private AdsOptionDto eventAds;
-    private Location eventLocation;
-    private OrganizerHeaderDto eventOrganizer;
+    protected int id;
+    protected String name;
+    protected String description;
+    protected String eventCategory;
+    protected Date eventDate;
+    protected EventType eventType;
+    protected AdsOptionDto eventAds;
+    protected Location eventLocation;
+    protected OrganizerHeaderDto eventOrganizer;
 }

@@ -16,7 +16,9 @@ public interface SuperEventRepositoryService {
 
     public SuperEvent updateEventAndHandleNotFound(SuperEvent newEvent);
 
-    public void deleteEvent(int id) ;
-    public SuperEvent  setEventOrganizer(Organizer organizer,SuperEvent superEvent);
+    public void deleteEvent(int id);
+
+    public SuperEvent setEventOrganizer(Organizer organizer, SuperEvent superEvent);
+
     public Event getEventFromSuperEvent(SuperEvent superEvent);
 }
