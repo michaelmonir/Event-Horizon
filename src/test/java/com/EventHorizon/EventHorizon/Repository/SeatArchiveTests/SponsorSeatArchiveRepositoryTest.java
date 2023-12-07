@@ -44,7 +44,6 @@ public class SponsorSeatArchiveRepositoryTest
         Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
         this.sponsorRepository.save(sponsor);
 
-
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
 
         Assertions.assertDoesNotThrow(()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
