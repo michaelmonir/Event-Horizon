@@ -37,8 +37,6 @@ public class EventServiceTest
     private EventService eventService;
     @Mock
     private OrganizerInformationRepositoryService organizerInformationService;
-    @Mock
-    private UserEventService userEventService;
 
     private Event customEvent;
     private ViewEventDto customViewEventDto;

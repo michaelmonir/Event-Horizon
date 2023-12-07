@@ -28,6 +28,8 @@ public class SponsorSeatArchive
     @Column(nullable = false)
     int available_number_of_seats;
 
+    protected SponsorSeatArchive() { }
+
     public SponsorSeatArchive(SeatType seatType, Sponsor sponsor, int total_number_of_seats, int available_number_of_seats)
     {
         SponsorArchiveCompositeKey id = new SponsorArchiveCompositeKey(seatType.getId(), sponsor.getId());

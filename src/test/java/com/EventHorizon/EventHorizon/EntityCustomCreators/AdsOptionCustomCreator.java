@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class AdsOptionCustomCreator
 {
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    AdsOptionRepositry adsOptionRepositry;
 
     int numOfCreatedObjects = 0;
 
