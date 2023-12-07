@@ -30,7 +30,7 @@ public class SeatTypeWithEventRepositoryServiceTest
     public void creatingSeatTypeUsingRepositoryService()
     {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        Event event = this.getEventAndGiveOneSeatType(seatType);;
 
         Assertions.assertDoesNotThrow(() -> {
             eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
