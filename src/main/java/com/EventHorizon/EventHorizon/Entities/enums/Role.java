@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Entities.enums;
 public enum Role {
     CLIENT("ROLE_CLIENT"),
     ADMIN("ROLE_ADMIN"),
-    MODERATOR(  "ROLE_MODERATOR"),
+    MODERATOR("ROLE_MODERATOR"),
     SPONSOR("ROLE_SPONSOR"),
     ORGANIZER("ROLE_ORGANIZER");
     private String role;
