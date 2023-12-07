@@ -1,12 +1,14 @@
 package com.EventHorizon.EventHorizon.Controllers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.UserTokenInformationService;
+import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,71 +31,38 @@ public class EventOperationsController {
         return new ResponseEntity<>(viewEventDTO, HttpStatus.OK);
     }
 
-    @GetMapping("LaunchedEventForOrganizer/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedLaunchedEventDto> getLaunchedEventForOrganizer(HttpServletRequest request, @PathVariable int eventId) {
+    @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
+    public ResponseEntity<DetailedEventDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId,@RequestBody EventType eventType) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        DetailedLaunchedEventDto detailedLaunchedEventDTO = this.eventService.getLaunchedEventForOrganizer(organizerId, eventId);
-        return new ResponseEntity<>(detailedLaunchedEventDTO, HttpStatus.OK);
-    }
-    @GetMapping("DraftedEventForOrganizer/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedDraftedEventDto> getDraftedEventForOrganizer(HttpServletRequest request, @PathVariable int eventId) {
-
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        DetailedDraftedEventDto detailedDraftedEventDTO = this.eventService.getDraftedEventForOrganizer(organizerId, eventId);
-        return new ResponseEntity<>(detailedDraftedEventDTO, HttpStatus.OK);
+        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId,eventType);
+        return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-
-    @PostMapping("createLaunchedEvent")//organizer,admin
-    public ResponseEntity<DetailedLaunchedEventDto> createLaunchedEvent
-            (HttpServletRequest request, @RequestBody DetailedLaunchedEventDto detailedLaunchedEventDto) {
+    @PostMapping("createEvent")//organizer,admin
+    public ResponseEntity<DetailedEventDto> createEvent
+            (HttpServletRequest request, @RequestBody DetailedEventDto detailedEventDto) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedLaunchedEventDto = this.eventService.createLaunchedEvent(organizerId, detailedLaunchedEventDto);
-        return new ResponseEntity<>(detailedLaunchedEventDto, HttpStatus.OK);
+        detailedEventDto = this.eventService.createEvent(organizerId, detailedEventDto);
+        return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 
-    @PostMapping("createDraftedEvent")//organizer,admin
-    public ResponseEntity<DetailedDraftedEventDto> createDraftedEvent
-            (HttpServletRequest request, @RequestBody DetailedDraftedEventDto detailedDraftedEventDto) {
+    @PutMapping("updateEvent/{eventId}")//organizer,admin
+    public ResponseEntity<DetailedEventDto> updateEvent
+            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedDraftedEventDto = this.eventService.createDraftedEvent(organizerId, detailedDraftedEventDto);
-        return new ResponseEntity<>(detailedDraftedEventDto, HttpStatus.OK);
+        detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
+        return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @PutMapping("updateLaunchedEvent/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedLaunchedEventDto> updateLaunchedEvent
-            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedLaunchedEventDto detailedLaunchedEventDTO) {
+    @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
+    public ResponseEntity deleteEvent
+            (HttpServletRequest request, @PathVariable int eventId,@RequestBody DetailedEventDto detailedEventDTO) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedLaunchedEventDTO = this.eventService.createLaunchedEvent(organizerId, detailedLaunchedEventDTO);
-        return new ResponseEntity<>(detailedLaunchedEventDTO, HttpStatus.OK);
-    }
-    @PutMapping("updateDraftedEvent/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedDraftedEventDto> updateDraftedEvent
-            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedDraftedEventDto detailedDraftedEventDTO) {
-
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedDraftedEventDTO = this.eventService.createDraftedEvent(organizerId, detailedDraftedEventDTO);
-        return new ResponseEntity<>(detailedDraftedEventDTO, HttpStatus.OK);
-    }
-
-    @DeleteMapping("deleteLaunchedEvent/{eventId}") //organizer,admin
-    public ResponseEntity deleteLaunchedEvent
-            (HttpServletRequest request, @PathVariable int eventId) {
-
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        this.eventService.deleteLaunchedEvent(organizerId, eventId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-    @DeleteMapping("deleteDraftedEvent/{eventId}") //organizer,admin
-    public ResponseEntity deleteDraftedEvent
-            (HttpServletRequest request, @PathVariable int eventId) {
-
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        this.eventService.deleteDraftedEvent(organizerId, eventId);
+        this.eventService.deleteEvent(organizerId, detailedEventDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 

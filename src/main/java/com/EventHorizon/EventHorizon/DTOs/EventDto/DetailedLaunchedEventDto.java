@@ -13,28 +13,20 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DetailedLaunchedEventDto {
-    private int id;
-    private String name;
-    private String description;
-    private String eventCategory;
-    private Date eventDate;
+public class DetailedLaunchedEventDto extends DetailedEventDto{
+
     private Date launchedDate;
-    private EventType eventType;
-    private AdsOptionDto eventAds;
-    private Location eventLocation;
-    private OrganizerHeaderDto eventOrganizer;
 
     public DetailedLaunchedEventDto(LaunchedEvent event) {
-        this.id = event.getId();
-        this.name = event.getName();
-        this.description = event.getDescription();
-        this.eventCategory = event.getEventCategory();
-        this.eventDate = event.getEventDate();
+        this.setId(event.getId());
+        this.setName(event.getName());
+        this.setDescription(event.getDescription());
+        this.setEventCategory(event.getEventCategory());
+        this.setEventDate(event.getEventDate());
         this.launchedDate=event.getLaunchedDate();
-        this.eventLocation = event.getEventLocation();
-        this.eventAds = new AdsOptionDto(event.getEventAds());
-        this.eventType=event.getEventType();
-        this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
+        this.setEventLocation(event.getEventLocation());
+        this.setEventAds(new AdsOptionDto(event.getEventAds()));
+        this.setEventType(event.getEventType());
+        this.setEventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()));
     }
 }

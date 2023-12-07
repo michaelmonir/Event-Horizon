@@ -2,8 +2,11 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class LaunchedEventRepositoryService  {
+public class LaunchedEventRepositoryService implements SuperEventRepositoryService  {
     @Autowired
     private LaunchedEventRepository launchedEventRepositry;
     @Autowired
@@ -31,7 +34,8 @@ public class LaunchedEventRepositoryService  {
         return optionalOldEvent.get();
     }
 
-    public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(LaunchedEvent launchedEvent) {
+    public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(SuperEvent event) {
+        LaunchedEvent launchedEvent=(LaunchedEvent) event;
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
 
@@ -39,7 +43,8 @@ public class LaunchedEventRepositoryService  {
         return launchedEvent;
     }
 
-    public LaunchedEvent updateEventAndHandleNotFound(LaunchedEvent newEvent) {
+    public LaunchedEvent updateEventAndHandleNotFound(SuperEvent event) {
+        LaunchedEvent newEvent=(LaunchedEvent) event;
         int id = newEvent.getId();
         this.getEventAndHandleNotFound(id);
 
@@ -57,6 +62,15 @@ public class LaunchedEventRepositoryService  {
         launchedEventRepositry.deleteById(id);
     }
 
+    public LaunchedEvent setEventOrganizer(Organizer organizer, SuperEvent superEvent) {
+        LaunchedEvent launchedEvent=(LaunchedEvent) superEvent;
+        launchedEvent.setEventOrganizer(organizer);
+        return launchedEvent;
+    }
+    public Event getEventFromSuperEvent(SuperEvent superEvent) {
+        DraftedEvent draftedEvent = (DraftedEvent) superEvent;
+        return draftedEvent.getEvent();
+    }
     public ViewEventDto getViewEventDTO(int id) {
         Optional<LaunchedEvent> optionalOldEvent = launchedEventRepositry.findById(id);
 

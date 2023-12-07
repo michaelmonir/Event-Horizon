@@ -6,33 +6,23 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 @EqualsAndHashCode
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class DetailedDraftedEventDto {
-    private int id;
-    private String name;
-    private String description;
-    private String eventCategory;
-    private Date eventDate;
-    private EventType eventType;
-    private AdsOptionDto eventAds;
-    private Location eventLocation;
-    private OrganizerHeaderDto eventOrganizer;
-
+public class DetailedDraftedEventDto extends DetailedEventDto {
     public DetailedDraftedEventDto(DraftedEvent event) {
-        this.id = event.getId();
-        this.name = event.getName();
-        this.description = event.getDescription();
-        this.eventCategory = event.getEventCategory();
-        this.eventDate = event.getEventDate();
-        this.eventLocation = event.getEventLocation();
-        this.eventAds = new AdsOptionDto(event.getEventAds());
-        this.eventType=event.getEventType();
-        this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
+        this.setId(event.getId());
+        this.setName(event.getName());
+        this.setDescription(event.getDescription());
+        this.setEventCategory(event.getEventCategory());
+        this.setEventDate(event.getEventDate());
+        this.setEventLocation(event.getEventLocation());
+        this.setEventAds(new AdsOptionDto(event.getEventAds()));
+        this.setEventType(event.getEventType());
+        this.setEventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()));
     }
 }

@@ -1,22 +1,16 @@
 package com.EventHorizon.EventHorizon.Services;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DetailedDraftedEventDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DetailedLaunchedEventDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
@@ -26,19 +20,16 @@ import java.util.List;
 @Service
 public class EventService {
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private EventRepositoryServiceFactory eventRepositoryServiceFactory;
     @Autowired
     private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Autowired
-    private DraftedEventRepositoryService draftedEventRepositoryService;
+    private DetailedEventDtoMapperFactory detailedEventDtoMapperFactory;
     @Autowired
     private DashboardRepositoryService dashboardRepositoryService;
     @Autowired
     private UserEventService userEventService;
-    @Autowired
-    private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
-    @Autowired
-    private DetailedDraftedEventDtoMapper detailedDraftedEventDtoMapper;
+
     @Autowired
     private InformationRepositoryService informationService;
     @Autowired
@@ -48,27 +39,18 @@ public class EventService {
 
     public ViewEventDto getEventForUser(int eventId) {
         LaunchedEvent event = this.launchedEventRepositoryService.getEventAndHandleNotFound(eventId);
+
         return viewEventDtoMapper.getDTOfromViewEvent(event);
     }
 
-    public DetailedLaunchedEventDto getLaunchedEventForOrganizer(int informationId, int eventId) {
+    public DetailedEventDto getEventForOrganizer(int informationId, int eventId,EventType eventType) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-
-        LaunchedEvent event = this.launchedEventRepositoryService.getEventAndHandleNotFound(eventId);
-        this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event.getEvent());
-
-        DetailedLaunchedEventDto resultDTO = detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        return resultDTO;
-    }
-
-    public DetailedDraftedEventDto getDraftedEventForOrganizer(int informationId, int eventId) {
-        Organizer organizer = this.getOrganizerFromInformationId(informationId);
-
-        DraftedEvent event = this.draftedEventRepositoryService.getEventAndHandleNotFound(eventId);
-        this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event.getEvent());
-
-        DetailedDraftedEventDto resultDTO = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
+        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        SuperEvent event = eventRepositoryService.getEventAndHandleNotFound(eventId);
+        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
 
         return resultDTO;
     }
@@ -77,61 +59,47 @@ public class EventService {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
 
-    public DetailedLaunchedEventDto createLaunchedEvent(int informationId, DetailedLaunchedEventDto eventDTO) {
+    public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        LaunchedEvent event = this.detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        event.setEventOrganizer(organizer);
-        this.launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        DetailedLaunchedEventDto resultDTO = detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
+        EventType eventType=eventDTO.getEventType();
+        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        SuperEvent event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        event=eventRepositoryService.setEventOrganizer(organizer,event);
+        eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
 
         return resultDTO;
     }
 
-    public DetailedDraftedEventDto createDraftedEvent(int informationId, DetailedDraftedEventDto eventDTO) {
+    public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        DraftedEvent event = this.detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        event.setEventOrganizer(organizer);
-        this.draftedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        DetailedDraftedEventDto resultDTO = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        return resultDTO;
-    }
-    public DetailedLaunchedEventDto updateLaunchedEvent(int informationId, DetailedLaunchedEventDto eventDTO) {
-        Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        LaunchedEvent event = this.detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        event.setEventOrganizer(organizer);
-        this.launchedEventRepositoryService.updateEventAndHandleNotFound(event);
-        DetailedLaunchedEventDto resultDTO = detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
-
+        EventType eventType=eventDTO.getEventType();
+        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        SuperEvent event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        event = eventRepositoryService.updateEventAndHandleNotFound(event);
+        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
         return resultDTO;
     }
 
-    public DetailedDraftedEventDto updateDraftedEvent(int informationId, DetailedDraftedEventDto eventDTO) {
+    public void deleteEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        DraftedEvent event = this.detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        event.setEventOrganizer(organizer);
-        this.draftedEventRepositoryService.updateEventAndHandleNotFound(event);
-        DetailedDraftedEventDto resultDTO = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        return resultDTO;
-    }
-
-    public void deleteLaunchedEvent(int informationId, int eventId) {
-        Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        LaunchedEvent event = this.launchedEventRepositoryService.getEventAndHandleNotFound(eventId);
-        this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event.getEvent());
-        this.launchedEventRepositoryService.deleteEvent(eventId);
-    }
-    public void deleteDraftedEvent(int informationId, int eventId) {
-        Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        DraftedEvent event = this.draftedEventRepositoryService.getEventAndHandleNotFound(eventId);
-        this.userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event.getEvent());
-        this.draftedEventRepositoryService.deleteEvent(eventId);
+        EventType eventType=eventDTO.getEventType();
+        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        SuperEvent event = eventRepositoryService.getEventAndHandleNotFound(eventDTO.getId());
+        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        eventRepositoryService.deleteEvent(eventDTO.getId());
     }
 
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
 
-        return (Organizer)organizerInformationService.getUserByInformation(information);
+        return (Organizer) organizerInformationService.getUserByInformation(information);
     }
+
+
 }

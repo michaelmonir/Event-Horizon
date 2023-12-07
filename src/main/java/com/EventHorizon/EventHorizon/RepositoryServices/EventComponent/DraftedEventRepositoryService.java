@@ -1,6 +1,9 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.DraftedEventRepository;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DraftedEventRepositoryService  {
+public class DraftedEventRepositoryService implements SuperEventRepositoryService {
 
     @Autowired
     private DraftedEventRepository draftedEventRepository;
@@ -21,27 +24,29 @@ public class DraftedEventRepositoryService  {
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
     public DraftedEvent getEventAndHandleNotFound(int id) {
-        Optional<DraftedEvent> optionalOldEvent=draftedEventRepository.findById(id);
-        if(optionalOldEvent.isEmpty())
+        Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
+        if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
         return optionalOldEvent.get();
     }
 
-    public DraftedEvent saveEventWhenCreatingAndHandleAlreadyExisting(DraftedEvent launchedEvent) {
-        if (launchedEvent.getId() != 0)
+    public DraftedEvent saveEventWhenCreatingAndHandleAlreadyExisting(SuperEvent event) {
+        DraftedEvent draftedEvent = (DraftedEvent) event;
+        if (draftedEvent.getId() != 0)
             throw new EventAlreadyExisting();
 
-        draftedEventRepository.save(launchedEvent);
-        return launchedEvent;
+        draftedEventRepository.save(draftedEvent);
+        return draftedEvent;
     }
 
-    public DraftedEvent updateEventAndHandleNotFound(DraftedEvent newEvent) {
-        int id = newEvent.getId();
+    public DraftedEvent updateEventAndHandleNotFound(SuperEvent event) {
+        DraftedEvent draftedEvent = (DraftedEvent) event;
+        int id = draftedEvent.getId();
         this.getEventAndHandleNotFound(id);
 
-        newEvent.setId(id);
-        draftedEventRepository.save(newEvent);
-        return newEvent;
+        draftedEvent.setId(id);
+        draftedEventRepository.save(draftedEvent);
+        return draftedEvent;
     }
 
     public void deleteEvent(int id) {
@@ -52,5 +57,17 @@ public class DraftedEventRepositoryService  {
 
         draftedEventRepository.deleteById(id);
     }
+
+    public DraftedEvent setEventOrganizer(Organizer organizer, SuperEvent superEvent) {
+        DraftedEvent draftedEvent = (DraftedEvent) superEvent;
+        draftedEvent.setEventOrganizer(organizer);
+        return draftedEvent;
+    }
+
+    public Event getEventFromSuperEvent(SuperEvent superEvent) {
+        DraftedEvent draftedEvent = (DraftedEvent) superEvent;
+        return draftedEvent.getEvent();
+    }
+
 
 }
