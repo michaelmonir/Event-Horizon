@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @Builder
 @Table(name = "drafted_event")
-public class DraftedEvent {
+public class DraftedEvent extends SuperEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

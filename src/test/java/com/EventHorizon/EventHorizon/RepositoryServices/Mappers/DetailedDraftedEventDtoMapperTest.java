@@ -28,7 +28,7 @@ class DetailedDraftedEventDtoMapperTest {
     @Test
     public void testGetEventFromDetailedEventDTO() {
 
-        DetailedLaunchedEventDto dto = new DetailedLaunchedEventDto();
+        DetailedDraftedEventDto dto = new DetailedDraftedEventDto();
         dto.setId(1);
         dto.setName("Test Event");
         dto.setDescription("Test Description");

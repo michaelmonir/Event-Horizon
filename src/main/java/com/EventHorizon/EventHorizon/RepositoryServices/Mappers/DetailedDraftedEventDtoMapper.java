@@ -14,7 +14,7 @@ public class DetailedDraftedEventDtoMapper {
     @Autowired
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
-    public DraftedEvent getEventFromDetailedEventDTO(DetailedLaunchedEventDto dto) {
+    public DraftedEvent getEventFromDetailedEventDTO(DetailedDraftedEventDto dto) {
         Event event = Event.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())

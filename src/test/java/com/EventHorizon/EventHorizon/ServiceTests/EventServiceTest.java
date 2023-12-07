@@ -1,10 +1,12 @@
 //package com.EventHorizon.EventHorizon.ServiceTests;
 //
 //import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
+//import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
 //import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 //import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 //import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 //import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+//import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 //import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 //import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 //import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
@@ -23,8 +25,7 @@
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //@SpringBootTest
-//public class EventServiceTest
-//{
+//public class EventServiceTest {
 //    @Mock
 //    private EventRepositoryService eventRepositoryService;
 //    @Mock
@@ -43,8 +44,12 @@
 //    private Event customEvent;
 //    private ViewEventDto customViewEventDto;
 //    private DetailedLaunchedEventDto customDetailedLaunchedEventDto;
+//    private DetailedDraftedEventDto customDetailedDraftedEventDto;
 //    private Organizer customOrganizer;
 //    private Information customInformation;
+//    private LaunchedEvent customLaunchedEvent;
+//    private LaunchedEvent customDraftedEvent;
+//
 //
 //    @Test
 //    public void gettingEventForUser() {
@@ -110,6 +115,7 @@
 //        Mockito.when(this.eventRepositoryService.updateEventAndHandleNotFound(Mockito.any(Event.class)))
 //                .thenReturn(this.customEvent);
 //    }
+//
 //    private void initializeDetailedEventDtoMapper() {
 //        Mockito.when(this.delaitedEventDtoMapper.getDTOfromDetailedEvent(Mockito.any(Event.class)))
 //                .thenReturn(this.customDetailedLaunchedEventDto);
@@ -118,16 +124,19 @@
 //        Mockito.when(this.delaitedEventDtoMapper.getEventFromDetailedEventDTO(Mockito.any(DetailedLaunchedEventDto.class)))
 //                .thenReturn(this.customEvent);
 //    }
+//
 //    private void initializeEventDtoMapper() {
 //        Mockito.when(this.viewEventDtoMapper.getEventFromViewEventDTO(Mockito.any(ViewEventDto.class)))
 //                .thenReturn(this.customEvent);
 //        Mockito.when(this.viewEventDtoMapper.getDTOfromViewEvent(Mockito.any(Event.class)))
 //                .thenReturn(this.customViewEventDto);
 //    }
+//
 //    private void initializerInformationService() {
 //        Mockito.when(this.informationService.getByID(Mockito.any(int.class)))
 //                .thenReturn(this.customInformation);
 //    }
+//
 //    private void initializeOrganizerInformationService() {
 //        Mockito.when(this.organizerInformationService.getUserByInformation(Mockito.any(Information.class)))
 //                .thenReturn(this.customOrganizer);
@@ -139,8 +148,10 @@
 //        this.initializeCustomInformation();
 //        this.initializeCustomOrganizer();
 //        this.initializeViewEventDTO();
-//        this.initializeDetailedEventDTO();
+//        this.initializeDetailedLaunchedEventDTO();
+//        this.initializeDetailedDraftedEventDTO();
 //    }
+//
 //    private void initializeCustomEvent() {
 //        this.customEvent = Event.builder()
 //                .id(1)
@@ -149,28 +160,46 @@
 //                .eventAds(new AdsOption())
 //                .build();
 //    }
+//
 //    private void initializeCustomInformation() {
-//        this.customInformation=Information.builder()
+//        this.customInformation = Information.builder()
 //                .id(1)
 //                .build();
 //    }
+//
 //    private void initializeCustomOrganizer() {
-//        this.customOrganizer=Organizer.builder()
+//        this.customOrganizer = Organizer.builder()
 //                .id(1)
 //                .information(customInformation)
 //                .build();
 //    }
-//    private void initializeViewEventDTO(){
+//
+//    private void initializeViewEventDTO() {
 //        this.customViewEventDto = ViewEventDto.builder()
 //                .id(1)
 //                .name("My Event").build();
 //        this.customViewEventDto.setEventLocation(new Location());
 //    }
-//    private void initializeDetailedEventDTO() {
+//
+//    private void initializeDetailedLaunchedEventDTO() {
 //        this.customDetailedLaunchedEventDto = DetailedLaunchedEventDto.builder()
 //                .id(1)
 //                .name("My Event")
 //                .eventLocation(new Location())
 //                .eventAds(new AdsOptionDto()).build();
+//    }
+//
+//    private void initializeDetailedDraftedEventDTO() {
+//        this.customDetailedDraftedEventDto = DetailedDraftedEventDto.builder()
+//                .id(1)
+//                .name("My Event")
+//                .eventLocation(new Location())
+//                .eventAds(new AdsOptionDto()).build();
+//    }
+//    public void initializeLaunchedEvent(){
+//        this.customLaunchedEvent.builder().event(customEvent).build();
+//    }
+//    public void initializeDraftedEvent(){
+//        this.customDraftedEvent.builder().event(customEvent).build();
 //    }
 //}

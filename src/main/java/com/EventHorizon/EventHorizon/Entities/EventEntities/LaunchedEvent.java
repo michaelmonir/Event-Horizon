@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @Builder
 @Table(name = "launched_event")
-public class LaunchedEvent {
+public class LaunchedEvent extends SuperEvent{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
