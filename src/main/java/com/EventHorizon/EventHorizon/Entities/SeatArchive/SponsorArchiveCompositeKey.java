@@ -14,4 +14,12 @@ public class SponsorArchiveCompositeKey implements Serializable
     private int seatTypeId;
     @Column(name = "sponsor_id")
     private int sponsorId;
+
+    protected SponsorArchiveCompositeKey() { }
+
+    public SponsorArchiveCompositeKey(int seatTypeId, int sponsorId)
+    {
+        this.seatTypeId = seatTypeId;
+        this.sponsorId = sponsorId;
+    }
 }

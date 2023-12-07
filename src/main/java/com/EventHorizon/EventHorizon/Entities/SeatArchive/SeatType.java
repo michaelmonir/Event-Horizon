@@ -18,7 +18,7 @@ public class SeatType
 
     @ManyToOne()
     @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    public Event event;
+    private Event event;
 
     @Column(nullable = false)
     private String name;

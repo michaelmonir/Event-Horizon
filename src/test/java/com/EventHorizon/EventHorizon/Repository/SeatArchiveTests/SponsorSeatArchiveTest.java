@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class OrganizerSeatArchiveRepositoryTest
-{
+public class SponsorSeatArchiveTest {
+
     @Autowired
     OrganizerSeatArchiveRepository organizerSeatArchiveRepository;
     @Autowired

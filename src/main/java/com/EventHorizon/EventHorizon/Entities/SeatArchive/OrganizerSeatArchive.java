@@ -15,7 +15,7 @@ public class OrganizerSeatArchive
     @Id
     private int seatTypeId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @MapsId("seatTypeId")
     @JoinColumn(name = "seat_type_id", referencedColumnName = "id")
     private SeatType seatType;

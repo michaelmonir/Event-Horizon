@@ -84,8 +84,8 @@ create table if not exists organizer_seat_archive(
     total_number_of_seats int not null,
     available_number_of_seats int not null,
     foreign key (seat_type_id) references seat_type(id),
-    check (total_number_of_seats >= 0),
-    check (available_number_of_seats <= total_number_of_seats)
+    check (available_number_of_seats >= 0),
+    check (total_number_of_seats >= available_number_of_seats)
 );
 
 create table if not exists sponsor_seat_archive(
@@ -96,6 +96,6 @@ create table if not exists sponsor_seat_archive(
     primary key (seat_type_id, sponsor_id),
     foreign key (seat_type_id) references seat_type(id),
     foreign key(sponsor_id) references sponsor_tbl(id),
-    check (total_number_of_seats >= 0),
-    check (available_number_of_seats <= total_number_of_seats)
+    check (available_number_of_seats >= 0),
+    check (total_number_of_seats >= available_number_of_seats)
 );
