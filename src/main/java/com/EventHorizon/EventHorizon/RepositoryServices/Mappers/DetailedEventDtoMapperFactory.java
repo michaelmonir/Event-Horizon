@@ -13,7 +13,7 @@ public class DetailedEventDtoMapperFactory {
     @Autowired
     private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
     public DetailedEventDtoMapper getEventDtoMapperByEventType(EventType eventType){
-        if(Objects.equals(eventType.toString(), "LAUNCHEDEVENT"))
+        if(Objects.equals(eventType.toString(), "LAUNCHED_EVENT"))
             return detailedLaunchedEventDtoMapper;
         else return detailedDraftedEventDtoMapper;
     }

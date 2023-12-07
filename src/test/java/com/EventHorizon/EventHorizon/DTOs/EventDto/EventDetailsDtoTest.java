@@ -27,19 +27,18 @@ class EventDetailsDtoTest {
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
-    private Event tempEvent;
+    private LaunchedEvent tempEvent;
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(tempEvent).build();
-        ViewEventDto eventDetailsDto = new ViewEventDto(launchedEvent);
+        ViewEventDto eventDetailsDto = new ViewEventDto(tempEvent);
 
         // Verify that the values are mapped correctly
-        Assertions.assertEquals(launchedEvent.getName(), eventDetailsDto.getName());
-        Assertions.assertEquals(launchedEvent.getDescription(), eventDetailsDto.getDescription());
-        Assertions.assertEquals(launchedEvent.getEventCategory(), eventDetailsDto.getEventCategory());
-        Assertions.assertEquals(launchedEvent.getEventDate(), eventDetailsDto.getEventDate());
-        Assertions.assertEquals(launchedEvent.getEventLocation(), eventDetailsDto.getEventLocation());
+        Assertions.assertEquals(tempEvent.getName(), eventDetailsDto.getName());
+        Assertions.assertEquals(tempEvent.getDescription(), eventDetailsDto.getDescription());
+        Assertions.assertEquals(tempEvent.getEventCategory(), eventDetailsDto.getEventCategory());
+        Assertions.assertEquals(tempEvent.getEventDate(), eventDetailsDto.getEventDate());
+        Assertions.assertEquals(tempEvent.getEventLocation(), eventDetailsDto.getEventLocation());
     }
     private void insialize() {
         createOrganizer();
@@ -65,7 +64,7 @@ class EventDetailsDtoTest {
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = LaunchedEvent.builder()
                 .eventAds(tempAdsOption)
                 .eventLocation(tempLocation)
                 .name("EventDetailsDtoTest")
@@ -74,7 +73,6 @@ class EventDetailsDtoTest {
                 .eventCategory("Category1")
                 .eventDate(new Date())
                 .build();
-        tempEvent = event;
     }
 
     private void createLocation() {

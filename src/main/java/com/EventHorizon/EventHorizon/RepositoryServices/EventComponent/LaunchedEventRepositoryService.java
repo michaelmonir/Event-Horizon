@@ -2,11 +2,8 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NewEventDateIsBeforeNow;
@@ -36,26 +33,28 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
             throw new EventNotFoundException();
         return optionalLaunchedEvent.get();
     }
-    public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(SuperEvent event) {
+
+    public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
         LaunchedEvent launchedEvent = (LaunchedEvent) event;
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
-        EventWrapper eventWrapper=eventWrapperFactory.getEventWrapper(launchedEvent);
+        EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(launchedEvent);
         checkEventDate(eventWrapper);
-        saveEvent((FutureEventWrapper)eventWrapper);
+        saveEvent((FutureEventWrapper) eventWrapper);
         return launchedEvent;
     }
 
-    public LaunchedEvent updateEventAndHandleNotFound(SuperEvent event) {
+    public LaunchedEvent updateEventAndHandleNotFound(Event event) {
         LaunchedEvent newEvent = (LaunchedEvent) event;
         int id = newEvent.getId();
         getEventAndHandleNotFoundAndCheckEventDate(id);
         newEvent.setId(id);
-        EventWrapper eventWrapper=eventWrapperFactory.getEventWrapper(newEvent);
+        EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(newEvent);
         checkEventDate(eventWrapper);
-        saveEvent((FutureEventWrapper)eventWrapper);
+        saveEvent((FutureEventWrapper) eventWrapper);
         return newEvent;
     }
+
     public void deleteEvent(int id) {
         getEventAndHandleNotFound(id);
         launchedEventRepository.deleteById(id);
@@ -63,12 +62,12 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
 
 
     public ViewEventDto getViewEventDTO(int id) {
-        LaunchedEvent launchedEvent=getEventAndHandleNotFound(id);
+        LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
         return new ViewEventDto(launchedEvent);
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {
-        LaunchedEvent launchedEvent=getEventAndHandleNotFound(id);
+        LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
         return new EventHeaderDto(launchedEvent);
     }
 
@@ -80,28 +79,22 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         }
         return eventHeaderDtos;
     }
-    public LaunchedEvent setEventOrganizer(Organizer organizer, SuperEvent superEvent) {
-        LaunchedEvent launchedEvent = (LaunchedEvent) superEvent;
-        launchedEvent.setEventOrganizer(organizer);
-        return launchedEvent;
-    }
-    public Event getEventFromSuperEvent(SuperEvent superEvent) {
-        DraftedEvent draftedEvent = (DraftedEvent) superEvent;
-        return draftedEvent.getEvent();
-    }
-    private void checkEventDate(EventWrapper eventWrapper){
+
+    private void checkEventDate(EventWrapper eventWrapper) {
         if (eventWrapper instanceof FinishedEventWrapper) {
             throw new NewEventDateIsBeforeNow();
         }
     }
-    private void getEventAndHandleNotFoundAndCheckEventDate(int id){
-        LaunchedEvent launchedEvent=getEventAndHandleNotFound(id);
-        EventWrapper eventWrapper=eventWrapperFactory.getEventWrapper(launchedEvent);
+
+    private void getEventAndHandleNotFoundAndCheckEventDate(int id) {
+        LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
+        EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(launchedEvent);
         if (eventWrapper instanceof FinishedEventWrapper) {
             throw new UpdatePastEvent();
         }
     }
-    private void saveEvent(FutureEventWrapper futureEventWrapper){
+
+    private void saveEvent(FutureEventWrapper futureEventWrapper) {
         launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
     }
 }

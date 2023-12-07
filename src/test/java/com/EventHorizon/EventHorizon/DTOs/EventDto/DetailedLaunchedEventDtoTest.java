@@ -27,20 +27,18 @@ class DetailedLaunchedEventDtoTest {
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
-    private Event tempEvent;
+    private LaunchedEvent tempEvent;
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(tempEvent).build();
-        DetailedLaunchedEventDto detailedLaunchedEventDto = new DetailedLaunchedEventDto(launchedEvent);
-
+        DetailedLaunchedEventDto detailedLaunchedEventDto = new DetailedLaunchedEventDto(tempEvent);
         // Verify that the values are mapped correctly
-        Assertions.assertEquals(launchedEvent.getName(), detailedLaunchedEventDto.getName());
-        Assertions.assertEquals(launchedEvent.getDescription(), detailedLaunchedEventDto.getDescription());
-        Assertions.assertEquals(launchedEvent.getEventCategory(), detailedLaunchedEventDto.getEventCategory());
-        Assertions.assertEquals(launchedEvent.getEventDate(), detailedLaunchedEventDto.getEventDate());
-        Assertions.assertEquals(launchedEvent.getEventLocation(), detailedLaunchedEventDto.getEventLocation());
-        Assertions.assertEquals(launchedEvent.getLaunchedDate(), detailedLaunchedEventDto.getLaunchedDate());
+        Assertions.assertEquals(tempEvent.getName(), detailedLaunchedEventDto.getName());
+        Assertions.assertEquals(tempEvent.getDescription(), detailedLaunchedEventDto.getDescription());
+        Assertions.assertEquals(tempEvent.getEventCategory(), detailedLaunchedEventDto.getEventCategory());
+        Assertions.assertEquals(tempEvent.getEventDate(), detailedLaunchedEventDto.getEventDate());
+        Assertions.assertEquals(tempEvent.getEventLocation(), detailedLaunchedEventDto.getEventLocation());
+        Assertions.assertEquals(tempEvent.getLaunchedDate(), detailedLaunchedEventDto.getLaunchedDate());
     }
     private void insialize() {
         createOrganizer();
@@ -57,16 +55,15 @@ class DetailedLaunchedEventDtoTest {
     }
 
     public void createAdsOption() {
-        AdsOption adsOption = AdsOption.builder()
+        tempAdsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
                 .build();
-        tempAdsOption = adsOption;
 
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = LaunchedEvent.builder()
                 .eventAds(tempAdsOption)
                 .eventLocation(tempLocation)
                 .name("EventDetailsDtoTest")
@@ -75,14 +72,12 @@ class DetailedLaunchedEventDtoTest {
                 .eventCategory("Category1")
                 .eventDate(new Date())
                 .build();
-        tempEvent = event;
     }
 
     private void createLocation() {
-        Location location = Location.builder()
+        tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        tempLocation = location;
     }
 
 }

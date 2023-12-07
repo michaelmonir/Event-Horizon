@@ -36,8 +36,7 @@ class LaunchedEventRepositoryServiceTest {
     private OrganizerRepository organizerRepository;
     @Autowired
     InformationCreator informationCreator;
-
-    private Event tempEvent;
+    
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
     private Location tempLocation;
@@ -55,9 +54,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void addingPastEvent() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
         Assertions.assertThrows(NewEventDateIsBeforeNow.class, () -> {
             launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -67,9 +65,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void addEventNotGettingError() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
             launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
             Assertions.assertNotEquals(0, tempLaunchedEvent.getId());
@@ -80,9 +77,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setId(500);
         Assertions.assertThrows(EventNotFoundException.class, () -> {
             launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
@@ -91,12 +87,11 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void editPastEvent() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
-        tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()+5));
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertThrows(UpdatePastEvent.class, () -> {
+            tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()));
+            launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
             launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
         });
     }
@@ -104,11 +99,10 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void editEventWithoutError() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
-        LaunchedEvent newLaunchedEvent =LaunchedEvent.builder().event(createSecoundevent()).build();
+        LaunchedEvent newLaunchedEvent =createSecoundevent();
         newLaunchedEvent.setId(tempLaunchedEvent.getId());
         Assertions.assertDoesNotThrow(() -> {
             launchedEventRepositoryService.updateEventAndHandleNotFound(newLaunchedEvent);
@@ -126,9 +120,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         Assertions.assertDoesNotThrow(() -> {
             launchedEventRepositoryService.deleteEvent(tempLaunchedEvent.getId());
@@ -145,9 +138,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         ViewEventDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
                 launchedEventRepositoryService.getViewEventDTO(tempLaunchedEvent.getId())
@@ -166,9 +158,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEvent(tempEvent);
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
                 launchedEventRepositoryService.getEventHeaderDto(tempLaunchedEvent.getId())
@@ -179,9 +170,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempLaunchedEvent.setEvent(tempEvent);
-        LaunchedEvent launchedEvent2=LaunchedEvent.builder().event(createSecoundevent()).build();
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        LaunchedEvent launchedEvent2=createSecoundevent();
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(launchedEvent2);
         int pageIndex = 0;
@@ -194,9 +184,8 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testGetAllEventsHeaderDtoReturnsErrors() {
         insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempLaunchedEvent.setEvent(tempEvent);
-        LaunchedEvent launchedEvent2=LaunchedEvent.builder().event(createSecoundevent()).build();
+        tempLaunchedEvent.setEventAds(tempAdsOption);
+        LaunchedEvent launchedEvent2=createSecoundevent();
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(launchedEvent2);
         int pageIndex = 10;
@@ -212,7 +201,6 @@ class LaunchedEventRepositoryServiceTest {
         createAdsOption();
         createLocation();
         createEvent();
-        this.tempLaunchedEvent=new LaunchedEvent();
     }
 
     private void createOrganizer() {
@@ -233,7 +221,7 @@ class LaunchedEventRepositoryServiceTest {
     }
 
     private void createEvent() {
-        tempEvent = Event.builder()
+        tempLaunchedEvent = LaunchedEvent.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...")
@@ -245,10 +233,10 @@ class LaunchedEventRepositoryServiceTest {
                 .country("Egypt")
                 .city("Alex").build();
     }
-    private Event createSecoundevent(){
+    private LaunchedEvent createSecoundevent(){
         Location location2 = Location.builder().country("mun").city("cairo").build();
-       return Event.builder()
-                .id(tempEvent.getId())
+       return LaunchedEvent.builder()
+                .id(tempLaunchedEvent.getId())
                 .eventAds(tempAdsOption)
                 .eventLocation(location2)
                 .name("e500")

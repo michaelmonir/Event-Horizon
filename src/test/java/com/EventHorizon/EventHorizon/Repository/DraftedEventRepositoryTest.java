@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DraftedEventRepositoryTest {
     @Autowired
-    private DraftedEventRepository draftedEventRepository;
+    private DraftedEventRepository tempEventRepository;
 
     @Autowired
     private AdsOptionRepository adsOptionRepository;
@@ -27,67 +27,36 @@ class DraftedEventRepositoryTest {
     @Autowired
     private InformationCreator informationCreator;
 
-    private Event tempEvent;
+    private DraftedEvent tempEvent;
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
 
     @Test
     public void createDraftedEvent(){
         insialize();
-        DraftedEvent draftedEvent=DraftedEvent.builder()
-                .event(tempEvent).build();
-        draftedEventRepository.save(draftedEvent);
-        Assertions.assertNotEquals(0, draftedEvent.getId());
+        tempEventRepository.save(tempEvent);
+        Assertions.assertNotEquals(0, tempEvent.getId());
     }
     @Test
     public void findNotExistedDraftedEventById() {
-        Optional<DraftedEvent> event = draftedEventRepository.findById(0);
+        Optional<DraftedEvent> event = tempEventRepository.findById(0);
         assertFalse(event.isPresent());
     }
     @Test
     public void findExistedDraftedEventById() {
         insialize();
-        DraftedEvent draftedEvent=DraftedEvent.builder()
-                .event(tempEvent).build();
-        draftedEventRepository.save(draftedEvent);
-        Optional<DraftedEvent> findedEvent = draftedEventRepository.findById(draftedEvent.getId());
+        tempEventRepository.save(tempEvent);
+        Optional<DraftedEvent> findedEvent = tempEventRepository.findById(tempEvent.getId());
         assertTrue(findedEvent.isPresent());
     }
     @Test
     public void createDraftedEventWithoutEvent() {
-        DraftedEvent draftedEvent=DraftedEvent.builder().build();
+        DraftedEvent tempEvent=DraftedEvent.builder().build();
         Assertions.assertThrows(RuntimeException.class, () -> {
-            draftedEventRepository.save(draftedEvent);
+            tempEventRepository.save(tempEvent);
         });
     }
-    @Test
-    public void testOneToOneRelationBetwenDraftedEventAndEventWithError() {
-        insialize();
-        DraftedEvent draftedEvent=DraftedEvent.builder()
-                .event(tempEvent).build();
-        draftedEventRepository.save(draftedEvent);
-        DraftedEvent draftedEvent2=DraftedEvent.builder()
-                .event(tempEvent).build();
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            draftedEventRepository.save(draftedEvent2);
-        });
-
-    }
-    @Test
-    public void testOneToOneRelationBetwenDraftedEventAndEventWithOutError() {
-        insialize();
-        DraftedEvent draftedEvent=DraftedEvent.builder()
-                .event(tempEvent).build();
-        draftedEventRepository.save(draftedEvent);
-        DraftedEvent draftedEvent2=DraftedEvent.builder()
-                .event(tempEvent).build();
-        tempEvent.setId(0);
-        Assertions.assertDoesNotThrow(() -> {
-            draftedEventRepository.save(draftedEvent2);
-        });
-
-    }
-
+    
 
     private void insialize(){
         createOrganizer();
@@ -110,7 +79,7 @@ class DraftedEventRepositoryTest {
 
     }
     private void createEvent(){
-        tempEvent= Event.builder()
+        tempEvent= DraftedEvent.builder()
                 .name("e5")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer)

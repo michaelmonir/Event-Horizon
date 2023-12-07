@@ -17,7 +17,6 @@ class EventWrapperFactoryTest {
     @Test
     void getEventWrapperForPastEvent() {
         LaunchedEvent pastEvent = new LaunchedEvent();
-        pastEvent.setEvent(new Event());
         pastEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
         EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(pastEvent);
         assertTrue(eventWrapper instanceof FinishedEventWrapper);
@@ -26,7 +25,6 @@ class EventWrapperFactoryTest {
     @Test
     void getEventWrapperForFutureEvent() {
         LaunchedEvent futureEvent = new LaunchedEvent();
-        futureEvent.setEvent(new Event());
         futureEvent.setEventDate(new Date(System.currentTimeMillis() + 100000));
         EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(futureEvent);
         assertTrue(eventWrapper instanceof FutureEventWrapper);
@@ -35,7 +33,6 @@ class EventWrapperFactoryTest {
     @Test
     void getEventWrapperForCurrentEvent() {
         LaunchedEvent futureEvent = new LaunchedEvent();
-        futureEvent.setEvent(new Event());
         futureEvent.setEventDate(new Date(System.currentTimeMillis()));
         EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(futureEvent);
         assertTrue(eventWrapper instanceof FutureEventWrapper);

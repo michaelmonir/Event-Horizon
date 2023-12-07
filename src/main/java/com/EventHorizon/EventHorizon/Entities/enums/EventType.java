@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Entities.enums;
 
 public enum EventType {
 
-    LAUNCHEDEVENT("LAUNCHEDEVENT"),
-    DRAFTEDEVENT("DRAFTEDEVENT");
+    LAUNCHEDEVENT("LAUNCHED_EVENT"),
+    DRAFTEDEVENT("DRAFTED_EVENT");
 
     private String eventType;
 

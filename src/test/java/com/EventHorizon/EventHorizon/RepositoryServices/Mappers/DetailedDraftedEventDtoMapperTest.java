@@ -51,7 +51,7 @@ class DetailedDraftedEventDtoMapperTest {
     @Test
     public void testGetDTOfromDetailedEvent() {
 
-        Event event = new Event();
+        DraftedEvent event = new DraftedEvent();
         event.setId(1);
         event.setName("Test Event");
         event.setDescription("Test Description");
@@ -64,18 +64,16 @@ class DetailedDraftedEventDtoMapperTest {
         information.setId(1);
         information.setUserName("ahmed");
         organizer.setInformation(information);
-        DraftedEvent draftedEvent= DraftedEvent.builder().event(event).id(1).build();
 
+        DetailedDraftedEventDto result = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
 
-        DetailedDraftedEventDto result = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(draftedEvent);
-
-        Assertions.assertEquals(draftedEvent.getId(), result.getId());
-        Assertions.assertEquals(draftedEvent.getName(), result.getName());
-        Assertions.assertEquals(draftedEvent.getDescription(), result.getDescription());
-        Assertions.assertEquals(draftedEvent.getEventCategory(), result.getEventCategory());
-        Assertions.assertEquals(draftedEvent.getEventDate(), result.getEventDate());
-        Assertions.assertEquals(draftedEvent.getEventAds().getId(), result.getEventAds().getId());
-        Assertions.assertEquals(draftedEvent.getEventLocation(), result.getEventLocation());
+        Assertions.assertEquals(event.getId(), result.getId());
+        Assertions.assertEquals(event.getName(), result.getName());
+        Assertions.assertEquals(event.getDescription(), result.getDescription());
+        Assertions.assertEquals(event.getEventCategory(), result.getEventCategory());
+        Assertions.assertEquals(event.getEventDate(), result.getEventDate());
+        Assertions.assertEquals(event.getEventAds().getId(), result.getEventAds().getId());
+        Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
         Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }

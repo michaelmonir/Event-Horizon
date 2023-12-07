@@ -24,11 +24,10 @@ class DetailedDraftedEventDtoTest {
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
-    private Event tempEvent;
+    private DraftedEvent draftedEvent;
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
         insialize();
-        DraftedEvent draftedEvent=DraftedEvent.builder().event(tempEvent).build();
         DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto(draftedEvent);
 
         // Verify that the values are mapped correctly
@@ -62,7 +61,7 @@ class DetailedDraftedEventDtoTest {
     }
 
     private void createEvent() {
-        tempEvent = Event.builder()
+        draftedEvent = DraftedEvent.builder()
                 .eventAds(tempAdsOption)
                 .eventLocation(tempLocation)
                 .name("EventDetailsDtoTest")

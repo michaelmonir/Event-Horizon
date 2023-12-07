@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ public class DetailedDraftedEventDtoMapper implements DetailedEventDtoMapper {
 
     public DraftedEvent getEventFromDetailedEventDTO(DetailedEventDto dto) {
         DetailedDraftedEventDto detailedDraftedEventDto=(DetailedDraftedEventDto)dto;
-        Event event = Event.builder()
+        return DraftedEvent.builder()
+                .id(dto.getId())
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .eventCategory(dto.getEventCategory())
@@ -26,10 +28,9 @@ public class DetailedDraftedEventDtoMapper implements DetailedEventDtoMapper {
                 .eventAds(this.adsOptionDtoMapper.getAdsOptionFromDTO(dto.getEventAds()))
                 .eventLocation(dto.getEventLocation())
                 .build();
-        return DraftedEvent.builder().event(event).id(detailedDraftedEventDto.getId()).build();
     }
 
-    public DetailedDraftedEventDto getDTOfromDetailedEvent(SuperEvent event) {
+    public DetailedDraftedEventDto getDTOfromDetailedEvent(Event event) {
         DraftedEvent draftedEvent=(DraftedEvent)event;
         DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto(draftedEvent);
         return detailedDraftedEventDto;

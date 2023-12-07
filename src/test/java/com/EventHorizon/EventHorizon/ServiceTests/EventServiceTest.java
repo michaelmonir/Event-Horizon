@@ -100,9 +100,8 @@ public class EventServiceTest {
         when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any())).thenReturn(launchedEventRepositoryService);
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).setEventOrganizer(any(), any())).thenReturn(new LaunchedEvent());
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).saveEventWhenCreatingAndHandleAlreadyExisting(any())).thenReturn(new LaunchedEvent());
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any()).getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
+        when(detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+        when(detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
         DetailedEventDto result = eventService.createEvent(1, eventDTO);
         assertNotNull(result);
         assertEquals(DetailedLaunchedEventDto.class, result.getClass());

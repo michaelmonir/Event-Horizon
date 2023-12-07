@@ -7,87 +7,87 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 @Table(name = "drafted_event")
-public class DraftedEvent extends SuperEvent {
+@NoArgsConstructor
+public class DraftedEvent extends Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "event_id",
-            referencedColumnName = "id",
-            nullable = false)
-    private Event event;
-
-    public String getName() {
-        return event.getName();
-    }
-
-    public void setName(String name) {
-        this.event.setName(name);
-    }
-
-    public String getDescription() {
-        return event.getDescription();
-    }
-
-    public void setDescription(String description) {
-        this.event.setDescription(description);
-    }
-
-    public String getEventCategory() {
-        return event.getEventCategory();
-    }
-
-    public void setEventCategory(String eventCategory) {
-        this.event.setEventCategory(eventCategory);
-    }
-
-    public EventType getEventType() {
-        return event.getEventType();
-    }
-
-    public void setEventType(EventType eventType) {
-        this.event.setEventType(eventType);
-    }
-
-    public Date getEventDate() {
-        return event.getEventDate();
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.event.setEventDate(eventDate);
-    }
-
-    public Location getEventLocation() {
-        return event.getEventLocation();
-    }
-
-    public void setEventLocation(Location eventLocation) {
-        this.event.setEventLocation(eventLocation);
-    }
-
-    public AdsOption getEventAds() {
-        return event.getEventAds();
-    }
-
-    public void setEventAds(AdsOption eventAds) {
-        this.event.setEventAds(eventAds);
-    }
-
-    public Organizer getEventOrganizer() {
-        return event.getEventOrganizer();
-    }
-
-    public void setEventOrganizer(Organizer eventOrganizer) {
-        this.event.setEventOrganizer(eventOrganizer);
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "event_id",
+//            referencedColumnName = "id",
+//            nullable = false)
+//    private Event event;
+//
+//    public String getName() {
+//        return event.getName();
+//    }
+//
+//    public void setName(String name) {
+//        this.event.setName(name);
+//    }
+//
+//    public String getDescription() {
+//        return event.getDescription();
+//    }
+//
+//    public void setDescription(String description) {
+//        this.event.setDescription(description);
+//    }
+//
+//    public String getEventCategory() {
+//        return event.getEventCategory();
+//    }
+//
+//    public void setEventCategory(String eventCategory) {
+//        this.event.setEventCategory(eventCategory);
+//    }
+//
+//    public EventType getEventType() {
+//        return event.getEventType();
+//    }
+//
+//    public void setEventType(EventType eventType) {
+//        this.event.setEventType(eventType);
+//    }
+//
+//    public Date getEventDate() {
+//        return event.getEventDate();
+//    }
+//
+//    public void setEventDate(Date eventDate) {
+//        this.event.setEventDate(eventDate);
+//    }
+//
+//    public Location getEventLocation() {
+//        return event.getEventLocation();
+//    }
+//
+//    public void setEventLocation(Location eventLocation) {
+//        this.event.setEventLocation(eventLocation);
+//    }
+//
+//    public AdsOption getEventAds() {
+//        return event.getEventAds();
+//    }
+//
+//    public void setEventAds(AdsOption eventAds) {
+//        this.event.setEventAds(eventAds);
+//    }
+//
+//    public Organizer getEventOrganizer() {
+//        return event.getEventOrganizer();
+//    }
+//
+//    public void setEventOrganizer(Organizer eventOrganizer) {
+//        this.event.setEventOrganizer(eventOrganizer);
+//    }
 }

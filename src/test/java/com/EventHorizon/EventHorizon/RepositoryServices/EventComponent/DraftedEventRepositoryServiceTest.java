@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DraftedEventRepositoryServiceTest {
     @Autowired
@@ -28,7 +27,6 @@ class DraftedEventRepositoryServiceTest {
     @Autowired
     InformationCreator informationCreator;
 
-    private Event tempEvent;
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
     private Location tempLocation;
@@ -45,13 +43,12 @@ class DraftedEventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempDraftedEvent=DraftedEvent.builder().event(tempEvent).build();
+        initialize();
+        tempDraftedEvent.setEventAds(tempAdsOption);
+        tempDraftedEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
             draftedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempDraftedEvent);
-            Assertions.assertNotEquals(0, tempEvent.getId());
+            Assertions.assertNotEquals(0, tempDraftedEvent.getId());
         });
     }
 
@@ -59,11 +56,10 @@ class DraftedEventRepositoryServiceTest {
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
 
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempDraftedEvent=DraftedEvent.builder().event(tempEvent).build();
-        tempEvent.setId(34);
+        initialize();
+        tempDraftedEvent.setEventAds(tempAdsOption);
+        tempDraftedEvent.setEventLocation(tempLocation);
+        tempDraftedEvent.setId(34);
         Assertions.assertThrows(EventNotFoundException.class, () -> {
             draftedEventRepositoryService.updateEventAndHandleNotFound(tempDraftedEvent);
         });
@@ -71,12 +67,11 @@ class DraftedEventRepositoryServiceTest {
 
     @Test
     public void editEventwithoutError() {
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempDraftedEvent=DraftedEvent.builder().event(tempEvent).build();
+        initialize();
+        tempDraftedEvent.setEventAds(tempAdsOption);
+        tempDraftedEvent.setEventLocation(tempLocation);
         draftedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempDraftedEvent);
-        DraftedEvent newTempDraftedEvent=DraftedEvent.builder().event(createSecoundevent()).build();
+        DraftedEvent newTempDraftedEvent=createSecoundevent();
         newTempDraftedEvent.setId(tempDraftedEvent.getId());
         Assertions.assertDoesNotThrow(() -> {
             draftedEventRepositoryService.updateEventAndHandleNotFound(newTempDraftedEvent);
@@ -94,10 +89,9 @@ class DraftedEventRepositoryServiceTest {
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
 
-        insialize();
-        tempEvent.setEventAds(tempAdsOption);
-        tempEvent.setEventLocation(tempLocation);
-        tempDraftedEvent=DraftedEvent.builder().event(tempEvent).build();
+        initialize();
+        tempDraftedEvent.setEventAds(tempAdsOption);
+        tempDraftedEvent.setEventLocation(tempLocation);
         draftedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempDraftedEvent);
         Assertions.assertDoesNotThrow(() -> {
             draftedEventRepositoryService.deleteEvent(tempDraftedEvent.getId());
@@ -105,7 +99,7 @@ class DraftedEventRepositoryServiceTest {
     }
 
 
-    private void insialize() {
+    private void initialize() {
         createOrganizer();
         createAdsOption();
         createLocation();
@@ -130,7 +124,7 @@ class DraftedEventRepositoryServiceTest {
     }
 
     private void createEvent() {
-        tempEvent = Event.builder()
+        tempDraftedEvent = DraftedEvent.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...").build();
@@ -141,10 +135,10 @@ class DraftedEventRepositoryServiceTest {
                 .country("Egypt")
                 .city("Alex").build();
     }
-    private Event createSecoundevent(){
+    private DraftedEvent createSecoundevent(){
         Location location2 = Location.builder().country("mun").city("cairo").build();
-        return Event.builder()
-                .id(tempEvent.getId())
+        return DraftedEvent.builder()
+                .id(tempDraftedEvent.getId())
                 .eventAds(tempAdsOption)
                 .eventLocation(location2)
                 .name("e500")

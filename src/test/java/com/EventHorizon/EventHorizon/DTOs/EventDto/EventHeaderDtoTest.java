@@ -27,18 +27,17 @@ class EventHeaderDtoTest {
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
-    private Event tempEvent;
+    private LaunchedEvent tempEvent;
     @Test
     public void testEventHeaderDtoConstructorMapsValuesCorrectly() {
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(tempEvent).build();
         ViewEventDto eventDetailsDto = new ViewEventDto();
-        EventHeaderDto eventHeaderDto = new EventHeaderDto(launchedEvent);
+        EventHeaderDto eventHeaderDto = new EventHeaderDto(tempEvent);
         // Verify that the values are mapped correctly
-        Assertions.assertEquals(launchedEvent.getName(), eventHeaderDto.getName());
-        Assertions.assertEquals(launchedEvent.getEventCategory(), eventHeaderDto.getEventCategory());
-        Assertions.assertEquals(launchedEvent.getEventDate(), eventHeaderDto.getEventDate());
-        Assertions.assertEquals(launchedEvent.getEventLocation(), eventHeaderDto.getEventLocation());
+        Assertions.assertEquals(tempEvent.getName(), eventHeaderDto.getName());
+        Assertions.assertEquals(tempEvent.getEventCategory(), eventHeaderDto.getEventCategory());
+        Assertions.assertEquals(tempEvent.getEventDate(), eventHeaderDto.getEventDate());
+        Assertions.assertEquals(tempEvent.getEventLocation(), eventHeaderDto.getEventLocation());
     }
     private void insialize() {
         createOrganizer();
@@ -55,16 +54,15 @@ class EventHeaderDtoTest {
     }
 
     public void createAdsOption() {
-        AdsOption adsOption = AdsOption.builder()
+        tempAdsOption = AdsOption.builder()
                 .name("p")
                 .priority(2)
                 .build();
-        tempAdsOption = adsOption;
 
     }
 
     private void createEvent() {
-        Event event = Event.builder()
+        tempEvent = LaunchedEvent.builder()
                 .eventAds(tempAdsOption)
                 .eventLocation(tempLocation)
                 .name("EventDetailsDtoTest")
@@ -73,14 +71,12 @@ class EventHeaderDtoTest {
                 .eventCategory("Category1")
                 .eventDate(new Date())
                 .build();
-        tempEvent = event;
     }
 
     private void createLocation() {
-        Location location = Location.builder()
+        tempLocation = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        tempLocation = location;
     }
 
 

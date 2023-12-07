@@ -29,15 +29,13 @@ class LaunchedEventRepositoryTest {
     @Autowired
     private InformationCreator informationCreator;
 
-    private Event tempEvent;
+    private LaunchedEvent launchedEvent;
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
 
     @Test
     public void createLaunchedEvent(){
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder()
-                .event(tempEvent).build();
         launchedEventRepository.save(launchedEvent);
         Assertions.assertNotEquals(0, launchedEvent.getId());
     }
@@ -49,8 +47,6 @@ class LaunchedEventRepositoryTest {
     @Test
     public void findExistedLaunchedEventById() {
         insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder()
-                .event(tempEvent).build();
         launchedEventRepository.save(launchedEvent);
         Optional<LaunchedEvent> findedEvent = launchedEventRepository.findById(launchedEvent.getId());
         assertTrue(findedEvent.isPresent());
@@ -61,33 +57,6 @@ class LaunchedEventRepositoryTest {
         Assertions.assertThrows(RuntimeException.class, () -> {
             launchedEventRepository.save(launchedEvent);
         });
-    }
-    @Test
-    public void testOneToOneRelationBetwenLaunchedEventAndEventWithError() {
-        insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder()
-                .event(tempEvent).build();
-        launchedEventRepository.save(launchedEvent);
-        LaunchedEvent launchedEvent2=LaunchedEvent.builder()
-                .event(tempEvent).build();
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            launchedEventRepository.save(launchedEvent2);
-        });
-
-    }
-    @Test
-    public void testOneToOneRelationBetwenLaunchedEventAndEventWithOutError() {
-        insialize();
-        LaunchedEvent launchedEvent=LaunchedEvent.builder()
-                .event(tempEvent).build();
-        launchedEventRepository.save(launchedEvent);
-        LaunchedEvent launchedEvent2=LaunchedEvent.builder()
-                .event(tempEvent).build();
-        tempEvent.setId(0);
-        Assertions.assertDoesNotThrow(() -> {
-            launchedEventRepository.save(launchedEvent2);
-        });
-
     }
 
 
@@ -112,7 +81,7 @@ class LaunchedEventRepositoryTest {
 
     }
     private void createEvent(){
-        tempEvent= Event.builder()
+        launchedEvent= LaunchedEvent.builder()
                 .name("e5")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer)

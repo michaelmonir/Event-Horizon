@@ -8,7 +8,6 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositry;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent.LocationRepositoryService;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;

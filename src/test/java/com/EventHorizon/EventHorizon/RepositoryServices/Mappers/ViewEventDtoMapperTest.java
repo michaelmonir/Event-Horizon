@@ -2,11 +2,9 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,9 +19,7 @@ class ViewEventDtoMapperTest {
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
     @Mock
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Mock
-    private EventRepositoryService eventRepositoryService;
+    private LaunchedEventRepositoryService eventRepositoryService;
 
     @InjectMocks
     private ViewEventDtoMapper eventDtoMapper;
@@ -38,7 +34,7 @@ class ViewEventDtoMapperTest {
         dto.setDescription("Test Description");
         dto.setEventCategory("Test Category");
 
-        Event event = new Event();
+        LaunchedEvent event = new LaunchedEvent();
         event.setId(dto.getId());
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());
@@ -48,7 +44,6 @@ class ViewEventDtoMapperTest {
 
         AdsOption adsOption = new AdsOption();
         event.setEventAds(adsOption);
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(event).build();
         Mockito.when(eventRepositoryService.getEventAndHandleNotFound(dto.getId())).thenReturn(event);
 
         LaunchedEvent result = eventDtoMapper.getEventFromViewEventDTO(dto);
@@ -65,7 +60,7 @@ class ViewEventDtoMapperTest {
     @Test
     public void testGetDTOfromViewEvent() {
 
-        Event event = new Event();
+        LaunchedEvent event = new LaunchedEvent();
         event.setId(1);
         event.setName("Test Event");
         event.setDescription("Test Description");
@@ -78,17 +73,16 @@ class ViewEventDtoMapperTest {
         information.setUserName("ahmed");
         organizer.setInformation(information);
         event.setEventOrganizer(organizer);
+        
+        ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(event);
 
-        LaunchedEvent launchedEvent=LaunchedEvent.builder().event(event).build();
-        ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(launchedEvent);
 
-
-        Assertions.assertEquals(launchedEvent.getId(), result.getId());
-        Assertions.assertEquals(launchedEvent.getName(), result.getName());
-        Assertions.assertEquals(launchedEvent.getDescription(), result.getDescription());
-        Assertions.assertEquals(launchedEvent.getEventCategory(), result.getEventCategory());
-        Assertions.assertEquals(launchedEvent.getEventDate(), result.getEventDate());
-        Assertions.assertEquals(launchedEvent.getEventLocation(), result.getEventLocation());
+        Assertions.assertEquals(event.getId(), result.getId());
+        Assertions.assertEquals(event.getName(), result.getName());
+        Assertions.assertEquals(event.getDescription(), result.getDescription());
+        Assertions.assertEquals(event.getEventCategory(), result.getEventCategory());
+        Assertions.assertEquals(event.getEventDate(), result.getEventDate());
+        Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
         Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }

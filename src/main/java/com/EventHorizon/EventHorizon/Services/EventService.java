@@ -47,9 +47,8 @@ public class EventService {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
         DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
         SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
-        SuperEvent event = eventRepositoryService.getEventAndHandleNotFound(eventId);
-        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
-        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        Event event = eventRepositoryService.getEventAndHandleNotFound(eventId);
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
 
         return resultDTO;
@@ -64,8 +63,8 @@ public class EventService {
         EventType eventType=eventDTO.getEventType();
         DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
         SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
-        SuperEvent event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        event=eventRepositoryService.setEventOrganizer(organizer,event);
+        Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        event.setEventOrganizer(organizer);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
 
@@ -77,9 +76,8 @@ public class EventService {
         EventType eventType=eventDTO.getEventType();
         DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
         SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
-        SuperEvent event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
-        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
-        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         event = eventRepositoryService.updateEventAndHandleNotFound(event);
         DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
         return resultDTO;
@@ -89,9 +87,8 @@ public class EventService {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
         EventType eventType=eventDTO.getEventType();
         SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
-        SuperEvent event = eventRepositoryService.getEventAndHandleNotFound(eventDTO.getId());
-        Event eventInformation =eventRepositoryService.getEventFromSuperEvent(event);
-        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, eventInformation);
+        Event event = eventRepositoryService.getEventAndHandleNotFound(eventDTO.getId());
+        userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         eventRepositoryService.deleteEvent(eventDTO.getId());
     }
 

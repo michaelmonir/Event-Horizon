@@ -14,7 +14,6 @@ class FutureEventWrapperTest {
     @Test
     void testFutureEventWrapper() {
         LaunchedEvent futureEvent = new LaunchedEvent();
-        futureEvent.setEvent(new Event());
         futureEvent.setEventDate(new Date(System.currentTimeMillis()));
         FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(futureEvent);
         assertEquals(futureEvent, finishedEventWrapper.getLaunchedEvent());

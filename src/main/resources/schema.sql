@@ -72,15 +72,13 @@ CREATE TABLE IF NOT EXISTS Event (
     FOREIGN KEY (organizer_id) REFERENCES organizer_tbl(id)
 );
 CREATE TABLE launched_event (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY ,
     launched_Date DATE NOT NULL,
-    event_id INT NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES event(id)
+    FOREIGN KEY (id) REFERENCES event(id)
 );
 
 CREATE TABLE drafted_event (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    event_id INT NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES event(id)
+    id INT PRIMARY KEY,
+    FOREIGN KEY (id) REFERENCES event(id)
 );
 
