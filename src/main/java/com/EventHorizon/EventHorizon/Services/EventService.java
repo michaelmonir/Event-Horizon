@@ -4,9 +4,9 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsAlreadyLaunched;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
@@ -43,10 +43,10 @@ public class EventService {
         return viewEventDtoMapper.getDTOfromViewEvent(event);
     }
 
-    public DetailedEventDto getEventForOrganizer(int informationId, int eventId,EventType eventType) {
+    public DetailedEventDto getEventForOrganizer(int informationId, int eventId, EventType eventType) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
-        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        DetailedEventDtoMapper detailedEventDtoMapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = eventRepositoryService.getEventAndHandleNotFound(eventId);
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
@@ -60,9 +60,9 @@ public class EventService {
 
     public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        EventType eventType=eventDTO.getEventType();
-        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
-        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        EventType eventType = eventDTO.getEventType();
+        DetailedEventDtoMapper detailedEventDtoMapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         event.setEventOrganizer(organizer);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
@@ -73,9 +73,9 @@ public class EventService {
 
     public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        EventType eventType=eventDTO.getEventType();
-        DetailedEventDtoMapper detailedEventDtoMapper=detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
-        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        EventType eventType = eventDTO.getEventType();
+        DetailedEventDtoMapper detailedEventDtoMapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         event = eventRepositoryService.updateEventAndHandleNotFound(event);
@@ -83,10 +83,22 @@ public class EventService {
         return resultDTO;
     }
 
+    public DetailedEventDto launchEvent(int informationId, DetailedEventDto eventDTO) {
+        validateEventIsDrafted(eventDTO);
+        deleteEvent(informationId, eventDTO);
+        EventType eventType = eventDTO.getEventType();
+        DetailedEventDtoMapper detailedEventDtoMapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
+        Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        event.setEventType(EventType.LAUNCHEDEVENT);
+        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
+        return resultDTO;
+    }
+
     public void deleteEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
-        EventType eventType=eventDTO.getEventType();
-        SuperEventRepositoryService eventRepositoryService=eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
+        EventType eventType = eventDTO.getEventType();
+        SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = eventRepositoryService.getEventAndHandleNotFound(eventDTO.getId());
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         eventRepositoryService.deleteEvent(eventDTO.getId());
@@ -96,6 +108,11 @@ public class EventService {
         Information information = informationService.getByID(inforamtionID);
 
         return (Organizer) organizerInformationService.getUserByInformation(information);
+    }
+
+    public void validateEventIsDrafted(DetailedEventDto eventDTO) {
+        if (eventDTO.getEventType().equals(EventType.LAUNCHEDEVENT))
+            throw new EventIsAlreadyLaunched();
     }
 
 

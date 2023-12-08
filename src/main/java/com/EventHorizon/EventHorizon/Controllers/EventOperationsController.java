@@ -53,7 +53,15 @@ public class EventOperationsController {
             (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
+        detailedEventDTO = this.eventService.updateEvent(organizerId, detailedEventDTO);
+        return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
+    }
+    @PutMapping("launchEvent/{eventId}")//organizer,admin
+    public ResponseEntity<DetailedEventDto> launchEvent
+            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+        detailedEventDTO = this.eventService.launchEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
