@@ -5,7 +5,9 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "buyed_ticket_collection")
@@ -24,10 +26,20 @@ public class BuyedTicketCollection
     private SeatType seatType;
 
     @Column(nullable = false)
-    Date buyingTime;
-
-    @Column(nullable = false)
     int numberOfTickets;
 
     protected BuyedTicketCollection() {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BuyedTicketCollection that = (BuyedTicketCollection) o;
+
+
+        // not comparing dates as they are compared in different formats so will always return false
+        return numberOfTickets == that.numberOfTickets
+                && client.getId() == that.client.getId()
+                && seatType.getId() == that.seatType.getId();
+    }
 }

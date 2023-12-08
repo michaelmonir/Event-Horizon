@@ -31,4 +31,14 @@ public class OrganizerSeatArchive
         this.total_number_of_seats = total_number_of_seats;
         this.available_number_of_seats = available_number_of_seats;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrganizerSeatArchive that = (OrganizerSeatArchive) o;
+        return seatTypeId == that.seatTypeId
+                && total_number_of_seats == that.total_number_of_seats
+                && available_number_of_seats == that.available_number_of_seats;
+    }
 }

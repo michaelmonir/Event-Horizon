@@ -103,7 +103,6 @@ create table if not exists sponsor_seat_archive(
 create table if not exists buyed_ticket_collection(
     client_id int,
 	seat_type_id int,
-    buyingTime date not null,
     number_of_tickets int not null,
     primary key (client_id, seat_type_id),
     foreign key (seat_type_id) references seat_type(id),
@@ -116,7 +115,6 @@ create table if not exists gifted_ticket_collection(
     client_id int,
 	seat_type_id int,
     sponsor_id int,
-    gifting_time date not null,
     number_of_tickets int not null,
     primary key (client_id, seat_type_id, sponsor_id),
     foreign key (seat_type_id) references seat_type(id),

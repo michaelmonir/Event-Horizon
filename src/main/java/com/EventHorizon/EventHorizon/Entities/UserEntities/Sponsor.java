@@ -1,7 +1,10 @@
 package com.EventHorizon.EventHorizon.Entities.UserEntities;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -19,4 +22,7 @@ public class Sponsor  extends User{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id", referencedColumnName = "id")
     private Information information;
+
+    @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<SponsorSeatArchive> sponsorSeatArchiveList;
 }

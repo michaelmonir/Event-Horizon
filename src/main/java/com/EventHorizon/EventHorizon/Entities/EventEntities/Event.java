@@ -49,6 +49,6 @@ public class Event {
     )
     private Organizer eventOrganizer;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SeatType> seatTypes;
 }

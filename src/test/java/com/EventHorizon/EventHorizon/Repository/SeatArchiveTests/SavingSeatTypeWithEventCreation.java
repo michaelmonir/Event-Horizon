@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class SeatTypeWithEventRepositoryServiceTest
+public class SavingSeatTypeWithEventCreation
 {
     @Autowired
     EventRepositoryService eventRepositoryService;

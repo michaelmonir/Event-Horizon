@@ -30,9 +30,6 @@ public class GiftedTicketCollection
     private Sponsor sponsor;
 
     @Column(nullable = false)
-    Date giftingTime;
-
-    @Column(nullable = false)
     int numberOfTickets;
 
     protected GiftedTicketCollection() {}
