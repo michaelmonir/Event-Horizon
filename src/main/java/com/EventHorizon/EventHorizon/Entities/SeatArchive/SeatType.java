@@ -3,13 +3,14 @@ package com.EventHorizon.EventHorizon.Entities.SeatArchive;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
 @Table(name = "seat_type")
 @Data
 @ToString
+@EqualsAndHashCode
 public class SeatType
 {
     @Id
@@ -24,9 +25,6 @@ public class SeatType
     private String name;
     @Column(nullable = false)
     private int price;
-
-    @OneToOne(mappedBy = "seatType")
-    private OrganizerSeatArchive organizerSeatArchive;
 
     protected SeatType(){}
 

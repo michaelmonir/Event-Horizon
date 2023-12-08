@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
@@ -11,12 +12,12 @@ import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SponsorSeatArchiveRepository;
 import com.EventHorizon.EventHorizon.Repository.SponsorRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SponsorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,42 +42,87 @@ public class SponsorSeatArchiveRepositoryTest
     public void saveSuccessfully() {
 
         SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
-        this.sponsorRepository.save(sponsor);
+        Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+
+        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
+        Assertions.assertDoesNotThrow(() -> this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
+    }
+
+    @Test
+    public void saveWithoutSavingTheSeatType() {
+
+        SeatType seatType = new SeatType("s", 1);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
 
-        Assertions.assertDoesNotThrow(()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
+        Assertions.assertThrows(InvalidDataAccessApiUsageException.class,
+                ()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
     }
 
+    @Test
+    public void saveWithoutSavingTheSponsor() {
+
+        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
+        Sponsor sponsor = new Sponsor();
+
+        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
+
+        Assertions.assertThrows(InvalidDataAccessApiUsageException.class,
+                ()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
+    }
+
+    @Test
+    public void saveNegativeAvailableNumberOfSeats() {
+
+        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+
+        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, -1);
+
+        Assertions.assertThrows(DataIntegrityViolationException.class,
+                ()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
+    }
+
+    @Test
+    public void saveTotalNumberOfSeatsLessThanAvailable() {
+
+        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+
+        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 2);
+
+        Assertions.assertThrows(DataIntegrityViolationException.class,
+                ()->this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
+    }
+
+    @Test
+    public void getById()
+    {
+        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
+        Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+
+        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
+        this.sponsorSeatArchiveRepository.save(sponsorSeatArchive);
+
+        SponsorSeatArchive savedSponsorSeatArchive = this.sponsorSeatArchiveRepository.findBySeatTypeIdAndSponsorId(seatType.getId(), sponsor.getId());
+
+        Assertions.assertEquals(savedSponsorSeatArchive, sponsorSeatArchive);
+    }
+
+    // test not working
 //    @Test
-//    public void saveWithoutSavingTheSeatType() {
-//
-//        SeatType seatType = new SeatType("s", 1);
-//        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 1);
-//
-//        Assertions.assertThrows(DataIntegrityViolationException.class,
-//                ()->this.organizerSeatArchiveRepository.save(organizerSeatArchive));
-//    }
-//
-//    @Test
-//    public void saveNegativeAvailableNumberOfSeats() {
-//
+//    public void deletingSponsorDeletesTheArchive()
+//    {
 //        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
-//        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, -1);
+//        Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
 //
-//        Assertions.assertThrows(DataIntegrityViolationException.class,
-//                ()->this.organizerSeatArchiveRepository.save(organizerSeatArchive));
-//    }
+//        SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
+//        this.sponsorSeatArchiveRepository.save(sponsorSeatArchive);
 //
-//    @Test
-//    public void saveTotalNumberOfSeatsLessThanAvailable() {
+//        this.sponsorRepository.deleteById(sponsor.getId());
 //
-//        SeatType seatType = this.getAndCreateCustomSeatTypeFromSavedEvent();
-//        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 2);
-//
-//        Assertions.assertThrows(DataIntegrityViolationException.class,
-//                ()->this.organizerSeatArchiveRepository.save(organizerSeatArchive));
+//        Assertions.assertEquals(this.sponsorSeatArchiveRepository.findAll().size(), 0);
 //    }
 
     private SeatType getAndCreateCustomSeatTypeFromSavedEvent() {

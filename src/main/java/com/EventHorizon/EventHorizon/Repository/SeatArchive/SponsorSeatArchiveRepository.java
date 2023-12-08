@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SponsorSeatArchiveRepository  extends JpaRepository<SponsorSeatArchive, Integer>
 {
+    SponsorSeatArchive save(SponsorSeatArchive sponsorSeatArchive);
+
+    SponsorSeatArchive findBySeatTypeIdAndSponsorId(int seatTypeId, int sponsorId);
 }

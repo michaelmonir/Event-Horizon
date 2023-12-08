@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.Entities.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +13,12 @@ import lombok.Setter;
 public class SponsorSeatArchive
 {
     @Id
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "seat_type_id", referencedColumnName = "id")
     private SeatType seatType;
 
     @Id
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "sponsor_id", referencedColumnName = "id")
     private Sponsor sponsor;
 
@@ -37,5 +36,16 @@ public class SponsorSeatArchive
         this.sponsor = sponsor;
         this.total_number_of_seats = total_number_of_seats;
         this.available_number_of_seats = available_number_of_seats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SponsorSeatArchive that = (SponsorSeatArchive) o;
+        return total_number_of_seats == that.total_number_of_seats
+                && available_number_of_seats == that.available_number_of_seats
+                && seatType.getId() ==  that.seatType.getId()
+                && sponsor.getId() == that.sponsor.getId();
     }
 }

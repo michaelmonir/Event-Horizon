@@ -16,7 +16,7 @@ public class UserCustomCreator
     @Autowired
     private InformationRepositoryServiceFactory informationRepositoryServiceFactory;
 
-    public User getUser(Role role)
+    public User getUserAndSaveInRepository(Role role)
     {
         Information information = informationCustomCreator.getInformation(role);
         UserInformationRepositoryService informationRepositoryService

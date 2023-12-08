@@ -1,16 +1,14 @@
 package com.EventHorizon.EventHorizon.Entities.UserEntities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 @Table(name = "sponsor_tbl")
 public class Sponsor  extends User{
     @Id

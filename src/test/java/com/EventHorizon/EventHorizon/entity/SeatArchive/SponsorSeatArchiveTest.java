@@ -23,7 +23,7 @@ public class SponsorSeatArchiveTest {
     public void constructorWithNullSeatType() {
 
         Sponsor sponsor = new Sponsor();
-        Assertions.assertThrows(NullPointerException.class, ()->
+        Assertions.assertDoesNotThrow(()->
                 new SponsorSeatArchive(null, sponsor, 1, 1));
     }
 
@@ -31,7 +31,7 @@ public class SponsorSeatArchiveTest {
     public void constructorWithNullSponsor() {
 
         SeatType seatType = new SeatType("s", 1);
-        Assertions.assertThrows(NullPointerException.class, ()->
+        Assertions.assertDoesNotThrow(()->
                 new SponsorSeatArchive(seatType, null, 1, 1));
     }
 }

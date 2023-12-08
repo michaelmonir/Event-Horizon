@@ -3,10 +3,7 @@ package com.EventHorizon.EventHorizon.Entities.EventEntities;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@EqualsAndHashCode
 @Table(name = "event")
 public class Event {
     @Id
@@ -51,6 +49,6 @@ public class Event {
     )
     private Organizer eventOrganizer;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SeatType> seatTypes;
 }

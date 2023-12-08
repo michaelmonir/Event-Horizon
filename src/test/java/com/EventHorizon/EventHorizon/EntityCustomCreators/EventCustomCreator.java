@@ -35,7 +35,7 @@ public class EventCustomCreator
     {
         this.numberOfcreatedEvents++;
 
-        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUserAndSaveInRepository(Role.ORGANIZER);
         organizerRepository.save(customOrganizer);
         AdsOption customAdsOption = this.adsOptionCustomCreator.getAdsOption();
         this.adsOptionRepositry.save(customAdsOption);
