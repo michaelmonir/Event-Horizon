@@ -9,6 +9,7 @@ import com.EventHorizon.EventHorizon.Repository.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.AdsOptionDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,5 +84,12 @@ public class EventRepositoryService {
         return eventHeaderDtos;
     }
 
+    public List<Event> getAllEvents(Specification<Event> specification) {
+        return eventRepositry.findAll(specification);
+    }
+
+    public List<Event> getAllEvents() {
+        return eventRepositry.findAll();
+    }
 }
 
