@@ -6,16 +6,14 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "gifted_ticket_collection")
-@IdClass(GiftedTicketCollection.class)
+@IdClass(GiftedTicketCompositeKey.class)
 @AllArgsConstructor
 public class GiftedTicketCollection
 {
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
