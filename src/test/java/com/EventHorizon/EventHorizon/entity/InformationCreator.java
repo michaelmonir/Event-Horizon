@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InformationCreator {
-    int valueOfTest = 0;
+    static int valueOfTest = 0;
 
     public Information getInformation(Role role) {
         String z = "faris" + (valueOfTest);
