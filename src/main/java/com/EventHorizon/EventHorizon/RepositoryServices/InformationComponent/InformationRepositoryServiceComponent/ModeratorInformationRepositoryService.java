@@ -10,6 +10,7 @@ import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.Inf
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,5 +48,10 @@ public class ModeratorInformationRepositoryService implements UserInformationRep
         if (!moderator.isPresent())
             throw new ModeratorNotFoundException();
         return moderator.get();
+    }
+
+    @Override
+    public List<? extends User> findAllOfUsers() {
+        return moderatorRepository.findAll();
     }
 }
