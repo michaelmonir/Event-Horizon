@@ -16,4 +16,10 @@ public class CommonConfigs {
             "/event/updateEvent/**",
             "/event/deleteEvent/**",
     };
+    static final String[] AUTH_ADMIN = {
+            "/admin/**"
+    };
+    static final String[] AUTH_AUTHORITY = {
+            "/authority/**"
+    };
 }
