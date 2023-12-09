@@ -7,7 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NewEventDateIsBeforeNow;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdatePastEvent;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdateFinishedEvent;
 import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapperFactory;
@@ -90,7 +90,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
         EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(launchedEvent);
         if (eventWrapper instanceof FinishedEventWrapper) {
-            throw new UpdatePastEvent();
+            throw new UpdateFinishedEvent();
         }
     }
 

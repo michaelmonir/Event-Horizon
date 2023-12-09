@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
@@ -12,7 +11,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NewEventDateIsBeforeNow;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdatePastEvent;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdateFinishedEvent;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import com.EventHorizon.EventHorizon.entity.InformationCreator;
@@ -89,7 +88,7 @@ class LaunchedEventRepositoryServiceTest {
         insialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        Assertions.assertThrows(UpdatePastEvent.class, () -> {
+        Assertions.assertThrows(UpdateFinishedEvent.class, () -> {
             tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()));
             launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
             launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
