@@ -9,6 +9,7 @@ public class EventHorizonApplication {
 
 		SpringApplication.run(EventHorizonApplication.class, args);
 	}
+
 }
 
 
