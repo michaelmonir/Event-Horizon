@@ -43,10 +43,8 @@ public class EventRepositoryService {
     }
 
     public Event updateEventAndHandleNotFound(Event newEvent) {
-        int id = newEvent.getId();
-        this.getEventAndHandleNotFound(id);
+        this.getEventAndHandleNotFound(newEvent.getId());
 
-        newEvent.setId(id);
         eventRepositry.save(newEvent);
         return newEvent;
     }

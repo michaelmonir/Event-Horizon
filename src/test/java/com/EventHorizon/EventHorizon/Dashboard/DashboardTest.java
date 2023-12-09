@@ -8,8 +8,8 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
-import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndex;
-import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSize;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
+import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
@@ -42,7 +42,7 @@ class DashboardTest {
     public void testGetPageThrowsExceptionForInvalidPageIndex() {
         int invalidPageIndex = -1;
 
-        Assertions.assertThrows(InvalidPageIndex.class, () -> {
+        Assertions.assertThrows(InvalidPageIndexException.class, () -> {
             dashboard.getPage(invalidPageIndex, 10);
         });
     }
@@ -90,7 +90,7 @@ class DashboardTest {
     public void testGetPageReturnsErrorForPageSizeZero() {
         int pageIndex = 0;
         int pageSize = 0;
-        Assertions.assertThrows(InvalidPageSize.class, () -> {
+        Assertions.assertThrows(InvalidPageSizeException.class, () -> {
             dashboard.getPage(pageIndex, pageSize);
         });
     }
