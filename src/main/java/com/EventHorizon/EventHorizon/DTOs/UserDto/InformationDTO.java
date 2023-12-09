@@ -27,6 +27,7 @@ public class InformationDTO {
         this.id = information.getId();
         this.email = information.getEmail();
         this.firstName = information.getFirstName();
+        this.password=information.getPassword();
         this.userName = information.userName;
         this.lastName = information.getLastName();
         this.gender = information.getGender().toString();

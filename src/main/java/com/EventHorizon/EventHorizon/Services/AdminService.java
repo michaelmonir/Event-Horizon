@@ -23,15 +23,16 @@ public class AdminService {
     ProxyService proxyService;
 
 
-    public void addModerator(InformationDTO registerRequest) {
+    public Information addModerator(InformationDTO registerRequest) {
         /* To remove any account if it is not  verified  */
         proxyService.removeIfNotEnabled(registerRequest.getEmail());
         /* if userName used is used in database */
         proxyService.handleException(registerRequest.getEmail(), registerRequest.getUserName());
         Information information = proxyService.createInformation(registerRequest);
-        moderatorInformationRepositoryService.add(information);
         information.setActive(1);
         information.setEnable(1);
+        moderatorInformationRepositoryService.add(information);
+        return information;
     }
 
     public void deleteModerator(int idOfInformation) {
