@@ -33,6 +33,4 @@ public class OrganizerSeatArchiveRepositoryService
         this.getOrganizerArchiveByClientIdAndSeatTypeId(organizerSeatArchive.getSeatTypeId());
         return this.organizerSeatArchiveRepository.save(organizerSeatArchive);
     }
-
-
 }
