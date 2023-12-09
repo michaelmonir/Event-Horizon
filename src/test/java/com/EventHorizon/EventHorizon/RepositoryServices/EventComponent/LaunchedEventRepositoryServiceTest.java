@@ -52,7 +52,7 @@ class LaunchedEventRepositoryServiceTest {
     }
     @Test
     public void addingPastEvent() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
@@ -63,7 +63,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void addEventNotGettingError() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
@@ -75,7 +75,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setId(500);
@@ -85,7 +85,7 @@ class LaunchedEventRepositoryServiceTest {
     }
     @Test
     public void editPastEvent() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertThrows(UpdateFinishedEvent.class, () -> {
@@ -97,7 +97,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void editEventWithoutError() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -118,7 +118,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -136,7 +136,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void testGetEventDetailsDtoReturnsCorrectDto() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -156,7 +156,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void testGetEventHeaderDtoReturnsCorrectDto() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -168,7 +168,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         LaunchedEvent launchedEvent2=createSecoundevent();
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -182,7 +182,7 @@ class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsErrors() {
-        insialize();
+        initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         LaunchedEvent launchedEvent2=createSecoundevent();
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
@@ -195,7 +195,7 @@ class LaunchedEventRepositoryServiceTest {
         });
     }
 
-    private void insialize() {
+    private void initialize() {
         createOrganizer();
         createAdsOption();
         createLocation();
@@ -243,5 +243,6 @@ class LaunchedEventRepositoryServiceTest {
                 .eventOrganizer(tempOrganizer)
                 .build();
     }
+
 
 }

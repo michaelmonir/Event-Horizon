@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.Services;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
@@ -29,13 +28,14 @@ public class EventService {
     private DashboardRepositoryService dashboardRepositoryService;
     @Autowired
     private UserEventService userEventService;
-
     @Autowired
     private InformationRepositoryService informationService;
     @Autowired
     private ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
     private OrganizerInformationRepositoryService organizerInformationService;
+    @Autowired
+    private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
 
     public ViewEventDto getEventForUser(int eventId) {
         LaunchedEvent event = this.launchedEventRepositoryService.getEventAndHandleNotFound(eventId);
@@ -49,9 +49,7 @@ public class EventService {
         SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = eventRepositoryService.getEventAndHandleNotFound(eventId);
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
-        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        return resultDTO;
+        return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
     }
 
     public List<EventHeaderDto> getEventHeadersList(int pageIndex, int pageSize) {
@@ -66,9 +64,7 @@ public class EventService {
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         event.setEventOrganizer(organizer);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
-
-        return resultDTO;
+        return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
     }
 
     public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
@@ -79,8 +75,7 @@ public class EventService {
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         event = eventRepositoryService.updateEventAndHandleNotFound(event);
-        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
-        return resultDTO;
+        return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
     }
 
     public DetailedEventDto launchEvent(int informationId, DetailedEventDto eventDTO) {
@@ -91,12 +86,11 @@ public class EventService {
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         event.setEventType(EventType.LAUNCHEDEVENT);
         launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
-        DetailedEventDto resultDTO = detailedEventDtoMapper.getDTOfromDetailedEvent(event);
-        return resultDTO;
+        return detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
     }
 
     public void deleteEvent(int informationId, DetailedEventDto eventDTO) {
-        Organizer organizer = this.getOrganizerFromInformationId(informationId);
+        Organizer organizer = getOrganizerFromInformationId(informationId);
         EventType eventType = eventDTO.getEventType();
         SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = eventRepositoryService.getEventAndHandleNotFound(eventDTO.getId());
@@ -106,7 +100,6 @@ public class EventService {
 
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
-
         return (Organizer) organizerInformationService.getUserByInformation(information);
     }
 

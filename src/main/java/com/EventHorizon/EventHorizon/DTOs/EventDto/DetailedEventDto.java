@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@SuperBuilder
 public abstract class DetailedEventDto {
     protected int id;
     protected String name;

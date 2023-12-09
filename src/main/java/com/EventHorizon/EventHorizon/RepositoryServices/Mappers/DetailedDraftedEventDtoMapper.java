@@ -1,14 +1,9 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.SuperEvent;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

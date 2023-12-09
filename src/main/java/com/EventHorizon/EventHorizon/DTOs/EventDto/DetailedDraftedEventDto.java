@@ -2,15 +2,12 @@ package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 @EqualsAndHashCode
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @Data
 public class DetailedDraftedEventDto extends DetailedEventDto {
