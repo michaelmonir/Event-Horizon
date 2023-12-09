@@ -4,7 +4,6 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
@@ -13,15 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AuthorityService {
 
-
     @Autowired
     InformationRepositoryService informationRepositoryService;
-
 
     /* moderator and admin can use this function to delete Organizer - Sponsor - Client */
     public void deleteUser(int idOfInformation) {
@@ -31,7 +27,7 @@ public class AuthorityService {
         informationRepositoryService.delete(idOfInformation);
     }
 
-    /* next function Make admin and moderator like big boss of the program get most of data we have   */
+    /* next function Make admin and moderator like big boss of the program get most of the data we have   */
 
 
 

@@ -4,6 +4,8 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ModeratorInformationRepositoryService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
@@ -34,6 +36,8 @@ public class AdminService {
 
     public void deleteModerator(int idOfInformation) {
         Information information = informationRepositoryService.getByID(idOfInformation);
+        if (information.getRole() != Role.MODERATOR)
+            throw new ModeratorNotFoundException();
         moderatorInformationRepositoryService.delete(information);
     }
 }
