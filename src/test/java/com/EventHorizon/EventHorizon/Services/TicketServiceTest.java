@@ -7,13 +7,14 @@ import com.EventHorizon.EventHorizon.Mock.BuyableSeatInventory;
 import com.EventHorizon.EventHorizon.Mock.BuyableSeatInventoryRepositoryService;
 import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollectionRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapperFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -23,8 +24,6 @@ class TicketServiceTest {
     @Mock
     private LaunchedEventRepositoryService launchedEventRepositoryService;
 
-    @Mock
-    private EventWrapperFactory eventWrapperFactory;
 
     @Mock
     private BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
@@ -43,10 +42,10 @@ class TicketServiceTest {
         int seatTypeId = 3;
         int numOfTickets = 4;
         LaunchedEvent launchedEvent = new LaunchedEvent();
+        launchedEvent.setEventDate(new Date(System.currentTimeMillis() + 100000));
         BuyableSeatInventory buyableSeatInventory = new BuyableSeatInventory();
         buyableSeatInventory.setNoOfAvailableTickets(10);
         when(launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId)).thenReturn(launchedEvent);
-        when(eventWrapperFactory.getEventWrapper(launchedEvent)).thenReturn(mock(FutureEventWrapper.class));
         when(buyableSeatInventoryRepositoryService.find(seatTypeId)).thenReturn(buyableSeatInventory);
         ticketService.buyTicket(clientId, launchedEventId, seatTypeId, numOfTickets);
         verify(buyedTicketCollectionRepositoryService).saveTickets(clientId, seatTypeId, numOfTickets);
@@ -59,10 +58,10 @@ class TicketServiceTest {
         int seatTypeId = 3;
         int numOfTickets = 15;
         LaunchedEvent launchedEvent = new LaunchedEvent();
+        launchedEvent.setEventDate(new Date(System.currentTimeMillis() + 100000));
         BuyableSeatInventory buyableSeatInventory = new BuyableSeatInventory();
         buyableSeatInventory.setNoOfAvailableTickets(10);
         when(launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId)).thenReturn(launchedEvent);
-        when(eventWrapperFactory.getEventWrapper(launchedEvent)).thenReturn(mock(FutureEventWrapper.class));
         when(buyableSeatInventoryRepositoryService.find(seatTypeId)).thenReturn(buyableSeatInventory);
         assertThrows(AvailableTicketsIsLessThanRequiredToBuy.class,
                 () -> ticketService.buyTicket(clientId, launchedEventId, seatTypeId, numOfTickets));
@@ -74,10 +73,10 @@ class TicketServiceTest {
         int seatTypeId = 3;
         int numOfTickets = 4;
         LaunchedEvent launchedEvent = new LaunchedEvent();
+        launchedEvent.setEventDate(new Date(System.currentTimeMillis() + 100000));
         BuyedTicketCollection buyedTicketCollection = new BuyedTicketCollection();
         buyedTicketCollection.setNumberOfTickets(10);
         when(launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId)).thenReturn(launchedEvent);
-        when(eventWrapperFactory.getEventWrapper(launchedEvent)).thenReturn(mock(FutureEventWrapper.class));
         when(buyedTicketCollectionRepositoryService.find(clientId, seatTypeId)).thenReturn(buyedTicketCollection);
         ticketService.refundTicket(clientId, launchedEventId, seatTypeId, numOfTickets);
         verify(buyableSeatInventoryRepositoryService).saveSeatInventory(seatTypeId, numOfTickets);
@@ -90,10 +89,10 @@ class TicketServiceTest {
         int seatTypeId = 3;
         int numOfTickets = 15;
         LaunchedEvent launchedEvent = new LaunchedEvent();
+        launchedEvent.setEventDate(new Date(System.currentTimeMillis() + 100000));
         BuyedTicketCollection buyedTicketCollection = new BuyedTicketCollection();
         buyedTicketCollection.setNumberOfTickets(10);
         when(launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId)).thenReturn(launchedEvent);
-        when(eventWrapperFactory.getEventWrapper(launchedEvent)).thenReturn(mock(FutureEventWrapper.class));
         when(buyedTicketCollectionRepositoryService.find(clientId, seatTypeId)).thenReturn(buyedTicketCollection);
         assertThrows(BuyedTicketsIslessThanRequiredToRefund.class,
                 () -> ticketService.refundTicket(clientId, launchedEventId, seatTypeId, numOfTickets));

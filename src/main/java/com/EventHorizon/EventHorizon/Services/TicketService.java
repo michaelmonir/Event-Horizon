@@ -9,8 +9,8 @@ import com.EventHorizon.EventHorizon.Mock.BuyableSeatInventoryRepositoryService;
 import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollectionRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapperFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FinishedEventWrapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 public class TicketService {
     @Autowired
     private LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Autowired
-    private EventWrapperFactory eventWrapperFactory;
     @Autowired
     private BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
     @Autowired
@@ -40,10 +38,8 @@ public class TicketService {
 
     public void validateEventIsLaunchedAndIsFuture(int launchedEventId) {
         LaunchedEvent launchedEvent = launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId);
-        EventWrapper eventWrapper = eventWrapperFactory.getEventWrapper(launchedEvent);
-        if (eventWrapper instanceof FinishedEventWrapper) {
-            throw new EventIsFinished();
-        }
+        FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
+
     }
 
     public void validateNumberOfTicketsWhileBuying(int numOfTickets, int seatTypeId) {

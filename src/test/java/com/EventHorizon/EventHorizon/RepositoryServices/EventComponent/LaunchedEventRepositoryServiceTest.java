@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NewEventDateIsBeforeNow;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdateFinishedEvent;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
@@ -56,7 +56,7 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
-        Assertions.assertThrows(NewEventDateIsBeforeNow.class, () -> {
+        Assertions.assertThrows(InvalidateException.class, () -> {
             launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
         });
     }
@@ -88,7 +88,7 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        Assertions.assertThrows(UpdateFinishedEvent.class, () -> {
+        Assertions.assertThrows(InvalidateException.class, () -> {
             tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()));
             launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
             launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
