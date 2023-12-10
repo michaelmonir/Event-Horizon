@@ -37,8 +37,7 @@ class TicketServiceTest {
 
 
     @Test
-    void buyTicket_ValidRequest_Success() {
-        // Arrange
+    public void buyTicketValidRequestSuccess() {
         int clientId = 1;
         int launchedEventId = 2;
         int seatTypeId = 3;
@@ -54,7 +53,7 @@ class TicketServiceTest {
     }
 
     @Test
-    void buyTicket_InsufficientAvailableTickets_ThrowsException() {
+    public void buyTicketInsufficientAvailableTicketsThrowsException() {
         int clientId = 1;
         int launchedEventId = 2;
         int seatTypeId = 3;
@@ -69,7 +68,7 @@ class TicketServiceTest {
                 () -> ticketService.buyTicket(clientId, launchedEventId, seatTypeId, numOfTickets));
     }
     @Test
-    void refundTicket_ValidRequest_Success() {
+    public void refundTicketValidRequestSuccess() {
         int clientId = 1;
         int launchedEventId = 2;
         int seatTypeId = 3;
@@ -85,7 +84,7 @@ class TicketServiceTest {
     }
 
     @Test
-    void refundTicket_InsufficientBuyedTickets_ThrowsException() {
+    public void refundTicketInsufficientBuyedTicketsThrowsException() {
         int clientId = 1;
         int launchedEventId = 2;
         int seatTypeId = 3;
