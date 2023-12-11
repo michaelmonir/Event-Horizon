@@ -24,7 +24,6 @@ class InformationRepositoryTest {
     InformationCustomCreator informationCustomCreator;
 
     @Test
-    ////// add information from factory and check if information added
     public void addInformationTest() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
         informationService.add(information);

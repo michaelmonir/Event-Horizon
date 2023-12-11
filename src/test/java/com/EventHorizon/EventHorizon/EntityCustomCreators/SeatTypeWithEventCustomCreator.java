@@ -21,7 +21,7 @@ public class SeatTypeWithEventCustomCreator
 
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {
         SeatType customSeatType = this.seatTypeCustomCreator.getSeatType();
-        Event customEvent = this.eventCustomCreator.getEvent();
+        Event customEvent = this.eventCustomCreator.getLaunchedEvent();
         List<SeatType> seatTypesList = new ArrayList<>();
         seatTypesList.add(customSeatType);
 

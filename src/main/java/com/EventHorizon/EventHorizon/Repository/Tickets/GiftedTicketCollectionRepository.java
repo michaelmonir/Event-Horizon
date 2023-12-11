@@ -13,7 +13,7 @@ public interface GiftedTicketCollectionRepository extends JpaRepository<GiftedTi
     GiftedTicketCollection save(GiftedTicketCollection giftedTicketCollection);
 
 //    GiftedTicketCollection findByClientAndSeatTypeAndSponsor(Client client, SeatType seatType, Sponsor sponsor);
-//    Optional<GiftedTicketCollection> findByClientIdAndSeatTypeIdAndSponsorId(int clientId, int seatTypeId, int sponsorId);
+    Optional<GiftedTicketCollection> findByClientIdAndSeatTypeIdAndSponsorId(int clientId, int seatTypeId, int sponsorId);
 //    Optional<GiftedTicketCollection> findByClientAndSeatTypeAndSponsor(Client client, SeatType seatType, Sponsor sponsor);
 
 }

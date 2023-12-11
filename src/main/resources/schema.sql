@@ -111,15 +111,15 @@ create table if not exists sponsor_seat_archive(
     check (total_number_of_seats >= available_number_of_seats)
 );
 
---create table if not exists buyed_ticket_collection(
---    client_id int,
---	seat_type_id int,
---    number_of_tickets int not null,
---    primary key (client_id, seat_type_id),
---    foreign key (seat_type_id) references seat_type(id),
---    foreign key(client_id) references client_tbl(id),
---    check (number_of_tickets >= 0)
---);
+create table if not exists buyed_ticket_collection(
+    client_id int,
+	seat_type_id int,
+    number_of_tickets int not null,
+    primary key (client_id, seat_type_id),
+    foreign key (seat_type_id) references seat_type(id),
+    foreign key(client_id) references client_tbl(id),
+    check (number_of_tickets >= 0)
+);
 
 
 create table if not exists gifted_ticket_collection(
