@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 @SpringBootTest
-public class OrganizerSeatArchiveRepositoryServiceTest
+public class OrganizerSeatTypeRepositoryServiceTest
 {
     @InjectMocks
     OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
@@ -32,7 +32,7 @@ public class OrganizerSeatArchiveRepositoryServiceTest
         Mockito.when(this.organizerSeatArchiveRepository.findBySeatTypeId(Mockito.any(Integer.class)))
                 .thenReturn(Optional.ofNullable(this.customOrganizerSeatArchive));
         OrganizerSeatArchive result
-                = this.organizerSeatArchiveRepositoryService.getOrganizerArchiveByClientIdAndSeatTypeId(this.customSeatType.getId());
+                = this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customSeatType.getId());
         Assertions.assertEquals(this.customOrganizerSeatArchive, result);
     }
 
@@ -42,7 +42,7 @@ public class OrganizerSeatArchiveRepositoryServiceTest
         Mockito.when(this.organizerSeatArchiveRepository.findBySeatTypeId(Mockito.any(Integer.class)))
                 .thenReturn(Optional.empty());
         Assertions.assertThrows(OrganizerSeatArchiveNotFoundException.class, () ->
-                this.organizerSeatArchiveRepositoryService.getOrganizerArchiveByClientIdAndSeatTypeId(this.customSeatType.getId()));
+                this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customSeatType.getId()));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class OrganizerSeatArchiveRepositoryServiceTest
         this.initializeCustomObjectsAndMocks();
         Assertions.assertDoesNotThrow(() ->
                 this.organizerSeatArchiveRepositoryService
-                        .saveOrganizerSeatArchiveWWhenCreating(this.customOrganizerSeatArchive));
+                        .saveWhenCreating(this.customOrganizerSeatArchive));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class OrganizerSeatArchiveRepositoryServiceTest
         this.customOrganizerSeatArchive.setSeatTypeId(5);
         Assertions.assertThrows(OrganizerSeatArchiveShouldHaveIdWhileCreatingException.class,() ->
                 this.organizerSeatArchiveRepositoryService
-                        .saveOrganizerSeatArchiveWWhenCreating(this.customOrganizerSeatArchive));
+                        .saveWhenCreating(this.customOrganizerSeatArchive));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class OrganizerSeatArchiveRepositoryServiceTest
         this.initializeCustomObjectsAndMocks();
         Assertions.assertDoesNotThrow(() ->
                 this.organizerSeatArchiveRepositoryService
-                        .updateOrganizerSeatArchive(this.customOrganizerSeatArchive));
+                        .update(this.customOrganizerSeatArchive));
     }
 
     private void initializeCustomObjectsAndMocks()

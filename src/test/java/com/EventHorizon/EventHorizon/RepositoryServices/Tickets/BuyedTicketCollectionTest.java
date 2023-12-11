@@ -17,54 +17,54 @@ import java.util.Optional;
 @SpringBootTest
 public class BuyedTicketCollectionTest
 {
-//    @InjectMocks
-//    BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
-//    @Mock
-//    BuyedTicketCollectionRepository buyedTicketCollectionRepository;
-//
-//    private BuyedTicketCollection customBuyedTicketCollection;
-//    private SeatType customSeatType;
-//    private Client customClient;
-//
-//
-//    @Test
-//    public void getOrganizerArchiveByClientIdAndSeatTypeId() {
-//        this.initializeCustomObjectsAndMocks();
-//        Mockito.when(this.buyedTicketCollectionRepository
-//                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
-//                .thenReturn(Optional.ofNullable(this.customBuyedTicketCollection));
-//
-//        BuyedTicketCollection result
-//                = this.buyedTicketCollectionRepositoryService
-//                .getOrganizerArchiveByClientIdAndSeatTypeId(customClient.getId(), customSeatType.getId());
-//        Assertions.assertEquals(this.customBuyedTicketCollection, result);
-//    }
-//
-//    @Test
-//    public void getOrganizerArchiveByClientIdAndSeatTypeIdNotFound() {
-//        this.initializeCustomObjectsAndMocks();
-//        Mockito.when(this.buyedTicketCollectionRepository
-//                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
-//                .thenReturn(Optional.empty());
-//        Assertions.assertThrows(BuyedTicketCollectionNotFoundException.class, () ->
-//                this.buyedTicketCollectionRepositoryService
-//                .getOrganizerArchiveByClientIdAndSeatTypeId(customClient.getId(), customSeatType.getId()) );
-//    }
-//
-//    @Test
-//    public void saveBuyedTicketCollection() {
-//        Assertions.assertDoesNotThrow(() ->
-//                this.buyedTicketCollectionRepositoryService
-//                        .saveBuyedTicketCollection(this.customBuyedTicketCollection));
-//    }
-//
-//    public void initializeCustomObjectsAndMocks() {
-//        this.customClient = new Client();
-//        this.customSeatType = new SeatType("a", 1);
-//        this.customBuyedTicketCollection = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
-//
-//        Mockito.when(this.buyedTicketCollectionRepository
-//                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
-//                .thenReturn(Optional.ofNullable(this.customBuyedTicketCollection));
-//    }
+    @InjectMocks
+    BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
+    @Mock
+    BuyedTicketCollectionRepository buyedTicketCollectionRepository;
+
+    private BuyedTicketCollection customBuyedTicketCollection;
+    private SeatType customSeatType;
+    private Client customClient;
+
+
+    @Test
+    public void getOrganizerArchiveByClientIdAndSeatTypeId() {
+        this.initializeCustomObjectsAndMocks();
+        Mockito.when(this.buyedTicketCollectionRepository
+                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
+                .thenReturn(Optional.ofNullable(this.customBuyedTicketCollection));
+
+        BuyedTicketCollection result
+                = this.buyedTicketCollectionRepositoryService
+                .getBySeatTypeIdAndClientId(customClient.getId(), customSeatType.getId());
+        Assertions.assertEquals(this.customBuyedTicketCollection, result);
+    }
+
+    @Test
+    public void getOrganizerArchiveByClientIdAndSeatTypeIdNotFound() {
+        this.initializeCustomObjectsAndMocks();
+        Mockito.when(this.buyedTicketCollectionRepository
+                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
+                .thenReturn(Optional.empty());
+        Assertions.assertThrows(BuyedTicketCollectionNotFoundException.class, () ->
+                this.buyedTicketCollectionRepositoryService
+                .getBySeatTypeIdAndClientId(customClient.getId(), customSeatType.getId()) );
+    }
+
+    @Test
+    public void saveBuyedTicketCollection() {
+        Assertions.assertDoesNotThrow(() ->
+                this.buyedTicketCollectionRepositoryService
+                        .save(this.customBuyedTicketCollection));
+    }
+
+    public void initializeCustomObjectsAndMocks() {
+        this.customClient = new Client();
+        this.customSeatType = new SeatType("a", 1);
+        this.customBuyedTicketCollection = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
+
+        Mockito.when(this.buyedTicketCollectionRepository
+                        .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
+                .thenReturn(Optional.ofNullable(this.customBuyedTicketCollection));
+    }
 }

@@ -18,7 +18,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import java.util.Optional;
 
 @SpringBootTest
-public class SponsorSeatArchiveRepositoryTest {
+public class SponsorSeatTypeRepositoryTest {
     @Autowired
     UserCustomCreator userCustomCreator;
     @Autowired

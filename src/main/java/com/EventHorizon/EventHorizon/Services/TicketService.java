@@ -1,17 +1,18 @@
 package com.EventHorizon.EventHorizon.Services;
 
+import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuy;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsFinished;
-import com.EventHorizon.EventHorizon.Mock.BuyableSeatInventory;
-import com.EventHorizon.EventHorizon.Mock.BuyableSeatInventoryRepositoryService;
-import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Mock.BuyedTicketCollectionRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FinishedEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ClientInformationRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
+import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveTransactionService;
+import com.EventHorizon.EventHorizon.Services.Tickets.TicketsTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,43 +21,44 @@ public class TicketService {
     @Autowired
     private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Autowired
-    private BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
+    SeatArchiveTransactionService seatArchiveTransactionService;
     @Autowired
-    private BuyableSeatInventoryRepositoryService buyableSeatInventoryRepositoryService;
+    TicketsTransactionService ticketsTransactionService;
+    @Autowired
+    SeatTypeRepositoryService seatTypeRepositoryService;
+    @Autowired
+    InformationRepositoryService informationRepositoryService;
+    @Autowired
+    ClientInformationRepositoryService clientInformationRepositoryService;
 
-    public void buyTicket(int clientId, int launchedEventId, int seatTypeId, int numOfTickets) {
-        validateEventIsLaunchedAndIsFuture(launchedEventId);
-        validateNumberOfTicketsWhileBuying(numOfTickets, seatTypeId);
-        buyedTicketCollectionRepositoryService.saveTickets(clientId, seatTypeId, numOfTickets);
+    public void buyTicket(int clientInformationId, int seatTypeId, int numOfTickets) {
+        Client client = this.getClientByClientInformationId(clientInformationId);
+        validateEventIsLaunchedAndIsFuture(seatTypeId);
+
+        this.seatArchiveTransactionService.removeTickets(seatTypeId, numOfTickets);
+        this.ticketsTransactionService.addTickets(seatTypeId, client.getId(), numOfTickets);
     }
 
-    public void refundTicket(int clientId, int launchedEventId, int seatTypeId, int numOfTickets) {
-        validateEventIsLaunchedAndIsFuture(launchedEventId);
-        validateNumberOfTicketsWhileRefunding(numOfTickets, clientId, seatTypeId);
-        buyableSeatInventoryRepositoryService.saveSeatInventory(seatTypeId, numOfTickets);
+    public void refundTicket(int clientInformationId, int seatTypeId, int numOfTickets) {
+        Client client = this.getClientByClientInformationId(clientInformationId);
+        validateEventIsLaunchedAndIsFuture(seatTypeId);
+
+        this.ticketsTransactionService.removeTickets(seatTypeId, client.getId(), numOfTickets);
+        this.seatArchiveTransactionService.addTickets(seatTypeId, numOfTickets);
     }
 
-    public void validateEventIsLaunchedAndIsFuture(int launchedEventId) {
-        LaunchedEvent launchedEvent = launchedEventRepositoryService.getEventAndHandleNotFound(launchedEventId);
-        FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
+    private void validateEventIsLaunchedAndIsFuture(int seatTypeId) {
+        SeatType seatType = seatTypeRepositoryService.getById(seatTypeId);
 
+        Event event = seatType.getEvent();
+        if (!(event instanceof LaunchedEvent))
+            throw new NotLaunchedEventException();
+
+        FutureEventWrapper eventWrapper = new FutureEventWrapper((LaunchedEvent) event);
     }
 
-    public void validateNumberOfTicketsWhileBuying(int numOfTickets, int seatTypeId) {
-        BuyableSeatInventory buyableSeatInventory = buyableSeatInventoryRepositoryService.find(seatTypeId);
-        int noOfAvailableTickets = buyableSeatInventory.getAvailableTickets();
-        if (numOfTickets > noOfAvailableTickets)
-            throw new AvailableTicketsIsLessThanRequiredToBuy();
-        buyableSeatInventory.setNoOfAvailableTickets(noOfAvailableTickets - numOfTickets);
-        buyableSeatInventoryRepositoryService.update(buyableSeatInventory);
-    }
-
-    public void validateNumberOfTicketsWhileRefunding(int numOfTickets, int clientId, int seatTypeId) {
-        BuyedTicketCollection buyedTicketCollection = buyedTicketCollectionRepositoryService.find(clientId, seatTypeId);
-        int numOfBuyedTickets = buyedTicketCollection.getNumberOfTickets();
-        if (numOfTickets > numOfBuyedTickets)
-            throw new BuyedTicketsIslessThanRequiredToRefund();
-        buyedTicketCollection.setNumberOfTickets(numOfBuyedTickets - numOfTickets);
-        buyedTicketCollectionRepositoryService.update(buyedTicketCollection);
+    private Client getClientByClientInformationId(int clientInformationId) {
+        Information information = this.informationRepositoryService.getByID(clientInformationId);
+        return (Client)this.clientInformationRepositoryService.getUserByInformation(information);
     }
 }

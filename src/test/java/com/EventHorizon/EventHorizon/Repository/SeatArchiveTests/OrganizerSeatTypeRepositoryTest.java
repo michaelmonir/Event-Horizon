@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 @SpringBootTest
-public class OrganizerSeatArchiveRepositoryTest {
+public class OrganizerSeatTypeRepositoryTest {
 
     @Autowired
     OrganizerSeatArchiveRepository organizerSeatArchiveRepository;

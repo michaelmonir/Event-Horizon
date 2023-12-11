@@ -4,8 +4,12 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "buyed_ticket_collection")
 @IdClass(BuyedTicketCollection.class)
 @AllArgsConstructor

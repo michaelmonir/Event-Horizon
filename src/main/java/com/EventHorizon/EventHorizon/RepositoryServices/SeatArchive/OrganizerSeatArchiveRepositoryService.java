@@ -15,7 +15,7 @@ public class OrganizerSeatArchiveRepositoryService
     @Autowired
     OrganizerSeatArchiveRepository organizerSeatArchiveRepository;
 
-    public OrganizerSeatArchive getOrganizerArchiveByClientIdAndSeatTypeId(int seatTypeId) {
+    public OrganizerSeatArchive getBySeatTypeId(int seatTypeId) {
         Optional<OrganizerSeatArchive> optionalOrganizerSeatArchive
                 = this.organizerSeatArchiveRepository.findBySeatTypeId(seatTypeId);
         if (!optionalOrganizerSeatArchive.isPresent())
@@ -23,14 +23,14 @@ public class OrganizerSeatArchiveRepositoryService
         return optionalOrganizerSeatArchive.get();
     }
 
-    public void saveOrganizerSeatArchiveWWhenCreating(OrganizerSeatArchive organizerSeatArchive) {
+    public void saveWhenCreating(OrganizerSeatArchive organizerSeatArchive) {
         if (organizerSeatArchive.getSeatTypeId() != 0)
             throw new OrganizerSeatArchiveShouldHaveIdWhileCreatingException();
         this.organizerSeatArchiveRepository.save(organizerSeatArchive);
     }
 
-    public OrganizerSeatArchive updateOrganizerSeatArchive(OrganizerSeatArchive organizerSeatArchive) {
-        this.getOrganizerArchiveByClientIdAndSeatTypeId(organizerSeatArchive.getSeatTypeId());
+    public OrganizerSeatArchive update(OrganizerSeatArchive organizerSeatArchive) {
+        this.getBySeatTypeId(organizerSeatArchive.getSeatTypeId());
         return this.organizerSeatArchiveRepository.save(organizerSeatArchive);
     }
 }

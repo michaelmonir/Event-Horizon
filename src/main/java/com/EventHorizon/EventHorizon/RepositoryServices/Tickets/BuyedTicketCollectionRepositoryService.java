@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-//@Service
+@Service
 public class BuyedTicketCollectionRepositoryService
 {
-//    @Autowired
-//    BuyedTicketCollectionRepository buyedTicketCollectionRepository;
-//
-//    public BuyedTicketCollection getOrganizerArchiveByClientIdAndSeatTypeId(int seatTypeId, int clientId) {
-//        Optional<BuyedTicketCollection> optionalBuyedTicketCollection
-//                = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(clientId, seatTypeId);
-//        if (!optionalBuyedTicketCollection.isPresent())
-//            throw new BuyedTicketCollectionNotFoundException();
-//        return optionalBuyedTicketCollection.get();
-//    }
-//
-//    public void saveBuyedTicketCollection(BuyedTicketCollection buyedTicketCollection) {
-//        this.buyedTicketCollectionRepository.save(buyedTicketCollection);
-//    }
+    @Autowired
+    BuyedTicketCollectionRepository buyedTicketCollectionRepository;
+
+    public BuyedTicketCollection getBySeatTypeIdAndClientId(int seatTypeId, int clientId) {
+        Optional<BuyedTicketCollection> optionalBuyedTicketCollection
+                = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(clientId, seatTypeId);
+        if (!optionalBuyedTicketCollection.isPresent())
+            throw new BuyedTicketCollectionNotFoundException();
+        return optionalBuyedTicketCollection.get();
+    }
+
+    public void save(BuyedTicketCollection buyedTicketCollection) {
+        this.buyedTicketCollectionRepository.save(buyedTicketCollection);
+    }
 }
