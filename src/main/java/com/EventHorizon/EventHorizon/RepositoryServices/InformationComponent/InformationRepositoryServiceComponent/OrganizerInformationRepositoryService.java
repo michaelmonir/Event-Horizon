@@ -6,9 +6,11 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.OrganizerNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,5 +49,10 @@ public class OrganizerInformationRepositoryService implements UserInformationRep
         if (!organizer.isPresent())
             throw new OrganizerNotFoundException();
         return organizer.get();
+    }
+
+    @Override
+    public List<? extends User> findAllOfUsers() {
+        return  organizerRepository.findAll();
     }
 }
