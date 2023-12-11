@@ -32,6 +32,10 @@ public class SecurityConfig {
                                .permitAll()
                                .requestMatchers(CommonConfigs.AUTH_ORGANIZER)
                                .hasAnyRole("ORGANIZER","ADMIN")
+                                .requestMatchers(CommonConfigs.AUTH_ADMIN)
+                                .hasRole("ADMIN")
+                                .requestMatchers(CommonConfigs.AUTH_AUTHORITY)
+                                .hasAnyRole("ADMIN","MODERATOR")
                                 .anyRequest()
                                 .authenticated()
                 ).sessionManagement(

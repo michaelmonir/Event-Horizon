@@ -115,7 +115,7 @@ public class ProxyService {
                 .build();
     }
 
-    private Information createInformation(InformationDTO registerRequest) {
+    public Information createInformation(InformationDTO registerRequest) {
         return Information.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
