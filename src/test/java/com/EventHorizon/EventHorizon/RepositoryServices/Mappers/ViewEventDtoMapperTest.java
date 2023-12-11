@@ -2,10 +2,10 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ class ViewEventDtoMapperTest {
     private AdsOptionDtoMapper adsOptionDtoMapper;
 
     @Mock
-    private EventRepositoryService eventRepositoryService;
+    private LaunchedEventRepositoryService eventRepositoryService;
 
     @InjectMocks
     private ViewEventDtoMapper eventDtoMapper;
@@ -34,7 +34,7 @@ class ViewEventDtoMapperTest {
         dto.setDescription("Test Description");
         dto.setEventCategory("Test Category");
 
-        Event event = new Event();
+        LaunchedEvent event = new LaunchedEvent();
         event.setId(dto.getId());
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());
@@ -46,7 +46,7 @@ class ViewEventDtoMapperTest {
         event.setEventAds(adsOption);
         Mockito.when(eventRepositoryService.getEventAndHandleNotFound(dto.getId())).thenReturn(event);
 
-        Event result = eventDtoMapper.getEventFromViewEventDTO(dto);
+        LaunchedEvent result = eventDtoMapper.getEventFromViewEventDTO(dto);
 
         Assertions.assertEquals(dto.getId(), result.getId());
         Assertions.assertEquals(dto.getName(), result.getName());
@@ -60,7 +60,7 @@ class ViewEventDtoMapperTest {
     @Test
     public void testGetDTOfromViewEvent() {
 
-        Event event = new Event();
+        LaunchedEvent event = new LaunchedEvent();
         event.setId(1);
         event.setName("Test Event");
         event.setDescription("Test Description");
@@ -73,8 +73,7 @@ class ViewEventDtoMapperTest {
         information.setUserName("ahmed");
         organizer.setInformation(information);
         event.setEventOrganizer(organizer);
-
-
+        
         ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(event);
 
 

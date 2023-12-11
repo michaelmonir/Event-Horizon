@@ -25,7 +25,7 @@ class LocationRepositoryTest {
     @Test
     public void findNotExistedAdsById(){
         Optional<Location> location=locationRepository.findById(0);
-        Assertions.assertEquals(location.isPresent(),false);
+        Assertions.assertFalse(location.isPresent());
     }
     @Test
     public void findExistedAdsById(){
@@ -35,7 +35,7 @@ class LocationRepositoryTest {
         locationRepository.save(location1);
         Assertions.assertNotEquals(0,location1.getId());
         Optional<Location> findedLocation=locationRepository.findById(location1.getId());
-        Assertions.assertEquals(findedLocation.isPresent(),true);
+        Assertions.assertTrue(findedLocation.isPresent());
     }
     @Test
     public void createLocationWithoutCity() {

@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.entity;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SponsorInformationRepositoryService;
 import org.junit.jupiter.api.Assertions;
@@ -15,11 +16,11 @@ class SponsorRepositoryTest {
     @Autowired
     private SponsorInformationRepositoryService sponsorInformationService;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCustomCreator;
 
     @Test
     public void addSponsorTest() {
-        Information information = informationCreator.getInformation(Role.SPONSOR);
+        Information information = informationCustomCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
 
         Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);
@@ -30,7 +31,7 @@ class SponsorRepositoryTest {
 
     @Test
     public void deleteSponsorTest() {
-        Information information = informationCreator.getInformation(Role.SPONSOR);
+        Information information = informationCustomCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
         sponsorInformationService.delete(information);
 
@@ -43,7 +44,7 @@ class SponsorRepositoryTest {
 
     @Test
     public void getByInformationSponsorTest() {
-        Information information = informationCreator.getInformation(Role.SPONSOR);
+        Information information = informationCustomCreator.getInformation(Role.SPONSOR);
         sponsorInformationService.add(information);
 
         Sponsor s1 = (Sponsor) sponsorInformationService.getUserByInformation(information);
