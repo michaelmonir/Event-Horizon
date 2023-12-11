@@ -1,21 +1,23 @@
 package com.EventHorizon.EventHorizon.Services;
 
+import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryService;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DelaitedEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+
 
 @Service
 public class EventService {
@@ -61,7 +63,6 @@ public class EventService {
         event.setEventOrganizer(organizer);
         this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         DetailedEventDto resultDTO = delaitedEventDtoMapper.getDTOfromDetailedEvent(event);
-
         return resultDTO;
     }
 
@@ -86,6 +87,6 @@ public class EventService {
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
         Information information = informationService.getByID(inforamtionID);
 
-        return (Organizer)organizerInformationService.getUserByInformation(information);
+        return (Organizer) organizerInformationService.getUserByInformation(information);
     }
 }

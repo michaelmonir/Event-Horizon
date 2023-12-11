@@ -2,10 +2,7 @@ package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Builder
+@EqualsAndHashCode
 @Table(name = "event")
 public class Event {
     @Id
