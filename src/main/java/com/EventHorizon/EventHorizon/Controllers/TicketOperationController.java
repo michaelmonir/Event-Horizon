@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Controllers;
 
 import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
-import com.EventHorizon.EventHorizon.Services.TicketService;
+import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class TicketOperationController {
     @Autowired
-    private TicketService ticketService;
+    private TicketTransactionsService ticketTransactionsService;
 
     @PutMapping("buyTicket/{clientId}") //organizer,admin
     public ResponseEntity buyTicket
@@ -21,7 +21,7 @@ public class TicketOperationController {
 
         int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
         int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
-        ticketService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
+        ticketTransactionsService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -31,7 +31,7 @@ public class TicketOperationController {
 
         int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
         int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
-        ticketService.refundTicket(clientInformationId, seatTypeId, numOfTickets);
+        ticketTransactionsService.refundTicket(clientInformationId, seatTypeId, numOfTickets);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

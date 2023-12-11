@@ -1,24 +1,16 @@
 package com.EventHorizon.EventHorizon.Services;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Repository.ClientRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
-import org.junit.jupiter.api.Test;
+import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class TicketServiceTest {
@@ -29,7 +21,7 @@ class TicketServiceTest {
     @Mock
     private OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
     @InjectMocks
-    private TicketService ticketService;
+    private TicketTransactionsService ticketTransactionsService;
 
     private Client customclient;
     private SeatType customseatType;

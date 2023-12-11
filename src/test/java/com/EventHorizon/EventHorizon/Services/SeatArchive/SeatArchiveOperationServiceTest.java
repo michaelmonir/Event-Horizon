@@ -16,10 +16,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class SeatArchiveTransactionServiceTest
+public class SeatArchiveOperationServiceTest
 {
     @InjectMocks
-    SeatArchiveTransactionService seatArchiveTransactionService;
+    SeatArchiveOperationService seatArchiveOperationService;
     @Mock
     OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
 
@@ -33,7 +33,7 @@ public class SeatArchiveTransactionServiceTest
         when(organizerSeatArchiveRepositoryService.getBySeatTypeId(any(int.class)))
                 .thenReturn(customArchiveWithTickets);
 
-        this.seatArchiveTransactionService.removeTickets(this.customSeatType.getId(), 1);
+        this.seatArchiveOperationService.removeTickets(this.customSeatType.getId(), 1);
 
         verify(this.organizerSeatArchiveRepositoryService, Mockito.times(1))
                 .update(this.customArchiveWithoutTickets);
@@ -46,7 +46,7 @@ public class SeatArchiveTransactionServiceTest
                 .thenReturn(customArchiveWithTickets);
 
         Assertions.assertThrows(AvailableTicketsIsLessThanRequiredToBuy.class, () ->
-                this.seatArchiveTransactionService.removeTickets(this.customSeatType.getId(), 2));
+                this.seatArchiveOperationService.removeTickets(this.customSeatType.getId(), 2));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class SeatArchiveTransactionServiceTest
         when(organizerSeatArchiveRepositoryService.getBySeatTypeId(any(int.class)))
                 .thenReturn(customArchiveWithoutTickets);
 
-        this.seatArchiveTransactionService.addTickets(this.customSeatType.getId(), 1);
+        this.seatArchiveOperationService.addTickets(this.customSeatType.getId(), 1);
 
         verify(this.organizerSeatArchiveRepositoryService, Mockito.times(1))
                 .update(this.customArchiveWithTickets);
