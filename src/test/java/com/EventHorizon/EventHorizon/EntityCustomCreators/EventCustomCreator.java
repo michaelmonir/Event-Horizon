@@ -31,9 +31,7 @@ public class EventCustomCreator
     @Autowired
     private AdsOptionRepository adsOptionRepositry;
 
-
     int numberOfcreatedEvents = 0;
-
 
     public LaunchedEvent getLaunchedEvent() {
         this.numberOfcreatedEvents++;

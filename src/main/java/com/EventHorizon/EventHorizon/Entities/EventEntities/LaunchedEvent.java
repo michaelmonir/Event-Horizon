@@ -1,8 +1,5 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
-import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

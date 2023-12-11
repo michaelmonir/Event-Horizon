@@ -10,5 +10,4 @@ public interface SuperEventRepositoryService {
     public Event updateEventAndHandleNotFound(Event newEvent);
 
     public void deleteEvent(int id);
-
 }
