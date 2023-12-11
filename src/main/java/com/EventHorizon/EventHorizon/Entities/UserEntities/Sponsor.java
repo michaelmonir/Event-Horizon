@@ -1,16 +1,17 @@
 package com.EventHorizon.EventHorizon.Entities.UserEntities;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 @Table(name = "sponsor_tbl")
 public class Sponsor  extends User{
     @Id
@@ -21,4 +22,7 @@ public class Sponsor  extends User{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id", referencedColumnName = "id")
     private Information information;
+
+    @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<SponsorSeatArchive> sponsorSeatArchiveList;
 }

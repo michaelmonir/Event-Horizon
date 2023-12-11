@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,11 +17,11 @@ public class UserEventServiceTest {
     @Autowired
     private UserEventService userEventService;
     @Autowired
-    private InformationCreator informationCreator;
+    private InformationCustomCreator informationCustomCreator;
 
     @Test
     public void organizerOfEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         Event event = Event.builder()
                 .eventOrganizer(organizer)
@@ -33,12 +33,12 @@ public class UserEventServiceTest {
 
     @Test
     public void notOrganizerOfEvent() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
+        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         Event event = Event.builder()
                 .eventOrganizer(organizer)
                 .build();
-        Information information2 = informationCreator.getInformation(Role.ORGANIZER);
+        Information information2 = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer2 = Organizer.builder().information(information2).build();
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() -> {
             userEventService.checkAndHandleNotOrganizerOfEvent(organizer2, event);

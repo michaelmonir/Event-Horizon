@@ -24,5 +24,4 @@ public class LaunchedEvent extends Event {
     @Column(nullable = false)
     @Builder.Default
     private Date launchedDate = Calendar.getInstance().getTime();
-
 }

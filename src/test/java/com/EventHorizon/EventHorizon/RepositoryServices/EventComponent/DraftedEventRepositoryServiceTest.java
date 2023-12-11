@@ -4,11 +4,11 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ class DraftedEventRepositoryServiceTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCreator;
 
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
