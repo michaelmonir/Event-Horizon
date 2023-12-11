@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.EntityCustomCreators;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,10 @@ public class SeatTypeWithEventCustomCreator
     @Autowired
     EventCustomCreator eventCustomCreator;
     @Autowired
-    LaunchedEventRepositoryService eventRepositoryService;
+    LaunchedEventRepositoryService launchedEventRepositoryService;
+    @Autowired
+    DraftedEventRepositoryService draftedEventRepositoryService;
+
 
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {
         SeatType customSeatType = this.seatTypeCustomCreator.getSeatType();
@@ -26,7 +30,7 @@ public class SeatTypeWithEventCustomCreator
         seatTypesList.add(customSeatType);
 
         customEvent.setSeatTypes(seatTypesList);
-        customEvent = this.eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(customEvent);
+        customEvent = this.launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(customEvent);
 
         return customEvent.getSeatTypes().get(0);
     }

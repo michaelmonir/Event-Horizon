@@ -58,7 +58,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         launchedEventRepository.deleteById(id);
     }
 
-
     public ViewEventDto getViewEventDTO(int id) {
         LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
         return new ViewEventDto(launchedEvent);
