@@ -12,6 +12,7 @@ import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class LaunchedEventRepositoryService implements SuperEventRepositoryService {
     @Autowired
     private LaunchedEventRepository launchedEventRepository;
+    @Autowired
+    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
     public LaunchedEvent getEventAndHandleNotFound(int id) {
         Optional<LaunchedEvent> optionalLaunchedEvent = launchedEventRepository.findById(id);
@@ -76,6 +79,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     private void saveEvent(FutureEventWrapper futureEventWrapper) {
+        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(futureEventWrapper.getLaunchedEvent());
         launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
     }
 }

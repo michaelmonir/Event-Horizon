@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest
@@ -127,7 +128,8 @@ class DraftedEventRepositoryServiceTest {
         tempDraftedEvent = DraftedEvent.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
-                .description("...").build();
+                .description("...")
+                .seatTypes(new ArrayList<>()).build();
     }
 
     private void createLocation() {
@@ -144,6 +146,7 @@ class DraftedEventRepositoryServiceTest {
                 .name("e500")
                 .eventDate(new Date(System.currentTimeMillis() + 100000))
                 .eventOrganizer(tempOrganizer)
+                .seatTypes(new ArrayList<>())
                 .build();
     }
 }

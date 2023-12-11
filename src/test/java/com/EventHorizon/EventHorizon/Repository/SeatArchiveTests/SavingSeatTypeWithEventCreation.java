@@ -44,7 +44,7 @@ public class SavingSeatTypeWithEventCreation
         Event event = this.getEventAndGiveOneSeatType(seatType);
         // as then the seatTypes would not have their event initialized
         // which normally takes place in the RepositoryService not the repository
-        Assertions.assertDoesNotThrow(() -> {
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             eventRepositry.save(event);
         });
     }

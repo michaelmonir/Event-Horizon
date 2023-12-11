@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -223,7 +224,8 @@ class LaunchedEventRepositoryServiceTest {
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...")
-                .eventDate(new Date(System.currentTimeMillis() + 100000)).build();
+                .eventDate(new Date(System.currentTimeMillis() + 100000))
+                .seatTypes(new ArrayList<>()).build();
     }
 
     private void createLocation() {
@@ -240,8 +242,7 @@ class LaunchedEventRepositoryServiceTest {
                 .name("e500")
                 .eventDate(new Date(System.currentTimeMillis() + 100000))
                 .eventOrganizer(tempOrganizer)
+               .seatTypes(new ArrayList<>())
                 .build();
     }
-
-
 }

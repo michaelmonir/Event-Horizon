@@ -60,12 +60,4 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<SeatType> seatTypes;
-
-
-    public void setSeatTypes(List<SeatType> seatTypes)
-    {
-        this.seatTypes = seatTypes;
-        for (SeatType seatType : seatTypes)
-            seatType.setEvent(this);
-    }
 }
