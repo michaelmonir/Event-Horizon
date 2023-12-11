@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.SponsorNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.SeatArchive.SeatTypeNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class SeatTypeRepositoryService
     {
         Optional<SeatType> seatTypeOptional = seatTypeRepository.findById(id);
         if (!seatTypeOptional.isPresent())
-            throw new SponsorNotFoundException();
+            throw new SeatTypeNotFoundException();
         return seatTypeOptional.get();
     }
 }
