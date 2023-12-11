@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 public class FinishedEventWrapper extends EventWrapper{
-    protected FinishedEventWrapper(LaunchedEvent launchedEvent){
+    public FinishedEventWrapper(LaunchedEvent launchedEvent){
         if (launchedEvent.getEventDate().after(new Date()))
             throw new InvalidateException();
 

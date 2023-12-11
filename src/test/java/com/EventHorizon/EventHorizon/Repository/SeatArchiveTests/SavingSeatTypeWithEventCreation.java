@@ -27,8 +27,7 @@ public class SavingSeatTypeWithEventCreation
     EventRepositry eventRepositry;
 
     @Test
-    public void creatingSeatTypeUsingRepositoryService()
-    {
+    public void creatingSeatTypeUsingRepositoryService() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         Event event = this.getEventAndGiveOneSeatType(seatType);;
 
@@ -38,8 +37,7 @@ public class SavingSeatTypeWithEventCreation
     }
 
     @Test
-    public void creatingSeatTypeUsingRepository()
-    {
+    public void creatingSeatTypeUsingRepository() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         Event event = this.getEventAndGiveOneSeatType(seatType);
         // as then the seatTypes would not have their event initialized
@@ -50,8 +48,7 @@ public class SavingSeatTypeWithEventCreation
     }
 
     @Test
-    public void creatingEventWithoutMakingName()
-    {
+    public void creatingEventWithoutMakingName() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         seatType.setName(null);
         Event event = this.getEventAndGiveOneSeatType(seatType);
@@ -62,8 +59,7 @@ public class SavingSeatTypeWithEventCreation
     }
 
     @Test
-    public void creatingEventWithMakingPriceNegative()
-    {
+    public void creatingEventWithMakingPriceNegative() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         seatType.setPrice(-1);
         Event event = this.getEventAndGiveOneSeatType(seatType);
@@ -73,8 +69,7 @@ public class SavingSeatTypeWithEventCreation
         });
     }
 
-    private Event getEventAndGiveOneSeatType(SeatType seatType)
-    {
+    private Event getEventAndGiveOneSeatType(SeatType seatType) {
         List <SeatType> seatTypes = new ArrayList<>();
         seatTypes.add(seatType);
 

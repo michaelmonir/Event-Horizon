@@ -8,10 +8,11 @@ import java.util.Date;
 
 @Data
 public class FutureEventWrapper extends EventWrapper{
-    public FutureEventWrapper(LaunchedEvent launchedEvent){
+
+    public FutureEventWrapper(LaunchedEvent launchedEvent) {
         if (launchedEvent.getEventDate().before(new Date()))
             throw new InvalidateException();
 
-        this.launchedEvent=launchedEvent;
+        this.launchedEvent = launchedEvent;
     }
 }

@@ -34,7 +34,6 @@ public class TicketTransactionsService {
         this.seatArchiveOperationService.removeTickets(seatTypeId, numOfTickets);
         this.ticketOperationsService.addTickets(seatTypeId, client.getId(), numOfTickets);
     }
-
     public void refundTicket(int clientInformationId, int seatTypeId, int numOfTickets) {
         Client client = this.getClientByClientInformationId(clientInformationId);
         validateEventIsLaunchedAndIsFuture(seatTypeId);
@@ -42,7 +41,6 @@ public class TicketTransactionsService {
         this.ticketOperationsService.removeTickets(seatTypeId, client.getId(), numOfTickets);
         this.seatArchiveOperationService.addTickets(seatTypeId, numOfTickets);
     }
-
     private void validateEventIsLaunchedAndIsFuture(int seatTypeId) {
         SeatType seatType = seatTypeRepositoryService.getById(seatTypeId);
 
