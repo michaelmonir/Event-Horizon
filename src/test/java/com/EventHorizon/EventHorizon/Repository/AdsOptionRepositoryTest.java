@@ -11,23 +11,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 @SpringBootTest
-class AdsOptionRepositryTest {
+class AdsOptionRepositoryTest {
     @Autowired
-    private AdsOptionRepositry adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
 
     @Test
     public void createAdsOption() {
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(1).build();
-        adsOptionRepositry.save(adsOption);
+        adsOptionRepository.save(adsOption);
         Assertions.assertNotEquals(0, adsOption.getId());
     }
 
     @Test
     public void findNotExistedAdsById() {
-        Optional<AdsOption> adsOption = adsOptionRepositry.findById(0);
-        Assertions.assertEquals(adsOption.isPresent(), false);
+        Optional<AdsOption> adsOption = adsOptionRepository.findById(0);
+        Assertions.assertFalse(adsOption.isPresent());
     }
 
     @Test
@@ -35,9 +35,9 @@ class AdsOptionRepositryTest {
         AdsOption adsOption = AdsOption.builder()
                 .name("p")
                 .priority(1).build();
-        adsOptionRepositry.save(adsOption);
-        Optional<AdsOption> findedEvent = adsOptionRepositry.findById(adsOption.getId());
-        Assertions.assertEquals(findedEvent.isPresent(), true);
+        adsOptionRepository.save(adsOption);
+        Optional<AdsOption> findedEvent = adsOptionRepository.findById(adsOption.getId());
+        Assertions.assertTrue(findedEvent.isPresent());
     }
 
     @Test
@@ -47,7 +47,7 @@ class AdsOptionRepositryTest {
                 .priority(1).build();
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-            adsOptionRepositry.save(adsOption);
+            adsOptionRepository.save(adsOption);
         });
     }
 

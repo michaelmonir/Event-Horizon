@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS Event (
     name VARCHAR(255) NOT NULL,
     description VARCHAR(2550),
     event_category VARCHAR(255),
+    event_type int ,
     event_date datetime(6),
     location_id INT,
     ads_id INT NOT NULL,
@@ -69,5 +70,15 @@ CREATE TABLE IF NOT EXISTS Event (
     FOREIGN KEY (location_id) REFERENCES Location(id) ON DELETE SET NULL,
     FOREIGN KEY (ads_id) REFERENCES AdsOption(id),
     FOREIGN KEY (organizer_id) REFERENCES organizer_tbl(id)
+);
+CREATE TABLE launched_event (
+    id INT PRIMARY KEY ,
+    launched_Date DATE NOT NULL,
+    FOREIGN KEY (id) REFERENCES event(id)
+);
+
+CREATE TABLE drafted_event (
+    id INT PRIMARY KEY,
+    FOREIGN KEY (id) REFERENCES event(id)
 );
 

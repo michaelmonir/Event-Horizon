@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.UserTokenInformationService;
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
@@ -31,10 +32,10 @@ public class EventOperationsController {
     }
 
     @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
-    public ResponseEntity<DetailedEventDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId) {
+    public ResponseEntity<DetailedEventDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId,@RequestBody EventType eventType) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId);
+        DetailedEventDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId,eventType);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
@@ -52,16 +53,24 @@ public class EventOperationsController {
             (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDTO = this.eventService.createEvent(organizerId, detailedEventDTO);
+        detailedEventDTO = this.eventService.updateEvent(organizerId, detailedEventDTO);
+        return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
+    }
+    @PutMapping("launchEvent/{eventId}")//organizer,admin
+    public ResponseEntity<DetailedEventDto> launchEvent
+            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+
+        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+        detailedEventDTO = this.eventService.launchEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
     public ResponseEntity deleteEvent
-            (HttpServletRequest request, @PathVariable int eventId) {
+            (HttpServletRequest request, @PathVariable int eventId,@RequestBody DetailedEventDto detailedEventDTO) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        this.eventService.deleteEvent(organizerId, eventId);
+        this.eventService.deleteEvent(organizerId, detailedEventDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepositry;
+import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import java.util.Optional;
 public class AdsOptionDtoMapper {
 
     @Autowired
-    AdsOptionRepositry adsOptionRepositry;
+    AdsOptionRepository adsOptionRepository;
     public AdsOption getAdsOptionFromDTO(AdsOptionDto adsOptionDTO)
     {
-        Optional<AdsOption> optionalAdsOption = this.adsOptionRepositry.findById(adsOptionDTO.id);
+        Optional<AdsOption> optionalAdsOption = this.adsOptionRepository.findById(adsOptionDTO.id);
         if (!optionalAdsOption.isPresent())
             throw new AdsOptionNotFoundException();
         return optionalAdsOption.get();

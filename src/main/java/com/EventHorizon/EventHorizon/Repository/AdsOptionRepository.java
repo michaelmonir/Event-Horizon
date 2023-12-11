@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdsOptionRepositry extends JpaRepository<AdsOption, Integer>
+public interface AdsOptionRepository extends JpaRepository<AdsOption, Integer>
 {
 }

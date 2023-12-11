@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class ViewEventDto {
     private OrganizerHeaderDto eventOrganizer;
 
 
-    public ViewEventDto(Event event) {
+    public ViewEventDto(LaunchedEvent event) {
         this.id = event.getId();
         this.name = event.getName();
         this.eventCategory = event.getEventCategory();

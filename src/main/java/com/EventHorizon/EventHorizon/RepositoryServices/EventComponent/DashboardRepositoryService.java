@@ -15,7 +15,7 @@ import java.util.List;
 public class DashboardRepositoryService {
     private List<EventHeaderDto> eventHeaderDtos;
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private LaunchedEventRepositoryService launchedEventRepositoryService;
     int pageSize;
     PageRequest pageWithRecords;
 
@@ -26,7 +26,7 @@ public class DashboardRepositoryService {
             throw new InvalidPageSize();
         this.pageSize = pageSize;
         this.pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
-        eventHeaderDtos = eventRepositoryService.getAllEventsHeaderDto(pageWithRecords);
+        eventHeaderDtos = launchedEventRepositoryService.getAllEventsHeaderDto(pageWithRecords);
         return eventHeaderDtos;
     }
 }
