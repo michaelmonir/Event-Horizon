@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.entity;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
@@ -27,6 +28,7 @@ public class AdminInformationServiceTest {
     @Test
     public void updateAdminDataTest() {
         Information information = informationCreator.getInformation(Role.ADMIN);
+        information.setGender(Gender.NONE);
         informationRepository.save(information);
         information.setFirstName("newFirstName");
         information.setLastName("newLastName");
@@ -38,6 +40,8 @@ public class AdminInformationServiceTest {
     @Test
     public void noAdminExceptionTest() {
         Information information = informationCreator.getInformation(Role.ADMIN);
+        information.setGender(Gender.NONE);
+
         informationRepository.save(information);
         informationRepository.deleteById(information.getId());
         UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information);
@@ -51,6 +55,7 @@ public class AdminInformationServiceTest {
     @Test
     public void NotAdminOperationExceptionTest() {
         Information information = informationCreator.getInformation(Role.ADMIN);
+        information.setGender(Gender.NONE);
         assertThrows(
                 NotAdminOperationException.class, () -> {
                     informationService.add(information);

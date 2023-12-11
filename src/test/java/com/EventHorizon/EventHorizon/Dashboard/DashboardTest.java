@@ -62,7 +62,6 @@ class DashboardTest {
                 new EventHeaderDto(event1),
                 new EventHeaderDto(event2)
         );
-
         int pageIndex = 0;
         int pageSize = 10;
         Mockito.when(eventRepositoryService.getAllEventsHeaderDto(Mockito.any(PageRequest.class)))

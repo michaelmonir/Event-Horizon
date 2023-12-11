@@ -58,8 +58,10 @@ public class InformationRepositoryService {
     }
 
     public User getUserByInformation(Information information) {
+
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                (UserInformationRepositoryService) informationServiceFactory.
+                        getUserInformationServiceByRole(information.getRole().toString());
         return myService.getUserByInformation(information);
     }
 
@@ -118,7 +120,7 @@ public class InformationRepositoryService {
 
     public UserInformationRepositoryService getService(Role role) {
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(role.toString());
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(role.toString());
         return myService;
     }
 
