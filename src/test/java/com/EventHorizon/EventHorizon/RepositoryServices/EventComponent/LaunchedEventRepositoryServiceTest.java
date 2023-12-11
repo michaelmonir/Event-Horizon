@@ -8,19 +8,19 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdateFinishedEvent;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +34,7 @@ class LaunchedEventRepositoryServiceTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCreator;
     
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
@@ -224,7 +224,8 @@ class LaunchedEventRepositoryServiceTest {
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...")
-                .eventDate(new Date(System.currentTimeMillis() + 100000)).build();
+                .eventDate(new Date(System.currentTimeMillis() + 100000))
+                .seatTypes(new ArrayList<>()).build();
     }
 
     private void createLocation() {
@@ -241,8 +242,7 @@ class LaunchedEventRepositoryServiceTest {
                 .name("e500")
                 .eventDate(new Date(System.currentTimeMillis() + 100000))
                 .eventOrganizer(tempOrganizer)
+               .seatTypes(new ArrayList<>())
                 .build();
     }
-
-
 }

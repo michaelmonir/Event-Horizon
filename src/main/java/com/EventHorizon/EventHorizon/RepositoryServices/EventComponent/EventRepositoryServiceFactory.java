@@ -14,7 +14,7 @@ public class EventRepositoryServiceFactory {
     private DraftedEventRepositoryService draftedEventRepositoryService;
 
     public SuperEventRepositoryService getEventRepositoryServiceByEventType(EventType eventType){
-        if(Objects.equals(eventType.toString(), "LAUNCHED_EVENT"))
+        if(Objects.equals(eventType, EventType.LAUNCHEDEVENT))
             return launchedEventRepositoryService;
         else return draftedEventRepositoryService;
     }

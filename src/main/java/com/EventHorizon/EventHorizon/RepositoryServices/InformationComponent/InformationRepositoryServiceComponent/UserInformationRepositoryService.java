@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 
 public interface UserInformationRepositoryService {
 
-    void add(Information information);
+    User add(Information information);
 
     void delete(Information information);
     Information update(UpdateInformationDTO updateInformationDTO, Information information);

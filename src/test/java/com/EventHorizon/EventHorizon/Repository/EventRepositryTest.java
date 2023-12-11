@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ class EventRepositryTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    private InformationCreator informationCreator;
+    private InformationCustomCreator informationCreator;
 
     private Event tempEvent;
     private AdsOption tempAdsOption;

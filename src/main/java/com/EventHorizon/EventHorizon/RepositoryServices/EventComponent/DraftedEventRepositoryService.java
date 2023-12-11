@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.DraftedEventRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,15 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
 
     @Autowired
     private DraftedEventRepository draftedEventRepository;
-
+    @Autowired
+    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
     public DraftedEvent saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         if (draftedEvent.getId() != 0)
             throw new EventAlreadyExisting();
 
+        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(draftedEvent);
         draftedEventRepository.save(draftedEvent);
         return draftedEvent;
     }
@@ -31,6 +34,8 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         int id = draftedEvent.getId();
         getEventAndHandleNotFound(id);
         draftedEvent.setId(id);
+
+        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(draftedEvent);
         draftedEventRepository.save(draftedEvent);
         return draftedEvent;
     }

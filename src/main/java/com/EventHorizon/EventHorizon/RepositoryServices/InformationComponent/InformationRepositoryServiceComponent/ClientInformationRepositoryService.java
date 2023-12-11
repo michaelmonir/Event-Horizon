@@ -19,9 +19,10 @@ public class ClientInformationRepositoryService implements UserInformationReposi
     private ClientRepository clientRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Client client = Client.builder().information(information).build();
         clientRepository.save(client);
+        return client;
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Table(name = "adsoption")
+@EqualsAndHashCode
 public class AdsOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

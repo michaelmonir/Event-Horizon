@@ -17,9 +17,10 @@ public class SponsorInformationRepositoryService implements UserInformationRepos
     SponsorRepository sponsorRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Sponsor sponsor = Sponsor.builder().information(information).build();
         sponsorRepository.save(sponsor);
+        return sponsor;
     }
 
     @Override

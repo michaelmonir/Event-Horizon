@@ -107,6 +107,4 @@ public class EventService {
         if (eventDTO.getEventType().equals(EventType.LAUNCHEDEVENT))
             throw new EventIsAlreadyLaunched();
     }
-
-
 }

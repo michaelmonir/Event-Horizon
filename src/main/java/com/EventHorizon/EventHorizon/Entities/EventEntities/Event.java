@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import jakarta.persistence.*;
@@ -8,8 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +20,7 @@ import java.util.Date;
 @Data
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
+@EqualsAndHashCode
 @Table(name = "event")
 public class Event {
 
@@ -53,4 +57,7 @@ public class Event {
             nullable = false
     )
     protected Organizer eventOrganizer;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    protected List<SeatType> seatTypes;
 }

@@ -4,16 +4,17 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
-import com.EventHorizon.EventHorizon.entity.InformationCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest
@@ -25,7 +26,7 @@ class DraftedEventRepositoryServiceTest {
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired
-    InformationCreator informationCreator;
+    InformationCustomCreator informationCreator;
 
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
@@ -127,7 +128,8 @@ class DraftedEventRepositoryServiceTest {
         tempDraftedEvent = DraftedEvent.builder()
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
-                .description("...").build();
+                .description("...")
+                .seatTypes(new ArrayList<>()).build();
     }
 
     private void createLocation() {
@@ -144,6 +146,7 @@ class DraftedEventRepositoryServiceTest {
                 .name("e500")
                 .eventDate(new Date(System.currentTimeMillis() + 100000))
                 .eventOrganizer(tempOrganizer)
+                .seatTypes(new ArrayList<>())
                 .build();
     }
 }

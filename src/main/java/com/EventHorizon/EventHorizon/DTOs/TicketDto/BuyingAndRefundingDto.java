@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class BuyingAndRefundingDto {
-    int launchedEventId;
+
     int seatTypeId;
     int numOfTickets;
-
 }

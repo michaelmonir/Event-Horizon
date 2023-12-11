@@ -19,9 +19,10 @@ public class OrganizerInformationRepositoryService implements UserInformationRep
     OrganizerRepository organizerRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
+        return organizer;
     }
 
     @Override
