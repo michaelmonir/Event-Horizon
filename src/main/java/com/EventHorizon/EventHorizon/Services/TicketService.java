@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService {
     @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Autowired
     SeatArchiveTransactionService seatArchiveTransactionService;
     @Autowired
     TicketsTransactionService ticketsTransactionService;

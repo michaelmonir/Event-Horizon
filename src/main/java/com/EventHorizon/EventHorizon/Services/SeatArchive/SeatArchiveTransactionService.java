@@ -12,7 +12,7 @@ public class SeatArchiveTransactionService
     @Autowired
     OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
 
-    public void addTickets(int seatTypeId, int numOfTickets) {
+    public void removeTickets(int seatTypeId, int numOfTickets) {
         OrganizerSeatArchive organizerSeatArchive
                 = organizerSeatArchiveRepositoryService.getBySeatTypeId(seatTypeId);
 
@@ -25,7 +25,7 @@ public class SeatArchiveTransactionService
         organizerSeatArchiveRepositoryService.update(organizerSeatArchive);
     }
 
-    public void removeTickets(int seatTypeId, int numOfTickets) {
+    public void addTickets(int seatTypeId, int numOfTickets) {
         OrganizerSeatArchive organizerSeatArchive
                 = organizerSeatArchiveRepositoryService.getBySeatTypeId(seatTypeId);
 
