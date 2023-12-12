@@ -1,20 +1,31 @@
 package com.EventHorizon.EventHorizon.Services;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsAlreadyLaunched;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.SuperEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
-import org.springframework.beans.factory.annotation.*;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DetailedEventDtoMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DetailedEventDtoMapperFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.DetailedLaunchedEventDtoMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+;
+
 
 @Service
 public class EventService {
@@ -65,6 +76,7 @@ public class EventService {
         event.setEventOrganizer(organizer);
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
+
     }
 
     public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {

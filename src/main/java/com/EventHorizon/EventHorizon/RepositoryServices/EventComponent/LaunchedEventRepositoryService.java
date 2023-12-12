@@ -6,20 +6,18 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.UpdateFinishedEvent;
 import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.EventWrapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class LaunchedEventRepositoryService implements SuperEventRepositoryService {
     @Autowired
@@ -80,6 +78,18 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private void saveEvent(FutureEventWrapper futureEventWrapper) {
         eventSeatArchiveRepositoryService.setEventForItsSeatArchives(futureEventWrapper.getLaunchedEvent());
         launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
+    }
+
+    public List<? extends Event> getAllEvents(Specification<Event> specification) {
+        return launchedEventRepository.findAll( castToLunchedEvents(specification));
+    }
+
+    public List<LaunchedEvent> getAllEvents() {
+        return launchedEventRepository.findAll();
+    }
+    private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
+        // Warning: Unchecked cast
+        return (Specification<T>) obj;
     }
 }
 

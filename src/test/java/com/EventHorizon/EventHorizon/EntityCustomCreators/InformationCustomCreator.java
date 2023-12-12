@@ -6,8 +6,9 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class InformationCustomCreator {
-    int valueOfTest = 0;
+    static int valueOfTest = 0;
 
     public Information getInformation(Role role) {
         String z = "faris" + (valueOfTest);
