@@ -24,9 +24,8 @@ public class AdminService {
 
 
     public Information addModerator(InformationDTO registerRequest) {
-        /* To remove any account if it is not  verified  */
         proxyService.removeIfNotEnabled(registerRequest.getEmail());
-        /* if userName used is used in database */
+
         proxyService.handleException(registerRequest.getEmail(), registerRequest.getUserName());
         Information information = proxyService.createInformation(registerRequest);
         information.setActive(1);
@@ -37,8 +36,6 @@ public class AdminService {
 
     public void deleteModerator(int idOfInformation) {
         Information information = informationRepositoryService.getByID(idOfInformation);
-        if (information.getRole() != Role.MODERATOR)
-            throw new ModeratorNotFoundException();
         moderatorInformationRepositoryService.delete(information);
     }
 }
