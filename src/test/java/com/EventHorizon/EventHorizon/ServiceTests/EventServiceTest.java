@@ -150,6 +150,4 @@ public class EventServiceTest {
     private DetailedLaunchedEventDto createLaunchedEvent() {
         return DetailedLaunchedEventDto.builder().eventType(EventType.LAUNCHEDEVENT).build();
     }
-
-
 }
