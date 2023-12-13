@@ -15,7 +15,7 @@ public class TicketOperationController {
     @Autowired
     private TicketTransactionsService ticketTransactionsService;
 
-    @PutMapping("buyTicket/{clientId}") //organizer,admin
+    @PutMapping("buyTicket/{clientId}") //client
     public ResponseEntity buyTicket
             (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
 
@@ -25,7 +25,7 @@ public class TicketOperationController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping("refundTicket/{clientId}") //organizer,admin
+    @PutMapping("refundTicket/{clientId}") //client
     public ResponseEntity refundTicket
             (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
 

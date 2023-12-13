@@ -9,6 +9,9 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsAlreadyLaunched;
+import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
+import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
+import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServiceFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
@@ -66,6 +69,7 @@ public class EventService {
     public List<EventHeaderDto> getEventHeadersList(int pageIndex, int pageSize) {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
+
 
     public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);

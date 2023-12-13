@@ -9,17 +9,22 @@ public class CommonConfigs {
             "/information/**",
             "/event/eventForUser/**",
             "/event/dashboard/**",
+            "/filter/**"
     };
     static final String[] AUTH_ORGANIZER = {
             "/event/EventForOrganizer/**",
             "/event/createEvent/**",
             "/event/updateEvent/**",
             "/event/deleteEvent/**",
+            "/event/launchEvent/**",
     };
     static final String[] AUTH_ADMIN = {
             "/admin/**"
     };
     static final String[] AUTH_AUTHORITY = {
             "/authority/**"
+    };
+    static final String[] AUTH_CLIENT={
+            "/ticket/**"
     };
 }

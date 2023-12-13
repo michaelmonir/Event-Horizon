@@ -11,13 +11,13 @@ public class FilterFactory {
 
     public FilterCriteria getFilterCriteria(FilterRelationList<FilterTypes, FilterRelation, Object> filter) {
         return switch (filter.first) {
-            case ADDRESS -> new AddressFilterCriteria((String) filter.Third);
-            case CATEGORY -> new CategoryFilterCriteria((String) filter.Third);
-            case COUNTRY -> new CountryFilterCriteria((String) filter.Third);
-            case CITY -> new CityFilterCriteria((String) filter.Third);
-            case DATE -> new DateFilterCriteria((Date) filter.Third);
-            case ORGANIZER -> new OrganizerNameFilterCriteria((String) filter.Third);
-            case NAME -> new EventNameFilterCriteria((String) filter.Third);
+            case ADDRESS -> new AddressFilterCriteria((String) filter.third);
+            case CATEGORY -> new CategoryFilterCriteria((String) filter.third);
+            case COUNTRY -> new CountryFilterCriteria((String) filter.third);
+            case CITY -> new CityFilterCriteria((String) filter.third);
+            case DATE -> new DateFilterCriteria((Date) filter.third);
+            case ORGANIZER -> new OrganizerNameFilterCriteria((String) filter.third);
+            case NAME -> new EventNameFilterCriteria((String) filter.third);
         };
     }
 }

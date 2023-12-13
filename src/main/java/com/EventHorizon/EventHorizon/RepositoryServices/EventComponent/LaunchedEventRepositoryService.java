@@ -9,6 +9,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundExc
 import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.Services.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,6 +25,12 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
+
+
+    private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
+        // Warning: Unchecked cast
+        return (Specification<T>) obj;
+    }
 
     public LaunchedEvent getEventAndHandleNotFound(int id) {
         Optional<LaunchedEvent> optionalLaunchedEvent = launchedEventRepository.findById(id);
@@ -75,21 +82,32 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return eventHeaderDtos;
     }
 
+    public List<EventHeaderDto> getFilteredEventsHeaderDto(PageRequest pageWithRecords, Specification<Event> specification) {
+        List<LaunchedEvent> events = (List<LaunchedEvent>) getAllEvents(specification, pageWithRecords);
+        List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
+        for (LaunchedEvent event : events) {
+            eventHeaderDtos.add(new EventHeaderDto(event));
+        }
+        return eventHeaderDtos;
+    }
+
     private void saveEvent(FutureEventWrapper futureEventWrapper) {
         eventSeatArchiveRepositoryService.setEventForItsSeatArchives(futureEventWrapper.getLaunchedEvent());
         launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification) {
-        return launchedEventRepository.findAll( castToLunchedEvents(specification));
+        return launchedEventRepository.findAll(castToLunchedEvents(specification));
+    }
+
+    public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
+        return launchedEventRepository.findAll(castToLunchedEvents(specification), pageRequest).getContent();
     }
 
     public List<LaunchedEvent> getAllEvents() {
         return launchedEventRepository.findAll();
     }
-    private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
-        // Warning: Unchecked cast
-        return (Specification<T>) obj;
-    }
+
+
 }
 
