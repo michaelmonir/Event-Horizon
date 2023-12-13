@@ -1,7 +1,9 @@
 package com.EventHorizon.EventHorizon.Controllers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.UserTokenInformationService;
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
@@ -22,6 +24,9 @@ public class EventOperationsController {
     private EventService eventService;
     @Autowired
     private UserTokenInformationService userTokenInformationService;
+
+    @Autowired
+    LaunchedEventRepositoryService launchedEventRepositoryService;
 
     @GetMapping("eventForUser/{eventId}")//any
     public ResponseEntity<ViewEventDto> getEventForUser(@PathVariable int eventId) {
@@ -46,12 +51,12 @@ public class EventOperationsController {
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 
-    @PutMapping("updateEvent/{eventId}")//organizer,admin
+    @PutMapping("updateEvent/{organizerId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> updateEvent
-            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+            (@PathVariable int organizerId,@RequestBody DetailedLaunchedEventDto detailedEventDTO) {
 
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDTO = this.eventService.updateEvent(organizerId, detailedEventDTO);
+      //  int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+        detailedEventDTO = (DetailedLaunchedEventDto) this.eventService.updateEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
     @PutMapping("launchEvent/{eventId}")//organizer,admin
@@ -77,8 +82,15 @@ public class EventOperationsController {
         List<EventHeaderDto> eventHeaders = this.eventService.getEventHeadersList(pageIndex, pageSize);
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
-    @GetMapping("test")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("test", HttpStatus.OK);
+
+    @GetMapping("getSeatType/{id}")//any
+    public ResponseEntity<List<SeatType>> getEventHeaders(@PathVariable int eventId) {
+        List<SeatType> list = this.launchedEventRepositoryService.getSeatTypeById(eventId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+
+
+
+
 }

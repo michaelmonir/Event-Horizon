@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 ;
@@ -92,7 +93,11 @@ public class EventService {
         DetailedEventDtoMapper detailedEventDtoMapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(eventType);
         SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        /*                                                   ++++++++-----------------                      */
+        event.setSeatTypes(new ArrayList<>());
+        ((LaunchedEvent) event).setLaunchedDate(new Date(System.currentTimeMillis()+1000000));
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
+        event.setEventOrganizer(organizer);
         event = eventRepositoryService.updateEventAndHandleNotFound(event);
         return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
     }

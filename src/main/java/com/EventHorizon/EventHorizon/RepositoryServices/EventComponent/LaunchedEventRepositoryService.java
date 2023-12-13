@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.LaunchedEventRepository;
@@ -110,6 +111,9 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return launchedEventRepository.findAll();
     }
 
-
+    public List<SeatType> getSeatTypeById(int id) {
+        LaunchedEvent launchedEvent = this.getEventAndHandleNotFound(id);
+        return launchedEvent.getSeatTypes();
+    }
 }
 

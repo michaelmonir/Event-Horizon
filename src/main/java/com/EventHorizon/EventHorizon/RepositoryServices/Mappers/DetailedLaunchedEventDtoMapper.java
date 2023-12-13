@@ -23,6 +23,7 @@ public class DetailedLaunchedEventDtoMapper implements DetailedEventDtoMapper {
                 .eventAds(this.adsOptionDtoMapper.getAdsOptionFromDTO(dto.getEventAds()))
                 .eventLocation(dto.getEventLocation())
                 .launchedDate(detailedLaunchedEventDto.getLaunchedDate())
+                .eventType(detailedLaunchedEventDto.getEventType())
                 .build();
     }
 
