@@ -22,7 +22,7 @@ public class FilterController {
     private FilterService filterService;
 
 
-    @GetMapping("dashboard/{pageIndex}/{pageSize}")//any
+    @PostMapping("dashboard/{pageIndex}/{pageSize}")//any
     public ResponseEntity<List<EventHeaderDto>> getEventHeaders(@PathVariable int pageIndex, @PathVariable int pageSize, @RequestBody FilterDto filterDto) {
         List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filterDto.getFilters());
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
