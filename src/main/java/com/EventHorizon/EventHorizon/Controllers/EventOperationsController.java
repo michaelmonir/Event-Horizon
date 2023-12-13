@@ -1,8 +1,6 @@
 package com.EventHorizon.EventHorizon.Controllers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Services.EventService;
 import com.EventHorizon.EventHorizon.Services.UserTokenInformationService;
@@ -39,12 +37,12 @@ public class EventOperationsController {
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @PostMapping("createEvent")//organizer,admin
+    @PostMapping("createEvent/{organizerId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> createEvent
-            (HttpServletRequest request, @RequestBody DetailedEventDto detailedEventDto) {
+            (@PathVariable int organizerId, @RequestBody DetailedLaunchedEventDto detailedEventDto) {
 
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDto = this.eventService.createEvent(organizerId, detailedEventDto);
+//        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+        detailedEventDto = (DetailedLaunchedEventDto) eventService.createEvent(organizerId, detailedEventDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 

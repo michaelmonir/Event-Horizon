@@ -21,14 +21,14 @@ public class RestExceptionHandler
 
         return new ResponseEntity<>(error, e.httpStatus);
     }
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(Exception e)
-    {
-        ErrorResponse error = new ErrorResponse();
-        error.status = HttpStatus.BAD_REQUEST.value();
-        error.message = "Unexpected Error";
-        error.timestamp = System.currentTimeMillis();
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handleException(Exception e)
+//    {
+//        ErrorResponse error = new ErrorResponse();
+//        error.status = HttpStatus.BAD_REQUEST.value();
+//        error.message = "Unexpected Error";
+//        error.timestamp = System.currentTimeMillis();
+//
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
 }

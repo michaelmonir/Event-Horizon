@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
 
     public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
         LaunchedEvent launchedEvent = (LaunchedEvent) event;
+        launchedEvent.setLaunchedDate(new Date());
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
         FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);

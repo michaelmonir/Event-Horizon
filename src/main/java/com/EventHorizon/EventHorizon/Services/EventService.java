@@ -25,6 +25,7 @@ import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.ViewEventDtoMapp
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 ;
@@ -78,6 +79,8 @@ public class EventService {
         SuperEventRepositoryService eventRepositoryService = eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(eventType);
         Event event = detailedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
         event.setEventOrganizer(organizer);
+        // ++++++++++++++++++++++---------------------
+        event.setSeatTypes(new ArrayList<>());
         eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
         return detailedEventDtoMapper.getDTOfromDetailedEvent(event);
 
