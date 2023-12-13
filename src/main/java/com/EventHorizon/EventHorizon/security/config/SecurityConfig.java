@@ -9,12 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -22,30 +18,33 @@ import javax.sql.DataSource;
 public class SecurityConfig {
     private final JWTAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        c->c
-                               .requestMatchers(CommonConfigs.AUTH_WHITELIST)
-                               .permitAll()
-                               .requestMatchers(CommonConfigs.AUTH_ORGANIZER)
-                               .hasAnyRole("ORGANIZER","ADMIN")
+                        c -> c
+                                .requestMatchers(CommonConfigs.AUTH_WHITELIST)
+                                .permitAll()
+                                .requestMatchers(CommonConfigs.AUTH_ORGANIZER)
+                                .hasAnyRole("ORGANIZER", "ADMIN")
                                 .requestMatchers(CommonConfigs.AUTH_ADMIN)
                                 .hasRole("ADMIN")
                                 .requestMatchers(CommonConfigs.AUTH_AUTHORITY)
-                                .hasAnyRole("ADMIN","MODERATOR")
+                                .hasAnyRole("ADMIN", "MODERATOR")
+                                .requestMatchers(CommonConfigs.AUTH_CLIENT)
+                                .hasAnyRole("CLIENT")
                                 .anyRequest()
                                 .authenticated()
                 ).sessionManagement(
-                        s->s
+                        s -> s
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 ).authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
                 ).logout(
-                        l->l.logoutUrl("/logout")
+                        l -> l.logoutUrl("/logout")
                 );
         return http.build();
     }

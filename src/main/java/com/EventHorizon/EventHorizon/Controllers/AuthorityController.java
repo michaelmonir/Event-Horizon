@@ -23,6 +23,12 @@ public class AuthorityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("deleteEvent")
+    public ResponseEntity<?> deleteEvent(@RequestParam Integer idOfEvent) {
+        authorityService.deleteEvent(idOfEvent);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("getAllUsersByRole")
     public ResponseEntity<?> getAllUsersByRole(@RequestParam Role role) {
         return new ResponseEntity<>(authorityService.getAllUsersByRole(role), HttpStatus.OK);

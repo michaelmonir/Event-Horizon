@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,19 @@ public class AuthorityService {
     @Autowired
     InformationRepositoryService informationRepositoryService;
 
+    @Autowired
+    LaunchedEventRepositoryService launchedEventRepositoryService;
+
     /* moderator and admin can use this function to delete Organizer - Sponsor - Client */
     public void deleteUser(int idOfInformation) {
         Information information = informationRepositoryService.getByID(idOfInformation);
         if (information.getRole() == Role.MODERATOR)
             throw new NotModeratorOperationsException();
         informationRepositoryService.delete(idOfInformation);
+    }
+
+    public void deleteEvent(int idOfEvent) {
+        launchedEventRepositoryService.deleteEvent(idOfEvent);
     }
 
     /* next function Make admin and moderator like big boss of the program get most of the data we have   */
