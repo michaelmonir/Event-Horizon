@@ -57,6 +57,8 @@ public class EventServiceTest {
     private OrganizerInformationRepositoryService organizerInformationService;
     @Mock
     private DashboardRepositoryService dashboardRepositoryService;
+    @Mock
+    private DetailedLaunchedEventDto detailedLaunchedEventDto;
 
 
     @Test
@@ -107,16 +109,17 @@ public class EventServiceTest {
     void testUpdateEvent() {
         Organizer organizer = new Organizer();
         DetailedEventDto eventDTO = new DetailedDraftedEventDto();
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(detailedDraftedEventDtoMapper);
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any())).thenReturn(draftedEventRepositoryService);
+        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(detailedLaunchedEventDtoMapper);
+        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any())).thenReturn(launchedEventRepositoryService);
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).getEventAndHandleNotFound(anyInt())).thenReturn(new DraftedEvent());
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).updateEventAndHandleNotFound(any())).thenReturn(new DraftedEvent());
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any()).getDTOfromDetailedEvent(any())).thenReturn(new DetailedDraftedEventDto());
+        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).getEventAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any()).updateEventAndHandleNotFound(any())).thenReturn(new LaunchedEvent());
+        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any()).getDTOfromDetailedEvent(any())).thenReturn(detailedLaunchedEventDto);
+        when(detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
         DetailedEventDto result = eventService.updateEvent(1, eventDTO);
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(DetailedDraftedEventDto.class, result.getClass());
+        Assertions.assertEquals(DetailedLaunchedEventDto.class, result.getClass());
     }
 
     @Test
