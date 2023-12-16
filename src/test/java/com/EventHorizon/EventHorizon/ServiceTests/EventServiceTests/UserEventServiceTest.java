@@ -1,18 +1,23 @@
 package com.EventHorizon.EventHorizon.ServiceTests.EventServiceTests;
 
+import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,44 +30,29 @@ public class UserEventServiceTest {
     private UserEventService userEventService;
     @Autowired
     private InformationCustomCreator informationCustomCreator;
+    @Mock
+    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    @Autowired
+    private EventCustomCreator eventCreator;
 
-    @Mock
-    private EventRepositoryServiceFactory eventRepositoryServiceFactory;
-    @Mock
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Test
     public void organizerOfEvent() {
-        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        LaunchedEvent event = LaunchedEvent.builder()
-                .eventOrganizer(organizer)
-                .id(1)
-                .build();
+        Event eventt = eventCreator.getLaunchedEvent();
 
-        when(eventRepositoryServiceFactory.getByEventType(any())).thenReturn(launchedEventRepositoryService);
-        when(launchedEventRepositoryService.getById(1)).thenReturn(event);
+        when(eventRepositoryServiceInterface.getByIdAndEventType(Mockito.any(int.class), Mockito.any())).thenReturn(eventt);
         Assertions.assertDoesNotThrow(() -> {
-            userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
+            userEventService.checkAndHandleNotOrganizerOfEvent(eventt.getEventOrganizer(), eventt);
         });
     }
 
     @Test
     public void notOrganizerOfEvent() {
-        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        LaunchedEvent event = LaunchedEvent.builder()
-                .eventOrganizer(organizer)
-                .id(1)
-                .build();
-        Information information2 = informationCustomCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer2 = Organizer.builder().information(information2).build();
+        Event event = eventCreator.getLaunchedEvent();
 
-
-        when(eventRepositoryServiceFactory.getByEventType(any())).thenReturn(launchedEventRepositoryService);
-        when(launchedEventRepositoryService.getById(1)).thenReturn(event);
+        when(eventRepositoryServiceInterface.getByIdAndEventType(Mockito.any(int.class), Mockito.any())).thenReturn(event);
 
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() -> {
-            userEventService.checkAndHandleNotOrganizerOfEvent(organizer2, event);
+            userEventService.checkAndHandleNotOrganizerOfEvent(Organizer.builder().id(10000).build(), event);
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
+import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,12 @@ import org.springframework.stereotype.Service;
 public class EventRepositoryServiceInterface
 {
     @Autowired
-    EventRepositoryServiceFactory eventRepositoryServiceFactory;
+    private EventRepositoryServiceFactory eventRepositoryServiceFactory;
 
-    public Event getByIdAndEventType(int id, EventType seatType)
+    public Event getByIdAndEventType(int id, EventType eventType)
     {
         SuperEventRepositoryService eventRepositoryService
-                = eventRepositoryServiceFactory.getByEventType(seatType);
+                = eventRepositoryServiceFactory.getByEventType(eventType);
         return eventRepositoryService.getById(id);
     }
 
