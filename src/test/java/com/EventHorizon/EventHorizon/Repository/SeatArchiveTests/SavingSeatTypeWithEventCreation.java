@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class SavingSeatTypeWithEventCreation
         Event event = this.getEventAndGiveOneSeatType(seatType);;
 
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+            eventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -54,7 +54,7 @@ public class SavingSeatTypeWithEventCreation
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+            eventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -65,7 +65,7 @@ public class SavingSeatTypeWithEventCreation
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+            eventRepositoryService.saveWhenCreating(event);
         });
     }
 

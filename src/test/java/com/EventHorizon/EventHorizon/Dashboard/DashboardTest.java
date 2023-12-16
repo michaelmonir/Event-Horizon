@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageInde
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

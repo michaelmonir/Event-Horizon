@@ -14,6 +14,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundExc
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ class LaunchedEventRepositoryServiceTest {
         LaunchedEvent event = new LaunchedEvent();
         event.setId(5);
         Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-            launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(event);
+            launchedEventRepositoryService.saveWhenCreating(event);
         });
     }
     @Test
@@ -57,7 +58,7 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
         Assertions.assertThrows(InvalidateException.class, () -> {
-            launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         });
     }
 
@@ -67,7 +68,7 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
-            launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
             Assertions.assertNotEquals(0, tempLaunchedEvent.getId());
         });
     }
@@ -80,7 +81,7 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setId(500);
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
+            launchedEventRepositoryService.update(tempLaunchedEvent);
         });
     }
     @Test
@@ -90,8 +91,8 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventLocation(tempLocation);
         Assertions.assertThrows(InvalidateException.class, () -> {
             tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()));
-            launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
-            launchedEventRepositoryService.updateEventAndHandleNotFound(tempLaunchedEvent);
+            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
+            launchedEventRepositoryService.update(tempLaunchedEvent);
         });
     }
 
@@ -100,11 +101,11 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         LaunchedEvent newLaunchedEvent =createSecoundevent();
         newLaunchedEvent.setId(tempLaunchedEvent.getId());
         Assertions.assertDoesNotThrow(() -> {
-            launchedEventRepositoryService.updateEventAndHandleNotFound(newLaunchedEvent);
+            launchedEventRepositoryService.update(newLaunchedEvent);
             Assertions.assertEquals(tempLaunchedEvent.getId(), newLaunchedEvent.getId());
         });
     }
@@ -112,7 +113,7 @@ class LaunchedEventRepositoryServiceTest {
     @Test
     public void testDeleteEventThrowsExceptionWhenEventNotFound() {
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            launchedEventRepositoryService.deleteEvent(0);
+            launchedEventRepositoryService.delete(0);
         });
     }
 
@@ -121,9 +122,9 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         Assertions.assertDoesNotThrow(() -> {
-            launchedEventRepositoryService.deleteEvent(tempLaunchedEvent.getId());
+            launchedEventRepositoryService.delete(tempLaunchedEvent.getId());
         });
     }
 
@@ -139,7 +140,7 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         ViewEventDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
                 launchedEventRepositoryService.getViewEventDTO(tempLaunchedEvent.getId())
         );
@@ -159,7 +160,7 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
                 launchedEventRepositoryService.getEventHeaderDto(tempLaunchedEvent.getId())
         );
@@ -171,8 +172,8 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         LaunchedEvent launchedEvent2=createSecoundevent();
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(launchedEvent2);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(launchedEvent2);
         int pageIndex = 0;
         int pageSize = 10;
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
@@ -185,8 +186,8 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         LaunchedEvent launchedEvent2=createSecoundevent();
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(tempLaunchedEvent);
-        launchedEventRepositoryService.saveEventWhenCreatingAndHandleAlreadyExisting(launchedEvent2);
+        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
+        launchedEventRepositoryService.saveWhenCreating(launchedEvent2);
         int pageIndex = 10;
         int pageSize = 10;
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);

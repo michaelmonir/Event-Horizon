@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper.FutureEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,14 +33,14 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return (Specification<T>) obj;
     }
 
-    public LaunchedEvent getEventAndHandleNotFound(int id) {
+    public LaunchedEvent getById(int id) {
         Optional<LaunchedEvent> optionalLaunchedEvent = launchedEventRepository.findById(id);
         if (optionalLaunchedEvent.isEmpty())
             throw new EventNotFoundException();
         return optionalLaunchedEvent.get();
     }
 
-    public LaunchedEvent saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
+    public LaunchedEvent saveWhenCreating(Event event) {
         LaunchedEvent launchedEvent = (LaunchedEvent) event;
         launchedEvent.setLaunchedDate(new Date());
         if (launchedEvent.getId() != 0)
@@ -50,9 +50,9 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return launchedEvent;
     }
 
-    public LaunchedEvent updateEventAndHandleNotFound(Event event) {
+    public LaunchedEvent update(Event event) {
         LaunchedEvent newEvent = (LaunchedEvent) event;
-        getEventAndHandleNotFound(newEvent.getId());
+        getById(newEvent.getId());
         int id = newEvent.getId();
         newEvent.setId(id);
         FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
@@ -60,18 +60,18 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return newEvent;
     }
 
-    public void deleteEvent(int id) {
-        getEventAndHandleNotFound(id);
+    public void delete(int id) {
+        getById(id);
         launchedEventRepository.deleteById(id);
     }
 
     public ViewEventDto getViewEventDTO(int id) {
-        LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
+        LaunchedEvent launchedEvent = getById(id);
         return new ViewEventDto(launchedEvent);
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {
-        LaunchedEvent launchedEvent = getEventAndHandleNotFound(id);
+        LaunchedEvent launchedEvent = getById(id);
         return new EventHeaderDto(launchedEvent);
     }
 
@@ -111,7 +111,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<SeatType> getSeatTypeById(int id) {
-        LaunchedEvent launchedEvent = this.getEventAndHandleNotFound(id);
+        LaunchedEvent launchedEvent = this.getById(id);
         return launchedEvent.getSeatTypes();
     }
 }

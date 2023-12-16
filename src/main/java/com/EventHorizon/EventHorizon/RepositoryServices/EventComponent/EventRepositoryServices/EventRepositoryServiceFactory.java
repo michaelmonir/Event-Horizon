@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class EventRepositoryServiceFactory {
     @Autowired
     private DraftedEventRepositoryService draftedEventRepositoryService;
 
-    public SuperEventRepositoryService getEventRepositoryServiceByEventType(EventType eventType){
+    public SuperEventRepositoryService getByEventType(EventType eventType){
         if(Objects.equals(eventType, EventType.LAUNCHEDEVENT))
             return launchedEventRepositoryService;
         else return draftedEventRepositoryService;

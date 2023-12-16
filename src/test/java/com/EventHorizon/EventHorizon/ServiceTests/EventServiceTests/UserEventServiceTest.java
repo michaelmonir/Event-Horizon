@@ -1,14 +1,13 @@
 package com.EventHorizon.EventHorizon.ServiceTests.EventServiceTests;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServiceFactory;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -40,8 +39,8 @@ public class UserEventServiceTest {
                 .id(1)
                 .build();
 
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any())).thenReturn(launchedEventRepositoryService);
-        when(launchedEventRepositoryService.getEventAndHandleNotFound(1)).thenReturn(event);
+        when(eventRepositoryServiceFactory.getByEventType(any())).thenReturn(launchedEventRepositoryService);
+        when(launchedEventRepositoryService.getById(1)).thenReturn(event);
         Assertions.assertDoesNotThrow(() -> {
             userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         });
@@ -59,8 +58,8 @@ public class UserEventServiceTest {
         Organizer organizer2 = Organizer.builder().information(information2).build();
 
 
-        when(eventRepositoryServiceFactory.getEventRepositoryServiceByEventType(any())).thenReturn(launchedEventRepositoryService);
-        when(launchedEventRepositoryService.getEventAndHandleNotFound(1)).thenReturn(event);
+        when(eventRepositoryServiceFactory.getByEventType(any())).thenReturn(launchedEventRepositoryService);
+        when(launchedEventRepositoryService.getById(1)).thenReturn(event);
 
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() -> {
             userEventService.checkAndHandleNotOrganizerOfEvent(organizer2, event);
