@@ -42,7 +42,6 @@ class EventRepositoryServiceFactoryTest {
         result.delete(0);
         verifyNoInteractions(launchedEventRepositoryService); // Ensure the other service is not called
         verify(draftedEventRepositoryService).delete(0); // Add relevant method from DraftedEventRepositoryService
-
     }
 
 }
