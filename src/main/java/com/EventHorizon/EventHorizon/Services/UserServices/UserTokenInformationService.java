@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services;
+package com.EventHorizon.EventHorizon.Services.UserServices;
 
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;

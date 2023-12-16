@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Controllers.UserControllers;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
-import com.EventHorizon.EventHorizon.Services.AdminService;
+import com.EventHorizon.EventHorizon.Services.UserServices.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

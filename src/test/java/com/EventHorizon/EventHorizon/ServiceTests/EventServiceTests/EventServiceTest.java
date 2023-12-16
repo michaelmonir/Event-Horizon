@@ -6,16 +6,19 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsAlreadyLaunched;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperInterface;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Mappers.*;
-import com.EventHorizon.EventHorizon.Services.EventService;
+import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
-import com.EventHorizon.EventHorizon.Services.UserEventService;
+import com.EventHorizon.EventHorizon.Services.EventServices.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -63,6 +66,8 @@ public class EventServiceTest {
     private DashboardRepositoryService dashboardRepositoryService;
     @Mock
     private DetailedLaunchedEventDto detailedLaunchedEventDto;
+    @Mock
+    private DetailedEventDtoMapperInterface detailedEventDtoMapperInterface;
 
 
     @Test
@@ -77,11 +82,9 @@ public class EventServiceTest {
     @Test
     void testGetEventForOrganizer() {
 
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(detailedDraftedEventDtoMapper);
-
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new DraftedEvent());
 
-        when(detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(any())).thenReturn(new DetailedDraftedEventDto());
+        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedDraftedEventDto());
         DetailedEventDto result = eventService.getEventForOrganizer(1, 1, EventType.DRAFTEDEVENT);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(DetailedDraftedEventDto.class, result.getClass());
@@ -99,13 +102,14 @@ public class EventServiceTest {
     void testCreateEvent() {
         Organizer organizer = new Organizer();
         DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(detailedLaunchedEventDtoMapper);
         when(eventRepositoryServiceInterface.saveWhenCreating(any())).thenReturn(new LaunchedEvent());
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
-        when(detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
-        when(detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
+
+        when(detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
+
         DetailedEventDto result = eventService.createEvent(1, eventDTO);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(DetailedLaunchedEventDto.class, result.getClass());
@@ -115,7 +119,6 @@ public class EventServiceTest {
     void testUpdateEvent() {
         Organizer organizer = new Organizer();
         DetailedEventDto eventDTO = new DetailedDraftedEventDto();
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(detailedLaunchedEventDtoMapper);
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
@@ -123,8 +126,9 @@ public class EventServiceTest {
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
 
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any()).getDTOfromDetailedEvent(any())).thenReturn(detailedLaunchedEventDto);
-        when(detailedLaunchedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(detailedLaunchedEventDto);
+        when(detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+
         DetailedEventDto result = eventService.updateEvent(1, eventDTO);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(DetailedLaunchedEventDto.class, result.getClass());
@@ -134,7 +138,6 @@ public class EventServiceTest {
     void testDeleteEvent() {
         Organizer organizer = new Organizer();
         DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
-        when(detailedEventDtoMapperFactory.getEventDtoMapperByEventType(any())).thenReturn(new DetailedLaunchedEventDtoMapper());
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);

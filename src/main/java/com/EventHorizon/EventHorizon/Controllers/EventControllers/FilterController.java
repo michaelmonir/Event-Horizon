@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Controllers.EventControllers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.FilterDto;
-import com.EventHorizon.EventHorizon.Services.EventService;
-import com.EventHorizon.EventHorizon.Services.FilterService;
+import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
+import com.EventHorizon.EventHorizon.Services.EventServices.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

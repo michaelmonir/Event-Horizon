@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Controllers.UserControllers;
 
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Services.AuthorityService;
+import com.EventHorizon.EventHorizon.Services.UserServices.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
