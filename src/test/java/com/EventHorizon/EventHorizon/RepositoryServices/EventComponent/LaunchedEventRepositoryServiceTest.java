@@ -12,8 +12,8 @@ import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreat
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

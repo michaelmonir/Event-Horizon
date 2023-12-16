@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingUserName;
-import com.EventHorizon.EventHorizon.Repository.InformationRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.InformationRepository;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

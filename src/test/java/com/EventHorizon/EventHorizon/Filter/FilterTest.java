@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventService;

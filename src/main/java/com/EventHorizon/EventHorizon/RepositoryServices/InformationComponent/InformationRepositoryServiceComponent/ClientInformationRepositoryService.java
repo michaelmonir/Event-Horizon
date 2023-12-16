@@ -5,8 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.ClientRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.DraftedEventRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

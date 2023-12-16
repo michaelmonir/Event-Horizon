@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

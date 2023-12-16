@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
-import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;

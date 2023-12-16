@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
-import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

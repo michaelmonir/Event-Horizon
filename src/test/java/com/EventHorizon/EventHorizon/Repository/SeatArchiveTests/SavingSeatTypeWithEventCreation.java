@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
-import com.EventHorizon.EventHorizon.Repository.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

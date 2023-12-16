@@ -2,13 +2,12 @@ package com.EventHorizon.EventHorizon.EntityCustomCreators;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositry;
-import com.EventHorizon.EventHorizon.Repository.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

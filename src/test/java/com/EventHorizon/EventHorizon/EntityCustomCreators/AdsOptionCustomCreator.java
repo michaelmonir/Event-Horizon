@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Repository.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

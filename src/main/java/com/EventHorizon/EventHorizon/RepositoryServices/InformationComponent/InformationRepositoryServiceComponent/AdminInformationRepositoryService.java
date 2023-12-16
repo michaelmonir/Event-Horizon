@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.In
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AdminNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.InformationRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.InformationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
