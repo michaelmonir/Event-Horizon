@@ -17,15 +17,12 @@ import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.Inf
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-;
-
 
 @Service
 public class EventService {
@@ -85,7 +82,7 @@ public class EventService {
         Event event = detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(eventDTO);
         /*                                                   ++++++++-----------------                      */
         event.setSeatTypes(new ArrayList<>());
-        ((LaunchedEvent) event).setLaunchedDate(new Date(System.currentTimeMillis()+1000000));
+        ((LaunchedEvent) event).setLaunchedDate(DateFunctions.getCurrentDate());
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         event.setEventOrganizer(organizer);
         event = eventRepositoryServiceInterface.update(event);

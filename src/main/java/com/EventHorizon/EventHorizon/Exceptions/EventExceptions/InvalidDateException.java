@@ -3,9 +3,10 @@ package com.EventHorizon.EventHorizon.Exceptions.EventExceptions;
 import com.EventHorizon.EventHorizon.Exceptions.BaseException;
 import org.springframework.http.HttpStatus;
 
-public class InvalidateException extends BaseException {
-    public InvalidateException() {
-        this.message="New Event Date Is Before Now";
+public class InvalidDateException extends BaseException {
+
+    public InvalidDateException() {
+        this.message="Invalid Date";
         this.httpStatus= HttpStatus.FORBIDDEN;
     }
 }

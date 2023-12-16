@@ -11,10 +11,11 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidDateException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,8 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis() - 100000));
-        Assertions.assertThrows(InvalidateException.class, () -> {
+        tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
+        Assertions.assertThrows(InvalidDateException.class, () -> {
             launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         });
     }
@@ -89,8 +90,8 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        Assertions.assertThrows(InvalidateException.class, () -> {
-            tempLaunchedEvent.setEventDate(new Date(System.currentTimeMillis()));
+        Assertions.assertThrows(InvalidDateException.class, () -> {
+            tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
             launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
             launchedEventRepositoryService.update(tempLaunchedEvent);
         });

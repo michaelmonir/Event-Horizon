@@ -1,17 +1,15 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidDateException;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import lombok.Data;
-
-import java.util.Date;
-
 
 @Data
 public class FinishedEventWrapper extends EventWrapper{
     public FinishedEventWrapper(LaunchedEvent launchedEvent){
-        if (launchedEvent.getEventDate().after(new Date()))
-            throw new InvalidateException();
+        if (DateFunctions.isDateAfterNow(launchedEvent.getEventDate()))
+            throw new InvalidDateException();
 
         this.launchedEvent=launchedEvent;
     }

@@ -1,13 +1,12 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper;
+package com.EventHorizon.EventHorizon.entity.EventEntities.EventWrapper;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidateException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidDateException;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -16,14 +15,14 @@ class FinishedEventWrapperTest {
     @Test
     void testFinishedEventWrapper() {
         LaunchedEvent finishedEvent = new LaunchedEvent();
-        finishedEvent.setEventDate(new Date(System.currentTimeMillis()));
+        finishedEvent.setEventDate(DateFunctions.getYesterDaysDate());
         FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(finishedEvent);
         assertEquals(finishedEvent, finishedEventWrapper.getLaunchedEvent());
     }
     @Test
     void testFinishedEventWrapperNotThrowError() {
         LaunchedEvent finishedEvent = new LaunchedEvent();
-        finishedEvent.setEventDate(new Date(System.currentTimeMillis()-100));
+        finishedEvent.setEventDate(DateFunctions.getYesterDaysDate());
         Assertions.assertDoesNotThrow(()->{
             FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(finishedEvent);
             assertEquals(finishedEvent, finishedEventWrapper.getLaunchedEvent());
@@ -32,9 +31,9 @@ class FinishedEventWrapperTest {
     @Test
     void testFinishedEventWrapperThrowError() {
         LaunchedEvent finishedEvent = new LaunchedEvent();
-        finishedEvent.setEventDate(new Date(System.currentTimeMillis()+100000));
-        Assertions.assertThrows(InvalidateException.class,()->{
-            FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(finishedEvent);
+        finishedEvent.setEventDate(DateFunctions.getCurrentDate());
+        Assertions.assertThrows(InvalidDateException.class,()->{
+            new FinishedEventWrapper(finishedEvent);
         });
     }
 
