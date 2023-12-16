@@ -88,9 +88,4 @@ public class EventOperationsController {
         List<SeatType> list = this.launchedEventRepositoryService.getSeatTypeById(eventId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
-
-
-
-
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/")
 @RestController
 @CrossOrigin("*")
-
 public class AdminController {
 
     @Autowired
@@ -27,6 +26,4 @@ public class AdminController {
         adminService.deleteModerator(idOfModerator);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }
