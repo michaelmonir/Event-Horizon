@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
@@ -19,7 +19,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
-    public DraftedEvent saveEventWhenCreatingAndHandleAlreadyExisting(Event event) {
+    public DraftedEvent saveWhenCreating(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         if (draftedEvent.getId() != 0)
             throw new EventAlreadyExisting();
@@ -29,10 +29,10 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         return draftedEvent;
     }
 
-    public DraftedEvent updateEventAndHandleNotFound(Event event) {
+    public DraftedEvent update(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         int id = draftedEvent.getId();
-        getEventAndHandleNotFound(id);
+        getById(id);
         draftedEvent.setId(id);
 
         eventSeatArchiveRepositoryService.setEventForItsSeatArchives(draftedEvent);
@@ -40,12 +40,12 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         return draftedEvent;
     }
 
-    public void deleteEvent(int id) {
-        getEventAndHandleNotFound(id);
+    public void delete(int id) {
+        getById(id);
         draftedEventRepository.deleteById(id);
     }
 
-    public DraftedEvent getEventAndHandleNotFound(int id) {
+    public DraftedEvent getById(int id) {
         Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
         if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();

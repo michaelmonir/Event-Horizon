@@ -1,6 +1,10 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
 
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
+import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

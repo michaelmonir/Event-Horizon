@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreat
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.Services.AuthorityService;
+import com.EventHorizon.EventHorizon.Services.UserServices.AuthorityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

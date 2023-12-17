@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services;
+package com.EventHorizon.EventHorizon.Services.EventServices;
 
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.Filter.FilterFactory;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
 import com.EventHorizon.EventHorizon.Filter.RelationTypeFactory;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

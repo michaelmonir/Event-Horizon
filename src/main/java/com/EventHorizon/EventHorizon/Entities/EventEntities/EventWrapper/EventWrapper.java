@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventWrapper;
+package com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import lombok.Data;

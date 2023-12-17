@@ -1,9 +1,10 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

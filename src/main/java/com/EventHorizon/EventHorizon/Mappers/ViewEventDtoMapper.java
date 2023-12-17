@@ -1,9 +1,9 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
+package com.EventHorizon.EventHorizon.Mappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class ViewEventDtoMapper {
                 .eventCategory(dto.getEventCategory())
                 .eventDate(dto.getEventDate())
                 .eventLocation(dto.getEventLocation())
-                .eventAds(launchedEventRepositoryService.getEventAndHandleNotFound(dto.getId()).getEventAds())
+                .eventAds(launchedEventRepositoryService.getById(dto.getId()).getEventAds())
                 .build();
     }
 

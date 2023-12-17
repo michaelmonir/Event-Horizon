@@ -8,6 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class EventCustomCreator
                 .eventOrganizer(customOrganizer)
                 .description("description" + numberOfcreatedEvents)
                 .seatTypes(new ArrayList<>())
-                .eventDate(new Date(System.currentTimeMillis()+1000))
+                .eventDate(DateFunctions.getCurrentDate())
                 .build();
         return event;
     }
@@ -67,7 +68,7 @@ public class EventCustomCreator
                 .eventOrganizer(customOrganizer)
                 .description("description" + numberOfcreatedEvents)
                 .seatTypes(new ArrayList<>())
-                .eventDate(new Date(System.currentTimeMillis()+1000))
+                .eventDate(DateFunctions.getCurrentDate())
                 .build();
         return event;
     }

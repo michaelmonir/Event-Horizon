@@ -9,7 +9,7 @@ import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.Services.AdminService;
+import com.EventHorizon.EventHorizon.Services.UserServices.AdminService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
