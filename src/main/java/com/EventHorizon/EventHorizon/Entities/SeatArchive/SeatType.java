@@ -34,6 +34,13 @@ public class SeatType
         this.price = price;
     }
 
+    public SeatType(int id, Event event, String name, int price) {
+        this.id = id;
+        this.event = event;
+        this.name = name;
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
