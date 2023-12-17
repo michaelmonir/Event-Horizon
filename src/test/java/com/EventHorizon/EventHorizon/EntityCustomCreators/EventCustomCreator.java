@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
@@ -49,6 +50,7 @@ public class EventCustomCreator
                 .description("description" + numberOfcreatedEvents)
                 .seatTypes(new ArrayList<>())
                 .eventDate(DateFunctions.getCurrentDate())
+                .eventType(EventType.LAUNCHEDEVENT)
                 .build();
         return event;
     }
@@ -69,6 +71,7 @@ public class EventCustomCreator
                 .description("description" + numberOfcreatedEvents)
                 .seatTypes(new ArrayList<>())
                 .eventDate(DateFunctions.getCurrentDate())
+                .eventType(EventType.DRAFTEDEVENT)
                 .build();
         return event;
     }

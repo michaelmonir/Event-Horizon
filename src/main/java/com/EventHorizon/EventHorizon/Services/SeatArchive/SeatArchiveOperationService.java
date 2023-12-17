@@ -22,7 +22,7 @@ public class SeatArchiveOperationService
             throw new AvailableTicketsIsLessThanRequiredToBuy();
 
         organizerSeatArchive.setAvailable_number_of_seats(oldNumberOfTickets - numOfTickets);
-        organizerSeatArchiveRepositoryService.update(organizerSeatArchive);
+        organizerSeatArchiveRepositoryService.save(organizerSeatArchive);
     }
 
     public void addTickets(int seatTypeId, int numOfTickets) {
@@ -32,6 +32,6 @@ public class SeatArchiveOperationService
         int oldNumbeOfTickets = organizerSeatArchive.getAvailable_number_of_seats();
 
         organizerSeatArchive.setAvailable_number_of_seats(oldNumbeOfTickets + numOfTickets);
-        organizerSeatArchiveRepositoryService.update(organizerSeatArchive);
+        organizerSeatArchiveRepositoryService.save(organizerSeatArchive);
     }
 }

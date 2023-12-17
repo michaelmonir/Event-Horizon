@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NullEventTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,11 @@ public class EventRepositoryServiceFactory {
     private DraftedEventRepositoryService draftedEventRepositoryService;
 
     public SuperEventRepositoryService getByEventType(EventType eventType){
-        if(Objects.equals(eventType, EventType.LAUNCHEDEVENT))
+        if(eventType == EventType.LAUNCHEDEVENT)
             return launchedEventRepositoryService;
-        else return draftedEventRepositoryService;
+        else if (eventType == EventType.DRAFTEDEVENT)
+            return draftedEventRepositoryService;
+        else
+            throw new NullEventTypeException();
     }
 }

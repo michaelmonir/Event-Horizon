@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.RepositoryServices.SeatArchives;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Exceptions.SeatArchive.OrganizerSeatArchiveNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.SeatArchive.OrganizerSeatArchiveShouldHaveIdWhileCreatingException;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.OrganizerSeatArchiveRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import org.junit.jupiter.api.Assertions;
@@ -50,24 +49,16 @@ public class OrganizerSeatTypeRepositoryServiceTest
         this.initializeCustomObjectsAndMocks();
         Assertions.assertDoesNotThrow(() ->
                 this.organizerSeatArchiveRepositoryService
-                        .saveWhenCreating(this.customOrganizerSeatArchive));
+                        .save(this.customOrganizerSeatArchive));
     }
 
     @Test
     public void saveOrganizerSeatArchiveWithIdNotZero() {
         this.initializeCustomObjectsAndMocks();
         this.customOrganizerSeatArchive.setSeatTypeId(5);
-        Assertions.assertThrows(OrganizerSeatArchiveShouldHaveIdWhileCreatingException.class,() ->
-                this.organizerSeatArchiveRepositoryService
-                        .saveWhenCreating(this.customOrganizerSeatArchive));
-    }
-
-    @Test
-    public void updateOrganizerSeatArchive() {
-        this.initializeCustomObjectsAndMocks();
         Assertions.assertDoesNotThrow(() ->
                 this.organizerSeatArchiveRepositoryService
-                        .update(this.customOrganizerSeatArchive));
+                        .save(this.customOrganizerSeatArchive));
     }
 
     private void initializeCustomObjectsAndMocks()

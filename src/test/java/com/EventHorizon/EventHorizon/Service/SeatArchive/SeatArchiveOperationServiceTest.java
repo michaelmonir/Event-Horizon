@@ -37,7 +37,7 @@ public class SeatArchiveOperationServiceTest
         this.seatArchiveOperationService.removeTickets(this.customSeatType.getId(), 1);
 
         verify(this.organizerSeatArchiveRepositoryService, Mockito.times(1))
-                .update(this.customArchiveWithoutTickets);
+                .save(this.customArchiveWithoutTickets);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class SeatArchiveOperationServiceTest
         this.seatArchiveOperationService.addTickets(this.customSeatType.getId(), 1);
 
         verify(this.organizerSeatArchiveRepositoryService, Mockito.times(1))
-                .update(this.customArchiveWithTickets);
+                .save(this.customArchiveWithTickets);
     }
 
     private void initializeCustomObjects(){

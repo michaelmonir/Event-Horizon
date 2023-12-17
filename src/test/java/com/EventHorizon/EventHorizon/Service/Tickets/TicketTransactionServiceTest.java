@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class TicketTransactionServiceTest {
-
     @InjectMocks
     private TicketTransactionsService ticketTransactionService;
     @Mock
