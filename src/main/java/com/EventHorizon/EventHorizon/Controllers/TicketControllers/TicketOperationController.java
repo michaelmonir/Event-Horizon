@@ -21,7 +21,7 @@ public class TicketOperationController {
 
         int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
         int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
-        ticketTransactionsService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
+//        ticketTransactionsService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.ServiceTests.AuthorityServiceTests;
+package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;

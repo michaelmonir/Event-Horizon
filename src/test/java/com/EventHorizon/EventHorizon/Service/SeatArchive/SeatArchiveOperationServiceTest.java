@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.ServiceTests.SeatArchive;
+package com.EventHorizon.EventHorizon.Service.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;

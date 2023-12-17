@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.ServiceTests.EventServiceTests;
+package com.EventHorizon.EventHorizon.Service.EventServiceTests;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;

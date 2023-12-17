@@ -55,7 +55,4 @@ public class ClientInformationRepositoryService implements UserInformationReposi
     public List<? extends User> findAllOfUsers() {
         return clientRepository.findAll();
     }
-
-
-
 }

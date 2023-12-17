@@ -11,7 +11,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidDateException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
@@ -58,7 +58,7 @@ class LaunchedEventRepositoryServiceTest {
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
         tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
-        Assertions.assertThrows(InvalidDateException.class, () -> {
+        Assertions.assertThrows(NotFutureEventException.class, () -> {
             launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
         });
     }
@@ -90,7 +90,7 @@ class LaunchedEventRepositoryServiceTest {
         initialize();
         tempLaunchedEvent.setEventAds(tempAdsOption);
         tempLaunchedEvent.setEventLocation(tempLocation);
-        Assertions.assertThrows(InvalidDateException.class, () -> {
+        Assertions.assertThrows(NotFutureEventException.class, () -> {
             tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
             launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
             launchedEventRepositoryService.update(tempLaunchedEvent);

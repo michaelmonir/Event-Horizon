@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.ServiceTests.Tickets;
+package com.EventHorizon.EventHorizon.Service.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class TicketTransactionServiceTest
+public class TicketOperationServiceTest
 {
     @InjectMocks
     TicketOperationsService ticketOperationsService;
