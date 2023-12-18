@@ -28,7 +28,7 @@ public class BuyedTicketCollectionTest
 
 
     @Test
-    public void getOrganizerArchiveByClientIdAndSeatTypeId() {
+    public void getByClientIdAndSeatTypeId() {
         this.initializeCustomObjectsAndMocks();
         Mockito.when(this.buyedTicketCollectionRepository
                         .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
@@ -41,7 +41,7 @@ public class BuyedTicketCollectionTest
     }
 
     @Test
-    public void getOrganizerArchiveByClientIdAndSeatTypeIdNotFound() {
+    public void getByClientIdAndSeatTypeIdNotFound() {
         this.initializeCustomObjectsAndMocks();
         Mockito.when(this.buyedTicketCollectionRepository
                         .findByClientIdAndSeatTypeId(Mockito.any(Integer.class), Mockito.any(Integer.class)))
@@ -52,7 +52,8 @@ public class BuyedTicketCollectionTest
     }
 
     @Test
-    public void saveBuyedTicketCollection() {
+    public void save() {
+        this.initializeCustomObjectsAndMocks();
         Assertions.assertDoesNotThrow(() ->
                 this.buyedTicketCollectionRepositoryService
                         .save(this.customBuyedTicketCollection));

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class BuyedTicketCollection
 {
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 

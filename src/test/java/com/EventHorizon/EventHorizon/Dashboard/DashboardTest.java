@@ -99,7 +99,7 @@ class DashboardTest {
         Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
         Organizer organizer = Organizer.builder().information(information).build();
         organizerRepository.save(organizer);
-         launchedEvent1 = new LaunchedEvent();
+        launchedEvent1 = new LaunchedEvent();
         launchedEvent1.setId(1);
         launchedEvent1.setEventOrganizer(organizer);
         launchedEvent2 = new LaunchedEvent();

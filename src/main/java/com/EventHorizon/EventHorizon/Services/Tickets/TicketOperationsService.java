@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.Services.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
+import com.EventHorizon.EventHorizon.Repository.Tickets.BuyedTicketCollectionRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,10 @@ public class TicketOperationsService
 
         int oldNumOfTickets = buyedTicketCollection.getNumberOfTickets();
 
-        buyedTicketCollection.setNumberOfTickets(oldNumOfTickets + numOfTickets);
-        this.buyedTicketCollectionRepositoryService.save(buyedTicketCollection);
+        BuyedTicketCollection newone
+                = new BuyedTicketCollection(buyedTicketCollection.getClient(), buyedTicketCollection.getSeatType(), oldNumOfTickets + numOfTickets);
+//        buyedTicketCollection.setNumberOfTickets(oldNumOfTickets + numOfTickets);
+        this.buyedTicketCollectionRepositoryService.save(newone);
     }
 
     public void removeTickets(int seatTypeId, int clientId, int numOfTickets) {
