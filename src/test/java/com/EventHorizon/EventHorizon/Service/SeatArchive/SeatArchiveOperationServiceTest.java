@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Service.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuy;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuyException;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveOperationService;
 import org.junit.jupiter.api.Assertions;
@@ -46,7 +46,7 @@ public class SeatArchiveOperationServiceTest
         when(organizerSeatArchiveRepositoryService.getBySeatTypeId(any(int.class)))
                 .thenReturn(customArchiveWithTickets);
 
-        Assertions.assertThrows(AvailableTicketsIsLessThanRequiredToBuy.class, () ->
+        Assertions.assertThrows(AvailableTicketsIsLessThanRequiredToBuyException.class, () ->
                 this.seatArchiveOperationService.removeTickets(this.customSeatType.getId(), 2));
     }
 

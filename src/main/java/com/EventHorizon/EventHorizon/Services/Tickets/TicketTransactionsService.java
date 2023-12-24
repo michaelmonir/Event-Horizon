@@ -45,8 +45,18 @@ public class TicketTransactionsService {
         this.ticketOperationsService.addTickets(seatTypeId, client.getId(), numOfTickets);
     }
 
-    public void refundTicket(int clientInformationId, int seatTypeId, int numOfTickets) {
+    @Transactional
+    public void refundTicketCollections(int clientInformationId, List<BuyingAndRefundingDto> list) {
         Client client = tempUserRepositoryServiceInterface.getClientByClientInformationId(clientInformationId);
+
+        for (BuyingAndRefundingDto buyingAndRefundingDto : list)
+            refundOneTicketCollection(client, buyingAndRefundingDto);
+    }
+
+    private void refundOneTicketCollection(Client client, BuyingAndRefundingDto buyingAndRefundingDto) {
+        int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
+        int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
+
         validateEventIsLaunchedAndIsFuture(seatTypeId);
 
         this.ticketOperationsService.removeTickets(seatTypeId, client.getId(), numOfTickets);

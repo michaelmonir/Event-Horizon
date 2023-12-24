@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Services.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuy;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuyException;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class SeatArchiveOperationService
         int oldNumberOfTickets = organizerSeatArchive.getAvailable_number_of_seats();
 
         if (oldNumberOfTickets < numOfTickets)
-            throw new AvailableTicketsIsLessThanRequiredToBuy();
+            throw new AvailableTicketsIsLessThanRequiredToBuyException();
 
         organizerSeatArchive.setAvailable_number_of_seats(oldNumberOfTickets - numOfTickets);
         organizerSeatArchiveRepositoryService.save(organizerSeatArchive);

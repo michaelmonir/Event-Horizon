@@ -55,6 +55,16 @@ public class TicketTransactionServiceTest {
         this.ticketTransactionService.buyTicketCollections(1, this.customBuyingAndRefundingDtoList);
     }
 
+    @Test
+    public void refundOneTicketSuccessful(){
+        this.initializeCustomObjects();
+
+        when(tempUserRepositoryServiceInterface.getClientByClientInformationId(anyInt())).thenReturn(this.customClient);
+        when(seatTypeRepositoryService.getById(anyInt())).thenReturn(this.customSeatType);
+
+        this.ticketTransactionService.refundTicketCollections(1, this.customBuyingAndRefundingDtoList);
+    }
+
     private void initializeCustomObjects(){
         this.customClient = Client.builder().id(1).build();
         this.customSeatType = new SeatType(5, new LaunchedEvent(), "name", 1);

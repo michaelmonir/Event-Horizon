@@ -15,23 +15,23 @@ public class TicketOperationController {
     @Autowired
     private TicketTransactionsService ticketTransactionsService;
 
-    @PutMapping("buyTicket/{clientId}") //client
-    public ResponseEntity buyTicket
-            (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
+//    @PutMapping("buyTicket/{clientId}") //client
+//    public ResponseEntity buyTicket
+//            (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
+//
+//        int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
+//        int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
+////        ticketTransactionsService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 
-        int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
-        int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
-//        ticketTransactionsService.buyTicket(clientInformationId, seatTypeId, numOfTickets);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @PutMapping("refundTicket/{clientId}") //client
-    public ResponseEntity refundTicket
-            (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
-
-        int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
-        int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
-        ticketTransactionsService.refundTicket(clientInformationId, seatTypeId, numOfTickets);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @PutMapping("refundTicket/{clientId}") //client
+//    public ResponseEntity refundTicket
+//            (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody BuyingAndRefundingDto buyingAndRefundingDto) {
+//
+//        int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
+//        int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
+//        ticketTransactionsService.refundTicket(clientInformationId, seatTypeId, numOfTickets);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 }

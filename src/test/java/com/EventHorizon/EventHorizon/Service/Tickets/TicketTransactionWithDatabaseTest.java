@@ -10,6 +10,8 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuyException;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
@@ -39,7 +41,6 @@ public class TicketTransactionWithDatabaseTest
     @Autowired
     private BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
 
-
     private BuyedTicketCollection customTicketCollection;
     private Client customClient;
     private LaunchedEvent customEvent;
@@ -48,13 +49,14 @@ public class TicketTransactionWithDatabaseTest
 
 
     @Test
-    public void buyOneTicketSuccessful(){
-        this.initializeCustomObjects();
+    public void buyTicketsSuccessful(){
+        this.initializeCustomObjectsForBuying();
         BuyingAndRefundingDto buyingAndRefundingDto = new BuyingAndRefundingDto(this.customSeatType.getId(), 1);
+
+        List<BuyingAndRefundingDto> dtoList = List.of(buyingAndRefundingDto, buyingAndRefundingDto);
+
         Assertions.assertDoesNotThrow(() ->
-                this.ticketTransactionService
-                        .buyTicketCollections(
-                                this.customClient.getInformation().getId(), List.of(buyingAndRefundingDto, buyingAndRefundingDto)) );
+                this.ticketTransactionService.buyTicketCollections(this.customClient.getInformation().getId(), dtoList) );
         OrganizerSeatArchive organizerSeatArchive = this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customOrganizerSeatArchive.getSeatTypeId());
         Assertions.assertEquals(0, organizerSeatArchive.getAvailable_number_of_seats());
 
@@ -63,14 +65,14 @@ public class TicketTransactionWithDatabaseTest
     }
 
     @Test
-    public void buyOneTicketsMoreThanArchiveHas(){
-        this.initializeCustomObjects();
+    public void buyTicketsMoreThanArchiveHas(){
+        this.initializeCustomObjectsForBuying();
         BuyingAndRefundingDto buyingAndRefundingDto = new BuyingAndRefundingDto(this.customSeatType.getId(), 1);
-        Assertions.assertThrows(RuntimeException.class, () ->
-                this.ticketTransactionService
-                        .buyTicketCollections(
-                                this.customClient.getInformation().getId()
-                                , List.of(buyingAndRefundingDto, buyingAndRefundingDto, buyingAndRefundingDto)) );
+
+        List<BuyingAndRefundingDto> listMoreThanItHas = List.of(buyingAndRefundingDto, buyingAndRefundingDto, buyingAndRefundingDto);
+
+        Assertions.assertThrows(AvailableTicketsIsLessThanRequiredToBuyException.class, () ->
+                this.ticketTransactionService.buyTicketCollections(this.customClient.getInformation().getId(), listMoreThanItHas));
         OrganizerSeatArchive organizerSeatArchive = this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customOrganizerSeatArchive.getSeatTypeId());
         Assertions.assertEquals(2, organizerSeatArchive.getAvailable_number_of_seats());
 
@@ -78,13 +80,55 @@ public class TicketTransactionWithDatabaseTest
         Assertions.assertEquals(0, buyedTicketCollection.getNumberOfTickets());
     }
 
-    private void initializeCustomObjects(){
+    @Test
+    public void refundTicketSuccessful(){
+        this.initializeCustomObjectsForRefunding();
+        BuyingAndRefundingDto buyingAndRefundingDto = new BuyingAndRefundingDto(this.customSeatType.getId(), 1);
+
+        List<BuyingAndRefundingDto> dtoList = List.of(buyingAndRefundingDto, buyingAndRefundingDto);
+
+        Assertions.assertDoesNotThrow(() -> this.ticketTransactionService.refundTicketCollections(this.customClient.getInformation().getId(), dtoList));
+        OrganizerSeatArchive organizerSeatArchive = this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customOrganizerSeatArchive.getSeatTypeId());
+        Assertions.assertEquals(2, organizerSeatArchive.getAvailable_number_of_seats());
+
+        BuyedTicketCollection buyedTicketCollection = this.buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(this.customSeatType.getId(), this.customClient.getId());
+        Assertions.assertEquals(0, buyedTicketCollection.getNumberOfTickets());
+    }
+
+    @Test
+    public void refundTicketMoreThanItHas(){
+        this.initializeCustomObjectsForRefunding();
+        BuyingAndRefundingDto buyingAndRefundingDto = new BuyingAndRefundingDto(this.customSeatType.getId(), 1);
+
+        List<BuyingAndRefundingDto> listMoreThanItHas = List.of(buyingAndRefundingDto, buyingAndRefundingDto, buyingAndRefundingDto);
+
+        Assertions.assertThrows(BuyedTicketsIslessThanRequiredToRefund.class, () ->
+                this.ticketTransactionService.refundTicketCollections(
+                        this.customClient.getInformation().getId(), listMoreThanItHas));
+        OrganizerSeatArchive organizerSeatArchive = this.organizerSeatArchiveRepositoryService.getBySeatTypeId(this.customOrganizerSeatArchive.getSeatTypeId());
+        Assertions.assertEquals(0, organizerSeatArchive.getAvailable_number_of_seats());
+
+        BuyedTicketCollection buyedTicketCollection = this.buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(this.customSeatType.getId(), this.customClient.getId());
+        Assertions.assertEquals(2, buyedTicketCollection.getNumberOfTickets());
+    }
+
+    private void initializeCustomObjectsForBuying(){
         this.initializeCustomEventObjects();
 
         this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 2);
         this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
 
         this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 0);
+        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
+    }
+
+    private void initializeCustomObjectsForRefunding(){
+        this.initializeCustomEventObjects();
+
+        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 0);
+        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
+
+        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 2);
         this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
     }
 
