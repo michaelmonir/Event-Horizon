@@ -4,7 +4,9 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 
-public class GiftedTicketCompositeKey
+import java.io.Serializable;
+
+public class GiftedTicketCompositeKey implements Serializable
 {
     private Client client;
     private SeatType seatType;

@@ -14,18 +14,4 @@ import java.util.Optional;
 public interface BuyedTicketCollectionRepository extends JpaRepository<BuyedTicketCollection, Integer>
 {
     Optional<BuyedTicketCollection> findByClientIdAndSeatTypeId(int clientId, int seatTypeId);
-
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO buyed_ticket_collection (client_id, seat_type_id, number_of_tickets) " +
-            "VALUES (:#{#buyedTicketCollection.client.id}, :#{#buyedTicketCollection.seatType.id}, :#{#buyedTicketCollection.numberOfTickets})", nativeQuery = true)
-    void create(@Param("buyedTicketCollection") BuyedTicketCollection buyedTicketCollection);
-
-    // Custom native SQL query for updating an existing record
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE buyed_ticket_collection " +
-            "SET number_of_tickets = :#{#buyedTicketCollection.numberOfTickets} " +
-            "WHERE client_id = :#{#buyedTicketCollection.client.id} AND seat_type_id = :#{#buyedTicketCollection.seatType.id}", nativeQuery = true)
-    void update(@Param("buyedTicketCollection") BuyedTicketCollection buyedTicketCollection);
 }

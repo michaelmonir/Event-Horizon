@@ -19,10 +19,8 @@ public class TicketOperationsService
 
         int oldNumOfTickets = buyedTicketCollection.getNumberOfTickets();
 
-        BuyedTicketCollection newone
-                = new BuyedTicketCollection(buyedTicketCollection.getClient(), buyedTicketCollection.getSeatType(), oldNumOfTickets + numOfTickets);
-//        buyedTicketCollection.setNumberOfTickets(oldNumOfTickets + numOfTickets);
-        this.buyedTicketCollectionRepositoryService.save(newone);
+        buyedTicketCollection.setNumberOfTickets(oldNumOfTickets + numOfTickets);
+        this.buyedTicketCollectionRepositoryService.save(buyedTicketCollection);
     }
 
     public void removeTickets(int seatTypeId, int clientId, int numOfTickets) {

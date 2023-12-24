@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "buyed_ticket_collection")
-@IdClass(BuyedTicketCollection.class)
+@IdClass(BuyedTicketCompositeKey.class)
 @AllArgsConstructor
 public class BuyedTicketCollection
 {

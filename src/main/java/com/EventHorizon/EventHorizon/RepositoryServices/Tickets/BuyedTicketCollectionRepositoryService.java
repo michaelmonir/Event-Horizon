@@ -23,16 +23,6 @@ public class BuyedTicketCollectionRepositoryService
     }
 
     public void save(BuyedTicketCollection buyedTicketCollection) {
-
-        try{
-            this.getBySeatTypeIdAndClientId(
-                    buyedTicketCollection.getSeatType().getId(),
-                    buyedTicketCollection.getClient().getId());
-            this.buyedTicketCollectionRepository.update(buyedTicketCollection);
-        }
-        catch (BuyedTicketCollectionNotFoundException e)
-        {
-            this.buyedTicketCollectionRepository.create(buyedTicketCollection);
-        }
+        this.buyedTicketCollectionRepository.save(buyedTicketCollection);
     }
 }
