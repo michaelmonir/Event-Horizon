@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
@@ -31,7 +32,7 @@ public class SeatTypeRepositoryTest
     @Test
     public void testGetByIdWithoutSavingSeatType()
     {
-        SeatType seatType = new SeatType("a", 1);
+        SeatType seatType = new SeatType("a", 1, 1);
         Optional<SeatType> resultSeatType = this.seatTypeRepository.findById(seatType.getId());
         Assertions.assertFalse(resultSeatType.isPresent());
     }

@@ -13,7 +13,7 @@ public class BuyedTicketCollectionEntityTest
     @Test
     public void constructorSuccess()
     {
-        SeatType seatType = new SeatType("s1", 1);
+        SeatType seatType = new SeatType("s1", 1, 1);
         Assertions.assertDoesNotThrow(()-> new BuyedTicketCollection(new Client(), seatType, 0));
     }
 

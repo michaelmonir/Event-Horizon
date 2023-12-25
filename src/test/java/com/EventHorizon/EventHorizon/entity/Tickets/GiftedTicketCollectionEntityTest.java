@@ -14,7 +14,7 @@ public class GiftedTicketCollectionEntityTest
     @Test
     public void constructorSuccess()
     {
-        SeatType seatType = new SeatType("s1", 1);
+        SeatType seatType = new SeatType("s1", 1, 1);
         Assertions.assertDoesNotThrow(()-> new GiftedTicketCollection(new Client(), seatType, new Sponsor(), 0));
     }
 

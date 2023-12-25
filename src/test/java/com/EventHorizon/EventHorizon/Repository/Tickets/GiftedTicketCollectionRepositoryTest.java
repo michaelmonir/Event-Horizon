@@ -62,7 +62,7 @@ public class GiftedTicketCollectionRepositoryTest
     public void saveWithNegativeNumberOfTickets() {
         Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
         Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
-        SeatType seatType = new SeatType("name", 1);
+        SeatType seatType = new SeatType("name", 1, 1);
 
         GiftedTicketCollection giftedTicketCollection
                 = new GiftedTicketCollection(client, seatType, sponsor, 1);

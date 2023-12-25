@@ -86,8 +86,10 @@ create table if not exists seat_type(
         event_id INT NOT NULL,
         name VARCHAR(255) NOT NULL,
         price INT NOT NULL,
+        number_of_seats INT NOT NULL,
         foreign KEY (event_id) REFERENCES event(id),
-        CHECK (price >= 0)
+        CHECK (price >= 0),
+        CHECK (number_of_seats >= 0)
 );
 
 create table if not exists organizer_seat_archive(

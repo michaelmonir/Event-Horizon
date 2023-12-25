@@ -65,7 +65,7 @@ class DetailedLaunchedEventDtoMapperTest {
         event.setDescription("Test Description");
         event.setEventCategory("Test Category");
         event.setEventAds(new AdsOption());
-        event.setSeatTypes(List.of(new SeatType("s1", 1), new SeatType("s2", 2)));
+        event.setSeatTypes(List.of(new SeatType("s1", 1, 1), new SeatType("s2", 2, 2)));
         event.setSeatTypes(new ArrayList<>());
         
         Organizer organizer = new Organizer();

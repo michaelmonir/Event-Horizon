@@ -63,7 +63,7 @@ public class OrganizerSeatTypeRepositoryServiceTest
 
     private void initializeCustomObjectsAndMocks()
     {
-        this.customSeatType = new SeatType("seatType", 1);
+        this.customSeatType = new SeatType("seatType", 1, 1);
         this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 1, 1);
 
         Mockito.when(this.organizerSeatArchiveRepository.findBySeatTypeId(Mockito.any(Integer.class)))

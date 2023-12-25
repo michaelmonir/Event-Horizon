@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import lombok.*;
 
 @EqualsAndHashCode
@@ -12,4 +11,5 @@ public class SeatTypeDto
 {
     String name;
     int price;
+    int numberOfSeats;
 }

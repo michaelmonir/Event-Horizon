@@ -15,7 +15,7 @@ public class SeatTypeCustomCreator
     public SeatType getSeatType()
     {
         numberOfCreatedObjects++;
-        SeatType seatType = new SeatType("Seat Type" + numberOfCreatedObjects, numberOfCreatedObjects);
+        SeatType seatType = new SeatType("Seat Type" + numberOfCreatedObjects, numberOfCreatedObjects, numberOfCreatedObjects);
 
         return seatType;
     }

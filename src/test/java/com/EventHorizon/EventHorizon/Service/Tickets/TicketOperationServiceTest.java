@@ -65,7 +65,7 @@ public class TicketOperationServiceTest
     }
 
     private void initializeCustomObjects(){
-        this.customSeatType = new SeatType("a", 1);
+        this.customSeatType = new SeatType("a", 1, 1);
         this.customClient = Client.builder().id(1).build();
         this.customCollectionWithTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
         this.customCollectionWithoutTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 0);

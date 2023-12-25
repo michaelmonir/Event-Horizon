@@ -61,7 +61,7 @@ public class BuyedTicketCollectionTest
 
     public void initializeCustomObjectsAndMocks() {
         this.customClient = new Client();
-        this.customSeatType = new SeatType("a", 1);
+        this.customSeatType = new SeatType("a", 1, 1);
         this.customBuyedTicketCollection = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
 
         Mockito.when(this.buyedTicketCollectionRepository

@@ -32,7 +32,7 @@ public class OrganizerSeatTypeRepositoryTest {
 
     @Test
     public void saveWithoutSavingTheSeatType() {
-        SeatType seatType = new SeatType("s", 1);
+        SeatType seatType = new SeatType("s", 1, 1);
         OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 1);
 
         Assertions.assertThrows(DataIntegrityViolationException.class,

@@ -39,7 +39,7 @@ public class SponsorSeatTypeRepositoryTest {
 
     @Test
     public void saveWithoutSavingTheSeatType() {
-        SeatType seatType = new SeatType("s", 1);
+        SeatType seatType = new SeatType("s", 1, 1);
         Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);

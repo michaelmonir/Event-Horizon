@@ -29,7 +29,7 @@ public class SeatTypeRepositoryServiceTest
     @Test
     public void testGetByIdWithoutSavingSeatType()
     {
-        SeatType seatType = new SeatType("a", 1);
+        SeatType seatType = new SeatType("a", 1, 1);
         Assertions.assertThrows(SeatTypeNotFoundException.class, () ->
                 this.seatTypeRepositoryService.getById(seatType.getId()));
     }

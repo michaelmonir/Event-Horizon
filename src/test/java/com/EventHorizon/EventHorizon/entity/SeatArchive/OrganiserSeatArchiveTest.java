@@ -12,7 +12,7 @@ public class OrganiserSeatArchiveTest
     @Test
     public void constructorSuccess()
     {
-        SeatType seatType = new SeatType("s1", 1);
+        SeatType seatType = new SeatType("s1", 1, 1);
         Assertions.assertDoesNotThrow(()-> new OrganizerSeatArchive(seatType, 1, 1));
     }
 

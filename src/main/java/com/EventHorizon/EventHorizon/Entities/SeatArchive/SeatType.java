@@ -26,14 +26,15 @@ public class SeatType
     private String name;
     @Column(nullable = false)
     private int price;
-//    @Column(nullable = false)
-//    private int numberOfSeats;
+    @Column(nullable = false)
+    private int numberOfSeats;
 
     protected SeatType(){}
 
-    public SeatType(String name, int price) {
+    public SeatType(String name, int price, int numberOfSeats) {
         this.name = name;
         this.price = price;
+        this.numberOfSeats = numberOfSeats;
     }
 
     public SeatType(int id, Event event, String name, int price) {

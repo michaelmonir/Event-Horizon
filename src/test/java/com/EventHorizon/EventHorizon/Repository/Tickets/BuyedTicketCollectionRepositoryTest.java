@@ -49,7 +49,7 @@ public class BuyedTicketCollectionRepositoryTest
     @Test
     public void saveWithoutSavingSeatType() {
         Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
-        SeatType seatType = new SeatType("a", 1);
+        SeatType seatType = new SeatType("a", 1, 1);
 
         BuyedTicketCollection buyedTicketCollection
                 = new BuyedTicketCollection(client, seatType, 1);

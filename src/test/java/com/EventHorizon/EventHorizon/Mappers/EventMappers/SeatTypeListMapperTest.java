@@ -18,8 +18,8 @@ public class SeatTypeListMapperTest {
     @Test
     public void testGetSeatTypeListFromDTO() {
         List<SeatTypeDto> seatTypes = List.of(
-                new SeatTypeDto("Test Seat Type 1", 10),
-                new SeatTypeDto("Test Seat Type 2", 20)
+                new SeatTypeDto("Test Seat Type 1", 10, 1),
+                new SeatTypeDto("Test Seat Type 2", 20, 1)
         );
         List<SeatType> result = seatTypeListMapper.getSeatTypeListFromSeatTypeListDTO(seatTypes);
         for (int i = 0; i < seatTypes.size(); i++) {

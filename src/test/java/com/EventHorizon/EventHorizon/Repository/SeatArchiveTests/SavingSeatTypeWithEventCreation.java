@@ -69,6 +69,17 @@ public class SavingSeatTypeWithEventCreation
         });
     }
 
+    @Test
+    public void creatingEventWithMakingNumberOfSeatsNegative() {
+        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
+        seatType.setNumberOfSeats(-1);
+        Event event = this.getEventAndGiveOneSeatType(seatType);
+
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            eventRepositoryService.saveWhenCreating(event);
+        });
+    }
+
     private Event getEventAndGiveOneSeatType(SeatType seatType) {
         List <SeatType> seatTypes = new ArrayList<>();
         seatTypes.add(seatType);

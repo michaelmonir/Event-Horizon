@@ -63,7 +63,7 @@ public class SeatArchiveOperationServiceTest
     }
 
     private void initializeCustomObjects(){
-        this.customSeatType = new SeatType("a", 1);
+        this.customSeatType = new SeatType("a", 1, 1);
         this.customArchiveWithTickets = new OrganizerSeatArchive(this.customSeatType, 1, 1);
         this.customArchiveWithoutTickets = new OrganizerSeatArchive(this.customSeatType, 1, 0);
     }

@@ -13,7 +13,7 @@ public class SponsorSeatArchiveTest {
     @Test
     public void constructorSuccessfull() {
 
-        SeatType seatType = new SeatType("s", 1);
+        SeatType seatType = new SeatType("s", 1, 1);
         Sponsor sponsor = new Sponsor();
         Assertions.assertDoesNotThrow(()->
                 new SponsorSeatArchive(seatType, sponsor, 1, 1));
@@ -30,7 +30,7 @@ public class SponsorSeatArchiveTest {
     @Test
     public void constructorWithNullSponsor() {
 
-        SeatType seatType = new SeatType("s", 1);
+        SeatType seatType = new SeatType("s", 1, 1);
         Assertions.assertDoesNotThrow(()->
                 new SponsorSeatArchive(seatType, null, 1, 1));
     }
