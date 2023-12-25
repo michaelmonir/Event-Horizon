@@ -6,7 +6,9 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class ViewEventDto {
     private Date eventDate;
     private Location eventLocation;
     private OrganizerHeaderDto eventOrganizer;
+    private List<SeatTypeDto> seatTypes;
 
 
     public ViewEventDto(LaunchedEvent event) {
@@ -31,6 +34,14 @@ public class ViewEventDto {
         this.description = event.getDescription();
         this.eventLocation = event.getEventLocation();
         this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
+        this.initializeSeatTypeListFromEvent(event);
+    }
+
+    private void initializeSeatTypeListFromEvent(Event event){
+        this.seatTypes = new ArrayList<>();
+        event.getSeatTypes().forEach(seatType -> {
+            this.seatTypes.add(new SeatTypeDto(seatType));
+        });
     }
 
     @Override

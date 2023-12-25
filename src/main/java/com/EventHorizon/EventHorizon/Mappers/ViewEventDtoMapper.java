@@ -13,6 +13,8 @@ public class ViewEventDtoMapper {
     private AdsOptionDtoMapper adsOptionDtoMapper;
     @Autowired
     private LaunchedEventRepositoryService launchedEventRepositoryService;
+    @Autowired
+    private SeatTypeListMapper seatTypeListMapper;
 
     public LaunchedEvent getEventFromViewEventDTO(ViewEventDto dto) {
         return LaunchedEvent.builder()
@@ -23,6 +25,7 @@ public class ViewEventDtoMapper {
                 .eventDate(dto.getEventDate())
                 .eventLocation(dto.getEventLocation())
                 .eventAds(launchedEventRepositoryService.getById(dto.getId()).getEventAds())
+                .seatTypes(seatTypeListMapper.getSeatTypeListFromSeatTypeListDTO(dto.getSeatTypes()))
                 .build();
     }
 

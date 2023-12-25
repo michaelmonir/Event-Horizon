@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest
@@ -70,6 +71,7 @@ class EventDetailsDtoTest {
                 .eventOrganizer(tempOrganizer)
                 .eventCategory("Category1")
                 .eventDate(new Date())
+                .seatTypes(new ArrayList<>())
                 .build();
     }
 

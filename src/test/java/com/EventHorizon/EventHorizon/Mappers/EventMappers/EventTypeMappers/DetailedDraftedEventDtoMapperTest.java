@@ -1,6 +1,6 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.EventMappers.EventTypeMappers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
@@ -8,6 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,14 +16,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+
 
 @SpringBootTest
 class DetailedDraftedEventDtoMapperTest {
     @Mock
     private AdsOptionDtoMapper adsOptionDtoMapper;
-
     @InjectMocks
     private DetailedDraftedEventDtoMapper detailedDraftedEventDtoMapper;
+    @Mock
+    private SeatTypeListMapper seatTypeListMapper;
 
 
     @Test
@@ -34,6 +38,8 @@ class DetailedDraftedEventDtoMapperTest {
         dto.setDescription("Test Description");
         dto.setEventCategory("Test Category");
         dto.setEventAds(new AdsOptionDto());
+        dto.setSeatTypes(new ArrayList<>());
+        dto.setSeatTypes(new ArrayList<>());
 
         AdsOption adsOption = new AdsOption();
         Mockito.when(adsOptionDtoMapper.getAdsOptionFromDTO(dto.getEventAds())).thenReturn(adsOption);
@@ -57,6 +63,8 @@ class DetailedDraftedEventDtoMapperTest {
         event.setDescription("Test Description");
         event.setEventCategory("Test Category");
         event.setEventAds(new AdsOption());
+        event.setSeatTypes(new ArrayList<>());
+
         Organizer organizer = new Organizer();
         organizer.setId(1);
         event.setEventOrganizer(organizer);

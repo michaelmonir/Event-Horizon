@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.DTOs.EventDto;
+package com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import lombok.*;
@@ -16,5 +16,4 @@ public class AdsOptionDto
         this.id=adsOption.getId();
         this.name=adsOption.getName();
     }
-
 }

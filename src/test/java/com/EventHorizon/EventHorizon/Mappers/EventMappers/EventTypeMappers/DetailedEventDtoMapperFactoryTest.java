@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.EventMappers.EventTypeMappers;
 
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;

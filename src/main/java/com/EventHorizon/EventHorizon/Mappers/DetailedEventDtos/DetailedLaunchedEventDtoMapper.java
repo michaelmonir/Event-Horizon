@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class DetailedLaunchedEventDtoMapper implements DetailedEventDtoMapper {
     @Autowired
     private AdsOptionDtoMapper adsOptionDtoMapper;
+    @Autowired
+    private SeatTypeListMapper seatTypeListMapper;
 
     public LaunchedEvent getEventFromDetailedEventDTO(DetailedEventDto dto) {
         DetailedLaunchedEventDto detailedLaunchedEventDto=(DetailedLaunchedEventDto)dto;
@@ -25,6 +28,7 @@ public class DetailedLaunchedEventDtoMapper implements DetailedEventDtoMapper {
                 .eventLocation(dto.getEventLocation())
                 .launchedDate(detailedLaunchedEventDto.getLaunchedDate())
                 .eventType(detailedLaunchedEventDto.getEventType())
+                .seatTypes(seatTypeListMapper.getSeatTypeListFromSeatTypeListDTO(dto.getSeatTypes()))
                 .build();
     }
 

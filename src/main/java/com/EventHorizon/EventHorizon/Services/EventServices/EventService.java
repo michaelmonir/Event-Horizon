@@ -70,7 +70,6 @@ public class EventService {
         Event event = detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(eventDTO);
         event.setEventOrganizer(organizer);
         // ++++++++++++++++++++++---------------------
-        event.setSeatTypes(new ArrayList<>());
         eventRepositoryServiceInterface.saveWhenCreating(event);
         return detailedEventDtoMapperInterface.getDTOfromDetailedEvent(event);
 
@@ -80,8 +79,6 @@ public class EventService {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
 
         Event event = detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(eventDTO);
-        /*                                                   ++++++++-----------------                      */
-        event.setSeatTypes(new ArrayList<>());
         ((LaunchedEvent) event).setLaunchedDate(DateFunctions.getCurrentDate());
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
         event.setEventOrganizer(organizer);
