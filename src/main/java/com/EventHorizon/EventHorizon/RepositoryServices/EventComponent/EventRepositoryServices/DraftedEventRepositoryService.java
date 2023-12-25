@@ -2,10 +2,12 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRep
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     @Autowired
     private DraftedEventRepository draftedEventRepository;
     @Autowired
+    private EventSeatTypesRepositoryService eventSeatTypesRepositoryService;
+    @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
     public DraftedEvent saveWhenCreating(Event event) {
@@ -24,8 +28,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         if (draftedEvent.getId() != 0)
             throw new EventAlreadyExisting();
 
-        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(draftedEvent);
-        draftedEventRepository.save(draftedEvent);
+        this.handleSeatArchivesAndSaveInRepository(draftedEvent);
         return draftedEvent;
     }
 
@@ -35,8 +38,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         getById(id);
         draftedEvent.setId(id);
 
-        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(draftedEvent);
-        draftedEventRepository.save(draftedEvent);
+        this.handleSeatArchivesAndSaveInRepository(draftedEvent);
         return draftedEvent;
     }
 
@@ -50,5 +52,11 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();
         return optionalOldEvent.get();
+    }
+
+    private void handleSeatArchivesAndSaveInRepository(DraftedEvent draftedEvent) {
+        eventSeatTypesRepositoryService.setEventForItsSeatTypes(draftedEvent);
+        draftedEventRepository.save(draftedEvent);
+        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(draftedEvent);
     }
 }

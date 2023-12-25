@@ -1,9 +1,14 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
+import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
@@ -28,6 +33,10 @@ public class SavingSeatTypeWithEventCreationTest
     EventRepositry eventRepositry;
     @Autowired
     SeatTypeRepository seatTypeRepository; // used only for finding by id not for creation
+    @Autowired
+    LaunchedEventRepository launchedEventRepository;
+    @Autowired
+    DraftedEventRepository draftedEventRepository;
 
     @Test
     public void creatingSeatTypeUsingRepositoryService() {
@@ -39,10 +48,28 @@ public class SavingSeatTypeWithEventCreationTest
         });
     }
 
-    // this test means that changing the seatType doesn'tttttt mean that it will
-    // automatically remove the old seat Types from data database
+    // this is because it doesn't use the repository service which uses the eventSeatReposirotyService
+    // which deletes the old seatTypes
     @Test
-    public void testChangingEventSeatTypesDoesNotDeleteOldTypes() {
+    public void changingEventSeatTypesFromRepositoryDoesNotDeleteOldSeatTypes(){
+        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
+        Event event = this.getEventAndGiveOneSeatType(seatType);
+
+        eventRepositoryService.saveWhenCreating(event);
+
+        event.setSeatTypes(new ArrayList<>());
+        if (event.getEventType() == EventType.LAUNCHEDEVENT)
+            launchedEventRepository.save((LaunchedEvent) event);
+        else if (event.getEventType() == EventType.DRAFTEDEVENT)
+            draftedEventRepository.save((DraftedEvent) event);
+
+        Assertions.assertEquals(0, event.getSeatTypes().size());
+        Assertions.assertNotEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
+    }
+
+    // use the repository service instead
+    @Test
+    public void updatingEventSeatTypesDeletesOldTypes(){
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
@@ -52,7 +79,7 @@ public class SavingSeatTypeWithEventCreationTest
         eventRepositoryService.update(event);
 
         Assertions.assertEquals(0, event.getSeatTypes().size());
-        Assertions.assertNotEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
+        Assertions.assertEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
     }
 
     @Test

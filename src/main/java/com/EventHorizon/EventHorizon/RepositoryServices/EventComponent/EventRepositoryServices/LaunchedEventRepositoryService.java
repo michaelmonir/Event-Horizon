@@ -7,11 +7,11 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,9 +27,11 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     @Autowired
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
-    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
+    private EventSeatTypesRepositoryService eventSeatTypesRepositoryService;
     @Autowired
     private ViewEventDtoMapper viewEventDtoMapper;
+    @Autowired
+    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
 
 
     private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
@@ -50,7 +52,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
         FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
-        saveEvent(eventWrapper);
+        handleSeatArchivesAndSaveInRepository(eventWrapper);
         return launchedEvent;
     }
 
@@ -60,7 +62,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         int id = newEvent.getId();
         newEvent.setId(id);
         FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
-        saveEvent(eventWrapper);
+        handleSeatArchivesAndSaveInRepository(eventWrapper);
         return newEvent;
     }
 
@@ -97,9 +99,10 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return eventHeaderDtos;
     }
 
-    private void saveEvent(FutureEventWrapper futureEventWrapper) {
-        eventSeatArchiveRepositoryService.setEventForItsSeatArchives(futureEventWrapper.getLaunchedEvent());
+    private void handleSeatArchivesAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
+        eventSeatTypesRepositoryService.setEventForItsSeatTypes(futureEventWrapper.getLaunchedEvent());
         launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
+        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(futureEventWrapper.getLaunchedEvent());
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification) {
