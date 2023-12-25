@@ -31,18 +31,6 @@ public class ViewEventDto {
     private OrganizerHeaderDto eventOrganizer;
     private List<SeatTypeDto> seatTypes;
 
-
-    public ViewEventDto(LaunchedEvent event) {
-        this.id = event.getId();
-        this.name = event.getName();
-        this.eventCategory = event.getEventCategory();
-        this.eventDate = event.getEventDate();
-        this.description = event.getDescription();
-        this.eventLocation = event.getEventLocation();
-        this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
-        this.seatTypes = seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(event.getSeatTypes());
-    }
-
     @Override
     public String toString() {
         return "EventDetailsDto{" +

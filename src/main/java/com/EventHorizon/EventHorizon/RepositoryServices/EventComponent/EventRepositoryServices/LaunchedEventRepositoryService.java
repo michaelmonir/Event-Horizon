@@ -7,6 +7,8 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
+import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
@@ -26,6 +28,8 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
+    @Autowired
+    private ViewEventDtoMapper viewEventDtoMapper;
 
 
     private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
@@ -67,7 +71,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
 
     public ViewEventDto getViewEventDTO(int id) {
         LaunchedEvent launchedEvent = getById(id);
-        return new ViewEventDto(launchedEvent);
+        return viewEventDtoMapper.getDTOfromViewEvent(launchedEvent);
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {

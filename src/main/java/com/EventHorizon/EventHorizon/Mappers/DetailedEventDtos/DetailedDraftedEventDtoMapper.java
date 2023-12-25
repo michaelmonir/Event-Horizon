@@ -2,6 +2,8 @@ package com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;;;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
@@ -31,8 +33,18 @@ public class DetailedDraftedEventDtoMapper implements DetailedEventDtoMapper {
     }
 
     public DetailedDraftedEventDto getDTOfromDetailedEvent(Event event) {
-        DraftedEvent draftedEvent=(DraftedEvent)event;
-        DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto(draftedEvent);
-        return detailedDraftedEventDto;
+
+        return DetailedDraftedEventDto.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .description(event.getDescription())
+                .eventCategory(event.getEventCategory())
+                .eventDate(event.getEventDate())
+                .eventLocation(event.getEventLocation())
+                .eventAds(new AdsOptionDto(event.getEventAds()))
+                .eventType(event.getEventType())
+                .eventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()))
+                .seatTypes(seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(event.getSeatTypes()))
+                .build();
     }
 }

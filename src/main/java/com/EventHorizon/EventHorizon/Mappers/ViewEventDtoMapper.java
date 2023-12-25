@@ -32,12 +32,13 @@ public class ViewEventDtoMapper {
     public ViewEventDto getDTOfromViewEvent(LaunchedEvent event) {
         return ViewEventDto.builder()
                 .id(event.getId())
-                .eventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()))
-                .eventDate(event.getEventDate())
                 .name(event.getName())
+                .eventDate(event.getEventDate())
+                .description(event.getDescription())
                 .eventLocation(event.getEventLocation())
                 .eventCategory(event.getEventCategory())
-                .description(event.getDescription())
+                .eventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()))
+                .seatTypes(seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(event.getSeatTypes()))
                 .build();
     }
 }

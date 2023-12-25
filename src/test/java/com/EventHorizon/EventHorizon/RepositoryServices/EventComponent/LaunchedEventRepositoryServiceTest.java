@@ -37,6 +37,7 @@ class LaunchedEventRepositoryServiceTest {
     private OrganizerRepository organizerRepository;
     @Autowired
     InformationCustomCreator informationCreator;
+
     
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;

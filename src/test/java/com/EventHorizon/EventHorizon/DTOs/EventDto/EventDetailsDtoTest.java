@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,9 @@ import java.util.Date;
 
 @SpringBootTest
 class EventDetailsDtoTest {
+
+    @Autowired
+    ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
     private InformationCustomCreator informationCustomCreator;
     @Autowired
@@ -28,9 +32,9 @@ class EventDetailsDtoTest {
     private Location tempLocation;
     private LaunchedEvent tempEvent;
     @Test
-    public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
+    public void getViewDtoFromLaunchedEvent() {
         insialize();
-        ViewEventDto eventDetailsDto = new ViewEventDto(tempEvent);
+        ViewEventDto eventDetailsDto = viewEventDtoMapper.getDTOfromViewEvent(tempEvent);
 
         // Verify that the values are mapped correctly
         Assertions.assertEquals(tempEvent.getName(), eventDetailsDto.getName());
