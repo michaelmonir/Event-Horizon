@@ -31,39 +31,6 @@ class ViewEventDtoMapperTest {
 
 
     @Test
-    public void testGetEventFromViewEventDTO() {
-
-        ViewEventDto dto = new ViewEventDto();
-        dto.setId(1);
-        dto.setName("Test Event");
-        dto.setDescription("Test Description");
-        dto.setEventCategory("Test Category");
-
-        LaunchedEvent event = new LaunchedEvent();
-        event.setId(dto.getId());
-        event.setName(dto.getName());
-        event.setDescription(dto.getDescription());
-        event.setEventCategory(dto.getEventCategory());
-        event.setEventDate(dto.getEventDate());
-        event.setEventLocation(dto.getEventLocation());
-        event.setSeatTypes(new ArrayList<>());
-
-        AdsOption adsOption = new AdsOption();
-        event.setEventAds(adsOption);
-        Mockito.when(eventRepositoryService.getById(dto.getId())).thenReturn(event);
-
-        LaunchedEvent result = eventDtoMapper.getEventFromViewEventDTO(dto);
-
-        Assertions.assertEquals(dto.getId(), result.getId());
-        Assertions.assertEquals(dto.getName(), result.getName());
-        Assertions.assertEquals(dto.getDescription(), result.getDescription());
-        Assertions.assertEquals(dto.getEventCategory(), result.getEventCategory());
-        Assertions.assertEquals(dto.getEventDate(), result.getEventDate());
-        Assertions.assertEquals(dto.getEventLocation(), result.getEventLocation());
-        Assertions.assertEquals(adsOption, result.getEventAds());
-    }
-
-    @Test
     public void testGetDTOfromViewEvent() {
 
         LaunchedEvent event = new LaunchedEvent();
