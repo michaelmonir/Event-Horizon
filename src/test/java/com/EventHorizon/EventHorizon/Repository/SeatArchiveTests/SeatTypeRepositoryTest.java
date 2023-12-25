@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
@@ -8,9 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -35,5 +33,14 @@ public class SeatTypeRepositoryTest
         SeatType seatType = new SeatType("a", 1, 1);
         Optional<SeatType> resultSeatType = this.seatTypeRepository.findById(seatType.getId());
         Assertions.assertFalse(resultSeatType.isPresent());
+    }
+
+    @Test
+    public void deleteAllByEventId()
+    {
+        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
+        this.seatTypeRepository.deleteAllByEventId(seatType.getEvent().getId());
+        List<SeatType> list = this.seatTypeRepository.findAllByEventId(seatType.getId());
+        Assertions.assertEquals(list.size(), 0);
     }
 }

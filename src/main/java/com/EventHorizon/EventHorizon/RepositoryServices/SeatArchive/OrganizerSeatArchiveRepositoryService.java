@@ -6,6 +6,7 @@ import com.EventHorizon.EventHorizon.Repository.SeatArchive.OrganizerSeatArchive
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,5 +25,9 @@ public class OrganizerSeatArchiveRepositoryService
 
     public void save(OrganizerSeatArchive organizerSeatArchive) {
         this.organizerSeatArchiveRepository.save(organizerSeatArchive);
+    }
+
+    public List<OrganizerSeatArchive> getAllByEventId(int eventId) {
+        return this.organizerSeatArchiveRepository.findAllByEventId(eventId);
     }
 }

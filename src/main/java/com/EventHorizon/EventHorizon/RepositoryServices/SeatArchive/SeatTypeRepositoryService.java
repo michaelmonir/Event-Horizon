@@ -21,4 +21,9 @@ public class SeatTypeRepositoryService
             throw new SeatTypeNotFoundException();
         return seatTypeOptional.get();
     }
+
+    public void deleteAllByEventId(int eventId)
+    {
+        this.seatTypeRepository.deleteAllByEventId(eventId);
+    }
 }

@@ -13,16 +13,16 @@ public class OrganizerSeatArchive
     @Id
     private int seatTypeId;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId("seatTypeId")
     @JoinColumn(name = "seat_type_id", referencedColumnName = "id")
     private SeatType seatType;
 
     @Column(nullable = false)
-    int total_number_of_seats;
+    private int total_number_of_seats;
 
     @Column(nullable = false)
-    int available_number_of_seats;
+    private int available_number_of_seats;
 
     protected OrganizerSeatArchive(){}
 

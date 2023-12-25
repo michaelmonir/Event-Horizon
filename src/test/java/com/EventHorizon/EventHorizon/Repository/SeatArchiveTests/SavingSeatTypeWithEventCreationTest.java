@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class SavingSeatTypeWithEventCreation
+public class SavingSeatTypeWithEventCreationTest
 {
     @Autowired
     LaunchedEventRepositoryService eventRepositoryService;
@@ -25,6 +26,8 @@ public class SavingSeatTypeWithEventCreation
     SeatTypeCustomCreator seatTypeCustomCreator;
     @Autowired
     EventRepositry eventRepositry;
+    @Autowired
+    SeatTypeRepository seatTypeRepository; // used only for finding by id not for creation
 
     @Test
     public void creatingSeatTypeUsingRepositoryService() {
@@ -34,6 +37,22 @@ public class SavingSeatTypeWithEventCreation
         Assertions.assertDoesNotThrow(() -> {
             eventRepositoryService.saveWhenCreating(event);
         });
+    }
+
+    // this test means that changing the seatType doesn'tttttt mean that it will
+    // automatically remove the old seat Types from data database
+    @Test
+    public void testChangingEventSeatTypesDoesNotDeleteOldTypes() {
+        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
+        Event event = this.getEventAndGiveOneSeatType(seatType);
+
+        eventRepositoryService.saveWhenCreating(event);
+
+        event.setSeatTypes(new ArrayList<>());
+        eventRepositoryService.update(event);
+
+        Assertions.assertEquals(0, event.getSeatTypes().size());
+        Assertions.assertNotEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
     }
 
     @Test

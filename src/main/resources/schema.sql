@@ -96,7 +96,7 @@ create table if not exists organizer_seat_archive(
 	seat_type_id int primary key,
     total_number_of_seats int not null,
     available_number_of_seats int not null,
-    foreign key (seat_type_id) references seat_type(id),
+    foreign key (seat_type_id) references seat_type(id) on update cascade on delete cascade,
     check (available_number_of_seats >= 0),
     check (total_number_of_seats >= available_number_of_seats)
 );
