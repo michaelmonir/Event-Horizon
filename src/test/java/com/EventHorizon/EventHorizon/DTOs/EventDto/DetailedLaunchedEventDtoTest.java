@@ -7,9 +7,12 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,14 +25,18 @@ class DetailedLaunchedEventDtoTest {
     private InformationCustomCreator informationCreator;
     @Autowired
     private OrganizerRepository organizerRepository;
+    @Mock
+    private SeatTypeListMapper seatTypeListMapper;
 
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
     private LaunchedEvent tempEvent;
+
     @Test
     public void testEventDetailsDtoConstructorMapsValuesCorrectly() {
         insialize();
+
         DetailedLaunchedEventDto detailedLaunchedEventDto = new DetailedLaunchedEventDto(tempEvent);
         // Verify that the values are mapped correctly
         Assertions.assertEquals(tempEvent.getName(), detailedLaunchedEventDto.getName());
@@ -40,6 +47,7 @@ class DetailedLaunchedEventDtoTest {
         Assertions.assertEquals(tempEvent.getLaunchedDate(), detailedLaunchedEventDto.getLaunchedDate());
     }
     private void insialize() {
+        Mockito.when(seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(Mockito.any())).thenReturn(new ArrayList<>());
         createOrganizer();
         createAdsOption();
         createLocation();

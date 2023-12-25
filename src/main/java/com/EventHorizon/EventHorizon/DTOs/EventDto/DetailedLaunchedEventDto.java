@@ -4,8 +4,10 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class DetailedLaunchedEventDto extends DetailedEventDto{
+
+    @Autowired
+    private SeatTypeListMapper seatTypeListMapper;
 
     private Date launchedDate;
 
@@ -30,13 +35,6 @@ public class DetailedLaunchedEventDto extends DetailedEventDto{
         this.setEventAds(new AdsOptionDto(event.getEventAds()));
         this.setEventType(event.getEventType());
         this.setEventOrganizer(new OrganizerHeaderDto(event.getEventOrganizer()));
-        this.initializeSeatTypeListFromEvent(event);
-    }
-
-    private void initializeSeatTypeListFromEvent(Event event) {
-        this.seatTypes = new ArrayList<>();
-        event.getSeatTypes().forEach(seatType -> {
-            this.seatTypes.add(new SeatTypeDto(seatType));
-        });
+        this.setSeatTypes(seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(event.getSeatTypes()));
     }
 }

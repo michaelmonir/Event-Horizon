@@ -12,10 +12,4 @@ public class SeatTypeDto
 {
     String name;
     int price;
-
-    public SeatTypeDto(SeatType seatType)
-    {
-        this.name = seatType.getName();
-        this.price = seatType.getPrice();
-    }
 }

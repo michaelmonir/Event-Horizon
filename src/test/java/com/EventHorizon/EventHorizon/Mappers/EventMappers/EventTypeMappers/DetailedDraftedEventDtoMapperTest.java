@@ -57,6 +57,8 @@ class DetailedDraftedEventDtoMapperTest {
     @Test
     public void testGetDTOfromDetailedEvent() {
 
+        Mockito.when(seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(Mockito.any())).thenReturn(new ArrayList<>());
+
         DraftedEvent event = new DraftedEvent();
         event.setId(1);
         event.setName("Test Event");

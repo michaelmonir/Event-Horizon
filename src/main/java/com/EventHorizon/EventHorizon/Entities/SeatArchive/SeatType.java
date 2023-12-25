@@ -26,6 +26,8 @@ public class SeatType
     private String name;
     @Column(nullable = false)
     private int price;
+    @Column(nullable = false)
+    private int numberOfSeats;
 
     protected SeatType(){}
 

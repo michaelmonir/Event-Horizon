@@ -4,7 +4,9 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,10 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 public class ViewEventDto {
+
+    @Autowired
+    private SeatTypeListMapper seatTypeListMapper;
+
     private int id;
     private String name;
     private String description;
@@ -34,14 +40,7 @@ public class ViewEventDto {
         this.description = event.getDescription();
         this.eventLocation = event.getEventLocation();
         this.eventOrganizer = new OrganizerHeaderDto(event.getEventOrganizer());
-        this.initializeSeatTypeListFromEvent(event);
-    }
-
-    private void initializeSeatTypeListFromEvent(Event event){
-        this.seatTypes = new ArrayList<>();
-        event.getSeatTypes().forEach(seatType -> {
-            this.seatTypes.add(new SeatTypeDto(seatType));
-        });
+        this.seatTypes = seatTypeListMapper.getSeatTypeDtoListFromSeatTypeList(event.getSeatTypes());
     }
 
     @Override
