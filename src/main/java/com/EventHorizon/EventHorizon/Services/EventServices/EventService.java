@@ -99,14 +99,14 @@ public class EventService {
     }
 
     public DetailedEventDto launchEvent(int informationId, int eventId) {
-        DraftedEvent event = draftedEventRepositoryService.getById(eventId);
-        this.checkAndHandleNotOrganizerOfEvent(informationId, event);
+        DraftedEvent draftedEvent = draftedEventRepositoryService.getById(eventId);
+        this.checkAndHandleNotOrganizerOfEvent(informationId, draftedEvent);
         draftedEventRepositoryService.delete(eventId);
 
-        LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(event);
-        launchedEventRepositoryService.saveWhenCreating(launchedEvent);
+        LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
+        launchedEventRepositoryService.saveWhenLaunching(launchedEvent);
 
-        return detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
+        return detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(launchedEvent);
     }
 
     public void deleteEvent(int informationId, int eventId, EventType eventType) {

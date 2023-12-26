@@ -57,11 +57,11 @@ public class EventOperationsController {
         detailedEventDTO = (DetailedLaunchedEventDto) this.eventService.updateEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
-    @PutMapping("launchEvent/{eventId}")//organizer,admin
+    @PutMapping("launchEvent/{organizerId}/{eventId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> launchEvent
-            (HttpServletRequest request, @PathVariable int eventId) {
+            (HttpServletRequest request, @PathVariable int organizerId, @PathVariable int eventId) {
 
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+//        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         DetailedEventDto detailedEventDTO = this.eventService.launchEvent(organizerId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }

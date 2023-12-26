@@ -8,11 +8,13 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdException;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -52,6 +54,16 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         launchedEvent.setLaunchedDate(new Date());
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
+        FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
+        handleSeatArchivesAndSaveInRepository(eventWrapper);
+        return launchedEvent;
+    }
+
+    public LaunchedEvent saveWhenLaunching(Event event) {
+        LaunchedEvent launchedEvent = (LaunchedEvent) event;
+        launchedEvent.setLaunchedDate(DateFunctions.getCurrentDate());
+        if (launchedEvent.getId() == 0)
+            throw new InvalidEventIdException();
         FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
         handleSeatArchivesAndSaveInRepository(eventWrapper);
         return launchedEvent;
