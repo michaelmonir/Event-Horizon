@@ -59,19 +59,19 @@ public class EventOperationsController {
     }
     @PutMapping("launchEvent/{eventId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> launchEvent
-            (HttpServletRequest request, @PathVariable int eventId, @RequestBody DetailedEventDto detailedEventDTO) {
+            (HttpServletRequest request, @PathVariable int eventId) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDTO = this.eventService.launchEvent(organizerId, detailedEventDTO);
+        DetailedEventDto detailedEventDTO = this.eventService.launchEvent(organizerId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
+    @DeleteMapping("deleteEvent/{eventId}/{eventType}") //organizer,admin
     public ResponseEntity deleteEvent
-            (HttpServletRequest request, @PathVariable int eventId,@RequestBody DetailedEventDto detailedEventDTO) {
+            (HttpServletRequest request, @PathVariable int eventId, @PathVariable EventType eventType) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        this.eventService.deleteEvent(organizerId, detailedEventDTO);
+        this.eventService.deleteEvent(organizerId, eventId, eventType);
         return new ResponseEntity(HttpStatus.OK);
     }
 

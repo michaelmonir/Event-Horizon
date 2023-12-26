@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import org.springframework.beans.factory.annotation.Autowired;

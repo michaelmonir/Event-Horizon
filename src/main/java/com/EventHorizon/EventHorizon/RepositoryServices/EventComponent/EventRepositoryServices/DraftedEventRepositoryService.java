@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRep
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
@@ -55,6 +56,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     }
 
     private void handleSeatArchivesAndSaveInRepository(DraftedEvent draftedEvent) {
+        draftedEvent.setEventType(EventType.DRAFTEDEVENT);
         eventSeatTypesRepositoryService.setEventForItsSeatTypes(draftedEvent);
         draftedEventRepository.save(draftedEvent);
         eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(draftedEvent);

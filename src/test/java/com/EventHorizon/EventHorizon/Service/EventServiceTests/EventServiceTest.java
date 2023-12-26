@@ -102,12 +102,11 @@ public class EventServiceTest {
     void testCreateEvent() {
         Organizer organizer = new Organizer();
         DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
-        when(eventRepositoryServiceInterface.saveWhenCreating(any())).thenReturn(new LaunchedEvent());
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
 
-        when(detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+        when(detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new DraftedEvent());
         when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
 
         DetailedEventDto result = eventService.createEvent(1, eventDTO);
@@ -137,12 +136,11 @@ public class EventServiceTest {
     @Test
     void testDeleteEvent() {
         Organizer organizer = new Organizer();
-        DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
-        assertDoesNotThrow(() -> eventService.deleteEvent(1, eventDTO));
+        assertDoesNotThrow(() -> eventService.deleteEvent(1, 1, EventType.DRAFTEDEVENT));
     }
 
     @Test
@@ -152,16 +150,5 @@ public class EventServiceTest {
         Organizer result = eventService.getOrganizerFromInformationId(1);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(Organizer.class, result.getClass());
-    }
-
-    @Test
-    public void launchEvent_AlreadyLaunchedEvent_ThrowsEventIsAlreadyLaunchedException() {
-        int informationId = 1;
-        DetailedEventDto launchedEventDTO = createLaunchedEvent();
-        assertThrows(EventIsAlreadyLaunched.class, () -> eventService.launchEvent(informationId, launchedEventDTO));
-    }
-
-    private DetailedLaunchedEventDto createLaunchedEvent() {
-        return DetailedLaunchedEventDto.builder().eventType(EventType.LAUNCHEDEVENT).build();
     }
 }

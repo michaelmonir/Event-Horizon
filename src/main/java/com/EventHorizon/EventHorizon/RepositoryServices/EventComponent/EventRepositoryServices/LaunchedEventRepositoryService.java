@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
@@ -100,9 +101,11 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     private void handleSeatArchivesAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
-        eventSeatTypesRepositoryService.setEventForItsSeatTypes(futureEventWrapper.getLaunchedEvent());
-        launchedEventRepository.save(futureEventWrapper.getLaunchedEvent());
-        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(futureEventWrapper.getLaunchedEvent());
+        LaunchedEvent event = futureEventWrapper.getLaunchedEvent();
+        event.setEventType(EventType.LAUNCHEDEVENT);
+        eventSeatTypesRepositoryService.setEventForItsSeatTypes(event);
+        launchedEventRepository.save(event);
+        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification) {

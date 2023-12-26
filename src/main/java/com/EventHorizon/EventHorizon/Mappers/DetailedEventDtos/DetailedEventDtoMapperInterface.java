@@ -20,4 +20,9 @@ public class DetailedEventDtoMapperInterface
         DetailedEventDtoMapper mapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(event.getEventType());
         return mapper.getDTOfromDetailedEvent(event);
     }
+
+    public void updateEventFromDetailedEventDTO(Event event, DetailedEventDto dto) {
+        DetailedEventDtoMapper mapper = detailedEventDtoMapperFactory.getEventDtoMapperByEventType(dto.getEventType());
+        mapper.updateEventFromDetailedEventDTO(event, dto);
+    }
 }

@@ -7,4 +7,6 @@ public interface DetailedEventDtoMapper {
     Event getEventFromDetailedEventDTO(DetailedEventDto dto) ;
 
     DetailedEventDto getDTOfromDetailedEvent(Event event);
+
+    public void updateEventFromDetailedEventDTO(Event event, DetailedEventDto dto);
 }
