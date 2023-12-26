@@ -52,10 +52,14 @@ public class EventService {
     @Autowired
     private DraftedLaunchedEventMapper draftedLaunchedEventMapper;
 
-    public ViewEventDto getEventForUser(int eventId) {
-        LaunchedEvent event = this.launchedEventRepositoryService.getById(eventId);
-
-        return viewEventDtoMapper.getDTOfromViewEvent(event);
+    public DetailedEventDto getEventForUser(int eventId) {
+        try {
+            LaunchedEvent event = this.launchedEventRepositoryService.getById(eventId);
+            return detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
+        } catch (Exception e) {
+            DraftedEvent event = this.draftedEventRepositoryService.getById(eventId);
+            return detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
+        }
     }
 
     public DetailedEventDto getEventForOrganizer(int informationId, int eventId, EventType eventType) {

@@ -30,15 +30,4 @@ public class ViewEventDto {
     private Location eventLocation;
     private OrganizerHeaderDto eventOrganizer;
     private List<SeatTypeDto> seatTypes;
-
-    @Override
-    public String toString() {
-        return "EventDetailsDto{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", eventCategory='" + eventCategory + '\'' +
-                ", eventDate=" + eventDate +
-                ", eventLocation=" + eventLocation +
-                '}';
-    }
 }

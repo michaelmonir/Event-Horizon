@@ -27,9 +27,9 @@ public class EventOperationsController {
     LaunchedEventRepositoryService launchedEventRepositoryService;
 
     @GetMapping("eventForUser/{eventId}")//any
-    public ResponseEntity<ViewEventDto> getEventForUser(@PathVariable int eventId) {
-        ViewEventDto viewEventDTO = this.eventService.getEventForUser(eventId);
-        return new ResponseEntity<>(viewEventDTO, HttpStatus.OK);
+    public ResponseEntity<DetailedEventDto> getEventForUser(@PathVariable int eventId) {
+        DetailedEventDto detailedEventDto = this.eventService.getEventForUser(eventId);
+        return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 
     @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
@@ -42,10 +42,10 @@ public class EventOperationsController {
 
     @PostMapping("createEvent/{organizerId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> createEvent
-            (@PathVariable int organizerId, @RequestBody DetailedLaunchedEventDto detailedEventDto) {
+            (@PathVariable int organizerId, @RequestBody DetailedDraftedEventDto detailedEventDto) {
 
 //        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDto = (DetailedLaunchedEventDto) eventService.createEvent(organizerId, detailedEventDto);
+        detailedEventDto = (DetailedDraftedEventDto) eventService.createEvent(organizerId, detailedEventDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 
