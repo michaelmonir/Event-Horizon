@@ -36,7 +36,6 @@ public class BuyedTicketCollection
         if (o == null || getClass() != o.getClass()) return false;
         BuyedTicketCollection that = (BuyedTicketCollection) o;
 
-
         // not comparing dates as they are compared in different formats so will always return false
         return numberOfTickets == that.numberOfTickets
                 && client.getId() == that.client.getId()

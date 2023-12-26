@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.Services.EventServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
@@ -34,7 +33,7 @@ public class EventService {
     @Autowired
     private UserEventService userEventService;
     @Autowired
-    private InformationRepositoryService informationService;
+    private InformationRepositoryService informationRepositoryService;
     @Autowired
     private ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
@@ -73,7 +72,6 @@ public class EventService {
     public List<EventHeaderDto> getEventHeadersList(int pageIndex, int pageSize) {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
-
 
     public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
@@ -117,11 +115,11 @@ public class EventService {
     }
 
     public Organizer getOrganizerFromInformationId(int inforamtionID) {
-        Information information = informationService.getByID(inforamtionID);
+        Information information = informationRepositoryService.getByID(inforamtionID);
         return (Organizer) organizerInformationService.getUserByInformation(information);
     }
 
-    public void checkAndHandleNotOrganizerOfEvent(int informationId, Event event){
+    private void checkAndHandleNotOrganizerOfEvent(int informationId, Event event){
         Organizer organizer = getOrganizerFromInformationId(informationId);
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
     }
