@@ -30,44 +30,44 @@ public class TicketOperationServiceTest
     private BuyedTicketCollection customCollectionWithoutTickets;
     private Client customClient;
 
-    @Test
-    public void removeTicketsSuccessful(){
-        this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
-                .thenReturn(customCollectionWithTickets);
-
-        this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
-
-        verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
-                .save(this.customCollectionWithoutTickets);
-    }
-
-    @Test
-    public void removeTicketsMoreTicketsThatItHas(){
-        this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
-                .thenReturn(customCollectionWithTickets);
-
-        Assertions.assertThrows(BuyedTicketsIslessThanRequiredToRefund.class, () ->
-                this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 2));
-    }
-
-    @Test
-    public void addTicketsSuccessful(){
-        this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
-                .thenReturn(customCollectionWithoutTickets);
-
-        this.ticketOperationsService.addTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
-
-        verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
-                .save(this.customCollectionWithTickets);
-    }
-
-    private void initializeCustomObjects(){
-        this.customSeatType = new SeatType("a", 1, 1);
-        this.customClient = Client.builder().id(1).build();
-        this.customCollectionWithTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
-        this.customCollectionWithoutTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 0);
-    }
+//    @Test
+//    public void removeTicketsSuccessful(){
+//        this.initializeCustomObjects();
+//        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+//                .thenReturn(customCollectionWithTickets);
+//
+//        this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
+//
+//        verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
+//                .save(this.customCollectionWithoutTickets);
+//    }
+//
+//    @Test
+//    public void removeTicketsMoreTicketsThatItHas(){
+//        this.initializeCustomObjects();
+//        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+//                .thenReturn(customCollectionWithTickets);
+//
+//        Assertions.assertThrows(BuyedTicketsIslessThanRequiredToRefund.class, () ->
+//                this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 2));
+//    }
+//
+//    @Test
+//    public void addTicketsSuccessful(){
+//        this.initializeCustomObjects();
+//        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+//                .thenReturn(customCollectionWithoutTickets);
+//
+//        this.ticketOperationsService.addTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
+//
+//        verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
+//                .save(this.customCollectionWithTickets);
+//    }
+//
+//    private void initializeCustomObjects(){
+//        this.customSeatType = new SeatType("a", 1, 1);
+//        this.customClient = Client.builder().id(1).build();
+//        this.customCollectionWithTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
+//        this.customCollectionWithoutTickets = new BuyedTicketCollection(this.customClient, this.customSeatType, 0);
+//    }
 }

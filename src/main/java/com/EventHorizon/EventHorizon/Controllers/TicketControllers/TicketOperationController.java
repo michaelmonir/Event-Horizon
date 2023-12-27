@@ -21,7 +21,7 @@ public class TicketOperationController {
     @Autowired
     private TicketViewService ticketViewService;
 
-    @PutMapping("buyTicket/{clientId}") //client
+    @PutMapping("buyTicket/{clientInformationId}") //client
     public ResponseEntity buyTicket
             (HttpServletRequest request, @PathVariable int clientInformationId, @RequestBody List<BuyingAndRefundingDto> list) {
 

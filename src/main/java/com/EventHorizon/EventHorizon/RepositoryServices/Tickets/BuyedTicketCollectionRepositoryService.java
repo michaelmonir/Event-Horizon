@@ -1,6 +1,8 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Tickets;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Exceptions.Tickets.BuyedTicketCollectionNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.Tickets.BuyedTicketCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,17 @@ public class BuyedTicketCollectionRepositoryService
                 = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(clientId, seatTypeId);
         if (!optionalBuyedTicketCollection.isPresent())
             throw new BuyedTicketCollectionNotFoundException();
+        return optionalBuyedTicketCollection.get();
+    }
+
+    public BuyedTicketCollection getBySeatTypeIdAndClientId(SeatType seatType, Client client) {
+        Optional<BuyedTicketCollection> optionalBuyedTicketCollection
+                = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(seatType.getId(), client.getId());
+        if (!optionalBuyedTicketCollection.isPresent()) {
+            BuyedTicketCollection buyedTicketCollection = new BuyedTicketCollection(client, seatType, 0);
+            this.buyedTicketCollectionRepository.save(buyedTicketCollection);
+            return buyedTicketCollection;
+        }
         return optionalBuyedTicketCollection.get();
     }
 
