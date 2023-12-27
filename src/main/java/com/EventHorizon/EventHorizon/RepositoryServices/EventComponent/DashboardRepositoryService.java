@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,8 @@ public class DashboardRepositoryService {
     private List<EventHeaderDto> eventHeaderDtos;
     @Autowired
     private LaunchedEventRepositoryService launchedEventRepositoryService;
+    @Autowired
+    private DraftedEventRepositoryService draftedEventRepositoryService;
     int pageSize;
     PageRequest pageWithRecords;
     private void checkPageIndexAndSize(int pageIndex, int pageSize) {

@@ -9,6 +9,6 @@ public enum FilterTypes {
     CITY,
     DATE,
     ORGANIZER,
-
+    EVENTTYPE,
 
 }

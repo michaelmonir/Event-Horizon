@@ -9,7 +9,9 @@ import com.EventHorizon.EventHorizon.Filter.FilterCriteria;
 import com.EventHorizon.EventHorizon.Filter.FilterFactory;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
 import com.EventHorizon.EventHorizon.Filter.RelationTypeFactory;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,7 +24,7 @@ import java.util.List;
 public class FilterService {
 
     private final FilterFactory filterFactory;
-    private final LaunchedEventRepositoryService LaunchEventRepositoryService;
+    private final EventRepository eventRepository;
     private final RelationTypeFactory relationTypeFactory;
     private final DashboardRepositoryService dashboardRepositoryService;
 
@@ -42,8 +44,9 @@ public class FilterService {
     }
 
     public List<? extends Event> getFilteredEvents(List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
-        return LaunchEventRepositoryService.getAllEvents(getSpecifications(filters));
+        return eventRepository.findAll(getSpecifications(filters));
     }
+
     public List<EventHeaderDto> getFilteredEventHeadersList(int pageIndex, int pageSize, List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
         return this.dashboardRepositoryService.getFilteredPage(pageIndex, pageSize, getSpecifications(filters));
     }

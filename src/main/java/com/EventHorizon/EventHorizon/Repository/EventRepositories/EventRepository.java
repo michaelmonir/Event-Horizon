@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface EventRepositry extends JpaRepository<Event, Integer>, JpaSpecificationExecutor<Event> {
+public interface EventRepository extends JpaRepository<Event, Integer>, JpaSpecificationExecutor<Event> {
 
     @Override
     List<Event> findAll(@Nullable Specification<Event> specification);

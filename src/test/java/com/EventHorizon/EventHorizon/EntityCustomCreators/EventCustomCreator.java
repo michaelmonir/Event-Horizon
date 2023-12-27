@@ -7,14 +7,13 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Service
 public class EventCustomCreator
@@ -26,7 +25,7 @@ public class EventCustomCreator
     @Autowired
     private LocationCustomCreator locationCustomCreator;
     @Autowired
-    private EventRepositry eventRepositry;
+    private EventRepository eventRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
     @Autowired

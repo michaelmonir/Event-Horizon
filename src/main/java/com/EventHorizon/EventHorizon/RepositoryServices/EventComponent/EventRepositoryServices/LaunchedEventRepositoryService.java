@@ -10,6 +10,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExis
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdException;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
@@ -35,8 +36,8 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
-
-
+    @Autowired
+    private EventRepository eventRepository;
     private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
         // Warning: Unchecked cast
         return (Specification<T>) obj;
@@ -105,9 +106,9 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<EventHeaderDto> getFilteredEventsHeaderDto(PageRequest pageWithRecords, Specification<Event> specification) {
-        List<LaunchedEvent> events = (List<LaunchedEvent>) getAllEvents(specification, pageWithRecords);
+        List<Event> events = (List<Event>) getAllEvents(specification, pageWithRecords);
         List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
-        for (LaunchedEvent event : events) {
+        for (Event event : events) {
             eventHeaderDtos.add(new EventHeaderDto(event));
         }
         return eventHeaderDtos;
@@ -135,7 +136,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
-        return launchedEventRepository.findAll(castToLunchedEvents(specification), pageRequest).getContent();
+        return eventRepository.findAll(castToLunchedEvents(specification), pageRequest).getContent();
     }
 
     public List<LaunchedEvent> getAllEvents() {

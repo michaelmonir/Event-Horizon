@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,9 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 @SpringBootTest
-class EventRepositryTest {
+class EventRepositoryTest {
     @Autowired
-    private EventRepositry eventRepositry;
+    private EventRepository eventRepository;
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
@@ -39,7 +39,7 @@ class EventRepositryTest {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
         tempEvent.setEventLocation(tempLocation);
-        eventRepositry.save(tempEvent);
+        eventRepository.save(tempEvent);
         Assertions.assertNotEquals(0, tempEvent.getId());
 
     }
@@ -48,12 +48,12 @@ class EventRepositryTest {
     public void testManyToOneRelationBetwenAdsAndEvent() {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
-        eventRepositry.save(tempEvent);
+        eventRepository.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer).build();
-        eventRepositry.save(event2);
+        eventRepository.save(event2);
         Assertions.assertEquals(tempEvent.getEventAds().getId(), event2.getEventAds().getId());
     }
 
@@ -62,14 +62,14 @@ class EventRepositryTest {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
         tempEvent.setEventLocation(tempLocation);
-        eventRepositry.save(tempEvent);
+        eventRepository.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
                 .eventAds(tempAdsOption)
                 .eventOrganizer(tempOrganizer)
                 .eventLocation(tempLocation).build();
         Assertions.assertThrows(RuntimeException.class, () -> {
-            eventRepositry.save(event2);
+            eventRepository.save(event2);
         });
     }
 
@@ -81,7 +81,7 @@ class EventRepositryTest {
         Location location2 = Location.builder()
                 .country("Egypt")
                 .city("Alex").build();
-        eventRepositry.save(tempEvent);
+        eventRepository.save(tempEvent);
         Event event2 = Event.builder()
                 .name("e6")
                 .eventAds(tempAdsOption)
@@ -89,7 +89,7 @@ class EventRepositryTest {
                 .eventLocation(location2).build();
 
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositry.save(event2);
+            eventRepository.save(event2);
             Assertions.assertNotEquals(tempEvent.getEventLocation().getId(), event2.getEventLocation().getId());
         });
 
@@ -97,7 +97,7 @@ class EventRepositryTest {
 
     @Test
     public void findNotExistedEventById() {
-        Optional<Event> event = eventRepositry.findById(0);
+        Optional<Event> event = eventRepository.findById(0);
         Assertions.assertFalse(event.isPresent());
     }
 
@@ -105,8 +105,8 @@ class EventRepositryTest {
     public void findExistedEventById() {
         insialize();
         tempEvent.setEventAds(tempAdsOption);
-        eventRepositry.save(tempEvent);
-        Optional<Event> findedEvent = eventRepositry.findById(tempEvent.getId());
+        eventRepository.save(tempEvent);
+        Optional<Event> findedEvent = eventRepository.findById(tempEvent.getId());
         Assertions.assertTrue(findedEvent.isPresent());
     }
 
@@ -120,7 +120,7 @@ class EventRepositryTest {
                 .description("...").build();
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-            eventRepositry.save(event);
+            eventRepository.save(event);
         });
     }
 
@@ -128,7 +128,7 @@ class EventRepositryTest {
     public void createEventWithoutAdsOption() {
         insialize();
         Assertions.assertThrows(RuntimeException.class, () -> {
-            eventRepositry.save(tempEvent);
+            eventRepository.save(tempEvent);
         });
     }
 

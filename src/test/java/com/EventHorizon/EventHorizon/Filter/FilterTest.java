@@ -11,6 +11,7 @@ import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreat
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
@@ -35,6 +36,8 @@ public class FilterTest {
     private EventService eventService;
     @Autowired
     private LaunchedEventRepositoryService eventRepositoryService;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private InformationRepositoryService informationRepositoryService;
     @Autowired
@@ -109,7 +112,7 @@ public class FilterTest {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         List<? extends Event> events = filterService.getFilteredEvents(list);
-        List<? extends Event> allEvents = eventRepositoryService.getAllEvents();
+        List<? extends Event> allEvents = eventRepository.findAll();
         Assertions.assertEquals(events, allEvents);
     }
     @Test

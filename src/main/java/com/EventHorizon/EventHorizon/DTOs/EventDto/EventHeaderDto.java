@@ -21,7 +21,7 @@ public class EventHeaderDto {
     private Location eventLocation;
     private OrganizerHeaderDto eventOrganizer;
 
-    public EventHeaderDto(LaunchedEvent event) {
+    public EventHeaderDto(Event event) {
         this.id = event.getId();
         this.name = event.getName();
         this.eventCategory = event.getEventCategory();

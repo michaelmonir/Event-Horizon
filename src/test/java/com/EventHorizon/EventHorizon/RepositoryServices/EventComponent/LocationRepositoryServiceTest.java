@@ -7,7 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.LocationComponent.LocationRepositoryService;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class LocationRepositoryServiceTest {
     @Autowired
-    private EventRepositry eventRepositry;
+    private EventRepository eventRepository;
     @Autowired
     private LocationRepositoryService locationRepositoryService;
     @Autowired
@@ -45,7 +45,7 @@ class LocationRepositoryServiceTest {
                 .eventAds(adsOption)
                 .eventOrganizer(organizer)
                 .description("neo").build();
-        eventRepositry.save(event);
+        eventRepository.save(event);
         locationRepositoryService.deleteLocationById(event.getId());
     }
 }

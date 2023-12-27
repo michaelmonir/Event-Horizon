@@ -7,7 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.*;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepositry;
+import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
@@ -30,7 +30,7 @@ public class SavingSeatTypeWithEventCreationTest
     @Autowired
     SeatTypeCustomCreator seatTypeCustomCreator;
     @Autowired
-    EventRepositry eventRepositry;
+    EventRepository eventRepository;
     @Autowired
     SeatTypeRepository seatTypeRepository; // used only for finding by id not for creation
     @Autowired
@@ -89,7 +89,7 @@ public class SavingSeatTypeWithEventCreationTest
         // as then the seatTypes would not have their event initialized
         // which normally takes place in the RepositoryService not the repository
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositry.save(event);
+            eventRepository.save(event);
         });
     }
 
