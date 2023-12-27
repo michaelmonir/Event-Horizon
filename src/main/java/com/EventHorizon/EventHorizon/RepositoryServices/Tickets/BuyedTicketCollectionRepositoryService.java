@@ -26,7 +26,7 @@ public class BuyedTicketCollectionRepositoryService
 
     public BuyedTicketCollection getAndHandleLazyInitialization(SeatType seatType, Client client) {
         Optional<BuyedTicketCollection> optionalBuyedTicketCollection
-                = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(seatType.getId(), client.getId());
+                = this.buyedTicketCollectionRepository.findByClientIdAndSeatTypeId(client.getId(), seatType.getId());
         if (!optionalBuyedTicketCollection.isPresent()) {
             BuyedTicketCollection buyedTicketCollection = new BuyedTicketCollection(client, seatType, 0);
             this.buyedTicketCollectionRepository.save(buyedTicketCollection);

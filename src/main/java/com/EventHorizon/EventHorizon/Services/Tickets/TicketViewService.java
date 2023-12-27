@@ -58,7 +58,7 @@ public class TicketViewService
             // this is put inside of catch as could be unregistered user
             int clientId = this.getClientIdFromInformationId(userInformationId);
             BuyedTicketCollection buyedTicketCollection
-                    = btcRepositoryService.getBySeatTypeIdAndClientId(clientId, seatTypeId);
+                    = btcRepositoryService.getBySeatTypeIdAndClientId(seatTypeId, clientId);
             return buyedTicketCollection.getNumberOfTickets();
         } catch (Exception e) {
             // not initialized due to not buying tickets
