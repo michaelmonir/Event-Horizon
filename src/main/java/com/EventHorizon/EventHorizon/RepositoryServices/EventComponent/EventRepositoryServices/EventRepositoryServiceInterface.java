@@ -18,6 +18,19 @@ public class EventRepositoryServiceInterface
         return eventRepositoryService.getById(id);
     }
 
+    public Event getById(int id)
+    {
+        try {
+            SuperEventRepositoryService eventRepositoryService
+                    = eventRepositoryServiceFactory.getByEventType(EventType.LAUNCHEDEVENT);
+            return eventRepositoryService.getById(id);
+        } catch (Exception e) {
+            SuperEventRepositoryService eventRepositoryService
+                    = eventRepositoryServiceFactory.getByEventType(EventType.DRAFTEDEVENT);
+            return eventRepositoryService.getById(id);
+        }
+    }
+
     public Event saveWhenCreating(Event Event)
     {
         SuperEventRepositoryService eventRepositoryService

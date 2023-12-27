@@ -86,8 +86,7 @@ public class EventService {
     public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
 
-        Event event = eventRepositoryServiceInterface
-                .getByIdAndEventType(eventDTO.getId(), eventDTO.getEventType());
+        Event event = eventRepositoryServiceInterface.getById(eventDTO.getId());
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
 
         detailedEventDtoMapperInterface.updateEventFromDetailedEventDTO(event, eventDTO);

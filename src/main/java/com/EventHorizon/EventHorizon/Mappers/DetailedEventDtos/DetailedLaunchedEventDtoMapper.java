@@ -52,6 +52,7 @@ public class DetailedLaunchedEventDtoMapper implements DetailedEventDtoMapper {
                 .build();
     }
 
+    // shouldn't update seat types
     public void updateEventFromDetailedEventDTO(Event event, DetailedEventDto dto) {
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());
@@ -59,6 +60,5 @@ public class DetailedLaunchedEventDtoMapper implements DetailedEventDtoMapper {
         event.setEventDate(dto.getEventDate());
         event.setEventLocation(dto.getEventLocation());
         event.setEventAds(this.adsOptionDtoMapper.getAdsOptionFromDTO(dto.getEventAds()));
-        event.setSeatTypes(seatTypeListMapper.getSeatTypeListFromSeatTypeListDTO(dto.getSeatTypes()));
     }
 }
