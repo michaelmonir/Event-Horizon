@@ -33,10 +33,10 @@ public class TicketOperationServiceTest
     @Test
     public void removeTicketsSuccessful(){
         this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+        when(buyedTicketCollectionRepositoryService.getAndHandleLazyInitialization(any(SeatType.class), any(Client.class)))
                 .thenReturn(customCollectionWithTickets);
 
-        this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
+        this.ticketOperationsService.removeTickets(this.customSeatType, this.customClient, 1);
 
         verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
                 .save(this.customCollectionWithoutTickets);
@@ -45,20 +45,20 @@ public class TicketOperationServiceTest
     @Test
     public void removeTicketsMoreTicketsThatItHas(){
         this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+        when(buyedTicketCollectionRepositoryService.getAndHandleLazyInitialization(any(SeatType.class), any(Client.class)))
                 .thenReturn(customCollectionWithTickets);
 
         Assertions.assertThrows(BuyedTicketsIslessThanRequiredToRefund.class, () ->
-                this.ticketOperationsService.removeTickets(this.customSeatType.getId(), this.customClient.getId(), 2));
+                this.ticketOperationsService.removeTickets(this.customSeatType, this.customClient, 2));
     }
 
     @Test
     public void addTicketsSuccessful(){
         this.initializeCustomObjects();
-        when(buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(any(int.class), any(int.class)))
+        when(buyedTicketCollectionRepositoryService.getAndHandleLazyInitialization(any(SeatType.class), any(Client.class)))
                 .thenReturn(customCollectionWithoutTickets);
 
-        this.ticketOperationsService.addTickets(this.customSeatType.getId(), this.customClient.getId(), 1);
+        this.ticketOperationsService.addTickets(this.customSeatType, this.customClient, 1);
 
         verify(this.buyedTicketCollectionRepositoryService, Mockito.times(1))
                 .save(this.customCollectionWithTickets);

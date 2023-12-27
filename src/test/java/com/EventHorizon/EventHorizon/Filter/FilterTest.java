@@ -168,5 +168,4 @@ public class FilterTest {
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
-
 }

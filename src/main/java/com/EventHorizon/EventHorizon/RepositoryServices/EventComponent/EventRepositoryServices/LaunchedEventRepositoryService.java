@@ -75,6 +75,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         int id = newEvent.getId();
         newEvent.setId(id);
         FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
+//        handleSeatArchivesAndSaveInRepository(eventWrapper);
         handleSeatArchivesAndSaveInRepository(eventWrapper);
         return newEvent;
     }
@@ -119,6 +120,15 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         launchedEventRepository.save(event);
         eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
     }
+
+    // shouldn't update the seat types of the event
+//    private void handleDateAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
+//        LaunchedEvent event = futureEventWrapper.getLaunchedEvent();
+//        event.setEventType(EventType.LAUNCHEDEVENT);
+////        eventSeatTypesRepositoryService.setEventForItsSeatTypes(event);
+//        launchedEventRepository.save(event);
+////        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
+//    }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification) {
         return launchedEventRepository.findAll(castToLunchedEvents(specification));

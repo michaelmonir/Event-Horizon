@@ -51,10 +51,10 @@ public class EventOperationsController {
 
     @PutMapping("updateEvent/{organizerId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> updateEvent
-            (@PathVariable int organizerId,@RequestBody DetailedLaunchedEventDto detailedEventDTO) {
+            (@PathVariable int organizerId,@RequestBody DetailedDraftedEventDto detailedEventDTO) {
 
       //  int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDTO = (DetailedLaunchedEventDto) this.eventService.updateEvent(organizerId, detailedEventDTO);
+        detailedEventDTO = (DetailedDraftedEventDto) this.eventService.updateEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
     @PutMapping("launchEvent/{organizerId}/{eventId}")//organizer,admin

@@ -39,10 +39,11 @@ public class TicketTransactionsService {
         int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
         int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
 
-        validateEventIsLaunchedAndIsFuture(seatTypeId);
+        SeatType seatType = seatTypeRepositoryService.getById(seatTypeId);
+        validateEventIsLaunchedAndIsFuture(seatType);
 
         this.seatArchiveOperationService.removeTickets(seatTypeId, numOfTickets);
-        this.ticketOperationsService.addTickets(seatTypeId, client.getId(), numOfTickets);
+        this.ticketOperationsService.addTickets(seatType, client, numOfTickets);
     }
 
     @Transactional
@@ -57,14 +58,14 @@ public class TicketTransactionsService {
         int seatTypeId = buyingAndRefundingDto.getSeatTypeId();
         int numOfTickets = buyingAndRefundingDto.getNumOfTickets();
 
-        validateEventIsLaunchedAndIsFuture(seatTypeId);
+        SeatType seatType = seatTypeRepositoryService.getById(seatTypeId);
+        validateEventIsLaunchedAndIsFuture(seatType);
 
-        this.ticketOperationsService.removeTickets(seatTypeId, client.getId(), numOfTickets);
+        this.ticketOperationsService.removeTickets(seatType, client, numOfTickets);
         this.seatArchiveOperationService.addTickets(seatTypeId, numOfTickets);
     }
 
-    private void validateEventIsLaunchedAndIsFuture(int seatTypeId) {
-        SeatType seatType = seatTypeRepositoryService.getById(seatTypeId);
+    private void validateEventIsLaunchedAndIsFuture(SeatType seatType) {
         Event event = seatType.getEvent();
         eventTypeService.checkAndHandleSeatTypeOfLaunchedFutureEvent(event.getId(), event.getEventType());
     }

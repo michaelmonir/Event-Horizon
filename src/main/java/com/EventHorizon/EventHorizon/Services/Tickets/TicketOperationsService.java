@@ -1,8 +1,9 @@
 package com.EventHorizon.EventHorizon.Services.Tickets;
 
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
-import com.EventHorizon.EventHorizon.Repository.Tickets.BuyedTicketCollectionRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public class TicketOperationsService
     @Autowired
     BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
 
-    public void addTickets(int seatTypeId, int clientId, int numOfTickets) {
+    public void addTickets(SeatType seatType, Client client, int numOfTickets) {
         BuyedTicketCollection buyedTicketCollection =
-                this.buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(seatTypeId, clientId);
+                this.buyedTicketCollectionRepositoryService.getAndHandleLazyInitialization(seatType, client);
 
         int oldNumOfTickets = buyedTicketCollection.getNumberOfTickets();
 
@@ -23,9 +24,9 @@ public class TicketOperationsService
         this.buyedTicketCollectionRepositoryService.save(buyedTicketCollection);
     }
 
-    public void removeTickets(int seatTypeId, int clientId, int numOfTickets) {
+    public void removeTickets(SeatType seatType, Client client, int numOfTickets) {
         BuyedTicketCollection buyedTicketCollection =
-                this.buyedTicketCollectionRepositoryService.getBySeatTypeIdAndClientId(seatTypeId, clientId);
+                this.buyedTicketCollectionRepositoryService.getAndHandleLazyInitialization(seatType, client);
 
         int oldNumOfTickets = buyedTicketCollection.getNumberOfTickets();
 
