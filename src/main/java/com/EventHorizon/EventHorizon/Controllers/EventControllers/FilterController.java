@@ -35,6 +35,7 @@ public class FilterController {
         List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filterDto.getFilters());
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
+
     /*
      * for pending
      */
@@ -46,4 +47,15 @@ public class FilterController {
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
 
+    /*
+     * for pending
+     */
+    @PostMapping("draftedForOrganizer/{pageIndex}/{pageSize}/{organizerId}")//any
+    public ResponseEntity<List<EventHeaderDto>> getEventHeadersForPendingForOrganizer(@PathVariable int pageIndex, @PathVariable int pageSize, @PathVariable int organizerId, @RequestBody FilterDto filterDto) {
+        List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters = filterDto.getFilters();
+        filters.add(new FilterRelationList<>(FilterTypes.ORGANIZERID, FilterRelation.AND, organizerId));
+        filters.add(new FilterRelationList<>(FilterTypes.EVENTTYPE, FilterRelation.AND, EventType.DRAFTEDEVENT));
+        List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filters);
+        return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
+    }
 }

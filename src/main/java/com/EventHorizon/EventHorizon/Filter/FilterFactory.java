@@ -20,6 +20,7 @@ public class FilterFactory {
             case ORGANIZER -> new OrganizerNameFilterCriteria((String) filter.third);
             case NAME -> new EventNameFilterCriteria((String) filter.third);
             case EVENTTYPE -> new EventTypeFilterCriteria((EventType) filter.third);
+            case ORGANIZERID -> new OrganizerIdFilterCriteria((int) filter.third);
         };
     }
 }
