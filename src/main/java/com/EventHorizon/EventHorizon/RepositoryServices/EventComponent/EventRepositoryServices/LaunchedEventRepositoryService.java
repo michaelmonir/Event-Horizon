@@ -136,7 +136,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
-        return eventRepository.findAll(castToLunchedEvents(specification), pageRequest).getContent();
+        return eventRepository.findAll(specification, pageRequest).getContent();
     }
 
     public List<LaunchedEvent> getAllEvents() {

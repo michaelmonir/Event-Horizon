@@ -12,6 +12,6 @@ public class EventTypeFilterCriteria implements FilterCriteria {
     @Override
     public Specification<Event> meetCriteria() {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("event_type"), eventType);
+                criteriaBuilder.equal(root.get("eventType"), eventType);
     }
 }
