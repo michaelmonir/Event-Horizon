@@ -51,6 +51,7 @@ public class FilterController {
      * for pending
      */
     @PostMapping("draftedForOrganizer/{pageIndex}/{pageSize}/{organizerId}")//any
+//    @PostMapping("eventsForOrganizer/{pageIndex}/{pageSize}/{organizerId}")//any
     public ResponseEntity<List<EventHeaderDto>> getEventHeadersForPendingForOrganizer(@PathVariable int pageIndex, @PathVariable int pageSize, @PathVariable int organizerId, @RequestBody FilterDto filterDto) {
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters = filterDto.getFilters();
         filters.add(new FilterRelationList<>(FilterTypes.ORGANIZERID, FilterRelation.AND, organizerId));
