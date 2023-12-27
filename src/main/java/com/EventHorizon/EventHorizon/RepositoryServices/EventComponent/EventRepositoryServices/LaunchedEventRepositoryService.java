@@ -43,7 +43,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         return (Specification<T>) obj;
     }
 
-    public LaunchedEvent getById(int id) {
+    public LaunchedEvent getByIdAndHandleNotFound(int id) {
         Optional<LaunchedEvent> optionalLaunchedEvent = launchedEventRepository.findById(id);
         if (optionalLaunchedEvent.isEmpty())
             throw new EventNotFoundException();
@@ -72,7 +72,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
 
     public LaunchedEvent update(Event event) {
         LaunchedEvent newEvent = (LaunchedEvent) event;
-        getById(newEvent.getId());
+        getByIdAndHandleNotFound(newEvent.getId());
         int id = newEvent.getId();
         newEvent.setId(id);
         FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
@@ -82,17 +82,17 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public void delete(int id) {
-        getById(id);
+        getByIdAndHandleNotFound(id);
         launchedEventRepository.deleteById(id);
     }
 
     public ViewEventDto getViewEventDTO(int id) {
-        LaunchedEvent launchedEvent = getById(id);
+        LaunchedEvent launchedEvent = getByIdAndHandleNotFound(id);
         return viewEventDtoMapper.getDTOfromViewEvent(launchedEvent);
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {
-        LaunchedEvent launchedEvent = getById(id);
+        LaunchedEvent launchedEvent = getByIdAndHandleNotFound(id);
         return new EventHeaderDto(launchedEvent);
     }
 
@@ -144,7 +144,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<SeatType> getSeatTypeById(int id) {
-        LaunchedEvent launchedEvent = this.getById(id);
+        LaunchedEvent launchedEvent = this.getByIdAndHandleNotFound(id);
         return launchedEvent.getSeatTypes();
     }
 }

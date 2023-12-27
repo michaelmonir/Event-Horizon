@@ -71,7 +71,7 @@ public class GiftedTicketCollectionRepositoryTest
     }
 //
 //    @Test
-//    public void getById() {
+//    public void getByIdAndHandleNotFound() {
 //        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
 //        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 //

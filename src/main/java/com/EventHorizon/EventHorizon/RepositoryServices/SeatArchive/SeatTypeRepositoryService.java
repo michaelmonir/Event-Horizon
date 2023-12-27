@@ -28,6 +28,6 @@ public class SeatTypeRepositoryService
     }
 
     public void deleteAllByEventId(int eventId) {
-        this.seatTypeRepository.deleteAllByEventId(eventId);
+        this.seatTypeRepository.deleteByEventId(eventId);
     }
 }

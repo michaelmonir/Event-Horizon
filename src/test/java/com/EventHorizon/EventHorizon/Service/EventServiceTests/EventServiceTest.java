@@ -5,7 +5,6 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventIsAlreadyLaunched;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperInterface;
@@ -72,7 +71,7 @@ public class EventServiceTest {
 
 //    @Test
 //    void testGetEventForUser() {
-//        when(launchedEventRepositoryService.getById(anyInt())).thenReturn(new LaunchedEvent());
+//        when(launchedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
 //        when(viewEventDtoMapper.getDTOfromViewEvent(any())).thenReturn(new ViewEventDto());
 //        ViewEventDto result = eventService.getEventForUser(1);
 //        Assertions.assertNotNull(result);
@@ -82,8 +81,8 @@ public class EventServiceTest {
     // this function is just updated temporarily until the view event is fixed
     @Test
     void testGetEventForUser() {
-        when(launchedEventRepositoryService.getById(anyInt())).thenReturn(new LaunchedEvent());
-        when(draftedEventRepositoryService.getById(anyInt())).thenReturn(new DraftedEvent());
+        when(launchedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
+        when(draftedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new DraftedEvent());
 
         when(detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(any()))
                 .thenReturn(new DetailedLaunchedEventDto());

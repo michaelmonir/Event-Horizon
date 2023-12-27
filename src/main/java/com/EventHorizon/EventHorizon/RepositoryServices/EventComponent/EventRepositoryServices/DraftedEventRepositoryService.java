@@ -1,10 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
@@ -12,12 +9,8 @@ import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRe
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,7 +35,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     public DraftedEvent update(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         int id = draftedEvent.getId();
-        getById(id);
+        getByIdAndHandleNotFound(id);
         draftedEvent.setId(id);
 
         this.handleSeatArchivesAndSaveInRepository(draftedEvent);
@@ -50,11 +43,11 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     }
 
     public void delete(int id) {
-        getById(id);
+        getByIdAndHandleNotFound(id);
         draftedEventRepository.deleteById(id);
     }
 
-    public DraftedEvent getById(int id) {
+    public DraftedEvent getByIdAndHandleNotFound(int id) {
         Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
         if (optionalOldEvent.isEmpty())
             throw new EventNotFoundException();

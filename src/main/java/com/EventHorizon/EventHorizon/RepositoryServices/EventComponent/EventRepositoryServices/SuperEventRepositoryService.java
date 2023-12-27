@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRep
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 
 public interface SuperEventRepositoryService {
-    public Event getById(int id);
+    public Event getByIdAndHandleNotFound(int id);
 
     public Event saveWhenCreating(Event Event);
 

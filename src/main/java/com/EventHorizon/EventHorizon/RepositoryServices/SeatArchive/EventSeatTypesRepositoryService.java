@@ -6,6 +6,8 @@ import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventSeatTypesRepositoryService {
 
@@ -14,7 +16,13 @@ public class EventSeatTypesRepositoryService {
 
     // it's important to delete the old seatTypes as they doesn't get deleted automatically
     public void setEventForItsSeatTypes(Event event) {
-        seatTypeRepository.deleteAllByEventId(event.getId());
+//        List<SeatType> l= seatTypeRepository.findAllByEventId(event.getId());
+//        for(int i =0; i < l.size();i ++) {
+//            l.get(i).setEvent(null);
+//            seatTypeRepository.save(l.get(i));
+//            seatTypeRepository.delete(l.get(i));
+//        }
+        seatTypeRepository.deleteByEventId(event.getId());
         for (SeatType seatType : event.getSeatTypes())
             seatType.setEvent(event);
     }

@@ -15,7 +15,7 @@ public class EventRepositoryServiceInterface
     {
         SuperEventRepositoryService eventRepositoryService
                 = eventRepositoryServiceFactory.getByEventType(eventType);
-        return eventRepositoryService.getById(id);
+        return eventRepositoryService.getByIdAndHandleNotFound(id);
     }
 
     public Event getById(int id)
@@ -23,11 +23,11 @@ public class EventRepositoryServiceInterface
         try {
             SuperEventRepositoryService eventRepositoryService
                     = eventRepositoryServiceFactory.getByEventType(EventType.LAUNCHEDEVENT);
-            return eventRepositoryService.getById(id);
+            return eventRepositoryService.getByIdAndHandleNotFound(id);
         } catch (Exception e) {
             SuperEventRepositoryService eventRepositoryService
                     = eventRepositoryServiceFactory.getByEventType(EventType.DRAFTEDEVENT);
-            return eventRepositoryService.getById(id);
+            return eventRepositoryService.getByIdAndHandleNotFound(id);
         }
     }
 

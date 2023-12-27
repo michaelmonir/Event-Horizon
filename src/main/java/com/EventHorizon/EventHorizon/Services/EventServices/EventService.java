@@ -53,10 +53,10 @@ public class EventService {
 
     public DetailedEventDto getEventForUser(int eventId) {
         try {
-            LaunchedEvent event = this.launchedEventRepositoryService.getById(eventId);
+            LaunchedEvent event = this.launchedEventRepositoryService.getByIdAndHandleNotFound(eventId);
             return detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
         } catch (Exception e) {
-            DraftedEvent event = this.draftedEventRepositoryService.getById(eventId);
+            DraftedEvent event = this.draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
             return detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
         }
     }
@@ -96,7 +96,7 @@ public class EventService {
     }
 
     public DetailedEventDto launchEvent(int informationId, int eventId) {
-        DraftedEvent draftedEvent = draftedEventRepositoryService.getById(eventId);
+        DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
         this.checkAndHandleNotOrganizerOfEvent(informationId, draftedEvent);
         draftedEventRepositoryService.delete(eventId);
 

@@ -12,14 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SeatTypeRepository extends JpaRepository<SeatType, Integer>
-{
+public interface SeatTypeRepository extends JpaRepository<SeatType, Integer> {
     Optional<SeatType> findById(int id);
 
     List<SeatType> findAllByEventId(int eventId);
 
-    @Modifying
+//    @Modifying
+//    @Transactional
+//    @Query(value = "DELETE FROM seat_type WHERE event_id = :eventId", nativeQuery = true)
+//    void deleteAllByEventId(@Param("eventId") int eventId);
     @Transactional
-    @Query(value = "DELETE FROM seat_type WHERE event_id = :eventId", nativeQuery = true)
-    void deleteAllByEventId(@Param("eventId") int eventId);
+    void deleteByEventId(int eventId);
+
 }
