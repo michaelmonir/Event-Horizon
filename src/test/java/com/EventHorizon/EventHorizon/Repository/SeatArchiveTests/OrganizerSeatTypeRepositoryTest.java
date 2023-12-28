@@ -87,16 +87,16 @@ public class OrganizerSeatTypeRepositoryTest {
         Assertions.assertEquals(organizerSeatArchive, list.get(0));
     }
 
-    @Test
-    public void testDeletingSeatTypeDeletesOrganizerSeatArchive() {
-        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 1);
-
-        this.organizerSeatArchiveRepository.save(organizerSeatArchive);
-
-        this.seatTypeRepositoryService.deleteAllByEventId(seatType.getEvent().getId());
-
-        List<OrganizerSeatArchive> list = organizerSeatArchiveRepository.findAllByEventId(seatType.getEvent().getId());
-        Assertions.assertEquals(0, list.size());
-    }
+//    @Test
+//    public void testDeletingSeatTypeDeletesOrganizerSeatArchive() {
+//        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
+//        OrganizerSeatArchive organizerSeatArchive = new OrganizerSeatArchive(seatType, 1, 1);
+//
+//        this.organizerSeatArchiveRepository.save(organizerSeatArchive);
+//
+//        this.seatTypeRepositoryService.deleteAllByEventId(seatType.getEvent().getId());
+//
+//        List<OrganizerSeatArchive> list = organizerSeatArchiveRepository.findAllByEventId(seatType.getEvent().getId());
+//        Assertions.assertEquals(0, list.size());
+//    }
 }

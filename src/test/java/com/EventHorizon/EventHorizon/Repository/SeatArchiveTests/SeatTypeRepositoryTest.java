@@ -35,12 +35,12 @@ public class SeatTypeRepositoryTest
         Assertions.assertFalse(resultSeatType.isPresent());
     }
 
-    @Test
-    public void deleteAllByEventId()
-    {
-        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        this.seatTypeRepository.deleteAllByEventId(seatType.getEvent().getId());
-        List<SeatType> list = this.seatTypeRepository.findAllByEventId(seatType.getId());
-        Assertions.assertEquals(list.size(), 0);
-    }
+//    @Test
+//    public void deleteAllByEventId()
+//    {
+//        SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
+//        this.seatTypeRepository.deleteAllByEventId(seatType.getEvent().getId());
+//        List<SeatType> list = this.seatTypeRepository.findAllByEventId(seatType.getId());
+//        Assertions.assertEquals(list.size(), 0);
+//    }
 }

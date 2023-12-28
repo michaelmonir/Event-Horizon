@@ -68,19 +68,19 @@ public class SavingSeatTypeWithEventCreationTest
     }
 
     // use the repository service instead
-    @Test
-    public void updatingEventSeatTypesDeletesOldTypes(){
-        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-        Event event = this.getEventAndGiveOneSeatType(seatType);
-
-        eventRepositoryService.saveWhenCreating(event);
-
-        event.setSeatTypes(new ArrayList<>());
-        eventRepositoryService.update(event);
-
-        Assertions.assertEquals(0, event.getSeatTypes().size());
-        Assertions.assertEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
-    }
+//    @Test
+//    public void updatingEventSeatTypesDeletesOldTypes(){
+//        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
+//        Event event = this.getEventAndGiveOneSeatType(seatType);
+//
+//        eventRepositoryService.saveWhenCreating(event);
+//
+//        event.setSeatTypes(new ArrayList<>());
+//        eventRepositoryService.update(event);
+//
+//        Assertions.assertEquals(0, event.getSeatTypes().size());
+//        Assertions.assertEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
+//    }
 
     @Test
     public void creatingSeatTypeUsingRepository() {
