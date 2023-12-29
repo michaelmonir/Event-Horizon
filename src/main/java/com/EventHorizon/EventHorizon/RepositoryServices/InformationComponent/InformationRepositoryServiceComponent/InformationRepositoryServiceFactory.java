@@ -1,32 +1,26 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent;
 
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.RoleNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 @Service
+@RequiredArgsConstructor
 public class InformationRepositoryServiceFactory {
 
-    @Autowired
-    private ClientInformationRepositoryService clientInformationService;
-    @Autowired
-    private ModeratorInformationRepositoryService moderatorInformationService;
-    @Autowired
-    private OrganizerInformationRepositoryService organizerInformationService;
-    @Autowired
-    private SponsorInformationRepositoryService sponsorInformationService;
+    private final ClientInformationRepositoryService clientInformationService;
+    private final ModeratorInformationRepositoryService moderatorInformationService;
+    private final OrganizerInformationRepositoryService organizerInformationService;
+    private final SponsorInformationRepositoryService sponsorInformationService;
+    private final AdminInformationRepositoryService adminInformationService;
 
-    public UserInformationRepositoryService getUserInformationServiceByRole(String role)
-    {
-        if (role.equals("ROLE_CLIENT"))
-            return this.clientInformationService;
-        else if (role.equals("ROLE_MODERATOR"))
-            return this.moderatorInformationService;
-        else if (role.equals("ROLE_ORGANIZER"))
-            return this.organizerInformationService;
-        else if (role.equals("ROLE_SPONSOR"))
-            return this.sponsorInformationService;
-        else
-            throw new RoleNotFoundException();
+    public SuperUserInformationRepositoryService getUserInformationServiceByRole(Role role) {
+        return switch (role) {
+            case CLIENT -> this.clientInformationService;
+            case MODERATOR -> this.moderatorInformationService;
+            case ORGANIZER -> this.organizerInformationService;
+            case SPONSOR -> this.sponsorInformationService;
+            case ADMIN -> this.adminInformationService;
+        };
     }
-
 }

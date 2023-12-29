@@ -3,11 +3,14 @@ package com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.InformationRepository;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.InformationRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.InformationRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.SuperUserInformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.UserInformationRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,24 +20,30 @@ import java.util.Optional;
 
 @Service
 public class InformationRepositoryService {
+
     @Autowired
     InformationRepository informationRepository;
     @Autowired
     InformationRepositoryServiceFactory informationServiceFactory;
 
     public void add(Information information) {
+        if (information.getRole() == Role.ADMIN) {
+            throw new NotAdminOperationException();
+        }
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.add(information);
     }
 
     public void delete(int id) {
         Information information = this.getByID(id);
+        if (information.getRole() == Role.ADMIN) {
+            throw new NotAdminOperationException();
+        }
         UserInformationRepositoryService myService =
-                informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         myService.delete(information);
     }
-
 
     public void update(int id, Information newOne) {
         Information oldOne = this.getByID(id);
@@ -44,10 +53,17 @@ public class InformationRepositoryService {
 
     public ViewInformationDTO updateWithDto(UpdateInformationDTO updateInformationDTO) {
         Information information = this.getByID(updateInformationDTO.getId());
-        UserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole().toString());
+        SuperUserInformationRepositoryService myService = informationServiceFactory.getUserInformationServiceByRole(information.getRole());
         return new ViewInformationDTO(myService.update(updateInformationDTO, information));
     }
 
+    public User getUserByInformation(Information information) {
+
+        UserInformationRepositoryService myService =
+                (UserInformationRepositoryService) informationServiceFactory.
+                        getUserInformationServiceByRole(information.getRole());
+        return myService.getUserByInformation(information);
+    }
 
     public Information getByID(int id) {
         Optional<Information> information = informationRepository.findById(id);
@@ -100,6 +116,12 @@ public class InformationRepositoryService {
     public List<Information> getBySignIn(int value) {
         List<Information> list = informationRepository.findBySignInWithEmail(value);
         return list;
+    }
+
+    public UserInformationRepositoryService getService(Role role) {
+        UserInformationRepositoryService myService =
+                (UserInformationRepositoryService) informationServiceFactory.getUserInformationServiceByRole(role);
+        return myService;
     }
 
 }

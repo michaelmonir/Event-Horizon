@@ -5,10 +5,11 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.ClientRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,9 +20,10 @@ public class ClientInformationRepositoryService implements UserInformationReposi
     private ClientRepository clientRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Client client = Client.builder().information(information).build();
         clientRepository.save(client);
+        return client;
     }
 
     @Override
@@ -47,5 +49,10 @@ public class ClientInformationRepositoryService implements UserInformationReposi
         if (!client.isPresent())
             throw new ClientNotFoundException();
         return client.get();
+    }
+
+    @Override
+    public List<? extends User> findAllOfUsers() {
+        return clientRepository.findAll();
     }
 }

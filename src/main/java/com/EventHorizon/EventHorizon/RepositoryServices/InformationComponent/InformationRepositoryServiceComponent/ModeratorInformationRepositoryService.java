@@ -5,10 +5,11 @@ import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.User;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.ModeratorRepository;
+import com.EventHorizon.EventHorizon.Repository.UserRepositories.ModeratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,9 +19,10 @@ public class ModeratorInformationRepositoryService implements UserInformationRep
     ModeratorRepository moderatorRepository;
 
     @Override
-    public void add(Information information) {
+    public User add(Information information) {
         Moderator moderator = Moderator.builder().information(information).build();
         moderatorRepository.save(moderator);
+        return moderator;
     }
 
     @Override
@@ -46,5 +48,10 @@ public class ModeratorInformationRepositoryService implements UserInformationRep
         if (!moderator.isPresent())
             throw new ModeratorNotFoundException();
         return moderator.get();
+    }
+
+    @Override
+    public List<? extends User> findAllOfUsers() {
+        return moderatorRepository.findAll();
     }
 }

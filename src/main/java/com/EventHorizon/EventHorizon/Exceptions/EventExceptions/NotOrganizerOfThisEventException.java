@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public class NotOrganizerOfThisEventException extends BaseException
 {
-    public NotOrganizerOfThisEventException()
-    {
+    public NotOrganizerOfThisEventException() {
         this.httpStatus = HttpStatus.FORBIDDEN;
         this.message = "Not organizer of this event";
     }
