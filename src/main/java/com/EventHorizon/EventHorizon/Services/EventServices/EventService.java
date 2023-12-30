@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Services.EventServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedEventDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
@@ -11,6 +12,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperInterface;
 import com.EventHorizon.EventHorizon.Mappers.DraftedLaunchedEventMapper;
+import com.EventHorizon.EventHorizon.Mappers.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
@@ -50,6 +52,8 @@ public class EventService {
     private DetailedDraftedEventDtoMapper detailedDraftedEventDtoMapper;
     @Autowired
     private DraftedLaunchedEventMapper draftedLaunchedEventMapper;
+    @Autowired
+    private EventCreationUpdationDtoMapper eventCreationUpdationDtoMapper;
 
     public DetailedEventDto getEventForUser(int eventId) {
         try {
@@ -73,10 +77,10 @@ public class EventService {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
 
-    public DetailedEventDto createEvent(int informationId, DetailedEventDto eventDTO) {
+    public DetailedEventDto createEvent(int informationId, EventCreationUpdationDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
 
-        DraftedEvent event = detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(eventDTO);
+        DraftedEvent event = eventCreationUpdationDtoMapper.getEventForUpdating(eventDTO);
 
         event.setEventOrganizer(organizer);
         draftedEventRepositoryService.saveWhenCreating(event);

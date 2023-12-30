@@ -9,6 +9,7 @@ import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEv
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperInterface;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
@@ -67,6 +68,8 @@ public class EventServiceTest {
     private DetailedLaunchedEventDto detailedLaunchedEventDto;
     @Mock
     private DetailedEventDtoMapperInterface detailedEventDtoMapperInterface;
+    @Mock
+    private EventCreationUpdationDtoMapper eventCreationUpdationDtoMapper;
 
 
 //    @Test
@@ -115,12 +118,12 @@ public class EventServiceTest {
     @Test
     void testCreateEvent() {
         Organizer organizer = new Organizer();
-        DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
+        EventCreationUpdationDto eventDTO = new EventCreationUpdationDto();
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
 
-        when(detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new DraftedEvent());
+        when(eventCreationUpdationDtoMapper.getEventForUpdating(any())).thenReturn(new DraftedEvent());
         when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
 
         DetailedEventDto result = eventService.createEvent(1, eventDTO);

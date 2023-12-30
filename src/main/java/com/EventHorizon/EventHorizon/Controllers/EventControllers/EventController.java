@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/event/")
 @CrossOrigin("*")
-public class EventOperationsController {
+public class EventController {
     @Autowired
     private EventService eventService;
     @Autowired
@@ -40,12 +40,11 @@ public class EventOperationsController {
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @PostMapping("createEvent/{organizerId}")//organizer,admin
+    @PostMapping("createEvent/{organizerInformationId}")//organizer,admin
     public ResponseEntity<DetailedEventDto> createEvent
-            (@PathVariable int organizerId, @RequestBody DetailedDraftedEventDto detailedEventDto) {
+            (@PathVariable int organizerInformationId, @RequestBody EventCreationUpdationDto creationDto) {
 
-//        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        detailedEventDto = (DetailedDraftedEventDto) eventService.createEvent(organizerId, detailedEventDto);
+        DetailedEventDto detailedEventDto = eventService.createEvent(organizerInformationId, creationDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 

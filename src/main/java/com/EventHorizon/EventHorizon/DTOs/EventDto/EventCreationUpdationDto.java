@@ -16,14 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class EventCreationDto
+public class EventCreationUpdationDto
 {
-    protected int id;
-    protected String name;
-    protected String description;
-    protected String eventCategory;
-    protected Date eventDate;
-    protected int AdsOptionId;
-    protected Location eventLocation;
-    protected List<SeatTypeDto> seatTypes;
+    private int id;
+    private String name;
+    private String description;
+    private String eventCategory;
+    private Date eventDate;
+    private int AdsOptionId;
+    private Location eventLocation;
+    private List<SeatTypeDto> seatTypes;
 }

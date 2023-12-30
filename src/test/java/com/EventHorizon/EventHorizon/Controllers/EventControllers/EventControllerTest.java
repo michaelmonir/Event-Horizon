@@ -34,11 +34,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@ContextConfiguration(classes = {EventOperationsController.class})
+@ContextConfiguration(classes = {EventController.class})
 @ExtendWith(SpringExtension.class)
-class EventOperationsControllerTest {
+class EventControllerTest {
   @Autowired
-  private EventOperationsController eventOperationsController;
+  private EventController eventController;
 
   @MockBean
   private EventService eventService;
@@ -56,7 +56,7 @@ class EventOperationsControllerTest {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/event/eventForUser/{eventId}", 1);
 
     // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventOperationsController)
+    MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -118,7 +118,7 @@ class EventOperationsControllerTest {
             .content(content);
 
     // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventOperationsController)
+    MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -139,7 +139,7 @@ class EventOperationsControllerTest {
             .put("/event/launchEvent/{organizerId}/{eventId}", 1, 1);
 
     // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventOperationsController)
+    MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -156,7 +156,7 @@ class EventOperationsControllerTest {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/event/getSeatType/42");
 
     // Act
-    ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(eventOperationsController)
+    ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder);
 
@@ -173,7 +173,7 @@ class EventOperationsControllerTest {
             1, 3);
 
     // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventOperationsController)
+    MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -203,7 +203,7 @@ class EventOperationsControllerTest {
             1, 3);
 
     // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventOperationsController)
+    MockMvcBuilders.standaloneSetup(eventController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
