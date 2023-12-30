@@ -36,15 +36,12 @@ public class AdsOptionRepositoryService {
         return adsOption;
     }
 
-    public AdsOption findAdsOptionById(int id) {
+    public AdsOption getById(int id) {
         Optional<AdsOption> adsOption = adsOptionRepository.findById(id);
-
 
         if (!adsOption.isPresent())
             throw new AdsOptionNotFoundException();
 
         return adsOption.get();
     }
-
-
 }

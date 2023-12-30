@@ -3,7 +3,6 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.AdsOptionRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +72,7 @@ class AdsOptionRepositoryServiceTest {
 
         Assertions.assertDoesNotThrow(() -> {
             adsOptionRepositoryService.updateAdsOption(adsOption.getId(), newAdsOption);
-            AdsOption updatedAdsOption = adsOptionRepositoryService.findAdsOptionById(adsOption.getId());
+            AdsOption updatedAdsOption = adsOptionRepositoryService.getById(adsOption.getId());
             Assertions.assertNotNull(updatedAdsOption);
             Assertions.assertEquals(newAdsOption.getName(), updatedAdsOption.getName());
             Assertions.assertEquals(newAdsOption.getPriority(), updatedAdsOption.getPriority());

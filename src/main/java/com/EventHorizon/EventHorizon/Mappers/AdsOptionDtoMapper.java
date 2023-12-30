@@ -20,4 +20,5 @@ public class AdsOptionDtoMapper {
             throw new AdsOptionNotFoundException();
         return optionalAdsOption.get();
     }
+
 }
