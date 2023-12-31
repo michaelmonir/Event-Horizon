@@ -23,7 +23,7 @@ public class EventCreationUpdationDto
     private String description;
     private String eventCategory;
     private Date eventDate;
-    private int AdsOptionId;
+    private int adsOptionId;
     private Location eventLocation;
     private List<SeatTypeDto> seatTypes;
 }
