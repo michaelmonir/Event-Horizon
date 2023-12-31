@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated;
+package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import lombok.*;

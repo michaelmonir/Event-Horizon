@@ -5,12 +5,8 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
-import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
-import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperInterface;
-import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.EventCreationUpdationDtoMapper;
-import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
+import com.EventHorizon.EventHorizon.Mappers.EventViewDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
@@ -38,39 +34,24 @@ import static org.mockito.Mockito.*;
 public class EventServiceTest {
     @InjectMocks
     private EventService eventService;
-
     @Mock
     private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Mock
     private DraftedEventRepositoryService draftedEventRepositoryService;
-
-    @Mock
-    private DetailedEventDtoMapperFactory detailedEventDtoMapperFactory;
-
     @Mock
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
-
     @Mock
     private InformationRepositoryService informationService;
     @Mock
     private UserEventService userEventService;
     @Mock
-    private ViewEventDtoMapper viewEventDtoMapper;
-    @Mock
-    private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
-    @Mock
-    private DetailedDraftedEventDtoMapper detailedDraftedEventDtoMapper;
-    @Mock
     private OrganizerInformationRepositoryService organizerInformationService;
     @Mock
     private DashboardRepositoryService dashboardRepositoryService;
     @Mock
-    private DetailedLaunchedEventDto detailedLaunchedEventDto;
-    @Mock
-    private DetailedEventDtoMapperInterface detailedEventDtoMapperInterface;
-    @Mock
     private EventCreationUpdationDtoMapper eventCreationUpdationDtoMapper;
-
+    @Mock
+    private EventViewDtoMapper eventViewDtoMapper;
 
 //    @Test
 //    void testGetEventForUser() {
@@ -87,12 +68,12 @@ public class EventServiceTest {
         when(launchedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
         when(draftedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new DraftedEvent());
 
-        when(detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(any()))
-                .thenReturn(new DetailedLaunchedEventDto());
-        when(detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(any()))
-                .thenReturn(new DetailedDraftedEventDto());
+        when(eventViewDtoMapper.getDetailedEventFromEventDto(any()))
+                .thenReturn(new EventViewDto());
+        when(eventViewDtoMapper.getDetailedEventFromEventDto(any()))
+                .thenReturn(new EventViewDto());
 
-        DetailedEventDto result = eventService.getEventForUser(1);
+        EventViewDto result = eventService.getEventForUser(1);
         Assertions.assertNotNull(result);
     }
 
@@ -101,10 +82,10 @@ public class EventServiceTest {
 
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new DraftedEvent());
 
-        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedDraftedEventDto());
-        DetailedEventDto result = eventService.getEventForOrganizer(1, 1, EventType.DRAFTEDEVENT);
+        when(eventViewDtoMapper.getDetailedEventFromEventDto(any())).thenReturn(new EventViewDto());
+        EventViewDto result = eventService.getEventForOrganizer(1, 1, EventType.DRAFTEDEVENT);
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(DetailedDraftedEventDto.class, result.getClass());
+        Assertions.assertEquals(EventViewDto.class, result.getClass());
     }
 
     @Test
@@ -124,11 +105,11 @@ public class EventServiceTest {
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
 
         when(eventCreationUpdationDtoMapper.getEventFromDtoForCreating(any())).thenReturn(new DraftedEvent());
-        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
+        when(eventViewDtoMapper.getDetailedEventFromEventDto(any())).thenReturn(new EventViewDto());
 
-        DetailedEventDto result = eventService.createEvent(1, eventDTO);
+        EventViewDto result = eventService.createEvent(1, eventDTO);
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(DetailedLaunchedEventDto.class, result.getClass());
+        Assertions.assertEquals(EventViewDto.class, result.getClass());
     }
 
     @Test
@@ -142,11 +123,11 @@ public class EventServiceTest {
         when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
 
-        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
+        when(eventViewDtoMapper.getDetailedEventFromEventDto(any())).thenReturn(new EventViewDto());
 
-        DetailedEventDto result = eventService.updateEvent(1, eventDTO);
+        EventViewDto result = eventService.updateEvent(1, eventDTO);
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(DetailedLaunchedEventDto.class, result.getClass());
+        Assertions.assertEquals(EventViewDto.class, result.getClass());
     }
 
     @Test

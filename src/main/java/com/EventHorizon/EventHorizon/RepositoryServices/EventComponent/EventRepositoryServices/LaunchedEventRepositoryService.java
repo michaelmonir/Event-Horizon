@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
@@ -9,7 +8,6 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdException;
-import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
@@ -32,8 +30,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
     private EventSeatTypesRepositoryService eventSeatTypesRepositoryService;
-    @Autowired
-    private ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
     @Autowired
@@ -84,11 +80,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     public void delete(int id) {
         getByIdAndHandleNotFound(id);
         launchedEventRepository.deleteById(id);
-    }
-
-    public ViewEventDto getViewEventDTO(int id) {
-        LaunchedEvent launchedEvent = getByIdAndHandleNotFound(id);
-        return viewEventDtoMapper.getDTOfromViewEvent(launchedEvent);
     }
 
     public EventHeaderDto getEventHeaderDto(int id) {
