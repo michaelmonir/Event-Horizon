@@ -14,7 +14,6 @@ public class UserEventService {
     EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
     public void checkAndHandleNotOrganizerOfEvent(Organizer organizer, Event event) {
-
         Event eventFromDB = eventRepositoryServiceInterface.getByIdAndEventType(event.getId(), event.getEventType());
          if (!eventFromDB.getEventOrganizer().equals(organizer))
             throw new NotOrganizerOfThisEventException();

@@ -80,20 +80,20 @@ public class EventService {
     public DetailedEventDto createEvent(int informationId, EventCreationUpdationDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
 
-        DraftedEvent event = eventCreationUpdationDtoMapper.getEventForUpdating(eventDTO);
+        DraftedEvent event = eventCreationUpdationDtoMapper.getEventFromDtoForCreating(eventDTO);
 
         event.setEventOrganizer(organizer);
         draftedEventRepositoryService.saveWhenCreating(event);
         return detailedEventDtoMapperInterface.getDTOfromDetailedEvent(event);
     }
 
-    public DetailedEventDto updateEvent(int informationId, DetailedEventDto eventDTO) {
+    public DetailedEventDto updateEvent(int informationId, EventCreationUpdationDto eventDTO) {
         Organizer organizer = this.getOrganizerFromInformationId(informationId);
 
         Event event = eventRepositoryServiceInterface.getById(eventDTO.getId());
         userEventService.checkAndHandleNotOrganizerOfEvent(organizer, event);
 
-        detailedEventDtoMapperInterface.updateEventFromDetailedEventDTO(event, eventDTO);
+        eventCreationUpdationDtoMapper.updateEventAttributesFromDto(event, eventDTO);
         eventRepositoryServiceInterface.update(event);
 
         return detailedEventDtoMapperInterface.getDTOfromDetailedEvent(event);

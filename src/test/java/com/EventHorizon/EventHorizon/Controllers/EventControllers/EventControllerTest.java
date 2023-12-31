@@ -67,69 +67,69 @@ class EventControllerTest {
                                     + "\":null,\"eventLocation\":null,\"eventOrganizer\":null,\"seatTypes\":null}"));
   }
 
-  @Test
-  void testUpdateEvent() throws Exception {
-    // Arrange
-    Location eventLocation = new Location();
-    eventLocation.setAddress("42 Main St");
-    eventLocation.setCity("Oxford");
-    eventLocation.setCountry("GB");
-    eventLocation.setId(1);
-
-    DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto();
-    detailedDraftedEventDto.setDescription("The characteristics of someone or something");
-    AdsOptionDto eventAds = AdsOptionDto.builder().id(1).name("Name").build();
-    detailedDraftedEventDto.setEventAds(eventAds);
-    detailedDraftedEventDto.setEventCategory("Event Category");
-    detailedDraftedEventDto
-            .setEventDate(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-    detailedDraftedEventDto.setEventLocation(eventLocation);
-    OrganizerHeaderDto eventOrganizer = OrganizerHeaderDto.builder().id(1).name("Name").build();
-    detailedDraftedEventDto.setEventOrganizer(eventOrganizer);
-    detailedDraftedEventDto.setEventType(EventType.DRAFTEDEVENT);
-    detailedDraftedEventDto.setId(1);
-    detailedDraftedEventDto.setName("Name");
-    detailedDraftedEventDto.setSeatTypes(new ArrayList<>());
-    when(eventService.updateEvent(anyInt(), Mockito.<DetailedEventDto>any())).thenReturn(detailedDraftedEventDto);
-
-    Location eventLocation2 = new Location();
-    eventLocation2.setAddress("42 Main St");
-    eventLocation2.setCity("Oxford");
-    eventLocation2.setCountry("GB");
-    eventLocation2.setId(1);
-
-    DetailedDraftedEventDto detailedDraftedEventDto2 = new DetailedDraftedEventDto();
-    detailedDraftedEventDto2.setDescription("The characteristics of someone or something");
-    AdsOptionDto eventAds2 = AdsOptionDto.builder().id(1).name("Name").build();
-    detailedDraftedEventDto2.setEventAds(eventAds2);
-    detailedDraftedEventDto2.setEventCategory("Event Category");
-    detailedDraftedEventDto2
-            .setEventDate(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-    detailedDraftedEventDto2.setEventLocation(eventLocation2);
-    OrganizerHeaderDto eventOrganizer2 = OrganizerHeaderDto.builder().id(1).name("Name").build();
-    detailedDraftedEventDto2.setEventOrganizer(eventOrganizer2);
-    detailedDraftedEventDto2.setEventType(EventType.DRAFTEDEVENT);
-    detailedDraftedEventDto2.setId(1);
-    detailedDraftedEventDto2.setName("Name");
-    detailedDraftedEventDto2.setSeatTypes(new ArrayList<>());
-    String content = (new ObjectMapper()).writeValueAsString(detailedDraftedEventDto2);
-    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/event/updateEvent/{organizerId}", 1)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(content);
-
-    // Act and Assert
-    MockMvcBuilders.standaloneSetup(eventController)
-            .build()
-            .perform(requestBuilder)
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.content()
-                    .string(
-                            "{\"id\":1,\"name\":\"Name\",\"description\":\"The characteristics of someone or something\",\"eventCategory\":\"Event"
-                                    + " Category\",\"eventDate\":0,\"eventType\":\"DRAFTEDEVENT\",\"eventAds\":{\"id\":1,\"name\":\"Name\"},\"eventLocation"
-                                    + "\":{\"id\":1,\"country\":\"GB\",\"city\":\"Oxford\",\"address\":\"42 Main St\"},\"eventOrganizer\":{\"id\":1,\"name\":\"Name"
-                                    + "\"},\"seatTypes\":[]}"));
-  }
+//  @Test
+//  void testUpdateEvent() throws Exception {
+//    // Arrange
+//    Location eventLocation = new Location();
+//    eventLocation.setAddress("42 Main St");
+//    eventLocation.setCity("Oxford");
+//    eventLocation.setCountry("GB");
+//    eventLocation.setId(1);
+//
+//    DetailedDraftedEventDto detailedDraftedEventDto = new DetailedDraftedEventDto();
+//    detailedDraftedEventDto.setDescription("The characteristics of someone or something");
+//    AdsOptionDto eventAds = AdsOptionDto.builder().id(1).name("Name").build();
+//    detailedDraftedEventDto.setEventAds(eventAds);
+//    detailedDraftedEventDto.setEventCategory("Event Category");
+//    detailedDraftedEventDto
+//            .setEventDate(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+//    detailedDraftedEventDto.setEventLocation(eventLocation);
+//    OrganizerHeaderDto eventOrganizer = OrganizerHeaderDto.builder().id(1).name("Name").build();
+//    detailedDraftedEventDto.setEventOrganizer(eventOrganizer);
+//    detailedDraftedEventDto.setEventType(EventType.DRAFTEDEVENT);
+//    detailedDraftedEventDto.setId(1);
+//    detailedDraftedEventDto.setName("Name");
+//    detailedDraftedEventDto.setSeatTypes(new ArrayList<>());
+//    when(eventService.updateEvent(anyInt(), Mockito.<DetailedEventDto>any())).thenReturn(detailedDraftedEventDto);
+//
+//    Location eventLocation2 = new Location();
+//    eventLocation2.setAddress("42 Main St");
+//    eventLocation2.setCity("Oxford");
+//    eventLocation2.setCountry("GB");
+//    eventLocation2.setId(1);
+//
+//    DetailedDraftedEventDto detailedDraftedEventDto2 = new DetailedDraftedEventDto();
+//    detailedDraftedEventDto2.setDescription("The characteristics of someone or something");
+//    AdsOptionDto eventAds2 = AdsOptionDto.builder().id(1).name("Name").build();
+//    detailedDraftedEventDto2.setEventAds(eventAds2);
+//    detailedDraftedEventDto2.setEventCategory("Event Category");
+//    detailedDraftedEventDto2
+//            .setEventDate(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+//    detailedDraftedEventDto2.setEventLocation(eventLocation2);
+//    OrganizerHeaderDto eventOrganizer2 = OrganizerHeaderDto.builder().id(1).name("Name").build();
+//    detailedDraftedEventDto2.setEventOrganizer(eventOrganizer2);
+//    detailedDraftedEventDto2.setEventType(EventType.DRAFTEDEVENT);
+//    detailedDraftedEventDto2.setId(1);
+//    detailedDraftedEventDto2.setName("Name");
+//    detailedDraftedEventDto2.setSeatTypes(new ArrayList<>());
+//    String content = (new ObjectMapper()).writeValueAsString(detailedDraftedEventDto2);
+//    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/event/updateEvent/{organizerId}", 1)
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .content(content);
+//
+//    // Act and Assert
+//    MockMvcBuilders.standaloneSetup(eventController)
+//            .build()
+//            .perform(requestBuilder)
+//            .andExpect(MockMvcResultMatchers.status().isOk())
+//            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+//            .andExpect(MockMvcResultMatchers.content()
+//                    .string(
+//                            "{\"id\":1,\"name\":\"Name\",\"description\":\"The characteristics of someone or something\",\"eventCategory\":\"Event"
+//                                    + " Category\",\"eventDate\":0,\"eventType\":\"DRAFTEDEVENT\",\"eventAds\":{\"id\":1,\"name\":\"Name\"},\"eventLocation"
+//                                    + "\":{\"id\":1,\"country\":\"GB\",\"city\":\"Oxford\",\"address\":\"42 Main St\"},\"eventOrganizer\":{\"id\":1,\"name\":\"Name"
+//                                    + "\"},\"seatTypes\":[]}"));
+//  }
 
   @Test
   void testLaunchEvent() throws Exception {

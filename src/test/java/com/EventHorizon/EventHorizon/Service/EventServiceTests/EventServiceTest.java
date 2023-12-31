@@ -123,7 +123,7 @@ public class EventServiceTest {
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
 
-        when(eventCreationUpdationDtoMapper.getEventForUpdating(any())).thenReturn(new DraftedEvent());
+        when(eventCreationUpdationDtoMapper.getEventFromDtoForCreating(any())).thenReturn(new DraftedEvent());
         when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
 
         DetailedEventDto result = eventService.createEvent(1, eventDTO);
@@ -134,16 +134,15 @@ public class EventServiceTest {
     @Test
     void testUpdateEvent() {
         Organizer organizer = new Organizer();
-        DetailedEventDto eventDTO = new DetailedDraftedEventDto();
+        EventCreationUpdationDto eventDTO = new EventCreationUpdationDto();
 
         when(informationService.getByID(anyInt())).thenReturn(new Information());
         when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
 
-        when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
 
-        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(detailedLaunchedEventDto);
-        when(detailedEventDtoMapperInterface.getEventFromDetailedEventDTO(any())).thenReturn(new LaunchedEvent());
+        when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
 
         DetailedEventDto result = eventService.updateEvent(1, eventDTO);
         Assertions.assertNotNull(result);
