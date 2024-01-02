@@ -10,6 +10,8 @@ public class EventRepositoryServiceInterface
 {
     @Autowired
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
+    @Autowired
+    private EventRepositoryService eventRepositoryService;
 
     public Event getByIdAndEventType(int id, EventType eventType)
     {
@@ -18,17 +20,8 @@ public class EventRepositoryServiceInterface
         return eventRepositoryService.getByIdAndHandleNotFound(id);
     }
 
-    public Event getById(int id)
-    {
-        try {
-            SuperEventRepositoryService eventRepositoryService
-                    = eventRepositoryServiceFactory.getByEventType(EventType.LAUNCHEDEVENT);
-            return eventRepositoryService.getByIdAndHandleNotFound(id);
-        } catch (Exception e) {
-            SuperEventRepositoryService eventRepositoryService
-                    = eventRepositoryServiceFactory.getByEventType(EventType.DRAFTEDEVENT);
-            return eventRepositoryService.getByIdAndHandleNotFound(id);
-        }
+    public Event getById(int id) {
+        return eventRepositoryService.getById(id);
     }
 
     public Event saveWhenCreating(Event Event)

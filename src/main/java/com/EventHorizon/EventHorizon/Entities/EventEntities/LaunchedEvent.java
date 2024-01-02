@@ -1,10 +1,8 @@
 package com.EventHorizon.EventHorizon.Entities.EventEntities;
 
+import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Calendar;
@@ -21,4 +19,12 @@ public class LaunchedEvent extends Event {
     @Column(nullable = false)
     @Builder.Default
     private Date launchedDate = Calendar.getInstance().getTime();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LaunchedEvent that = (LaunchedEvent) o;
+        return super.equals(that);
+    }
 }
