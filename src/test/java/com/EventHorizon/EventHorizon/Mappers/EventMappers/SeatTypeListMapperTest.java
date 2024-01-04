@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Mappers.EventMappers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.SeatTypeDto;
+import com.EventHorizon.EventHorizon.DTOs.SeatArchiveDtos.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import org.junit.jupiter.api.Test;

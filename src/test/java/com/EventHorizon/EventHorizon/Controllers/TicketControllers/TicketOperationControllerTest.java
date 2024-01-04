@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers.TicketControllers;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.when;
 
-import com.EventHorizon.EventHorizon.DTOs.TicketViewDto;
+import com.EventHorizon.EventHorizon.DTOs.TicketDto.TicketViewDto;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketViewService;
 

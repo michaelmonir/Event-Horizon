@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Services.Tickets;
 
-import com.EventHorizon.EventHorizon.DTOs.TicketViewDto;
+import com.EventHorizon.EventHorizon.DTOs.TicketDto.TicketViewDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;

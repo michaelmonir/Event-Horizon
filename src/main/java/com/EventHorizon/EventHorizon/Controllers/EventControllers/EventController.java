@@ -1,10 +1,12 @@
 package com.EventHorizon.EventHorizon.Controllers.EventControllers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
+import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
 import com.EventHorizon.EventHorizon.Services.UserServices.UserTokenInformationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +20,21 @@ import java.util.List;
 @RequestMapping("/event/")
 @CrossOrigin("*")
 public class EventController {
+
     @Autowired
     private EventService eventService;
     @Autowired
     private UserTokenInformationService userTokenInformationService;
-
+    @Autowired
+    private EventViewService eventViewService;
     @Autowired
     LaunchedEventRepositoryService launchedEventRepositoryService;
 
-    @GetMapping("eventForUser/{eventId}")//any
-    public ResponseEntity<EventViewDto> getEventForUser(@PathVariable int eventId) {
-        EventViewDto detailedEventDto = this.eventService.getEventForUser(eventId);
-        return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
-    }
+    @GetMapping("EventForOrganizer/{eventId}/{userInformationId}") //any
+    public ResponseEntity<EventViewDto> getEvent
+            (HttpServletRequest request, @PathVariable int eventId,@RequestBody int userInformationId) {
 
-    @GetMapping("EventForOrganizer/{eventId}")//organizer,admin
-    public ResponseEntity<EventViewDto> getEventForOrganizer(HttpServletRequest request, @PathVariable int eventId,@RequestBody EventType eventType) {
-
-        int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        EventViewDto detailedEventDTO = this.eventService.getEventForOrganizer(organizerId, eventId,eventType);
+        EventViewDto detailedEventDTO = this.eventViewService.getEventViewDto(userInformationId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 

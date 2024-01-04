@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.DTOs;
+package com.EventHorizon.EventHorizon.DTOs.TicketDto;
 
 import lombok.*;
 

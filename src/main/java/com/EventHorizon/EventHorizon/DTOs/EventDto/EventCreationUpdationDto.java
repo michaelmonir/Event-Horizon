@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
+import com.EventHorizon.EventHorizon.DTOs.SeatArchiveDtos.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

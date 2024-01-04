@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Controllers.TicketControllers;
 
 import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
-import com.EventHorizon.EventHorizon.DTOs.TicketViewDto;
+import com.EventHorizon.EventHorizon.DTOs.TicketDto.TicketViewDto;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketViewService;
 import jakarta.servlet.http.HttpServletRequest;
