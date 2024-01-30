@@ -4,18 +4,18 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
 import com.EventHorizon.EventHorizon.Services.EventServices.FilterService;
+import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FilterTest {
     @Autowired
     private FilterService filterService;
     @Autowired
-    private InformationCustomCreator informationCreator;
+    private UserCustomCreator userCustomCreator;
     @Autowired
     private EventService eventService;
     @Autowired
@@ -39,12 +39,12 @@ public class FilterTest {
     @Autowired
     private EventRepository eventRepository;
     @Autowired
-    private InformationRepositoryService informationRepositoryService;
+    private UserRepositoryService userRepositoryService;
     @Autowired
-    private AdsOptionRepository adsOptionRepositry;
+    private AdsOptionRepository adsOptionRepository;
     private LaunchedEvent testEvent;
     private Organizer testOrganizer;
-    private AdsOption testAdsOption ;
+    private AdsOption testAdsOption;
 
     private void createLaunchedEvent() {
         Location testLocation = Location.builder().city("filterCity").country("filterCountry").address("filterAddress").build();
@@ -53,16 +53,16 @@ public class FilterTest {
                 .eventCategory("filterEventCategory").
                 eventAds(testAdsOption).
                 eventLocation(testLocation).
-                eventDate(new Date(System.currentTimeMillis()+1000L*1000L*1000L))
+                eventDate(new Date(System.currentTimeMillis() + 1000L * 1000L * 1000L))
                 .seatTypes(new ArrayList<>())
                 .eventOrganizer(testOrganizer).build();
     }
+
     private void initializeTestData() {
-        Information testInformation = informationCreator.getInformation(Role.ORGANIZER);
-        informationRepositoryService.add(testInformation);
-        this.testOrganizer = this.eventService.getOrganizerFromInformationId(testInformation.getId());
+        this.testOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(testOrganizer);
         testAdsOption = AdsOption.builder().priority(1).name("FREE").build();
-        adsOptionRepositry.save(testAdsOption);
+        adsOptionRepository.save(testAdsOption);
         createLaunchedEvent();
         this.testEvent.setEventOrganizer(this.testOrganizer);
         eventRepositoryService.saveWhenCreating(testEvent);
@@ -72,8 +72,8 @@ public class FilterTest {
         list.add(new FilterRelationList<>(FilterTypes.NAME, relation, "filterEvent"));
         list.add(new FilterRelationList<>(FilterTypes.CITY, relation, "filterCity"));
         list.add(new FilterRelationList<>(FilterTypes.COUNTRY, relation, "filterCountry"));
-        list.add(new FilterRelationList<>(FilterTypes.DATE, relation, new Date(System.currentTimeMillis()+1000L*1000L*1000L)));
-        list.add(new FilterRelationList<>(FilterTypes.ORGANIZER, relation, testOrganizer.getInformation().getUsername()));
+        list.add(new FilterRelationList<>(FilterTypes.DATE, relation, new Date(System.currentTimeMillis() + 1000L * 1000L * 1000L)));
+        list.add(new FilterRelationList<>(FilterTypes.ORGANIZER, relation, testOrganizer.userName));
         list.add(new FilterRelationList<>(FilterTypes.CATEGORY, relation, "filterEventCategory"));
         list.add(new FilterRelationList<>(FilterTypes.ADDRESS, relation, "filterAddress"));
     }
@@ -115,59 +115,66 @@ public class FilterTest {
         List<? extends Event> allEvents = eventRepository.findAll();
         Assertions.assertEquals(events, allEvents);
     }
+
     @Test
-    void testAddressFilter(){
+    void testAddressFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         list.add(new FilterRelationList<>(FilterTypes.ADDRESS, FilterRelation.AND, "filterAddress"));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testCategoryFilter(){
+    void testCategoryFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         list.add(new FilterRelationList<>(FilterTypes.CATEGORY, FilterRelation.AND, "filterEventCategory"));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testCityFilter(){
+    void testCityFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         list.add(new FilterRelationList<>(FilterTypes.CITY, FilterRelation.AND, "filterCity"));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testCountryFilter(){
+    void testCountryFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         list.add(new FilterRelationList<>(FilterTypes.COUNTRY, FilterRelation.AND, "filterCountry"));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testDateFilter(){
+    void testDateFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
-        list.add(new FilterRelationList<>(FilterTypes.DATE, FilterRelation.AND,new Date(System.currentTimeMillis()+1000L*1000L*1000L)));
+        list.add(new FilterRelationList<>(FilterTypes.DATE, FilterRelation.AND, new Date(System.currentTimeMillis() + 1000L * 1000L * 1000L)));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testEventNameFilter(){
+    void testEventNameFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
         list.add(new FilterRelationList<>(FilterTypes.NAME, FilterRelation.AND, "filterEvent"));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }
+
     @Test
-    void testOrganizerFilter(){
+    void testOrganizerFilter() {
         this.initializeTestData();
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> list = new ArrayList<>();
-        list.add(new FilterRelationList<>(FilterTypes.ORGANIZER, FilterRelation.AND, this.testOrganizer.getInformation().getUsername()));
+        list.add(new FilterRelationList<>(FilterTypes.ORGANIZER, FilterRelation.AND, this.testOrganizer.userName));
         List<? extends Event> events = filterService.getFilteredEvents(list);
         Assertions.assertEquals(events.get(events.size() - 1).getId(), this.testEvent.getId());
     }

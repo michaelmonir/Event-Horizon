@@ -1,5 +1,5 @@
 package com.EventHorizon.EventHorizon.security;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.security.Service.JwtService;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,8 @@ public class JWTServiceTest {
 
         HashMap<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("DB4C95F1C9BEE041BA1413297E07693EF548922DFA18B49C027A712302DE0E45", "42");
-        Information userDetails = mock(Information.class);
+
+        User userDetails = mock(User.class);
         when(userDetails.getUsername()).thenReturn("janedoe");
 
         // Act

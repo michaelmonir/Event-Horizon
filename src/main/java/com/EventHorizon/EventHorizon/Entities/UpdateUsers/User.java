@@ -1,9 +1,10 @@
-package com.EventHorizon.EventHorizon.Entities.UserEntities;
+package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +14,18 @@ import java.util.List;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Table(name = "information_tbl")
+@SuperBuilder
+@Table(name = "users")
 @EqualsAndHashCode
-public class Information implements UserDetails {
+public class User implements UserDetails {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_name" ,unique = true)
+    @Column(name = "user_name", unique = true)
     public String userName;
     @Column(name = "password")
     private String password;
@@ -45,10 +47,12 @@ public class Information implements UserDetails {
     private int signInWithEmail;
     @Column(name = "enable")
     private int enable;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.toString()));
     }
+
     @Override
     public String getUsername() {
         return email;
@@ -61,17 +65,16 @@ public class Information implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true ;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true ;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return enable==1&&active==1 ;
+        return enable == 1 && active == 1;
     }
-
 }

@@ -1,14 +1,14 @@
 package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.UserServices.AdminService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,55 +18,58 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class AdminServiceTest {
 
-
     @Autowired
-    InformationCustomCreator informationCreator;
+    UserCustomCreator userCustomCreator;
     @Autowired
     AdminService adminService;
 
     @Autowired
-    InformationRepositoryService informationRepositoryService;
+    UserRepositoryService userRepositoryService;
 
     @Test
     public void addModeratorTestIfSucceed() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
-        information.setPassword("pass12345");
-        InformationDTO informationDTO = new InformationDTO(information);
-        Information information2=adminService.addModerator(informationDTO);
-        Moderator moderator = (Moderator) informationRepositoryService.getUserByInformation(information2);
-        Assertions.assertEquals(moderator.getInformation().getId(), information2.getId());
+        Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
+        moderator.setPassword("pass12345");
+
+        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+
+        Moderator moderator1 = adminService.addModerator(updatedUserDto);
+        Moderator moderator2 = userRepositoryService.getModeratorById(moderator1.getId());
+        Assertions.assertEquals(moderator2, moderator1);
     }
 
     @Test
     public void addModeratorTestIfFail() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
-        information.setPassword("pass12345");
-        InformationDTO informationDTO = new InformationDTO(information);
-        adminService.addModerator(informationDTO);
+        Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
+        moderator.setPassword("pass12345");
 
-        Information information2 = informationCreator.getInformation(Role.MODERATOR);
+        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+
+        adminService.addModerator(updatedUserDto);
+
+        Moderator information2 = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
         information2.setPassword("pass12345");
-        InformationDTO informationDTO2 = new InformationDTO(information2);
-        informationDTO2.setEmail(informationDTO.getEmail());
+        UpdatedUserDto updatedUserDto2 = new UpdatedUserDto(information2);
+        updatedUserDto2.setEmail(updatedUserDto.getEmail());
         Assertions.assertThrows(
-                ExistingMail.class, () -> {
-                    adminService.addModerator(informationDTO);
+                AlreadyFoundException.class, () -> {
+                    adminService.addModerator(updatedUserDto);
                 }
         );
     }
 
     @Test
     public void deleteModeratorTestIfSucceed() {
-        Information information = informationCreator.getInformation(Role.MODERATOR);
-        information.setPassword("pass12345");
-        InformationDTO informationDTO = new InformationDTO(information);
-        Information information2 = adminService.addModerator(informationDTO);
+        Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
+        moderator.setPassword("pass12345");
+
+        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+
+        Moderator information2 = adminService.addModerator(updatedUserDto);
         adminService.deleteModerator(information2.getId());
 
         Assertions.assertThrows(
-                ModeratorNotFoundException.class, () -> {
-                   informationRepositoryService.getUserByInformation(information2);
-                }
+                UserNotFoundException.class, () -> userRepositoryService.getById(information2.getId())
         );
 
     }
@@ -74,7 +77,7 @@ public class AdminServiceTest {
     @Test
     public void deleteModeratorTestIfFail() {
         Assertions.assertThrows(
-                InformationNotFoundException.class, () -> {
+                UserNotFoundException.class, () -> {
                     adminService.deleteModerator(1000000);
                 }
         );

@@ -2,12 +2,10 @@ package com.EventHorizon.EventHorizon.Mappers.EventMappers.EventTypeMappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedLaunchedEventDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedLaunchedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
@@ -67,16 +65,11 @@ class DetailedLaunchedEventDtoMapperTest {
         event.setEventAds(new AdsOption());
         event.setSeatTypes(List.of(new SeatType("s1", 1, 1), new SeatType("s2", 2, 2)));
         event.setSeatTypes(new ArrayList<>());
-        
         Organizer organizer = new Organizer();
         organizer.setId(1);
+        organizer.setUserName("ahmed");
         event.setEventOrganizer(organizer);
-        Information information=new Information();
-        information.setId(1);
-        information.setUserName("ahmed");
-        organizer.setInformation(information);
         DetailedLaunchedEventDto result = detailedLaunchedEventDtoMapper.getDTOfromDetailedEvent(event);
-
         Assertions.assertEquals(event.getId(), result.getId());
         Assertions.assertEquals(event.getName(), result.getName());
         Assertions.assertEquals(event.getDescription(), result.getDescription());
@@ -86,6 +79,5 @@ class DetailedLaunchedEventDtoMapperTest {
         Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(event.getLaunchedDate(), result.getLaunchedDate());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
-        Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }
 }

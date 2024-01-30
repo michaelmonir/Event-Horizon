@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class InformationDTO {
+public class UpdatedUserDto {
     private int id;
     private String userName;
     private String firstName;
@@ -21,13 +21,13 @@ public class InformationDTO {
     private String gender;
     private String payPalAccount;
     private String role;
-    int signInWithEmail;
+    private int signInWithEmail;
 
-    public InformationDTO(Information information) {
+    public UpdatedUserDto(User information) {
         this.id = information.getId();
         this.email = information.getEmail();
         this.firstName = information.getFirstName();
-        this.password=information.getPassword();
+        this.password = information.getPassword();
         this.userName = information.userName;
         this.lastName = information.getLastName();
         this.gender = information.getGender().toString();

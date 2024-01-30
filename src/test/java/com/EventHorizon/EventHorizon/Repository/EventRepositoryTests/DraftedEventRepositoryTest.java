@@ -2,13 +2,12 @@ package com.EventHorizon.EventHorizon.Repository.EventRepositoryTests;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,9 @@ class DraftedEventRepositoryTest {
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepository userRepository;
     @Autowired
-    private InformationCustomCreator informationCreator;
+    private UserCustomCreator informationCreator;
 
     private DraftedEvent tempEvent;
     private AdsOption tempAdsOption;
@@ -66,9 +65,8 @@ class DraftedEventRepositoryTest {
         createEvent();
     }
     private void  createOrganizer(){
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
+        Organizer organizer = (Organizer) informationCreator.getUser(Role.ORGANIZER);
+        userRepository.save(organizer);
         tempOrganizer=organizer;
     }
     public void createAdsOption(){

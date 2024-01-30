@@ -12,7 +12,7 @@ public class OrganizerNameFilterCriteria implements FilterCriteria {
     @Override
     public Specification<Event> meetCriteria() {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("eventOrganizer").get("information").get("userName")
+                criteriaBuilder.like(root.get("eventOrganizer").get("userName")
                         , "%" + organizerName + "%");
     }
 }

@@ -3,9 +3,9 @@ package com.EventHorizon.EventHorizon.Services.Tickets;
 import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.TempUserRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventTypeService;
 import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,12 @@ public class TicketTransactionsService {
     @Autowired
     private SeatTypeRepositoryService seatTypeRepositoryService;
     @Autowired
-    private TempUserRepositoryServiceInterface tempUserRepositoryServiceInterface;
-    @Autowired
     private EventTypeService eventTypeService;
-
+    @Autowired
+    private UserRepositoryService userRepositoryService;
     @Transactional
-    public void buyTicketCollections(int clientInformationId, List<BuyingAndRefundingDto> list) {
-        Client client = tempUserRepositoryServiceInterface.getClientByClientInformationId(clientInformationId);
-
+    public void buyTicketCollections(int id, List<BuyingAndRefundingDto> list) {
+        Client client = userRepositoryService.getClientById(id);
         for (BuyingAndRefundingDto buyingAndRefundingDto : list)
             buyOneTicketCollection(client, buyingAndRefundingDto);
     }
@@ -47,9 +45,8 @@ public class TicketTransactionsService {
     }
 
     @Transactional
-    public void refundTicketCollections(int clientInformationId, List<BuyingAndRefundingDto> list) {
-        Client client = tempUserRepositoryServiceInterface.getClientByClientInformationId(clientInformationId);
-
+    public void refundTicketCollections(int id, List<BuyingAndRefundingDto> list) {
+        Client client = userRepositoryService.getClientById(id);
         for (BuyingAndRefundingDto buyingAndRefundingDto : list)
             refundOneTicketCollection(client, buyingAndRefundingDto);
     }

@@ -1,14 +1,13 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,9 +24,9 @@ class DraftedEventRepositoryServiceTest {
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepository userRepository;
     @Autowired
-    InformationCustomCreator informationCreator;
+    UserCustomCreator userCustomCreator;
 
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
@@ -109,10 +108,9 @@ class DraftedEventRepositoryServiceTest {
     }
 
     private void createOrganizer() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        tempOrganizer = organizer;
+        tempOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
+
+        userRepository.save(tempOrganizer);
     }
 
     public void createAdsOption() {

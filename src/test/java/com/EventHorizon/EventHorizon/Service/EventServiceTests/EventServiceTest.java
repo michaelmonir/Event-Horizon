@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Service.EventServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedEventDtoMapperFactory;
@@ -14,9 +14,8 @@ import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.*;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.OrganizerInformationRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,7 +49,7 @@ public class EventServiceTest {
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
     @Mock
-    private InformationRepositoryService informationService;
+    private UserRepositoryService userRepositoryService;
     @Mock
     private UserEventService userEventService;
     @Mock
@@ -59,8 +58,6 @@ public class EventServiceTest {
     private DetailedLaunchedEventDtoMapper detailedLaunchedEventDtoMapper;
     @Mock
     private DetailedDraftedEventDtoMapper detailedDraftedEventDtoMapper;
-    @Mock
-    private OrganizerInformationRepositoryService organizerInformationService;
     @Mock
     private DashboardRepositoryService dashboardRepositoryService;
     @Mock
@@ -117,8 +114,7 @@ public class EventServiceTest {
         Organizer organizer = new Organizer();
         DetailedLaunchedEventDto eventDTO = new DetailedLaunchedEventDto();
 
-        when(informationService.getByID(anyInt())).thenReturn(new Information());
-        when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
+        when(userRepositoryService.getById(anyInt())).thenReturn(new Organizer());
 
         when(detailedDraftedEventDtoMapper.getEventFromDetailedEventDTO(any())).thenReturn(new DraftedEvent());
         when(detailedEventDtoMapperInterface.getDTOfromDetailedEvent(any())).thenReturn(new DetailedLaunchedEventDto());
@@ -133,8 +129,7 @@ public class EventServiceTest {
         Organizer organizer = new Organizer();
         DetailedEventDto eventDTO = new DetailedDraftedEventDto();
 
-        when(informationService.getByID(anyInt())).thenReturn(new Information());
-        when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
+        when(userRepositoryService.getById(anyInt())).thenReturn(new Organizer());
 
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
@@ -151,18 +146,8 @@ public class EventServiceTest {
     void testDeleteEvent() {
         Organizer organizer = new Organizer();
 
-        when(informationService.getByID(anyInt())).thenReturn(new Information());
-        when(organizerInformationService.getUserByInformation(any())).thenReturn(organizer);
+        when(userRepositoryService.getById(anyInt())).thenReturn(new Organizer());
         when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
         assertDoesNotThrow(() -> eventService.deleteEvent(1, 1, EventType.DRAFTEDEVENT));
-    }
-
-    @Test
-    void testGetOrganizerFromInformationId() {
-        when(informationService.getByID(anyInt())).thenReturn(new Information());
-        when(organizerInformationService.getUserByInformation(any())).thenReturn(new Organizer());
-        Organizer result = eventService.getOrganizerFromInformationId(1);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(Organizer.class, result.getClass());
     }
 }

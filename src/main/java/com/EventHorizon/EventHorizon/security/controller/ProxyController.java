@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.security.controller;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
@@ -22,7 +22,7 @@ public class ProxyController {
     private final ProxyService proxyService;
 
     @PostMapping("basicSignUp")
-    public ResponseEntity<AuthenticationResponse> basicSignUp(@RequestBody InformationDTO registerRequest) {
+    public ResponseEntity<AuthenticationResponse> basicSignUp(@RequestBody UpdatedUserDto registerRequest) {
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest), HttpStatus.OK);
     }
 
@@ -37,7 +37,7 @@ public class ProxyController {
     }
 
     @PostMapping("signUpWithGmail")
-    public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody InformationDTO registerRequest) {
+    public ResponseEntity<AuthenticationResponse> signUpWithGmail(@RequestBody UpdatedUserDto registerRequest) {
         return new ResponseEntity<AuthenticationResponse>(proxyService.signUp(registerRequest), HttpStatus.OK);
     }
 
