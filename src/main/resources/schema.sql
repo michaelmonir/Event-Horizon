@@ -159,7 +159,7 @@ CREATE TABLE `client` (
 
 CREATE TABLE organizer (
         id INT PRIMARY KEY,
-        `rate` float ,
+        `rate` float default 0,
         FOREIGN KEY (id) REFERENCES Users (id)
 );
 

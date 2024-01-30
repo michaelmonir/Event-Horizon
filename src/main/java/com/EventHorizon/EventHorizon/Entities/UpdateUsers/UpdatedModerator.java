@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities.Update;
+package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

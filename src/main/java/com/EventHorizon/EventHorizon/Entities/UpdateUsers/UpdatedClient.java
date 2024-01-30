@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities.Update;
+package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,5 +11,4 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Table(name = "client")
 public class UpdatedClient extends UpdatedUser {
-
 }

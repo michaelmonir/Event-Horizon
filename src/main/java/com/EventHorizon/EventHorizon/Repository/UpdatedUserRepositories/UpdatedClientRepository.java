@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories;
 
-import com.EventHorizon.EventHorizon.Entities.Update.UpdatedClient;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

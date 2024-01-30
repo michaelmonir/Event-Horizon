@@ -1,12 +1,9 @@
-package com.EventHorizon.EventHorizon.Entities.Update;
+package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Entity
 @Data

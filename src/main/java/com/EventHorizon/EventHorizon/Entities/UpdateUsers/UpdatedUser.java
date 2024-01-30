@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities.Update;
+package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Builder
 @Table(name = "users")
 @EqualsAndHashCode
 public class UpdatedUser implements UserDetails {

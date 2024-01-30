@@ -24,6 +24,7 @@ public class ClientInformationRepositoryService implements UserInformationReposi
         Client client = Client.builder().information(information).build();
         clientRepository.save(client);
         return client;
+        // updatedRep.add(user);
     }
 
     @Override

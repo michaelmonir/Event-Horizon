@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories;
 
-import com.EventHorizon.EventHorizon.Entities.Update.UpdatedSponsor;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedSponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
