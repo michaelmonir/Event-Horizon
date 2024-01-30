@@ -24,11 +24,18 @@ public class test {
         UpdatedOrganizer updatedOrganizer1 = (UpdatedOrganizer) updatedUserRepositoryService.getById(updatedOrganizer.getId());
         Assertions.assertEquals(updatedOrganizer1.getFirstName(), updatedOrganizer.getFirstName());
     }
+    @Test
+    void getRoleById(){
+        UpdatedOrganizer updatedOrganizer = getOrganizer("faris");
+        updatedUserRepositoryService.add(updatedOrganizer);
+        Role role = updatedUserRepositoryService.getRole(updatedOrganizer.getId());
+        Assertions.assertEquals(role,updatedOrganizer.getRole());
+    }
     private UpdatedOrganizer getOrganizer(String z){
         UpdatedOrganizer updatedOrganizer =  UpdatedOrganizer.builder().
                 firstName(z).email(z)
                 .gender(Gender.MALE).lastName(z)
-                .role(Role.CLIENT).password(z)
+                .role(Role.ORGANIZER).password(z)
                 .payPalAccount(z).userName(z)
                 .rate(5)
                 .build();

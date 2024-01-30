@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet;
 
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedUser;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UpdatedUserRepository;
@@ -33,11 +34,19 @@ public class UpdatedUserRepositoryService {
     }
 
     public void delete(UpdatedUser updatedUser) {
-        updatedUserRepository.delete(updatedUser);
+        try {
+            updatedUserRepository.delete(updatedUser);
+        } catch (Exception e) {
+            throw new UserNotFoundException();
+        }
     }
 
     public void deleteById(int id) {
-        updatedUserRepository.deleteById(id);
+        try {
+            updatedUserRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new UserNotFoundException();
+        }
     }
 
     public void update(UpdatedUser updatedUser) {
@@ -56,5 +65,11 @@ public class UpdatedUserRepositoryService {
         if (updatedUser.isEmpty())
             throw new UserNotFoundException();
         return updatedUser.get();
+    }
+    public Role getRole(int id){
+        Optional<Role> role = updatedUserRepository.findRoleById(id);
+        if (role.isEmpty())
+            throw new UserNotFoundException();
+        return role.get();
     }
 }
