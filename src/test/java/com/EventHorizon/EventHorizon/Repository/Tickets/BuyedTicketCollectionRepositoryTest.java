@@ -2,9 +2,10 @@ package com.EventHorizon.EventHorizon.Repository.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void saveSuccessfully() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection
@@ -47,7 +48,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void saveWithoutSavingSeatType() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
         SeatType seatType = new SeatType("a", 1, 1);
 
         BuyedTicketCollection buyedTicketCollection
@@ -58,7 +59,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void saveWithNegativeNumberOfTickets() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection
@@ -69,7 +70,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void getById() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection

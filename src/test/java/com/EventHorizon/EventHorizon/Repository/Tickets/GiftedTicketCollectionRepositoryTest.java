@@ -2,10 +2,11 @@ package com.EventHorizon.EventHorizon.Repository.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.GiftedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class GiftedTicketCollectionRepositoryTest
 
     @Test
     public void saveSuccessfully() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
-        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         GiftedTicketCollection giftedTicketCollection
@@ -36,7 +37,7 @@ public class GiftedTicketCollectionRepositoryTest
     @Test
     public void saveWithoutSavingClient() {
         Client client = new Client();
-        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         GiftedTicketCollection buyedTicketCollection
@@ -47,7 +48,7 @@ public class GiftedTicketCollectionRepositoryTest
 
     @Test
     public void saveWithoutSavingSponsor() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
         Sponsor sponsor = new Sponsor();
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
@@ -59,8 +60,8 @@ public class GiftedTicketCollectionRepositoryTest
 
     @Test
     public void saveWithNegativeNumberOfTickets() {
-        Client client = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
-        Sponsor sponsor = (Sponsor) this.userCustomCreator.getUserAndSaveInRepository(Role.SPONSOR);
+        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
         SeatType seatType = new SeatType("name", 1, 1);
 
         GiftedTicketCollection giftedTicketCollection

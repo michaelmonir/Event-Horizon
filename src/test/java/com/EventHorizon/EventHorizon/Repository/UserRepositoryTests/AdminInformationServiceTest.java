@@ -1,13 +1,13 @@
 package com.EventHorizon.EventHorizon.Repository.UserRepositoryTests;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Admin;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.InformationRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,46 +19,45 @@ import static org.junit.Assert.assertThrows;
 public class AdminInformationServiceTest {
 
     @Autowired
-    private InformationRepositoryService informationService;
+    private UserRepositoryService userRepositoryService;
     @Autowired
-    private InformationRepository informationRepository;
-    @Autowired
-    private InformationCustomCreator informationCreator;
+    private UserCustomCreator userCustomCreator;
 
     @Test
     public void updateAdminDataTest() {
-        Information information = informationCreator.getInformation(Role.ADMIN);
-        information.setGender(Gender.NONE);
-        informationRepository.save(information);
-        information.setFirstName("newFirstName");
-        information.setLastName("newLastName");
-        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
-        informationService.updateWithDto(userUpdateDTO);
-        assertEquals(information, informationService.getByID(information.getId()));
+        Admin admin = (Admin) userCustomCreator.getUser(Role.ADMIN);
+
+        admin.setGender(Gender.NONE);
+        userRepositoryService.add(admin);
+        admin.setFirstName("newFirstName");
+        admin.setLastName("newLastName");
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(admin);
+        userRepositoryService.updateWithDto(userUpdateDTO);
+        assertEquals(admin, userRepositoryService.getAdminById(admin.getId()));
     }
 
     @Test
     public void noAdminExceptionTest() {
-        Information information = informationCreator.getInformation(Role.ADMIN);
-        information.setGender(Gender.NONE);
+        Admin admin = (Admin) userCustomCreator.getUser(Role.ADMIN);
+        admin.setGender(Gender.NONE);
 
-        informationRepository.save(information);
-        informationRepository.deleteById(information.getId());
-        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
+        userRepositoryService.add(admin);
+        userRepositoryService.deleteById(admin.getId());
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(admin);
         assertThrows(
-                InformationNotFoundException.class, () -> {
-                    informationService.updateWithDto(userUpdateDTO);
+                UserNotFoundException.class, () -> {
+                    userRepositoryService.updateWithDto(userUpdateDTO);
                 }
         );
     }
 
     @Test
     public void NotAdminOperationExceptionTest() {
-        Information information = informationCreator.getInformation(Role.ADMIN);
-        information.setGender(Gender.NONE);
+        Admin admin = (Admin) userCustomCreator.getUser(Role.ADMIN);
+        admin.setGender(Gender.NONE);
         assertThrows(
                 NotAdminOperationException.class, () -> {
-                    informationService.add(information);
+                    userRepositoryService.add(admin);
                 }
         );
     }

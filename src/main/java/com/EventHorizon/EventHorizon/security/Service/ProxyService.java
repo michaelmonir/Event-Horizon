@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
@@ -39,7 +38,7 @@ public class ProxyService {
         try {
             userRepositoryService.getByEmail(mail);
             return true;
-        } catch (InformationNotFoundException e) {
+        } catch (UserNotFoundException e) {
             return false;
         }
 
@@ -49,7 +48,7 @@ public class ProxyService {
         try {
             userRepositoryService.getByUserName(userName);
             return true;
-        } catch (InformationNotFoundException e) {
+        } catch (UserNotFoundException e) {
             return false;
         }
     }

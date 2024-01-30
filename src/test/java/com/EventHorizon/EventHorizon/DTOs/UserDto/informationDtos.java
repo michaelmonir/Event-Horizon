@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import org.junit.Assert;
@@ -39,24 +40,22 @@ public class informationDtos {
 
     @Test
     void ToViewDto() {
-        Information information = userCustomCreator.getInformation(Role.CLIENT);
-        UserViewDTO informationDTO=new UserViewDTO(information);
+        User user = userCustomCreator.getUser(Role.CLIENT);
+        UserViewDTO informationDTO=new UserViewDTO(user);
 
-        Assert.assertEquals(information.userName, informationDTO.getUserName());
-        Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
-        Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
-        Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
-        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
-        Assert.assertEquals(information.getRole().toString(), informationDTO.getRole());
+        Assert.assertEquals(user.userName, informationDTO.getUserName());
+        Assert.assertEquals(user.getFirstName(), informationDTO.getFirstName());
+        Assert.assertEquals(user.getLastName(), informationDTO.getLastName());
+        Assert.assertEquals(user.getEmail(), informationDTO.getEmail());
+        Assert.assertEquals(user.getGender().toString(), informationDTO.getGender());
+        Assert.assertEquals(user.getRole().toString(), informationDTO.getRole());
     }
 
     @Test
     void ToInformationTest() {
-        Information information = userCustomCreator.getInformation(Role.CLIENT);
-        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
-        Information information1 = userUpdateDTO.toInformation(information);
-        Assert.assertEquals(information1.getRole(), information.getRole());
-
+        User user = userCustomCreator.getUser(Role.CLIENT);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(user);
+        User information1 = userUpdateDTO.toInformation(user);
+        Assert.assertEquals(information1.getRole(), user.getRole());
     }
-
 }

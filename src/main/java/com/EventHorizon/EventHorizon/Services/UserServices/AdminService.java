@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Services.UserServices;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
@@ -19,13 +20,13 @@ public class AdminService {
     private UserMapper userMapper;
 
 
-    public User addModerator(UpdatedUserDto registerRequest) {
+    public Moderator addModerator(UpdatedUserDto registerRequest) {
         proxyService.removeIfNotEnabled(registerRequest.getEmail());
-        User user = userMapper.createUser(registerRequest);
-        user.setActive(1);
-        user.setEnable(1);
-        userRepositoryService.add(user);
-        return user;
+        Moderator moderator = (Moderator) userMapper.createUser(registerRequest);
+        moderator.setActive(1);
+        moderator.setEnable(1);
+        userRepositoryService.add(moderator);
+        return moderator;
     }
 
     public void deleteModerator(int id) {

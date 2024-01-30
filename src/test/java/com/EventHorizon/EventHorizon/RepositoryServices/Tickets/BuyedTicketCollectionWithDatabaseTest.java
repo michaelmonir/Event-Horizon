@@ -2,9 +2,10 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.Tickets.BuyedTicketCollectionNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ public class BuyedTicketCollectionWithDatabaseTest
     }
 
     public void initializeAndSaveCustomObjectsInDB() {
-        this.customClient = (Client)this.userCustomCreator.getUserAndSaveInRepository(Role.CLIENT);
+        this.customClient = (Client)this.userCustomCreator.getUser(Role.CLIENT);
         this.customSeatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
         this.customBuyedTicketCollection = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
         this.TicketRepositoryService.save(this.customBuyedTicketCollection);

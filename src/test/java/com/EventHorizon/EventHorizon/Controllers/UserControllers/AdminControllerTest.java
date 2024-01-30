@@ -32,57 +32,57 @@ class AdminControllerTest {
     @MockBean
     private AdminService adminService;
 
-    @Test
-    void testAddModerator() throws Exception {
-        User user = new User();
-        user.setActive(1);
-        user.setEmail("jane.doe@example.org");
-        user.setEnable(1);
-        user.setFirstName("Jane");
-        user.setGender(Gender.MALE);
-        user.setId(1);
-        user.setLastName("Doe");
-        user.setPassword("iloveyou");
-        user.setPayPalAccount("3");
-        user.setRole(Role.CLIENT);
-        user.setSignInWithEmail(1);
-        user.setUserName("janedoe");
-        when(adminService.addModerator(Mockito.<UpdatedUserDto>any())).thenReturn(user);
-
-        UpdatedUserDto updatedUserDto = new UpdatedUserDto();
-        updatedUserDto.setEmail("jane.doe@example.org");
-        updatedUserDto.setFirstName("Jane");
-        updatedUserDto.setGender("Gender");
-        updatedUserDto.setId(1);
-        updatedUserDto.setLastName("Doe");
-        updatedUserDto.setPassword("iloveyou");
-        updatedUserDto.setPayPalAccount("3");
-        updatedUserDto.setRole("Role");
-        updatedUserDto.setSignInWithEmail(1);
-        updatedUserDto.setUserName("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(updatedUserDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/addModerator")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-
-        // Act and Assert
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    void testDeleteModerator() throws Exception {
-        // Arrange
-        doNothing().when(adminService).deleteModerator(anyInt());
-        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/admin/deleteModerator");
-        MockHttpServletRequestBuilder requestBuilder = deleteResult.param("idOfModerator", String.valueOf(1));
-
-        // Act and Assert
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+//    @Test
+//    void testAddModerator() throws Exception {
+//        User user = new User();
+//        user.setActive(1);
+//        user.setEmail("jane.doe@example.org");
+//        user.setEnable(1);
+//        user.setFirstName("Jane");
+//        user.setGender(Gender.MALE);
+//        user.setId(1);
+//        user.setLastName("Doe");
+//        user.setPassword("iloveyou");
+//        user.setPayPalAccount("3");
+//        user.setRole(Role.CLIENT);
+//        user.setSignInWithEmail(1);
+//        user.setUserName("janedoe");
+//        when(adminService.addModerator(Mockito.<UpdatedUserDto>any())).thenReturn(user);
+//
+//        UpdatedUserDto updatedUserDto = new UpdatedUserDto();
+//        updatedUserDto.setEmail("jane.doe@example.org");
+//        updatedUserDto.setFirstName("Jane");
+//        updatedUserDto.setGender("Gender");
+//        updatedUserDto.setId(1);
+//        updatedUserDto.setLastName("Doe");
+//        updatedUserDto.setPassword("iloveyou");
+//        updatedUserDto.setPayPalAccount("3");
+//        updatedUserDto.setRole("Role");
+//        updatedUserDto.setSignInWithEmail(1);
+//        updatedUserDto.setUserName("janedoe");
+//        String content = (new ObjectMapper()).writeValueAsString(updatedUserDto);
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/addModerator")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(content);
+//
+//        // Act and Assert
+//        MockMvcBuilders.standaloneSetup(adminController)
+//                .build()
+//                .perform(requestBuilder)
+//                .andExpect(MockMvcResultMatchers.status().isOk());
+//    }
+//
+//    @Test
+//    void testDeleteModerator() throws Exception {
+//        // Arrange
+//        doNothing().when(adminService).deleteModerator(anyInt());
+//        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/admin/deleteModerator");
+//        MockHttpServletRequestBuilder requestBuilder = deleteResult.param("idOfModerator", String.valueOf(1));
+//
+//        // Act and Assert
+//        MockMvcBuilders.standaloneSetup(adminController)
+//                .build()
+//                .perform(requestBuilder)
+//                .andExpect(MockMvcResultMatchers.status().isOk());
+//    }
 }

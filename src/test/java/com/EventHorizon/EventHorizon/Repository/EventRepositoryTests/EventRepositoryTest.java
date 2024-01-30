@@ -3,12 +3,12 @@ package com.EventHorizon.EventHorizon.Repository.EventRepositoryTests;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ class EventRepositoryTest {
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepository organizerRepository;
     @Autowired
-    private InformationCustomCreator informationCreator;
+    private UserCustomCreator userCustomCreator;
 
     private Event tempEvent;
     private AdsOption tempAdsOption;
@@ -139,10 +139,8 @@ class EventRepositoryTest {
     }
 
     private void createOrganizer() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
-        tempOrganizer = organizer;
+        tempOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
+        organizerRepository.save(tempOrganizer);
     }
 
     public void createAdsOption() {
