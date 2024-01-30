@@ -30,9 +30,9 @@ public class EventController {
     @Autowired
     LaunchedEventRepositoryService launchedEventRepositoryService;
 
-    @GetMapping("EventForOrganizer/{eventId}/{userInformationId}") //any
+    @GetMapping("eventForUser/{eventId}/{userInformationId}") //any
     public ResponseEntity<EventViewDto> getEvent
-            (HttpServletRequest request, @PathVariable int eventId,@RequestBody int userInformationId) {
+            (@PathVariable int eventId,@PathVariable int userInformationId) {
 
         EventViewDto detailedEventDTO = this.eventViewService.getEventViewDto(userInformationId, eventId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
