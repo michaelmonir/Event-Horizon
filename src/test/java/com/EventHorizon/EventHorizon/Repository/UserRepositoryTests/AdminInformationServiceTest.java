@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
+import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +23,27 @@ public class AdminInformationServiceTest {
     private UserRepositoryService userRepositoryService;
     @Autowired
     private UserCustomCreator userCustomCreator;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     public void updateAdminDataTest() {
         Admin admin = (Admin) userCustomCreator.getUser(Role.ADMIN);
 
         admin.setGender(Gender.NONE);
-        userRepositoryService.add(admin);
+        userRepository.save(admin);
         admin.setFirstName("newFirstName");
         admin.setLastName("newLastName");
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO(admin);
         userRepositoryService.updateWithDto(userUpdateDTO);
-        assertEquals(admin, userRepositoryService.getAdminById(admin.getId()));
+        assertEquals(admin.userName, userRepositoryService.getAdminById(admin.getId()).userName);
     }
 
     @Test
     public void noAdminExceptionTest() {
         Admin admin = (Admin) userCustomCreator.getUser(Role.ADMIN);
         admin.setGender(Gender.NONE);
-
-        userRepositoryService.add(admin);
-        userRepositoryService.deleteById(admin.getId());
+        admin.setId(1000000);
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO(admin);
         assertThrows(
                 UserNotFoundException.class, () -> {

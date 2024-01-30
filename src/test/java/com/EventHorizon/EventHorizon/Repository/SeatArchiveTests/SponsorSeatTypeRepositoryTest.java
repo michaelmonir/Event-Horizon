@@ -31,7 +31,7 @@ public class SponsorSeatTypeRepositoryTest {
     @Test
     public void saveSuccessfully() {
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor) userCustomCreator.getUser(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor) userCustomCreator.getAndSaveUser(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
         Assertions.assertDoesNotThrow(() -> this.sponsorSeatArchiveRepository.save(sponsorSeatArchive));
@@ -62,7 +62,7 @@ public class SponsorSeatTypeRepositoryTest {
     @Test
     public void saveNegativeAvailableNumberOfSeats() {
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor) userCustomCreator.getUser(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor) userCustomCreator.getAndSaveUser(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, -1);
 
@@ -73,7 +73,7 @@ public class SponsorSeatTypeRepositoryTest {
     @Test
     public void saveTotalNumberOfSeatsLessThanAvailable() {
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor) userCustomCreator.getUser(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor) userCustomCreator.getAndSaveUser(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 2);
 
@@ -84,7 +84,7 @@ public class SponsorSeatTypeRepositoryTest {
     @Test
     public void getById() {
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor) userCustomCreator.getUser(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor) userCustomCreator.getAndSaveUser(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
         this.sponsorSeatArchiveRepository.save(sponsorSeatArchive);
@@ -98,7 +98,7 @@ public class SponsorSeatTypeRepositoryTest {
     @Test
     public void deletingSponsorDeletesTheArchive() {
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
-        Sponsor sponsor = (Sponsor) userCustomCreator.getUser(Role.SPONSOR);
+        Sponsor sponsor = (Sponsor) userCustomCreator.getAndSaveUser(Role.SPONSOR);
 
         SponsorSeatArchive sponsorSeatArchive = new SponsorSeatArchive(seatType, sponsor, 1, 1);
         this.sponsorSeatArchiveRepository.save(sponsorSeatArchive);

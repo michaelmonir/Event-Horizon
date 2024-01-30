@@ -36,7 +36,7 @@ public class EventCustomCreator
     public LaunchedEvent getLaunchedEvent() {
         this.numberOfcreatedEvents++;
 
-        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        Organizer customOrganizer = (Organizer) this.userCustomCreator.getAndSaveUser(Role.ORGANIZER);
         userRepository.save(customOrganizer);
         AdsOption customAdsOption = this.adsOptionCustomCreator.getAdsOption();
         this.adsOptionRepositry.save(customAdsOption);
@@ -57,7 +57,7 @@ public class EventCustomCreator
     public DraftedEvent getDraftedEvent() {
         this.numberOfcreatedEvents++;
 
-        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        Organizer customOrganizer = (Organizer) this.userCustomCreator.getAndSaveUser(Role.ORGANIZER);
         userRepository.save(customOrganizer);
         AdsOption customAdsOption = this.adsOptionCustomCreator.getAdsOption();
         this.adsOptionRepositry.save(customAdsOption);

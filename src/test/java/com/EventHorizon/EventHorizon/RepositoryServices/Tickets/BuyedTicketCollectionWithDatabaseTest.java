@@ -58,7 +58,7 @@ public class BuyedTicketCollectionWithDatabaseTest
     }
 
     public void initializeAndSaveCustomObjectsInDB() {
-        this.customClient = (Client)this.userCustomCreator.getUser(Role.CLIENT);
+        this.customClient = (Client)this.userCustomCreator.getAndSaveUser(Role.CLIENT);
         this.customSeatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
         this.customBuyedTicketCollection = new BuyedTicketCollection(this.customClient, this.customSeatType, 1);
         this.TicketRepositoryService.save(this.customBuyedTicketCollection);

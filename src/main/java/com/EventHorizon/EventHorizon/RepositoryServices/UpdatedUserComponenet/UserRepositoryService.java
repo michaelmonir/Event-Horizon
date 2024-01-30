@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UserViewDTO;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AlreadyFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,10 @@ public class UserRepositoryService {
     private final UserRepository userRepository;
 
     public void add(User user) {
-        if (user.getId() != 0) {
+        if (user.getId() != 0)
             throw new AlreadyFoundException();
-        }
+        if (user.getRole() == Role.ADMIN)
+            throw new NotAdminOperationException();
         this.save(user);
     }
 
@@ -36,19 +38,17 @@ public class UserRepositoryService {
     }
 
     public void delete(User user) {
-        try {
-            userRepository.delete(user);
-        } catch (Exception e) {
-            throw new UserNotFoundException();
-        }
+        if (user.getRole() == Role.ADMIN)
+            throw new NotAdminOperationException();
+        this.getById(user.getId());
+        userRepository.delete(user);
     }
 
     public void deleteById(int id) {
-        try {
-            userRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new UserNotFoundException();
-        }
+        User user = this.getById(id);
+        if (user.getRole() == Role.ADMIN)
+            throw new NotAdminOperationException();
+        userRepository.deleteById(id);
     }
 
     public void update(User user) {

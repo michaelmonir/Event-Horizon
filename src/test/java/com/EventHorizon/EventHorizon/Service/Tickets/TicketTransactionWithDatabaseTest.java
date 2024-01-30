@@ -133,7 +133,7 @@ public class TicketTransactionWithDatabaseTest
     }
 
     private void initializeCustomEventObjects() {
-        this.customClient = (Client)userCustomCreator.getUser(Role.CLIENT);
+        this.customClient = (Client)userCustomCreator.getAndSaveUser(Role.CLIENT);
 
         this.customSeatType = this.seatTypeCustomCreator.getSeatType();
 

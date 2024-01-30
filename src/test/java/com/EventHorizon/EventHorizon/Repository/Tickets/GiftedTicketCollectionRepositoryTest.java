@@ -7,6 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,9 @@ public class GiftedTicketCollectionRepositoryTest
 
     @Test
     public void saveSuccessfully() {
-        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
-        Sponsor sponsor = (Sponsor)this.userCustomCreator.getUser(Role.SPONSOR);
+        Client client = (Client) userCustomCreator.getAndSaveUser(Role.CLIENT);
+        Sponsor sponsor = (Sponsor)this.userCustomCreator.getAndSaveUser(Role.SPONSOR);
+
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         GiftedTicketCollection giftedTicketCollection

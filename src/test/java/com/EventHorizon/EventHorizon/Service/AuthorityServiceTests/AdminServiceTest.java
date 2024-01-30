@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AlreadyFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
@@ -51,7 +52,7 @@ public class AdminServiceTest {
         UpdatedUserDto updatedUserDto2 = new UpdatedUserDto(information2);
         updatedUserDto2.setEmail(updatedUserDto.getEmail());
         Assertions.assertThrows(
-                ExistingMail.class, () -> {
+                AlreadyFoundException.class, () -> {
                     adminService.addModerator(updatedUserDto);
                 }
         );
@@ -68,9 +69,7 @@ public class AdminServiceTest {
         adminService.deleteModerator(information2.getId());
 
         Assertions.assertThrows(
-                ModeratorNotFoundException.class, () -> {
-                   userRepositoryService.getById(information2.getId());
-                }
+                UserNotFoundException.class, () -> userRepositoryService.getById(information2.getId())
         );
 
     }

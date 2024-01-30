@@ -6,6 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventTypeService;
 import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveOperationService;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketOperationsService;
@@ -33,6 +34,8 @@ public class TicketTransactionServiceTest {
     private SeatTypeRepositoryService seatTypeRepositoryService;
     @Mock
     private EventTypeService eventTypeService;
+    @Mock
+    private UserRepositoryService userRepositoryService;
 
     private Client customClient;
     private SeatType customSeatType;

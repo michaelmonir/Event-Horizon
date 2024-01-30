@@ -27,7 +27,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void saveSuccessfully() {
-        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getAndSaveUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection
@@ -59,7 +59,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void saveWithNegativeNumberOfTickets() {
-        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getAndSaveUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection
@@ -70,7 +70,7 @@ public class BuyedTicketCollectionRepositoryTest
 
     @Test
     public void getById() {
-        Client client = (Client) userCustomCreator.getUser(Role.CLIENT);
+        Client client = (Client) userCustomCreator.getAndSaveUser(Role.CLIENT);
         SeatType seatType = this.seatTypeWithEventCustomCreator.getAndCreateCustomSeatTypeFromSavedEvent();
 
         BuyedTicketCollection buyedTicketCollection
