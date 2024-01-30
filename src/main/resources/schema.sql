@@ -135,3 +135,44 @@ create table if not exists gifted_ticket_collection(
     foreign key(sponsor_id) references sponsor_tbl(id),
     check (number_of_tickets >= 0)
 );
+
+CREATE TABLE users (
+     id int NOT NULL AUTO_INCREMENT,
+     user_name varchar(45) DEFAULT NULL,
+     password varchar(100) DEFAULT NULL,
+     active int DEFAULT 1,
+     first_name varchar(45) DEFAULT NULL,
+     last_name varchar(45) DEFAULT NULL,
+     email varchar(45) DEFAULT NULL,
+     gender int DEFAULT NULL,
+     pay_pal_Account varchar(45) DEFAULT NULL,
+     role int DEFAULT NULL,
+     sign_in_with_email int DEFAULT 0,
+     enable int DEFAULT 0,
+     PRIMARY KEY (id)
+);
+
+CREATE TABLE `client` (
+      id INT PRIMARY KEY,
+      FOREIGN KEY (id) REFERENCES Users (id)
+);
+
+CREATE TABLE organizer (
+        id INT PRIMARY KEY,
+        `rate` float ,
+        FOREIGN KEY (id) REFERENCES Users (id)
+);
+
+CREATE TABLE sponsor (
+         id INT PRIMARY KEY,
+         FOREIGN KEY (id) REFERENCES Users (id)
+);
+
+CREATE TABLE moderator (
+        id INT PRIMARY KEY,
+        FOREIGN KEY (id) REFERENCES Users (id)
+);
+CREATE TABLE admin (
+        id INT PRIMARY KEY,
+        FOREIGN KEY (id) REFERENCES Users (id)
+);
