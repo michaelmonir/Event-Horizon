@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.AlreadyFoundExce
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UpdatedUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.rmi.AlreadyBoundException;
@@ -26,8 +27,8 @@ public class UpdatedUserRepositoryService {
     private void save(UpdatedUser updatedUser) {
         try {
             updatedUserRepository.save(updatedUser);
-        } catch (Exception e) {
-            throw new AlreadyFoundException();
+        } catch (DataIntegrityViolationException e) {
+            throw new AlreadyFoundException();// to change
         }
     }
 
@@ -55,6 +56,5 @@ public class UpdatedUserRepositoryService {
         if (updatedUser.isEmpty())
             throw new UserNotFoundException();
         return updatedUser.get();
-
     }
 }
