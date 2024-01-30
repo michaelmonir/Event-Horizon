@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.security.Service;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -92,10 +92,10 @@ public class ProxyService {
         map.put("id", information.getId());
         return jwtService.generateToken(map, information);
     }
-    public AuthenticationResponse signUp(InformationDTO registerRequest) {
+    public AuthenticationResponse signUp(UpdatedUserDto registerRequest) {
         removeIfNotEnabled(registerRequest.getEmail());
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
-        Information information = createInformation(registerRequest);
+        Information information = createUpdatedUser(registerRequest);
         String verifyCode = createCode();
         informationService.add(information);
         String jwt = generateTokenForSignUp(information, verifyCode);
@@ -115,7 +115,7 @@ public class ProxyService {
                 .build();
     }
 
-    public Information createInformation(InformationDTO registerRequest) {
+    public Information createUpdatedUser(UpdatedUserDto registerRequest) {
         return Information.builder()
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))

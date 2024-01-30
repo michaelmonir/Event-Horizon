@@ -1,8 +1,5 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
@@ -20,14 +17,14 @@ public class informationDtos {
     @Test
     void ToInformationDto() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
-        InformationDTO informationDTO = new InformationDTO(information);
-        Assert.assertEquals(information.userName, informationDTO.getUserName());
-        Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
-        Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
-        Assert.assertEquals(information.getEmail(), informationDTO.getEmail());
-        Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
-        Assert.assertEquals(information.getRole().toString(), informationDTO.getRole());
-        Assert.assertEquals(information.getSignInWithEmail(), informationDTO.getSignInWithEmail());
+        UpdatedUserDto updatedUserDto = new UpdatedUserDto(information);
+        Assert.assertEquals(information.userName, updatedUserDto.getUserName());
+        Assert.assertEquals(information.getFirstName(), updatedUserDto.getFirstName());
+        Assert.assertEquals(information.getLastName(), updatedUserDto.getLastName());
+        Assert.assertEquals(information.getEmail(), updatedUserDto.getEmail());
+        Assert.assertEquals(information.getGender().toString(), updatedUserDto.getGender());
+        Assert.assertEquals(information.getRole().toString(), updatedUserDto.getRole());
+        Assert.assertEquals(information.getSignInWithEmail(), updatedUserDto.getSignInWithEmail());
     }
 
     @Test

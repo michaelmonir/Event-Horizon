@@ -4,7 +4,7 @@ import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -48,20 +48,20 @@ class AdminControllerTest {
         information.setRole(Role.CLIENT);
         information.setSignInWithEmail(1);
         information.setUserName("janedoe");
-        when(adminService.addModerator(Mockito.<InformationDTO>any())).thenReturn(information);
+        when(adminService.addModerator(Mockito.<UpdatedUserDto>any())).thenReturn(information);
 
-        InformationDTO informationDTO = new InformationDTO();
-        informationDTO.setEmail("jane.doe@example.org");
-        informationDTO.setFirstName("Jane");
-        informationDTO.setGender("Gender");
-        informationDTO.setId(1);
-        informationDTO.setLastName("Doe");
-        informationDTO.setPassword("iloveyou");
-        informationDTO.setPayPalAccount("3");
-        informationDTO.setRole("Role");
-        informationDTO.setSignInWithEmail(1);
-        informationDTO.setUserName("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(informationDTO);
+        UpdatedUserDto updatedUserDto = new UpdatedUserDto();
+        updatedUserDto.setEmail("jane.doe@example.org");
+        updatedUserDto.setFirstName("Jane");
+        updatedUserDto.setGender("Gender");
+        updatedUserDto.setId(1);
+        updatedUserDto.setLastName("Doe");
+        updatedUserDto.setPassword("iloveyou");
+        updatedUserDto.setPayPalAccount("3");
+        updatedUserDto.setRole("Role");
+        updatedUserDto.setSignInWithEmail(1);
+        updatedUserDto.setUserName("janedoe");
+        String content = (new ObjectMapper()).writeValueAsString(updatedUserDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/addModerator")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);

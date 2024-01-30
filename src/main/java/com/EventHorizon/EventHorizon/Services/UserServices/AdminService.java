@@ -1,11 +1,7 @@
 package com.EventHorizon.EventHorizon.Services.UserServices;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.InformationDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Moderator;
-import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ModeratorNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryServiceComponent.ModeratorInformationRepositoryService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
@@ -23,11 +19,10 @@ public class AdminService {
     ProxyService proxyService;
 
 
-    public Information addModerator(InformationDTO registerRequest) {
+    public Information addModerator(UpdatedUserDto registerRequest) {
         proxyService.removeIfNotEnabled(registerRequest.getEmail());
-
         proxyService.handleException(registerRequest.getEmail(), registerRequest.getUserName());
-        Information information = proxyService.createInformation(registerRequest);
+        Information information = proxyService.createUpdatedUser(registerRequest);
         information.setActive(1);
         information.setEnable(1);
         moderatorInformationRepositoryService.add(information);
