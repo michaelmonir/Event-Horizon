@@ -138,12 +138,12 @@ create table if not exists gifted_ticket_collection(
 
 CREATE TABLE users (
      id int NOT NULL AUTO_INCREMENT,
-     user_name varchar(45) DEFAULT NULL,
+     user_name varchar(45) DEFAULT NULL UNIQUE,
      password varchar(100) DEFAULT NULL,
      active int DEFAULT 1,
      first_name varchar(45) DEFAULT NULL,
      last_name varchar(45) DEFAULT NULL,
-     email varchar(45) DEFAULT NULL,
+     email varchar(45) DEFAULT NULL UNIQUE,
      gender int DEFAULT NULL,
      pay_pal_Account varchar(45) DEFAULT NULL,
      role int DEFAULT NULL,
