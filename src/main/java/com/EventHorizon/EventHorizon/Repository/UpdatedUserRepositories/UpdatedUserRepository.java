@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UpdatedUserRepository extends JpaRepository<UpdatedUser, Integer> {
     @Query("SELECT u.role FROM UpdatedUser u WHERE u.id = :userId")
     Optional<Role> findRoleById(@Param("userId") Integer userId);
+    @Query("SELECT u FROM UpdatedUser u WHERE u.role = :role")
+    List<? extends UpdatedUser> findAllByRole(@Param("role") Role role);
+
 }

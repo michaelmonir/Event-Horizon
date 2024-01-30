@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.rmi.AlreadyBoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,10 +67,15 @@ public class UpdatedUserRepositoryService {
             throw new UserNotFoundException();
         return updatedUser.get();
     }
-    public Role getRole(int id){
+
+    public Role getRole(int id) {
         Optional<Role> role = updatedUserRepository.findRoleById(id);
         if (role.isEmpty())
             throw new UserNotFoundException();
         return role.get();
+    }
+
+    public List<? extends UpdatedUser> findAllByRole(Role role) {
+        return updatedUserRepository.findAllByRole(role);
     }
 }
