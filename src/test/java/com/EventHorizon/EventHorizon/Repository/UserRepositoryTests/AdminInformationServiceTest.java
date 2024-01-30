@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.UserRepositoryTests;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -33,8 +33,8 @@ public class AdminInformationServiceTest {
         informationRepository.save(information);
         information.setFirstName("newFirstName");
         information.setLastName("newLastName");
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information);
-        informationService.updateWithDto(updateInformationDTO);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
+        informationService.updateWithDto(userUpdateDTO);
         assertEquals(information, informationService.getByID(information.getId()));
     }
 
@@ -45,10 +45,10 @@ public class AdminInformationServiceTest {
 
         informationRepository.save(information);
         informationRepository.deleteById(information.getId());
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
         assertThrows(
                 InformationNotFoundException.class, () -> {
-                    informationService.updateWithDto(updateInformationDTO);
+                    informationService.updateWithDto(userUpdateDTO);
                 }
         );
     }

@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import org.junit.Assert;
@@ -30,7 +29,7 @@ public class informationDtos {
     @Test
     void ToUpdatedDto() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
-        UpdateInformationDTO informationDTO=new UpdateInformationDTO(information);
+        UserUpdateDTO informationDTO=new UserUpdateDTO(information);
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());
         Assert.assertEquals(information.getGender().toString(), informationDTO.getGender());
@@ -40,7 +39,7 @@ public class informationDtos {
     @Test
     void ToViewDto() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
-        ViewInformationDTO informationDTO=new ViewInformationDTO(information);
+        UserViewDTO informationDTO=new UserViewDTO(information);
 
         Assert.assertEquals(information.userName, informationDTO.getUserName());
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
@@ -53,8 +52,8 @@ public class informationDtos {
     @Test
     void ToInformationTest() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information);
-        Information information1 = updateInformationDTO.toInformation(information);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information);
+        Information information1 = userUpdateDTO.toInformation(information);
         Assert.assertEquals(information1.getRole(), information.getRole());
 
     }

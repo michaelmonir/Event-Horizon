@@ -18,11 +18,11 @@ import java.util.List;
 @RequestMapping("/event/")
 @CrossOrigin("*")
 public class EventOperationsController {
+
     @Autowired
     private EventService eventService;
     @Autowired
     private UserTokenInformationService userTokenInformationService;
-
     @Autowired
     LaunchedEventRepositoryService launchedEventRepositoryService;
 
@@ -53,7 +53,7 @@ public class EventOperationsController {
     public ResponseEntity<DetailedEventDto> updateEvent
             (@PathVariable int organizerId,@RequestBody DetailedDraftedEventDto detailedEventDTO) {
 
-      //  int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
+        //  int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
         detailedEventDTO = (DetailedDraftedEventDto) this.eventService.updateEvent(organizerId, detailedEventDTO);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }

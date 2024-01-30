@@ -1,12 +1,12 @@
 package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.enums.Gender;
-import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
-import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
+import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
@@ -28,15 +28,16 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ProxyService {
 
-    private final InformationRepositoryService informationService;
+    private final UserRepositoryService userRepositoryService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final EmailSenderService emailSenderService;
+    private final UserMapper userMapper;
 
     public boolean mailInSystem(String mail) {
         try {
-            informationService.getByEmail(mail);
+            userRepositoryService.getByEmail(mail);
             return true;
         } catch (InformationNotFoundException e) {
             return false;
@@ -46,7 +47,7 @@ public class ProxyService {
 
     public boolean userNameInSystem(String userName) {
         try {
-            informationService.getByUserName(userName);
+            userRepositoryService.getByUserName(userName);
             return true;
         } catch (InformationNotFoundException e) {
             return false;
@@ -54,11 +55,13 @@ public class ProxyService {
     }
 
     public void removeIfNotEnabled(String mail) {
-        if (informationService.existsByEmail(mail)) {
-            Information information = informationService.getByEmail(mail);
-            if (information.getEnable() == 0) {
-                informationService.delete(information.getId());
+        try {
+            User user = userRepositoryService.getByEmail(mail);
+            if (user.getEnable() == 0) {
+                userRepositoryService.delete(user);
             }
+        } catch (UserNotFoundException e) {
+
         }
     }
 
@@ -81,83 +84,69 @@ public class ProxyService {
         return code.toString();
     }
 
-    String generateTokenForSignUp(Information information, String verifyCode) {
+    String generateTokenForSignUp(User user, String verifyCode) {
         Map<String, Object> map = new HashMap<>();
         map.put("verifyCode", verifyCode);
-        map.put("id", information.getId());
-        return jwtService.generateToken(map, information);
+        map.put("id", user.getId());
+        return jwtService.generateToken(map, user);
     }
-    String generateTokenForSignIn(Information information) {
+
+    String generateTokenForSignIn(User user) {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", information.getId());
-        return jwtService.generateToken(map, information);
+        map.put("id", user.getId());
+        return jwtService.generateToken(map, user);
     }
+
+    private AuthenticationResponse createAuthenticationResponse(User user, String jwt) {
+        return AuthenticationResponse.builder()
+                .id(user.getId())
+                .token(jwt)
+                .role(user.getRole().toString())
+                .build();
+    }
+
     public AuthenticationResponse signUp(UpdatedUserDto registerRequest) {
         removeIfNotEnabled(registerRequest.getEmail());
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
-        Information information = createUpdatedUser(registerRequest);
+        User user = userMapper.createUser(registerRequest);
         String verifyCode = createCode();
-        informationService.add(information);
-        String jwt = generateTokenForSignUp(information, verifyCode);
+        userRepositoryService.add(user);
+        String jwt = generateTokenForSignUp(user, verifyCode);
         System.out.println(jwtService.extractVerifyCode(jwt));
-
         if (registerRequest.getSignInWithEmail() == 1) {
-            information.setActive(1);
-            information.setEnable(1);
+            user.setActive(1);
+            user.setEnable(1);
         } else {
-            emailSenderService.sendMail(information.getEmail(),
-                    "Verification Code", information.userName, verifyCode);
+            emailSenderService.sendMail(user.getEmail(),
+                    "Verification Code", user.userName, verifyCode);
         }
-        return AuthenticationResponse.builder()
-                .id(information.getId())
-                .token(jwt)
-                .role(information.getRole().toString())
-                .build();
+        return createAuthenticationResponse(user, jwt);
     }
 
-    public Information createUpdatedUser(UpdatedUserDto registerRequest) {
-        return Information.builder()
-                .userName(registerRequest.getUserName())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .email(registerRequest.getEmail())
-                .role(Role.fromString(registerRequest.getRole()))
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
-                .gender(Gender.fromString(registerRequest.getGender()))
-                .payPalAccount(registerRequest.getPayPalAccount())
-                .active(0)
-                .signInWithEmail(registerRequest.getSignInWithEmail())
-                .build();
-    }
 
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest, int withGmail) {
-        Information information = informationService.getByEmail(authenticationRequest.getEmail());
+        User user = userRepositoryService.getByEmail(authenticationRequest.getEmail());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getEmail(),
                         authenticationRequest.getPassword()
                 )
         );
-        if (information.getEnable() == 0) {
+        if (user.getEnable() == 0) {
             throw new ForbiddenException();
         }
-        if (information.getSignInWithEmail() != withGmail) {
+        if (user.getSignInWithEmail() != withGmail) {
             throw new ForbiddenException();
         }
-        String jwt = generateTokenForSignIn(information);
-
-        return AuthenticationResponse.builder()
-                .id(information.getId())
-                .token(jwt)
-                .role(information.getRole().toString())
-                .build();
+        String jwt = generateTokenForSignIn(user);
+        return createAuthenticationResponse(user, jwt);
     }
 
     private void putEnable(String mail) {
-        Information information = informationService.getByEmail(mail);
-        information.setEnable(1);
-        information.setActive(1);
-        informationService.update(information.getId(), information);
+        User user = userRepositoryService.getByEmail(mail);
+        user.setEnable(1);
+        user.setActive(1);
+        userRepositoryService.update(user);
     }
 
     public Boolean verifyCode(VerifyRequest verifyRequest) {

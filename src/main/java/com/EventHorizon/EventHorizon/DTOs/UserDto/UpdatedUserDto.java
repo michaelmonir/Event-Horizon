@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class UpdatedUserDto {
     private String role;
     private int signInWithEmail;
 
-    public UpdatedUserDto(Information information) {
+    public UpdatedUserDto(User information) {
         this.id = information.getId();
         this.email = information.getEmail();
         this.firstName = information.getFirstName();

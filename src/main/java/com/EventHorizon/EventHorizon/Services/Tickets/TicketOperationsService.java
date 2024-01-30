@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Services.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Client;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;

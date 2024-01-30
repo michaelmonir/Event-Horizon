@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -10,7 +11,8 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Table(name = "moderator")
-public class UpdatedModerator extends UpdatedUser{
-
+@Table(name = "organizer")
+public class Organizer extends User {
+    @Column(name = "rate")
+    private double rate;
 }

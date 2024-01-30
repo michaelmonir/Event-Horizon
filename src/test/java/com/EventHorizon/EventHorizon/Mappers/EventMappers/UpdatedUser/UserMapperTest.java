@@ -2,54 +2,52 @@ package com.EventHorizon.EventHorizon.Mappers.EventMappers.UpdatedUser;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
-import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UpdatedUserMapper;
-import org.junit.Assert;
+import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class UpdatedUserMapperTest {
+public class UserMapperTest {
     @Autowired
-    private UpdatedUserMapper updatedUserMapper;
+    private UserMapper userMapper;
 
 
     @Test
     void clientCreationTest() {
         UpdatedUserDto updatedUserDto = createUpdatedUserDto(Role.CLIENT);
-        UpdatedClient updatedClient = (UpdatedClient) updatedUserMapper.createUser(updatedUserDto);
-        Assertions.assertEquals(updatedClient.getClass(), UpdatedClient.class);
+        Client client = (Client) userMapper.createUser(updatedUserDto);
+        Assertions.assertEquals(client.getClass(), Client.class);
     }
 
     @Test
     void organizerCreationTest() {
         UpdatedUserDto updatedUserDto = createUpdatedUserDto(Role.ORGANIZER);
-        UpdatedOrganizer updatedOrganizer = (UpdatedOrganizer) updatedUserMapper.createUser(updatedUserDto);
-        Assertions.assertEquals(updatedOrganizer.getClass(), UpdatedOrganizer.class);
+        Organizer organizer = (Organizer) userMapper.createUser(updatedUserDto);
+        Assertions.assertEquals(organizer.getClass(), Organizer.class);
     }
 
     @Test
     void sponsorCreationTest() {
         UpdatedUserDto updatedUserDto = createUpdatedUserDto(Role.SPONSOR);
-        UpdatedSponsor updatedUser = (UpdatedSponsor) updatedUserMapper.createUser(updatedUserDto);
-        Assertions.assertEquals(updatedUser.getClass(), UpdatedSponsor.class);
+        Sponsor updatedUser = (Sponsor) userMapper.createUser(updatedUserDto);
+        Assertions.assertEquals(updatedUser.getClass(), Sponsor.class);
     }
 
     @Test
     void adminCreationTest() {
         UpdatedUserDto updatedUserDto = createUpdatedUserDto(Role.ADMIN);
-        UpdatedAdmin updatedUser = (UpdatedAdmin) updatedUserMapper.createUser(updatedUserDto);
-        Assertions.assertEquals(updatedUser.getClass(), UpdatedAdmin.class);
+        Admin updatedUser = (Admin) userMapper.createUser(updatedUserDto);
+        Assertions.assertEquals(updatedUser.getClass(), Admin.class);
     }
 
     @Test
     void moderatorCreationTest() {
         UpdatedUserDto updatedUserDto = createUpdatedUserDto(Role.MODERATOR);
-        UpdatedModerator updatedUser = (UpdatedModerator) updatedUserMapper.createUser(updatedUserDto);
-        Assertions.assertEquals(updatedUser.getClass(), UpdatedModerator.class);
+        Moderator updatedUser = (Moderator) userMapper.createUser(updatedUserDto);
+        Assertions.assertEquals(updatedUser.getClass(), Moderator.class);
     }
 
     private UpdatedUserDto createUpdatedUserDto(Role role) {

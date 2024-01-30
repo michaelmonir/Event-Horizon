@@ -34,30 +34,4 @@ public class AuthorityController {
         return new ResponseEntity<>(authorityService.getAllUsersByRole(role), HttpStatus.OK);
     }
 
-    @GetMapping("getAllUsersByFirstName")
-    public ResponseEntity<?> getAllUsersByFirstName(@RequestParam String firstName) {
-        return new ResponseEntity<>(authorityService.getAllUsersByFirstName(firstName), HttpStatus.OK);
-    }
-
-    @GetMapping("getAllUsersByLastName")
-    public ResponseEntity<?> getAllUsersByLastName(@RequestParam String lastName) {
-        return new ResponseEntity<>(authorityService.getAllUsersByLastName(lastName), HttpStatus.OK);
-    }
-
-    @GetMapping("getAllUsersByGender")
-    public ResponseEntity<?> getAllUsersByRole(@RequestParam Gender gender) {
-        return new ResponseEntity<>(authorityService.getAllUsersByGender(gender), HttpStatus.OK);
-    }
-
-    @GetMapping("getUserByEmail")
-    public ResponseEntity<?> getAllUsersByEmail(@RequestParam String email) {
-        return new ResponseEntity<>(authorityService.getUserByEmail(email), HttpStatus.OK);
-    }
-
-    @GetMapping("getUserByUserName")
-    public ResponseEntity<?> getAllUsersByUserName(@RequestParam String userName) {
-        return new ResponseEntity<>(authorityService.getUserByUserName(userName), HttpStatus.OK);
-    }
-
-
 }

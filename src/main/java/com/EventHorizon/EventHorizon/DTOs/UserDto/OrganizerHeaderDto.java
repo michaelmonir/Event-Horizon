@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ public class OrganizerHeaderDto {
 
     public OrganizerHeaderDto(Organizer organizer) {
         this.id = organizer.getId();
-        this.name = organizer.getInformation().userName;
+        this.name = organizer.userName;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Repository.UserRepositoryTests;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdateInformationDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.ViewInformationDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserViewDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
@@ -132,9 +132,9 @@ class InformationRepositoryTest {
         informationService.add(information);
         information2.setId(information.getId());
 
-        UpdateInformationDTO updateInformationDTO = new UpdateInformationDTO(information2);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(information2);
 
-        ViewInformationDTO viewInformationDTO = informationService.updateWithDto(updateInformationDTO);
+        UserViewDTO userViewDTO = informationService.updateWithDto(userUpdateDTO);
 
         Information i3 = informationService.getByEmail(information.getEmail());
         Assertions.assertEquals(i3.getFirstName(), information2.getFirstName());
@@ -147,7 +147,7 @@ class InformationRepositoryTest {
     @Test
     public void getViewInformationDTOInformationTest() {
         Information information = informationCustomCreator.getInformation(Role.CLIENT);
-        ViewInformationDTO informationDTO = new ViewInformationDTO(information);
+        UserViewDTO informationDTO = new UserViewDTO(information);
         Assert.assertEquals(information.userName, informationDTO.getUserName());
         Assert.assertEquals(information.getFirstName(), informationDTO.getFirstName());
         Assert.assertEquals(information.getLastName(), informationDTO.getLastName());

@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedSponsor;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UpdatedSponsorRepository extends JpaRepository<UpdatedSponsor,Integer> {
+public interface OrganizerRepository extends JpaRepository<Organizer, Integer> {
 }

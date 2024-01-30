@@ -11,5 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @Table(name = "admin")
-public class UpdatedAdmin extends UpdatedUser {
+public class Admin extends User {
 }

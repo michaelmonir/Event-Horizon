@@ -1,11 +1,10 @@
 package com.EventHorizon.EventHorizon;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedOrganizer;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedUser;
-import com.EventHorizon.EventHorizon.Entities.enums.Gender;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UpdatedUserCustomCreator;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UpdatedUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +17,32 @@ import java.util.List;
 public class test {
 
     @Autowired
-    private  UpdatedUserRepositoryService updatedUserRepositoryService;
+    private UserRepositoryService userRepositoryService;
     @Autowired
     private UpdatedUserCustomCreator updatedUserCustomCreator;
     @Test
     void test1() {
-        UpdatedOrganizer updatedOrganizer = (UpdatedOrganizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);
-        updatedUserRepositoryService.add(updatedOrganizer);
-        UpdatedOrganizer updatedOrganizer1 = (UpdatedOrganizer) updatedUserRepositoryService.getById(updatedOrganizer.getId());
-        Assertions.assertEquals(updatedOrganizer1.getFirstName(), updatedOrganizer.getFirstName());
+        Organizer organizer = (Organizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(organizer);
+        Organizer organizer1 = (Organizer) userRepositoryService.getById(organizer.getId());
+        Assertions.assertEquals(organizer1.getFirstName(), organizer.getFirstName());
     }
     @Test
     void getRoleById(){
-        UpdatedOrganizer updatedOrganizer = (UpdatedOrganizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);
-        updatedUserRepositoryService.add(updatedOrganizer);
-        Role role = updatedUserRepositoryService.getRole(updatedOrganizer.getId());
-        Assertions.assertEquals(role,updatedOrganizer.getRole());
+        Organizer organizer = (Organizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(organizer);
+        Role role = userRepositoryService.getRole(organizer.getId());
+        Assertions.assertEquals(role, organizer.getRole());
     }
     @Test
     void getAllByRole(){
-        UpdatedOrganizer updatedOrganizer = (UpdatedOrganizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);;
-        updatedUserRepositoryService.add(updatedOrganizer);
-        UpdatedOrganizer updatedOrganizer1 = (UpdatedOrganizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);;
-        updatedUserRepositoryService.add(updatedOrganizer1);
-        List<?extends UpdatedUser> list = updatedUserRepositoryService.findAllByRole(Role.ORGANIZER);
-        Assertions.assertEquals(list.get(list.size()-2).getEmail(),updatedOrganizer.getEmail());
-        Assertions.assertEquals(list.get(list.size()-1).getEmail(),updatedOrganizer1.getEmail());
+        Organizer organizer = (Organizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);;
+        userRepositoryService.add(organizer);
+        Organizer organizer1 = (Organizer) updatedUserCustomCreator.getUser(Role.ORGANIZER);;
+        userRepositoryService.add(organizer1);
+        List<?extends User> list = userRepositoryService.findAllByRole(Role.ORGANIZER);
+        Assertions.assertEquals(list.get(list.size()-2).getEmail(), organizer.getEmail());
+        Assertions.assertEquals(list.get(list.size()-1).getEmail(), organizer1.getEmail());
     }
 
 }

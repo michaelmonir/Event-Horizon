@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Mappers.UpdatedUser;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedUser.UpdatedUserBuilder;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User.UserBuilder;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.RoleNotFoundException;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UpdatedUserMapper {
+public class UserMapper {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UpdatedUser createUser(UpdatedUserDto registerRequest) {
+    public User createUser(UpdatedUserDto registerRequest) {
         return getUserBuilderByRole(registerRequest)
                 .userName(registerRequest.getUserName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -31,13 +31,13 @@ public class UpdatedUserMapper {
                 .build();
     }
 
-    private UpdatedUserBuilder getUserBuilderByRole(UpdatedUserDto registerRequest) {
+    private UserBuilder getUserBuilderByRole(UpdatedUserDto registerRequest) {
         return switch (registerRequest.getRole()) {
-            case "ROLE_ADMIN" -> UpdatedAdmin.builder();
-            case "ROLE_ORGANIZER" -> UpdatedOrganizer.builder();
-            case "ROLE_CLIENT" -> UpdatedClient.builder();
-            case "ROLE_SPONSOR" -> UpdatedSponsor.builder();
-            case "ROLE_MODERATOR" -> UpdatedModerator.builder();
+            case "ROLE_ADMIN" -> Admin.builder();
+            case "ROLE_ORGANIZER" -> Organizer.builder();
+            case "ROLE_CLIENT" -> Client.builder();
+            case "ROLE_SPONSOR" -> Sponsor.builder();
+            case "ROLE_MODERATOR" -> Moderator.builder();
             default -> throw new RoleNotFoundException();
         };
     }

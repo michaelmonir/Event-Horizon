@@ -9,9 +9,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Table(name = "sponsor")
-public class UpdatedSponsor extends UpdatedUser{
-//    @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<SponsorSeatArchive> sponsorSeatArchiveList;
-
+@Table(name = "client")
+public class Client extends User {
 }

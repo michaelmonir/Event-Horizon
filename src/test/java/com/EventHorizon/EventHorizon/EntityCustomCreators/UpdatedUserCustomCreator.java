@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.UpdatedUser;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UpdatedUserMapper;
+import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 public class UpdatedUserCustomCreator {
 
     @Autowired
-    private UpdatedUserMapper updatedUserMapper;
+    private UserMapper userMapper;
     static int valueOfTest = 0;
 
-    public UpdatedUser getUser(Role role) {
+    public User getUser(Role role) {
         String z = "faris" + (valueOfTest);
         UpdatedUserDto updatedUserDto =UpdatedUserDto.builder()
                 .firstName(z).email(z)
@@ -23,6 +23,6 @@ public class UpdatedUserCustomCreator {
                 .payPalAccount(z).userName(z)
                 .build();
         valueOfTest++;
-        return updatedUserMapper.createUser(updatedUserDto);
+        return userMapper.createUser(updatedUserDto);
     }
 }
