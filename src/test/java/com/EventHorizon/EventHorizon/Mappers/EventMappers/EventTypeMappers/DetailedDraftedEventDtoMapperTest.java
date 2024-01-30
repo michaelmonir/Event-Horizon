@@ -4,8 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.DetailedDraftedEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.DetailedEventDtos.DetailedDraftedEventDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
@@ -69,14 +68,9 @@ class DetailedDraftedEventDtoMapperTest {
 
         Organizer organizer = new Organizer();
         organizer.setId(1);
+        organizer.setUserName("ahmed");
         event.setEventOrganizer(organizer);
-        Information information=new Information();
-        information.setId(1);
-        information.setUserName("ahmed");
-        organizer.setInformation(information);
-
         DetailedDraftedEventDto result = detailedDraftedEventDtoMapper.getDTOfromDetailedEvent(event);
-
         Assertions.assertEquals(event.getId(), result.getId());
         Assertions.assertEquals(event.getName(), result.getName());
         Assertions.assertEquals(event.getDescription(), result.getDescription());
@@ -85,7 +79,6 @@ class DetailedDraftedEventDtoMapperTest {
         Assertions.assertEquals(event.getEventAds().getId(), result.getEventAds().getId());
         Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
-        Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }
 
 }

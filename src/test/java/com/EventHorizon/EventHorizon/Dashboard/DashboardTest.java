@@ -2,15 +2,14 @@ package com.EventHorizon.EventHorizon.Dashboard;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,13 +28,12 @@ import java.util.List;
 class DashboardTest {
     @InjectMocks
     private DashboardRepositoryService dashboard;
-
     @Mock
     private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Autowired
-    private InformationCustomCreator informationCustomCreator;
+    private UserCustomCreator customCreator;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepositoryService userRepositoryService;
 
     private LaunchedEvent launchedEvent1;
     private LaunchedEvent launchedEvent2;
@@ -96,9 +94,8 @@ class DashboardTest {
         });
     }
     private void initialize(){
-        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
+        Organizer organizer = (Organizer) customCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(organizer);
         launchedEvent1 = new LaunchedEvent();
         launchedEvent1.setId(1);
         launchedEvent1.setEventOrganizer(organizer);

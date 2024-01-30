@@ -1,10 +1,8 @@
 package com.EventHorizon.EventHorizon.Mappers.EventMappers.EventTypeMappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.AdsOptionDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
@@ -13,10 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 
 @SpringBootTest
 class ViewEventDtoMapperTest {
@@ -41,14 +37,9 @@ class ViewEventDtoMapperTest {
 
         Organizer organizer = new Organizer();
         organizer.setId(1);
-        Information information=new Information();
-        information.setId(1);
-        information.setUserName("ahmed");
-        organizer.setInformation(information);
+        organizer.setUserName("ahmed");
         event.setEventOrganizer(organizer);
-        
         ViewEventDto result = eventDtoMapper.getDTOfromViewEvent(event);
-
 
         Assertions.assertEquals(event.getId(), result.getId());
         Assertions.assertEquals(event.getName(), result.getName());
@@ -57,7 +48,6 @@ class ViewEventDtoMapperTest {
         Assertions.assertEquals(event.getEventDate(), result.getEventDate());
         Assertions.assertEquals(event.getEventLocation(), result.getEventLocation());
         Assertions.assertEquals(organizer.getId(), result.getEventOrganizer().getId());
-        Assertions.assertEquals(organizer.getInformation().userName, result.getEventOrganizer().getName());
     }
 
 }

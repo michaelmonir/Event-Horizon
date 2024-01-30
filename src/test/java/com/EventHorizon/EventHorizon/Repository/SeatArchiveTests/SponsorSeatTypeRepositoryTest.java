@@ -5,7 +5,6 @@ import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SponsorSeatArchiveRepository;
 import com.EventHorizon.EventHorizon.Repository.UserRepositories.SponsorRepository;
 import org.junit.jupiter.api.Assertions;

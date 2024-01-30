@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.entity.SeatArchive;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -3,12 +3,12 @@ package com.EventHorizon.EventHorizon.EntityCustomCreators;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class EventCustomCreator
     @Autowired
     private EventRepository eventRepository;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepository userRepository;
     @Autowired
     private AdsOptionRepository adsOptionRepositry;
 
@@ -36,8 +36,8 @@ public class EventCustomCreator
     public LaunchedEvent getLaunchedEvent() {
         this.numberOfcreatedEvents++;
 
-        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUserAndSaveInRepository(Role.ORGANIZER);
-        organizerRepository.save(customOrganizer);
+        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        userRepository.save(customOrganizer);
         AdsOption customAdsOption = this.adsOptionCustomCreator.getAdsOption();
         this.adsOptionRepositry.save(customAdsOption);
 
@@ -57,8 +57,8 @@ public class EventCustomCreator
     public DraftedEvent getDraftedEvent() {
         this.numberOfcreatedEvents++;
 
-        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUserAndSaveInRepository(Role.ORGANIZER);
-        organizerRepository.save(customOrganizer);
+        Organizer customOrganizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        userRepository.save(customOrganizer);
         AdsOption customAdsOption = this.adsOptionCustomCreator.getAdsOption();
         this.adsOptionRepositry.save(customAdsOption);
 

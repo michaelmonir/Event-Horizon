@@ -3,12 +3,11 @@ package com.EventHorizon.EventHorizon.DTOs.EventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Mappers.ViewEventDtoMapper;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,15 @@ class EventDetailsDtoTest {
     @Autowired
     ViewEventDtoMapper viewEventDtoMapper;
     @Autowired
-    private InformationCustomCreator informationCustomCreator;
+    private UserCustomCreator userCustomCreator;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepositoryService userRepositoryService;
 
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
     private LaunchedEvent tempEvent;
+
     @Test
     public void getViewDtoFromLaunchedEvent() {
         insialize();
@@ -43,6 +43,7 @@ class EventDetailsDtoTest {
         Assertions.assertEquals(tempEvent.getEventDate(), eventDetailsDto.getEventDate());
         Assertions.assertEquals(tempEvent.getEventLocation(), eventDetailsDto.getEventLocation());
     }
+
     private void insialize() {
         createOrganizer();
         createAdsOption();
@@ -51,9 +52,8 @@ class EventDetailsDtoTest {
     }
 
     private void createOrganizer() {
-        Information information = informationCustomCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
+        Organizer organizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(organizer);
         tempOrganizer = organizer;
     }
 

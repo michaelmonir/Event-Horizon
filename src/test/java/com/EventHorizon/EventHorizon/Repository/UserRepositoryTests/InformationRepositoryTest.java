@@ -4,7 +4,6 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserViewDTO;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.InformationNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;
 import org.junit.Assert;

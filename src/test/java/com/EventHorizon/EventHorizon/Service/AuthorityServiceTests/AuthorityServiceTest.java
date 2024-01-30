@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
 import com.EventHorizon.EventHorizon.Entities.UserEntities.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
 import com.EventHorizon.EventHorizon.RepositoryServices.InformationComponent.InformationRepositoryService;

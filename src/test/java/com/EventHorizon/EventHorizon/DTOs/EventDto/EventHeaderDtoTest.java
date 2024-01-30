@@ -3,11 +3,10 @@ package com.EventHorizon.EventHorizon.DTOs.EventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Information;
-import com.EventHorizon.EventHorizon.Entities.UserEntities.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.InformationCustomCreator;
-import com.EventHorizon.EventHorizon.Repository.UserRepositories.OrganizerRepository;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,9 @@ import java.util.Date;
 @SpringBootTest
 class EventHeaderDtoTest {
     @Autowired
-    private InformationCustomCreator informationCreator;
+    private UserCustomCreator userCustomCreator;
     @Autowired
-    private OrganizerRepository organizerRepository;
+    private UserRepositoryService userRepositoryService;
     private Organizer tempOrganizer;
     private AdsOption tempAdsOption;
     private Location tempLocation;
@@ -44,9 +43,8 @@ class EventHeaderDtoTest {
     }
 
     private void createOrganizer() {
-        Information information = informationCreator.getInformation(Role.ORGANIZER);
-        Organizer organizer = Organizer.builder().information(information).build();
-        organizerRepository.save(organizer);
+        Organizer organizer =(Organizer) userCustomCreator.getUser(Role.ORGANIZER);
+        userRepositoryService.add(organizer);
         tempOrganizer = organizer;
     }
 
@@ -75,7 +73,4 @@ class EventHeaderDtoTest {
                 .country("Egypt")
                 .city("Alex").build();
     }
-
-
-
 }
