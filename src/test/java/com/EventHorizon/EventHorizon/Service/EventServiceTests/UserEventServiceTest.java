@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.Service.EventServiceTests;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
@@ -16,15 +15,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class UserEventServiceTest {
     @InjectMocks
     private UserEventService userEventService;
-    @Autowired
-    private UserCustomCreator userCustomCreator;
     @Mock
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
     @Autowired
@@ -36,7 +32,7 @@ public class UserEventServiceTest {
     public void organizerOfEvent() {
         Event eventt = eventCreator.getLaunchedEvent();
 
-        when(eventRepositoryServiceInterface.getByIdAndEventType(Mockito.any(int.class), Mockito.any())).thenReturn(eventt);
+        when(eventRepositoryServiceInterface.getById(Mockito.any(int.class))).thenReturn(eventt);
         when(userRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
         Assertions.assertDoesNotThrow(() ->
             userEventService.getAndHandleNotOrganizerOfEvent(eventt.getEventOrganizer().getId(), eventt)
@@ -47,7 +43,7 @@ public class UserEventServiceTest {
     public void notOrganizerOfEvent() {
         Event event = eventCreator.getLaunchedEvent();
 
-        when(eventRepositoryServiceInterface.getByIdAndEventType(Mockito.any(int.class), Mockito.any())).thenReturn(event);
+        when(eventRepositoryServiceInterface.getById(Mockito.any(int.class))).thenReturn(event);
 
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() ->
             userEventService.getAndHandleNotOrganizerOfEvent(10000000, event) //////////////////////////////////

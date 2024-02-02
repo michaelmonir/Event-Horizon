@@ -117,7 +117,7 @@ public class EventServiceTest {
     @Test
     void testDeleteEvent() {
         when(userRepositoryService.getById(anyInt())).thenReturn(new Organizer());
-        when(eventRepositoryServiceInterface.getByIdAndEventType(anyInt(), any())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
         assertDoesNotThrow(() -> eventService.deleteEvent(1, 1, EventType.DRAFTEDEVENT));
     }
 }

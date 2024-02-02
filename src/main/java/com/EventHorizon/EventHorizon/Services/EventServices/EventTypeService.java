@@ -15,19 +15,12 @@ public class EventTypeService
     @Autowired
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
-    public void checkAndHandleLaunchedEvent(int eventId, EventType eventType) {
-        Event event = this.eventRepositoryServiceInterface.getByIdAndEventType(eventId, eventType);
-        this.checkAndHandleLaunchedEvent(event);
-    }
-
-    public void checkAndHandleSeatTypeOfLaunchedFutureEvent(int eventId, EventType eventType) {
-        Event event = this.eventRepositoryServiceInterface.getByIdAndEventType(eventId, eventType);
-        this.checkAndHandleLaunchedEvent(event);
-
+    public void checkFutureEvent(Event event) {
+        this.checkLaunchedEvent(event);
         FutureEventWrapper futureEventWrapper = new FutureEventWrapper((LaunchedEvent) event);
     }
 
-    private void checkAndHandleLaunchedEvent(Event event) {
+    private void checkLaunchedEvent(Event event) {
         if (!(event instanceof LaunchedEvent) || event.getEventType() != EventType.LAUNCHEDEVENT)
             throw new NotLaunchedEventException();
     }

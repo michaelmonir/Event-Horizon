@@ -2,9 +2,12 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRep
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotDraftedEventException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
@@ -22,6 +25,8 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     private EventSeatTypesRepositoryService eventSeatTypesRepositoryService;
     @Autowired
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
+    @Autowired
+    private EventRepositoryService eventRepositoryService;
 
     public DraftedEvent saveWhenCreating(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
@@ -35,7 +40,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     public DraftedEvent update(Event event) {
         DraftedEvent draftedEvent = (DraftedEvent) event;
         int id = draftedEvent.getId();
-        getByIdAndHandleNotFound(id);
+        this.getByIdAndHandleNotFound(id);
         draftedEvent.setId(id);
 
         this.handleSeatArchivesAndSaveInRepository(draftedEvent);
@@ -47,17 +52,17 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
         draftedEventRepository.deleteById(id);
     }
 
-    public DraftedEvent getByIdAndHandleNotFound(int id) {
-        Optional<DraftedEvent> optionalOldEvent = draftedEventRepository.findById(id);
-        if (optionalOldEvent.isEmpty())
-            throw new EventNotFoundException();
-        return optionalOldEvent.get();
-    }
-
     private void handleSeatArchivesAndSaveInRepository(DraftedEvent draftedEvent) {
         draftedEvent.setEventType(EventType.DRAFTEDEVENT);
         eventSeatTypesRepositoryService.setEventForItsSeatTypes(draftedEvent);
         draftedEventRepository.save(draftedEvent);
         eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(draftedEvent);
+    }
+
+    public DraftedEvent getByIdAndHandleNotFound(int id) {
+        Event event = eventRepositoryService.getById(id);
+        if (event.getEventType() != EventType.DRAFTEDEVENT)
+            throw new NotDraftedEventException();
+        return (DraftedEvent) event;
     }
 }

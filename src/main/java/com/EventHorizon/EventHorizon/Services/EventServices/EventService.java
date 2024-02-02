@@ -72,6 +72,7 @@ public class EventService {
 
     public EventViewDto launchEvent(int id, int eventId) {
         DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
+
         userEventService.getAndHandleNotOrganizerOfEvent(id, draftedEvent);
         draftedEventRepositoryService.delete(eventId);
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
@@ -80,7 +81,7 @@ public class EventService {
     }
 
     public void deleteEvent(int id, int eventId, EventType eventType) {
-        Event event = eventRepositoryServiceInterface.getByIdAndEventType(eventId, eventType);
+        Event event = eventRepositoryServiceInterface.getById(eventId);
         userEventService.getAndHandleNotOrganizerOfEvent(id, event);
         eventRepositoryServiceInterface.delete(eventId, eventType);
     }

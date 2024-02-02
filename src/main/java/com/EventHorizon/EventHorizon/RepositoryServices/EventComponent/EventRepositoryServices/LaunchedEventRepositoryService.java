@@ -2,12 +2,16 @@ package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRep
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.EventWrapper;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.WrongEventTypeException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
@@ -34,16 +38,12 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private EventRepositoryService eventRepositoryService;
+
     private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
         // Warning: Unchecked cast
         return (Specification<T>) obj;
-    }
-
-    public LaunchedEvent getByIdAndHandleNotFound(int id) {
-        Optional<LaunchedEvent> optionalLaunchedEvent = launchedEventRepository.findById(id);
-        if (optionalLaunchedEvent.isEmpty())
-            throw new EventNotFoundException();
-        return optionalLaunchedEvent.get();
     }
 
     public LaunchedEvent saveWhenCreating(Event event) {
@@ -113,30 +113,32 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
     }
 
-    // shouldn't update the seat types of the event
-//    private void handleDateAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
-//        LaunchedEvent event = futureEventWrapper.getLaunchedEvent();
-//        event.setEventType(EventType.LAUNCHEDEVENT);
-////        eventSeatTypesRepositoryService.setEventForItsSeatTypes(event);
-//        launchedEventRepository.save(event);
-////        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
-//    }
-
-    public List<? extends Event> getAllEvents(Specification<Event> specification) {
-        return launchedEventRepository.findAll(castToLunchedEvents(specification));
-    }
-
     public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
         return eventRepository.findAll(specification, pageRequest).getContent();
-    }
-
-    public List<LaunchedEvent> getAllEvents() {
-        return launchedEventRepository.findAll();
     }
 
     public List<SeatType> getSeatTypeById(int id) {
         LaunchedEvent launchedEvent = this.getByIdAndHandleNotFound(id);
         return launchedEvent.getSeatTypes();
+    }
+
+    public LaunchedEvent getByIdAndHandleNotFound(int id) {
+        Event event = eventRepositoryService.getById(id);
+        if (event.getEventType() != EventType.LAUNCHEDEVENT)
+            throw new NotLaunchedEventException();
+        return (LaunchedEvent) event;
+    }
+
+    public LaunchedEvent getFinishedEvent(int id) {
+        LaunchedEvent event = this.getByIdAndHandleNotFound(id);
+        FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(event);
+        return event;
+    }
+
+    public LaunchedEvent getFutureEvent(int id) {
+        LaunchedEvent event = this.getByIdAndHandleNotFound(id);
+        FutureEventWrapper futureEventWrapper = new FutureEventWrapper(event);
+        return event;
     }
 }
 

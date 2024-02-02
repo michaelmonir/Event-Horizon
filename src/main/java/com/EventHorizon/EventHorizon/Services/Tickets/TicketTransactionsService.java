@@ -64,6 +64,6 @@ public class TicketTransactionsService {
 
     private void validateEventIsLaunchedAndIsFuture(SeatType seatType) {
         Event event = seatType.getEvent();
-        eventTypeService.checkAndHandleSeatTypeOfLaunchedFutureEvent(event.getId(), event.getEventType());
+        eventTypeService.checkFutureEvent(event);
     }
 }
