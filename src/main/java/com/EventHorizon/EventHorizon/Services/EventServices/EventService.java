@@ -37,6 +37,7 @@ public class EventService {
     private DraftedLaunchedEventMapper draftedLaunchedEventMapper;
     @Autowired
     UserRepositoryService userRepositoryService;
+    @Autowired
     private EventCreationUpdationDtoMapper eventCreationUpdationDtoMapper;
     @Autowired
     private EventViewDtoMapper eventViewDtoMapper;
