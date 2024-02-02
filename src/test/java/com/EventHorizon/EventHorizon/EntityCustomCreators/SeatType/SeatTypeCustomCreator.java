@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.EntityCustomCreators;
+package com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;

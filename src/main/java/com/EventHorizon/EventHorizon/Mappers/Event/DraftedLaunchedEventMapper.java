@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;

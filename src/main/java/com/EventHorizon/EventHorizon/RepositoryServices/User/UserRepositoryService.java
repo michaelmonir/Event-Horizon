@@ -1,7 +1,5 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.User;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UserViewDTO;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.User.AlreadyFoundException;
@@ -9,7 +7,6 @@ import com.EventHorizon.EventHorizon.Exceptions.User.InvalidUserDataException;
 import com.EventHorizon.EventHorizon.Exceptions.User.NotAdminOperationException;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

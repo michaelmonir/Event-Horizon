@@ -1,9 +1,8 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.User;
 
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.User.WrongUserType.*;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
@@ -11,8 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class GetUserRepositoryServiceTest {

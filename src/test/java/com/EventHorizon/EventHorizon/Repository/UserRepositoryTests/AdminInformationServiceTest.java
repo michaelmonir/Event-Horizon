@@ -1,12 +1,10 @@
 package com.EventHorizon.EventHorizon.Repository.UserRepositoryTests;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdateDTO;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Admin;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.NotAdminOperationException;
-import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;

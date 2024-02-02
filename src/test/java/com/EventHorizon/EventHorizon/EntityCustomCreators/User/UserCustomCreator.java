@@ -1,9 +1,10 @@
-package com.EventHorizon.EventHorizon.EntityCustomCreators;
+package com.EventHorizon.EventHorizon.EntityCustomCreators.User;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
+import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,14 @@ public class UserCustomCreator {
 
     public User getUser(Role role) {
         String z = "faris" + (valueOfTest);
-        UpdatedUserDto updatedUserDto =UpdatedUserDto.builder()
+        UserCreationDto userCreationDto = UserCreationDto.builder()
                 .firstName(z).email(z+"@gmail.com")
                 .lastName(z)
                 .role(role.toString()).password(z)
                 .payPalAccount(z).userName(z+"userName")
                 .build();
         valueOfTest++;
-        return userMapper.createUser(updatedUserDto);
+        return userMapper.createUser(userCreationDto);
     }
 
     public User getAndSaveUser(Role role) {

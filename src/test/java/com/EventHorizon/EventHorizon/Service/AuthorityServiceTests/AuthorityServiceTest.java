@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.NotModeratorOperationsException;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;

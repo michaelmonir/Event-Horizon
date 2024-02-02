@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.security;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
@@ -52,7 +52,7 @@ public class ProxyServiceTest {
         userRepositoryService.create(client);
         Assertions.assertThrows(
                 ExistingMail.class, () -> {
-                    UpdatedUserDto request = UpdatedUserDto.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").build();
+                    UserCreationDto request = UserCreationDto.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").build();
                     proxyService.signUp(request);
                 }
         );
@@ -64,7 +64,7 @@ public class ProxyServiceTest {
         userRepositoryService.create(client);
         Assertions.assertThrows(
                 ExistingUserName.class, () -> {
-                    UpdatedUserDto request = UpdatedUserDto.builder().email("ahmed10@gmail.com").password("password").userName("ahmed9").role("ROLE_CLIENT").build();
+                    UserCreationDto request = UserCreationDto.builder().email("ahmed10@gmail.com").password("password").userName("ahmed9").role("ROLE_CLIENT").build();
                     proxyService.signUp(request);
                 }
         );

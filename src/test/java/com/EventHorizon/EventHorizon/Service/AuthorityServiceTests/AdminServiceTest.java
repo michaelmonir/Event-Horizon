@@ -1,10 +1,10 @@
 package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.User.AlreadyFoundException;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.Dtos.UserCreationDtoCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.InvalidUserDataException;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
@@ -24,18 +24,19 @@ public class AdminServiceTest {
     private AdminService adminService;
     @Autowired
     private GetUserRepositoryService getUserRepositoryService;
-
     @Autowired
     UserRepositoryService userRepositoryService;
+    @Autowired
+    private UserCreationDtoCustomCreator userCreationDtoCustomCreator;
 
     @Test
     public void addModeratorTestIfSucceed() {
         Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
         moderator.setPassword("pass12345");
 
-        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+        UserCreationDto userCreationDto = userCreationDtoCustomCreator.getDtoFromUser(moderator);
 
-        Moderator moderator1 = adminService.addModerator(updatedUserDto);
+        Moderator moderator1 = adminService.addModerator(userCreationDto);
         Moderator moderator2 = getUserRepositoryService.getModeratorById(moderator1.getId());
         Assertions.assertEquals(moderator2, moderator1);
     }
@@ -45,16 +46,16 @@ public class AdminServiceTest {
         Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
         moderator.setPassword("pass12345");
 
-        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+        UserCreationDto userCreationDto = userCreationDtoCustomCreator.getDtoFromUser(moderator);
 
-        adminService.addModerator(updatedUserDto);
+        adminService.addModerator(userCreationDto);
 
         Moderator information2 = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
         information2.setPassword("pass12345");
-        UpdatedUserDto updatedUserDto2 = new UpdatedUserDto(information2);
-        updatedUserDto2.setEmail(updatedUserDto.getEmail());
+        UserCreationDto userCreationDto2 = userCreationDtoCustomCreator.getDtoFromUser(information2);
+        userCreationDto2.setEmail(userCreationDto.getEmail());
         Assertions.assertThrows(
-                InvalidUserDataException.class, () -> adminService.addModerator(updatedUserDto)
+                InvalidUserDataException.class, () -> adminService.addModerator(userCreationDto)
         );
     }
 
@@ -63,9 +64,9 @@ public class AdminServiceTest {
         Moderator moderator = (Moderator) userCustomCreator.getUser(Role.MODERATOR);
         moderator.setPassword("pass12345");
 
-        UpdatedUserDto updatedUserDto = new UpdatedUserDto(moderator);
+        UserCreationDto userCreationDto = userCreationDtoCustomCreator.getDtoFromUser(moderator);
 
-        Moderator information2 = adminService.addModerator(updatedUserDto);
+        Moderator information2 = adminService.addModerator(userCreationDto);
         adminService.deleteModerator(information2.getId());
 
         Assertions.assertThrows(

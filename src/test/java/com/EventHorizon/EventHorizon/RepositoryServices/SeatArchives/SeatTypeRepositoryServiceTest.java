@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.SeatArchives;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.SeatArchive.SeatTypeNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
 import org.junit.jupiter.api.Assertions;

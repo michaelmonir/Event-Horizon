@@ -10,24 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserViewDTO {
+
+public class UserCreationDto {
     private int id;
     private String userName;
     private String firstName;
     private String lastName;
+    private String password;
     private String email;
     private String gender;
     private String payPalAccount;
     private String role;
-
-    public UserViewDTO(User user) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.userName = user.userName;
-        this.lastName = user.getLastName();
-        this.gender = user.getGender().toString();
-        this.role = user.getRole().toString();
-        this.payPalAccount = user.getPayPalAccount();
-    }
+    private int signInWithEmail;
 }

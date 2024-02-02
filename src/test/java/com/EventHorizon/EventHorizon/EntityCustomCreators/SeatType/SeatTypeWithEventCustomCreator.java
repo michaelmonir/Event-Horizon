@@ -1,7 +1,8 @@
-package com.EventHorizon.EventHorizon.EntityCustomCreators;
+package com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;

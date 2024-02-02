@@ -1,10 +1,10 @@
 package com.EventHorizon.EventHorizon.security.Service;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
-import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
+import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
@@ -104,7 +104,7 @@ public class ProxyService {
                 .build();
     }
 
-    public AuthenticationResponse signUp(UpdatedUserDto registerRequest) {
+    public AuthenticationResponse signUp(UserCreationDto registerRequest) {
         removeIfNotEnabled(registerRequest.getEmail());
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
         User user = userMapper.createUser(registerRequest);

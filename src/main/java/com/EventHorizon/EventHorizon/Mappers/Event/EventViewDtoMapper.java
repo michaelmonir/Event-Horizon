@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDto;
@@ -6,6 +6,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

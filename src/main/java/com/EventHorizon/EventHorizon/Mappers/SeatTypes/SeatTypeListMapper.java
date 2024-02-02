@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.SeatTypes;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;

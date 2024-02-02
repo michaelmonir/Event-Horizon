@@ -12,22 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class UserUpdateDTO {
+public class UserUpdationDTO {
     private int id;
     private String firstName;
     private String lastName;
     private String gender;
     private String payPalAccount;
 
-    private UserCreationDTO userCreationDTO;
-
-    public UserUpdateDTO(User user) {
+    public UserUpdationDTO(User user) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.gender = user.getGender().toString();
         this.payPalAccount = user.getPayPalAccount();
-
     }
     public User toInformation(User user){
         user.setFirstName(this.firstName);

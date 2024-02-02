@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Mappers.EventMappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Mappers.SeatTypeListMapper;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

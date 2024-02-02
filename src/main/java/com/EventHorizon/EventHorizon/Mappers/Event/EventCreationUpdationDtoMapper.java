@@ -1,10 +1,11 @@
-package com.EventHorizon.EventHorizon.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.AdsOptionRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;

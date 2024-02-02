@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Mappers;
+package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
