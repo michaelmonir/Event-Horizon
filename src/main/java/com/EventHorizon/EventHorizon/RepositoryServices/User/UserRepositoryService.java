@@ -49,12 +49,6 @@ public class UserRepositoryService {
         return userRepository.findAllByRole(role);
     }
 
-    public UserViewDTO updateWithDto(UserUpdateDTO userUpdateDTO) {
-        User user = getUserRepositoryService.getById(userUpdateDTO.getId());
-        this.update(user);
-        return new UserViewDTO(user);
-    }
-
     public Role getRoleAndCheckExists(int id) {
         Optional<Role> role = userRepository.findRoleById(id);
         if (role.isEmpty())

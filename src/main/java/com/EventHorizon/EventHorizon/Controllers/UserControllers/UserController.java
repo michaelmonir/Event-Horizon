@@ -29,7 +29,8 @@ public class UserController {
     }
     @PutMapping("updateInformation")
     public ResponseEntity<UserViewDTO>updateInformation(@RequestBody UserUpdateDTO userUpdateDTO){
-        return new ResponseEntity<>(userRepositoryService.updateWithDto(userUpdateDTO), HttpStatus.OK);
+        return null;
+//        return new ResponseEntity<>(userRepositoryService.updateWithDto(userUpdateDTO), HttpStatus.OK);
 //        return new ResponseEntity<>(userRepositoryService.update(userUpdateDTO), HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.User;
 
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class UserRepositoryServiceTest {
@@ -99,6 +102,19 @@ public class UserRepositoryServiceTest {
         User user = userCustomCreator.getUser(Role.SPONSOR);
         userRepositoryService.create(user);
         Assertions.assertEquals(Role.SPONSOR, userRepositoryService.getRoleAndCheckExists(user.getId()));
+    }
+
+    @Test
+    public void findAllByRole() {
+        User user1 = userCustomCreator.getUser(Role.CLIENT);
+        userRepositoryService.create(user1);
+        User user2 = userCustomCreator.getUser(Role.CLIENT);
+        userRepositoryService.create(user2);
+        User user3 = userCustomCreator.getUser(Role.SPONSOR);
+        userRepositoryService.create(user3);
+        List<Client> clients = (List<Client>) userRepositoryService.findAllByRole(Role.CLIENT);
+        Assertions.assertEquals(user1, clients.get(clients.size()- 2));
+        Assertions.assertEquals(user2, clients.get(clients.size()- 1));
     }
 }
 
