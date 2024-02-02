@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureE
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +15,12 @@ public class EventTypeService
     @Autowired
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
-    public void checkAndHandleLaunchedEvent(int eventId, EventType eventType) {
-        Event event = this.eventRepositoryServiceInterface.getByIdAndEventType(eventId, eventType);
-        this.checkAndHandleLaunchedEvent(event);
-    }
-
-    public void checkAndHandleSeatTypeOfLaunchedFutureEvent(int eventId, EventType eventType) {
-        Event event = this.eventRepositoryServiceInterface.getByIdAndEventType(eventId, eventType);
-        this.checkAndHandleLaunchedEvent(event);
-
+    public void checkFutureEvent(Event event) {
+        this.checkLaunchedEvent(event);
         FutureEventWrapper futureEventWrapper = new FutureEventWrapper((LaunchedEvent) event);
     }
 
-    private void checkAndHandleLaunchedEvent(Event event) {
+    private void checkLaunchedEvent(Event event) {
         if (!(event instanceof LaunchedEvent) || event.getEventType() != EventType.LAUNCHEDEVENT)
             throw new NotLaunchedEventException();
     }

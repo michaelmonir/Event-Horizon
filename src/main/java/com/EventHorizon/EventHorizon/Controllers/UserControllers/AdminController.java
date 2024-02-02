@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Controllers.UserControllers;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Services.UserServices.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("addModerator")
-    public ResponseEntity<?> addModerator(@RequestBody UpdatedUserDto registerRequest) {
+    public ResponseEntity<?> addModerator(@RequestBody UserCreationDto registerRequest) {
         adminService.addModerator(registerRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }

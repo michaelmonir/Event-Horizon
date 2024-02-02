@@ -2,9 +2,9 @@ package com.EventHorizon.EventHorizon.Services.UserServices;
 
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Exceptions.User.NotModeratorOperationsException;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class AuthorityService {
     UserRepositoryService userRepositoryService;
 
     public void deleteUser(int id) {
-        Role role = userRepositoryService.getRole(id);
+        Role role = userRepositoryService.getRoleAndCheckExists(id);
         if (role == Role.MODERATOR)
             throw new NotModeratorOperationsException();
         userRepositoryService.deleteById(id);

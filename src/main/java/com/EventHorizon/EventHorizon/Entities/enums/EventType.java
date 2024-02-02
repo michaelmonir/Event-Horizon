@@ -4,5 +4,4 @@ public enum EventType {
 
     DRAFTEDEVENT,
     LAUNCHEDEVENT,
-    ahmed
 }

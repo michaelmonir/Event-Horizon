@@ -4,12 +4,12 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -95,7 +95,7 @@ class DashboardTest {
     }
     private void initialize(){
         Organizer organizer = (Organizer) customCreator.getUser(Role.ORGANIZER);
-        userRepositoryService.add(organizer);
+        userRepositoryService.create(organizer);
         launchedEvent1 = new LaunchedEvent();
         launchedEvent1.setId(1);
         launchedEvent1.setEventOrganizer(organizer);

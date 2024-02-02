@@ -1,19 +1,18 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.ViewEventDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,7 +36,6 @@ class LaunchedEventRepositoryServiceTest {
     @Autowired
     UserCustomCreator userCustomCreator;
 
-    
     private AdsOption tempAdsOption;
     private Organizer tempOrganizer;
     private Location tempLocation;
@@ -127,26 +125,6 @@ class LaunchedEventRepositoryServiceTest {
         Assertions.assertDoesNotThrow(() -> {
             launchedEventRepositoryService.delete(tempLaunchedEvent.getId());
         });
-    }
-
-    @Test
-    public void testGetEventDetailsDtoThrowsExceptionWhenEventNotFound() {
-        Assertions.assertThrows(EventNotFoundException.class, () -> {
-            launchedEventRepositoryService.getViewEventDTO(0);
-        });
-    }
-
-    @Test
-    public void testGetEventDetailsDtoReturnsCorrectDto() {
-        initialize();
-        tempLaunchedEvent.setEventAds(tempAdsOption);
-        tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-        ViewEventDto eventDetailsDto = Assertions.assertDoesNotThrow(() ->
-                launchedEventRepositoryService.getViewEventDTO(tempLaunchedEvent.getId())
-        );
-        Assertions.assertEquals(tempLaunchedEvent.getName(), eventDetailsDto.getName());
-        Assertions.assertEquals(tempLaunchedEvent.getDescription(), eventDetailsDto.getDescription());
     }
 
     @Test

@@ -19,4 +19,21 @@ public class Sponsor extends User {
     @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SponsorSeatArchive> sponsorSeatArchiveList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Sponsor sponsor = (Sponsor) o;
+
+        List<SponsorSeatArchive> list = sponsor.getSponsorSeatArchiveList();
+
+        if (this.sponsorSeatArchiveList.size() != list.size())
+            return false;
+        for (int i = 0; i < this.sponsorSeatArchiveList.size(); i++) {
+            if (!this.sponsorSeatArchiveList.get(i).equals(list.get(i)))
+                return false;
+        }
+        return true;
+    }
 }

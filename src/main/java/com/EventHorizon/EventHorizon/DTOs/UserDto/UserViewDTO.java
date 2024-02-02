@@ -19,7 +19,6 @@ public class UserViewDTO {
     private String gender;
     private String payPalAccount;
     private String role;
-    private UserCreationDTO userCreationDTO;
 
     public UserViewDTO(User user) {
         this.id = user.getId();

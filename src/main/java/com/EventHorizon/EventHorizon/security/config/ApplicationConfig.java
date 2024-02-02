@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.security.config;
 
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepositoryService userRepositoryService;
+    private final GetUserRepositoryService getUserRepositoryService;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return userRepositoryService.getByEmail(username);
+                return getUserRepositoryService.getByEmail(username);
             }
         };
     }

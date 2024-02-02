@@ -1,14 +1,13 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatTypeWithEventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest

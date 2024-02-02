@@ -6,16 +6,15 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
 import com.EventHorizon.EventHorizon.Services.EventServices.FilterService;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class FilterTest {
 
     private void initializeTestData() {
         this.testOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-        userRepositoryService.add(testOrganizer);
+        userRepositoryService.create(testOrganizer);
         testAdsOption = AdsOption.builder().priority(1).name("FREE").build();
         adsOptionRepository.save(testAdsOption);
         createLaunchedEvent();

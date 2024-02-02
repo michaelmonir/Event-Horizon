@@ -5,8 +5,8 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,6 @@ class EventHeaderDtoTest {
     @Test
     public void testEventHeaderDtoConstructorMapsValuesCorrectly() {
         insialize();
-        ViewEventDto eventDetailsDto = new ViewEventDto();
         EventHeaderDto eventHeaderDto = new EventHeaderDto(tempEvent);
         // Verify that the values are mapped correctly
         Assertions.assertEquals(tempEvent.getName(), eventHeaderDto.getName());
@@ -44,7 +43,7 @@ class EventHeaderDtoTest {
 
     private void createOrganizer() {
         Organizer organizer =(Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-        userRepositoryService.add(organizer);
+        userRepositoryService.create(organizer);
         tempOrganizer = organizer;
     }
 

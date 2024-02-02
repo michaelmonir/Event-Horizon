@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name", unique = true, updatable = false)
     public String userName;
     @Column(name = "password")
     private String password;
@@ -33,13 +33,13 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, updatable = false)
     private String email;
     @Column(name = "gender")
     private Gender gender;
     @Column(name = "pay_pal_Account")
     private String payPalAccount;
-    @Column(name = "role")
+    @Column(name = "role", updatable = false)
     private Role role;
     @Column(name = "active")
     private int active;

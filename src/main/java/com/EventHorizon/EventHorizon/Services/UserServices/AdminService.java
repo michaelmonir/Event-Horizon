@@ -1,10 +1,9 @@
 package com.EventHorizon.EventHorizon.Services.UserServices;
 
-import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
+import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
-import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +19,12 @@ public class AdminService {
     private UserMapper userMapper;
 
 
-    public Moderator addModerator(UpdatedUserDto registerRequest) {
+    public Moderator addModerator(UserCreationDto registerRequest) {
         proxyService.removeIfNotEnabled(registerRequest.getEmail());
         Moderator moderator = (Moderator) userMapper.createUser(registerRequest);
         moderator.setActive(1);
         moderator.setEnable(1);
-        userRepositoryService.add(moderator);
+        userRepositoryService.create(moderator);
         return moderator;
     }
 
