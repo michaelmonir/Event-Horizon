@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User.UserBuilder;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.RoleNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.User.RoleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

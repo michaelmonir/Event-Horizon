@@ -5,10 +5,11 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Admin;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotAdminOperationException;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Exceptions.User.NotAdminOperationException;
+import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
+import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,8 @@ public class AdminInformationServiceTest {
     private UserCustomCreator userCustomCreator;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GetUserRepositoryService getUserRepositoryService;
 
     @Test
     public void updateAdminDataTest() {
@@ -36,7 +39,7 @@ public class AdminInformationServiceTest {
         admin.setLastName("newLastName");
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO(admin);
         userRepositoryService.updateWithDto(userUpdateDTO);
-        assertEquals(admin.userName, userRepositoryService.getAdminById(admin.getId()).userName);
+        assertEquals(admin.userName, getUserRepositoryService.getAdminById(admin.getId()).userName);
     }
 
     @Test
@@ -58,7 +61,7 @@ public class AdminInformationServiceTest {
         admin.setGender(Gender.NONE);
         assertThrows(
                 NotAdminOperationException.class, () -> {
-                    userRepositoryService.add(admin);
+                    userRepositoryService.create(admin);
                 }
         );
     }

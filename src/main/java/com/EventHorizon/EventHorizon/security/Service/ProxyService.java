@@ -2,10 +2,11 @@ package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationRequest;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.AuthenticationResponse;
 import com.EventHorizon.EventHorizon.security.authenticationMessages.VerifyRequest;
@@ -33,20 +34,20 @@ public class ProxyService {
     private final AuthenticationManager authenticationManager;
     private final EmailSenderService emailSenderService;
     private final UserMapper userMapper;
+    private final GetUserRepositoryService getUserRepositoryService;
 
     public boolean mailInSystem(String mail) {
         try {
-            userRepositoryService.getByEmail(mail);
+            getUserRepositoryService.getByEmail(mail);
             return true;
         } catch (UserNotFoundException e) {
             return false;
         }
-
     }
 
     public boolean userNameInSystem(String userName) {
         try {
-            userRepositoryService.getByUserName(userName);
+            getUserRepositoryService.getByUserName(userName);
             return true;
         } catch (UserNotFoundException e) {
             return false;
@@ -55,12 +56,11 @@ public class ProxyService {
 
     public void removeIfNotEnabled(String mail) {
         try {
-            User user = userRepositoryService.getByEmail(mail);
+            User user = getUserRepositoryService.getByEmail(mail);
             if (user.getEnable() == 0) {
                 userRepositoryService.delete(user);
             }
         } catch (UserNotFoundException e) {
-
         }
     }
 
@@ -109,7 +109,7 @@ public class ProxyService {
         handleException(registerRequest.getEmail(), registerRequest.getUserName());
         User user = userMapper.createUser(registerRequest);
         String verifyCode = createCode();
-        userRepositoryService.add(user);
+        userRepositoryService.create(user);
         String jwt = generateTokenForSignUp(user, verifyCode);
         System.out.println(jwtService.extractVerifyCode(jwt));
         if (registerRequest.getSignInWithEmail() == 1) {
@@ -124,7 +124,7 @@ public class ProxyService {
 
 
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest, int withGmail) {
-        User user = userRepositoryService.getByEmail(authenticationRequest.getEmail());
+        User user = getUserRepositoryService.getByEmail(authenticationRequest.getEmail());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getEmail(),
@@ -142,7 +142,7 @@ public class ProxyService {
     }
 
     private void putEnable(String mail) {
-        User user = userRepositoryService.getByEmail(mail);
+        User user = getUserRepositoryService.getByEmail(mail);
         user.setEnable(1);
         user.setActive(1);
         userRepositoryService.update(user);

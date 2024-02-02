@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UpdatedUserDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Mappers.UpdatedUser.UserMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class UserCustomCreator {
 
     public User getAndSaveUser(Role role) {
         User user = this.getUser(role);
-        this.userRepositoryService.add(user);
+        this.userRepositoryService.create(user);
         return user;
     }
 }

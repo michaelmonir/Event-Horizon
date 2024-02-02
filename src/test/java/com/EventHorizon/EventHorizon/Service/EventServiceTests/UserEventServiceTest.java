@@ -2,10 +2,10 @@ package com.EventHorizon.EventHorizon.Service.EventServiceTests;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.EventCustomCreator;
-import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,13 +27,15 @@ public class UserEventServiceTest {
     private EventCustomCreator eventCreator;
     @Mock
     private UserRepositoryService userRepositoryService;
+    @Mock
+    private GetUserRepositoryService getUserRepositoryService;
 
     @Test
     public void organizerOfEvent() {
         Event eventt = eventCreator.getLaunchedEvent();
 
         when(eventRepositoryServiceInterface.getById(Mockito.any(int.class))).thenReturn(eventt);
-        when(userRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
+        when(getUserRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
         Assertions.assertDoesNotThrow(() ->
             userEventService.getAndHandleNotOrganizerOfEvent(eventt.getEventOrganizer().getId(), eventt)
         );

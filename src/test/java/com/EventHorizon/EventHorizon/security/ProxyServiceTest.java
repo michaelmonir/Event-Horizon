@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingUserName;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class ProxyServiceTest {
     @Test
     public void mailIsInSystemTest() {
         Client client = Client.builder().email("ahmed@gmail.com").password("password").userName("ahmed").role(Role.CLIENT).active(1).build();
-        userRepositoryService.add(client);
+        userRepositoryService.create(client);
         assertTrue(proxyService.mailInSystem("ahmed@gmail.com"));
     }
 
@@ -42,14 +42,14 @@ public class ProxyServiceTest {
     @Test
     public void userNameIsInSystemTest() {
         Client client = Client.builder().email("ahmed2@gmail.com").password("password").userName("ahmed2").role(Role.CLIENT).active(1).build();
-        userRepositoryService.add(client);
+        userRepositoryService.create(client);
         assertTrue(proxyService.userNameInSystem("ahmed2"));
     }
 
     @Test
     public void signUpExistingMailTest() {
         Client client = Client.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role(Role.CLIENT).active(1).enable(1).build();
-        userRepositoryService.add(client);
+        userRepositoryService.create(client);
         Assertions.assertThrows(
                 ExistingMail.class, () -> {
                     UpdatedUserDto request = UpdatedUserDto.builder().email("ahmed8@gmail.com").password("password").userName("ahmed8").role("ROLE_CLIENT").build();
@@ -61,7 +61,7 @@ public class ProxyServiceTest {
     @Test
     public void signUpExistingUserNameTest() {
         Client client = Client.builder().email("ahmed9@gmail.com").password("password").userName("ahmed9").role(Role.CLIENT).active(1).build();
-        userRepositoryService.add(client);
+        userRepositoryService.create(client);
         Assertions.assertThrows(
                 ExistingUserName.class, () -> {
                     UpdatedUserDto request = UpdatedUserDto.builder().email("ahmed10@gmail.com").password("password").userName("ahmed9").role("ROLE_CLIENT").build();

@@ -11,11 +11,12 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.DraftedLaunchedEventMapper;
 import com.EventHorizon.EventHorizon.Mappers.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.EventViewDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,8 @@ public class EventService {
     private EventCreationUpdationDtoMapper eventCreationUpdationDtoMapper;
     @Autowired
     private EventViewDtoMapper eventViewDtoMapper;
+    @Autowired
+    private GetUserRepositoryService getUserRepositoryService;
 
     public EventViewDto getEventForUser(int eventId) {
         Event event = eventRepositoryServiceInterface.getById(eventId);
@@ -52,7 +55,7 @@ public class EventService {
     }
 
     public EventViewDto createEvent(int id, EventCreationUpdationDto eventDTO) {
-        Organizer organizer = userRepositoryService.getOrganizerById(id);
+        Organizer organizer = getUserRepositoryService.getOrganizerById(id);
 
         DraftedEvent event = eventCreationUpdationDtoMapper.getEventFromDtoForCreating(eventDTO);
         event.setEventOrganizer(organizer);

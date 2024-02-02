@@ -3,10 +3,10 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.ClientNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.NotModeratorOperationsException;
-import com.EventHorizon.EventHorizon.Exceptions.UsersExceptions.UserNotFoundException;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Exceptions.User.NotModeratorOperationsException;
+import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.UserServices.AuthorityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,28 +17,30 @@ import java.util.List;
 
 @SpringBootTest
 public class AuthorityServiceTest {
+
     @Autowired
     UserCustomCreator userCustomCreator;
     @Autowired
     AuthorityService authorityService;
-
     @Autowired
     UserRepositoryService userRepositoryService;
+    @Autowired
+    GetUserRepositoryService getUserRepositoryService;
 
     @Test
     public void deleteUserTestIfSucceed() {
         User information = userCustomCreator.getUser(Role.CLIENT);
-        userRepositoryService.add(information);
+        userRepositoryService.create(information);
         authorityService.deleteUser(information.getId());
         Assertions.assertThrows(
-                UserNotFoundException.class, () -> userRepositoryService.getById(information.getId())
+                UserNotFoundException.class, () -> getUserRepositoryService.getById(information.getId())
         );
     }
 
     @Test
     public void deleteUserTestIfFail() {
         User information = userCustomCreator.getUser(Role.MODERATOR);
-        userRepositoryService.add(information);
+        userRepositoryService.create(information);
         Assertions.assertThrows(
                 NotModeratorOperationsException.class, () -> {
                     authorityService.deleteUser(information.getId());
@@ -49,13 +51,13 @@ public class AuthorityServiceTest {
     @Test
     void GetAllUserByRoleTest() {
         User information = userCustomCreator.getUser(Role.CLIENT);
-        userRepositoryService.add(information);
+        userRepositoryService.create(information);
         User information2 = userCustomCreator.getUser(Role.CLIENT);
-        userRepositoryService.add(information2);
+        userRepositoryService.create(information2);
         User information3 = userCustomCreator.getUser(Role.CLIENT);
-        userRepositoryService.add(information3);
+        userRepositoryService.create(information3);
         User information4 = userCustomCreator.getUser(Role.CLIENT);
-        userRepositoryService.add(information4);
+        userRepositoryService.create(information4);
 
         List<? extends User> list = authorityService.getAllUsersByRole(Role.CLIENT);
         for (User u : list) {

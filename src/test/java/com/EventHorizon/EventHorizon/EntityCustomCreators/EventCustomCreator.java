@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
-import com.EventHorizon.EventHorizon.Repository.UpdatedUserRepositories.UserRepository;
+import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

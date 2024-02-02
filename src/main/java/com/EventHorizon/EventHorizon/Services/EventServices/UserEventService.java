@@ -2,11 +2,10 @@ package com.EventHorizon.EventHorizon.Services.EventServices;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
-import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.EventComponent.EventRepositoryServices.EventRepositoryServiceInterface;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,11 @@ public class UserEventService {
     EventRepositoryServiceInterface eventRepositoryServiceInterface;
     @Autowired
     UserRepositoryService userRepositoryService;
+    @Autowired
+    GetUserRepositoryService getUserRepositoryService;
 
     public Organizer getAndHandleNotOrganizerOfEvent(int id, Event event) {
-        Organizer organizer = userRepositoryService.getOrganizerById(id);
+        Organizer organizer = getUserRepositoryService.getOrganizerById(id);
         getAndHandleNotOrganizerOfEvent(organizer, event);
         return organizer;
     }

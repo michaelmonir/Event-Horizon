@@ -5,7 +5,8 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.UpdatedUserComponenet.UserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventTypeService;
 import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,12 @@ public class TicketTransactionsService {
     private EventTypeService eventTypeService;
     @Autowired
     private UserRepositoryService userRepositoryService;
+    @Autowired
+    private GetUserRepositoryService getUserRepositoryService;
+
     @Transactional
     public void buyTicketCollections(int id, List<BuyingAndRefundingDto> list) {
-        Client client = userRepositoryService.getClientById(id);
+        Client client = getUserRepositoryService.getClientById(id);
         for (BuyingAndRefundingDto buyingAndRefundingDto : list)
             buyOneTicketCollection(client, buyingAndRefundingDto);
     }
@@ -46,7 +50,7 @@ public class TicketTransactionsService {
 
     @Transactional
     public void refundTicketCollections(int id, List<BuyingAndRefundingDto> list) {
-        Client client = userRepositoryService.getClientById(id);
+        Client client = getUserRepositoryService.getClientById(id);
         for (BuyingAndRefundingDto buyingAndRefundingDto : list)
             refundOneTicketCollection(client, buyingAndRefundingDto);
     }
