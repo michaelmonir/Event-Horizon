@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/information/")
 @RestController
 @CrossOrigin("*")
-
-public class InformationController {
+public class UserController {
 
     @Autowired
-    private UserRepositoryService informationService;
+    private UserRepositoryService userRepositoryService;
     @Autowired
     private GetUserRepositoryService getUserRepositoryService;
 
@@ -30,6 +29,7 @@ public class InformationController {
     }
     @PutMapping("updateInformation")
     public ResponseEntity<UserViewDTO>updateInformation(@RequestBody UserUpdateDTO userUpdateDTO){
-        return new ResponseEntity<UserViewDTO>(informationService.updateWithDto(userUpdateDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userRepositoryService.updateWithDto(userUpdateDTO), HttpStatus.OK);
+//        return new ResponseEntity<>(userRepositoryService.update(userUpdateDTO), HttpStatus.OK);
     }
 }

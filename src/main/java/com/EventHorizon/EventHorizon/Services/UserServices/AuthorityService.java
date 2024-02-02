@@ -19,7 +19,7 @@ public class AuthorityService {
     UserRepositoryService userRepositoryService;
 
     public void deleteUser(int id) {
-        Role role = userRepositoryService.getRole(id);
+        Role role = userRepositoryService.getRoleAndCheckExists(id);
         if (role == Role.MODERATOR)
             throw new NotModeratorOperationsException();
         userRepositoryService.deleteById(id);

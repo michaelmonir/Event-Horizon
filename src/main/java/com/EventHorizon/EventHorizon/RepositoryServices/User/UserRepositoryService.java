@@ -32,42 +32,17 @@ public class UserRepositoryService {
         this.save(user);
     }
 
-    private void save(User user) {
-        try {
-            userRepository.save(user);
-        } catch (DataIntegrityViolationException e) {
-            throw new InvalidUserDataException();
-        }
-    }
+    public void update(User user) {
+        this.checkUserExists(user.getId());
 
-    public void delete(User user) {
-        if (user.getRole() == Role.ADMIN)
-            throw new NotAdminOperationException();
-        getUserRepositoryService.getById(user.getId());
-        userRepository.delete(user);
+        this.checkNotAdminOperation(user.getRole());
+        this.save(user);
     }
 
     public void deleteById(int id) {
-        User user = getUserRepositoryService.getById(id);
-        this.checkNotAdminOperation(user.getRole());
+        Role role = this.getRoleAndCheckExists(id);
+        this.checkNotAdminOperation(role);
         userRepository.deleteById(id);
-    }
-
-    public void update(User user) {
-        if (user.getId() == 0)
-            throw new UserNotFoundException();
-        try {
-            userRepository.save(user);
-        } catch (Exception e) {
-            throw new UserNotFoundException();
-        }
-    }
-
-    public Role getRole(int id) {
-        Optional<Role> role = userRepository.findRoleById(id);
-        if (role.isEmpty())
-            throw new UserNotFoundException();
-        return role.get();
     }
 
     public List<? extends User> findAllByRole(Role role) {
@@ -80,8 +55,28 @@ public class UserRepositoryService {
         return new UserViewDTO(user);
     }
 
+    public Role getRoleAndCheckExists(int id) {
+        Optional<Role> role = userRepository.findRoleById(id);
+        if (role.isEmpty())
+            throw new UserNotFoundException();
+        return role.get();
+    }
+
+    public void checkUserExists(int id) {
+        if (!userRepository.existsById(id))
+            throw new UserNotFoundException();
+    }
+
     private void checkNotAdminOperation(Role role) {
         if (role == Role.ADMIN)
             throw new NotAdminOperationException();
+    }
+
+    private void save(User user) {
+        try {
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidUserDataException();
+        }
     }
 }

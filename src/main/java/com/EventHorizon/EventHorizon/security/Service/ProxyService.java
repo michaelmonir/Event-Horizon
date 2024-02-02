@@ -58,7 +58,7 @@ public class ProxyService {
         try {
             User user = getUserRepositoryService.getByEmail(mail);
             if (user.getEnable() == 0) {
-                userRepositoryService.delete(user);
+                userRepositoryService.deleteById(user.getId());
             }
         } catch (UserNotFoundException e) {
         }

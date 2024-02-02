@@ -35,7 +35,7 @@ public class test {
     void getRoleById(){
         Organizer organizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
         userRepositoryService.create(organizer);
-        Role role = userRepositoryService.getRole(organizer.getId());
+        Role role = userRepositoryService.getRoleAndCheckExists(organizer.getId());
         Assertions.assertEquals(role, organizer.getRole());
     }
     @Test
