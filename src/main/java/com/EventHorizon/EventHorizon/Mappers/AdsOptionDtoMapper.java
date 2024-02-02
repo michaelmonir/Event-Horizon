@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Mappers;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventRelated.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
@@ -20,4 +20,5 @@ public class AdsOptionDtoMapper {
             throw new AdsOptionNotFoundException();
         return optionalAdsOption.get();
     }
+
 }

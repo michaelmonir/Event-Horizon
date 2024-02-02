@@ -27,7 +27,6 @@ class EventHeaderDtoTest {
     @Test
     public void testEventHeaderDtoConstructorMapsValuesCorrectly() {
         insialize();
-        ViewEventDto eventDetailsDto = new ViewEventDto();
         EventHeaderDto eventHeaderDto = new EventHeaderDto(tempEvent);
         // Verify that the values are mapped correctly
         Assertions.assertEquals(tempEvent.getName(), eventHeaderDto.getName());

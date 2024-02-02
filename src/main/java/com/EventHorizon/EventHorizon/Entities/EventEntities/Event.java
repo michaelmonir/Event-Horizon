@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -59,4 +60,21 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected List<SeatType> seatTypes;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event that = (Event) o;
+
+        // not comparing dates as they are compared in different formats so will always return false
+        return id == that.getId()
+                && Objects.equals(name, that.getName())
+                && Objects.equals(description, that.getDescription())
+                && Objects.equals(eventCategory, that.getEventCategory())
+                && eventType == that.getEventType()
+                && Objects.equals(eventLocation, that.getEventLocation())
+                && Objects.equals(eventAds, that.getEventAds())
+                && Objects.equals(eventOrganizer, that.getEventOrganizer());
+    }
 }

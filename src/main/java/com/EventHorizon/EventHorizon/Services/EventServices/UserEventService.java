@@ -18,7 +18,6 @@ public class UserEventService {
     @Autowired
     UserRepositoryService userRepositoryService;
 
-
     public Organizer getAndHandleNotOrganizerOfEvent(int id, Event event) {
         Organizer organizer = userRepositoryService.getOrganizerById(id);
         getAndHandleNotOrganizerOfEvent(organizer, event);
