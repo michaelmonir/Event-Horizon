@@ -4,6 +4,7 @@ import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdationDTO;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserViewDTO;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Services.UserServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ public class UserController {
     private UserRepositoryService userRepositoryService;
     @Autowired
     private GetUserRepositoryService getUserRepositoryService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("getInformationViewDto")
     public ResponseEntity<UserViewDTO>getInformation(@RequestParam Integer id){
@@ -29,8 +32,6 @@ public class UserController {
     }
     @PutMapping("updateInformation")
     public ResponseEntity<UserViewDTO>updateInformation(@RequestBody UserUpdationDTO userUpdationDTO){
-        return null;
-//        return new ResponseEntity<>(userRepositoryService.updateWithDto(userUpdateDTO), HttpStatus.OK);
-//        return new ResponseEntity<>(userRepositoryService.update(userUpdateDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(userUpdationDTO), HttpStatus.OK);
     }
 }
