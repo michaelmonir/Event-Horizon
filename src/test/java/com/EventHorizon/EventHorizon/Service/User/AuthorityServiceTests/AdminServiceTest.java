@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Service.AuthorityServiceTests;
+package com.EventHorizon.EventHorizon.Service.User.AuthorityServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;

@@ -22,6 +22,7 @@ public class UserService {
     public UserViewDTO updateUser(UserUpdationDTO updationDTO) {
         User user = getUserRepositoryService.getById(updationDTO.getId());
         userMapper.updateUser(user, updationDTO);
+        userRepositoryService.update(user);
         return new UserViewDTO(user);
     }
 }
