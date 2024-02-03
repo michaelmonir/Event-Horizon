@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
+import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class UserCustomCreator {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private UserRepository userRepository;
 
     static int valueOfTest = 0;
 
@@ -33,7 +34,7 @@ public class UserCustomCreator {
 
     public User getAndSaveUser(Role role) {
         User user = this.getUser(role);
-        this.userRepositoryService.create(user);
+        this.userRepository.save(user);
         return user;
     }
 }

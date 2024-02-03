@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Service.EventServiceTests;
+package com.EventHorizon.EventHorizon.Service.Event;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;

@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.Services.EventServices.EventView;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
@@ -20,17 +21,15 @@ public class OrganizerChain
     @Autowired
     private EventViewDtoMapper eventViewDtoMapper;
     @Autowired
-    private UserChain userChain;
+    private ClientChain clientChain;
 
     public EventViewDto getDto(User user, Event event) {
-        if (user.getRole() != Role.ORGANIZER)
-            throw new InvalidAccessOfEventException();
         try {
             userEventService.checkOrganizerOfEvent(user, event);
-            return eventViewDtoMapper.getDetailedDtoFromEvent(event, UserEventRole.Organizer);
+            return eventViewDtoMapper.getDetailedDtoFromEvent(event, UserEventRole.ORGANIZER);
         }
         catch (NotOrganizerOfThisEventException e) {
-            return userChain.getDto(event);
+            return clientChain.getDto(user, event);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Service.EventServiceTests;
+package com.EventHorizon.EventHorizon.Service.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;

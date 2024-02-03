@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySe
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +9,14 @@ import org.springframework.stereotype.Service;
 public class EventRepositoryServiceInterface {
     @Autowired
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
+    @Autowired
+    private EventRepositoryService eventRepositoryService;
 
     public Event getById(int id) {
-        return null;
+        return eventRepositoryService.getById(id);
     }
 
-    public Event saveWhenCreating(Event Event) {
+    public Event create(Event Event) {
         SuperEventRepositoryService eventRepositoryService
                 = eventRepositoryServiceFactory.getByEventType(Event.getEventType());
         return eventRepositoryService.saveWhenCreating(Event);

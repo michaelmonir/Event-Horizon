@@ -14,8 +14,8 @@ public class EventViewService {
     @Autowired
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
-    public EventViewDto getEventViewDto(int eventId, int userInformationId) {
+    public EventViewDto getEventViewDto(int eventId, int userId) {
         Event event = eventRepositoryServiceInterface.getById(eventId);
-        return this.unregisteredUserChain.getDto(event, userInformationId);
+        return this.unregisteredUserChain.getDto(event, userId);
     }
 }

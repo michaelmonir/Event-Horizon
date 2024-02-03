@@ -139,6 +139,6 @@ public class TicketTransactionWithDatabaseTest
 
         this.customEvent = this.eventCustomCreator.getLaunchedEvent();
         this.customEvent.setSeatTypes(List.of(this.customSeatType));
-        this.eventRepositoryServiceInterface.saveWhenCreating(this.customEvent);
+        this.eventRepositoryServiceInterface.create(this.customEvent);
     }
 }
