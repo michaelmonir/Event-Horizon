@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class EventRepositoryServiceTest {
 
     @Autowired
-    private EventRepositoryService eventRepositoryServiceTest;
+    private EventRepositoryService eventRepositoryService;
     @Autowired
     private EventCustomCreator eventCustomCreator;
     @Autowired
@@ -28,7 +28,7 @@ public class EventRepositoryServiceTest {
     public void testGetByIdLaunchedEvent() {
         LaunchedEvent launchedEvent = eventCustomCreator.getLaunchedEvent();
         launchedEventRepositoryService.saveWhenCreating(launchedEvent);
-        LaunchedEvent launchedEventFromDb = (LaunchedEvent) eventRepositoryServiceTest.getById(launchedEvent.getId());
+        LaunchedEvent launchedEventFromDb = (LaunchedEvent) eventRepositoryService.getById(launchedEvent.getId());
         Assertions.assertEquals(launchedEventFromDb.getEventType(), EventType.LAUNCHEDEVENT);
         Assertions.assertEquals(launchedEventFromDb, launchedEvent);
     }
@@ -37,7 +37,7 @@ public class EventRepositoryServiceTest {
     public void testGetByIdDraftedEvent() {
         DraftedEvent draftedEvent = eventCustomCreator.getDraftedEvent();
         draftedEventRepositoryService.saveWhenCreating(draftedEvent);
-        DraftedEvent draftedEventFromDb = (DraftedEvent) eventRepositoryServiceTest.getById(draftedEvent.getId());
+        DraftedEvent draftedEventFromDb = (DraftedEvent) eventRepositoryService.getById(draftedEvent.getId());
         Assertions.assertEquals(draftedEventFromDb.getEventType(), EventType.DRAFTEDEVENT);
         Assertions.assertEquals(draftedEventFromDb, draftedEvent);
     }

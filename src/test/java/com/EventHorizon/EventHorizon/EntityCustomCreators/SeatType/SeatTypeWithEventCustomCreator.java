@@ -15,13 +15,11 @@ import java.util.List;
 public class SeatTypeWithEventCustomCreator
 {
     @Autowired
-    SeatTypeCustomCreator seatTypeCustomCreator;
+    private SeatTypeCustomCreator seatTypeCustomCreator;
     @Autowired
-    EventCustomCreator eventCustomCreator;
+    private EventCustomCreator eventCustomCreator;
     @Autowired
-    LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Autowired
-    DraftedEventRepositoryService draftedEventRepositoryService;
+    private LaunchedEventRepositoryService launchedEventRepositoryService;
 
 
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {

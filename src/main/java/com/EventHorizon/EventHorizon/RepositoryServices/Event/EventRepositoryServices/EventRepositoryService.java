@@ -13,20 +13,11 @@ public class EventRepositoryService {
 
     @Autowired
     private EventRepository eventRepository;
-    @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Autowired
-    private DraftedEventRepositoryService draftedEventRepositoryService;
 
-    public Event getById(int id){
-        try {
-            return launchedEventRepositoryService.getByIdAndHandleNotFound(id);
-        } catch (EventNotFoundException e) {
-            return draftedEventRepositoryService.getByIdAndHandleNotFound(id);
-        }
-//        Optional<Event> eventOptional = eventRepository.findById(id);
-//        if (eventOptional.isEmpty())
-//            throw new EventNotFoundException();
-//        return eventOptional.get();
+    public Event getById(int id) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isEmpty())
+            throw new EventNotFoundException();
+        return eventOptional.get();
     }
 }
