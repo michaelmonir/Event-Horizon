@@ -1,7 +1,8 @@
 package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
@@ -15,11 +16,30 @@ public class EventViewDtoMapper
 {
     @Autowired
     private SeatTypeListMapper seatTypeListMapper;
-    public EventViewDto getDetailedEventFromEventDto(Event event){
+
+    public EventViewDto getDetailedDtoFromEvent(Event event){
         EventViewDto eventViewDto = this.getEventViewFromCommonAttributes(event);
 
         if (event.getEventType() == EventType.LAUNCHEDEVENT)
             this.setAttributesForLaunchedEvent((LaunchedEvent) event, eventViewDto);
+        return eventViewDto;
+    }
+
+    public EventViewDto getDetailedDtoFromEvent(Event event, UserEventRole userEventRole){
+        EventViewDto eventViewDto = this.getEventViewFromCommonAttributes(event);
+
+        if (event.getEventType() == EventType.LAUNCHEDEVENT)
+            this.setAttributesForLaunchedEvent((LaunchedEvent) event, eventViewDto);
+        eventViewDto.setUserEventRole(userEventRole);
+        return eventViewDto;
+    }
+
+    public EventViewDto getBriefedDtoFromEvent(Event event, UserEventRole userEventRole){
+        EventViewDto eventViewDto = this.getEventViewFromCommonAttributes(event);
+
+        if (event.getEventType() == EventType.LAUNCHEDEVENT)
+            this.setAttributesForLaunchedEvent((LaunchedEvent) event, eventViewDto);
+        eventViewDto.setUserEventRole(userEventRole);
         return eventViewDto;
     }
 

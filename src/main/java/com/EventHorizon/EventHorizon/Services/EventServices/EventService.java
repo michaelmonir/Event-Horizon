@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Services.EventServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDto;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
@@ -45,11 +45,6 @@ public class EventService {
     @Autowired
     private GetUserRepositoryService getUserRepositoryService;
 
-    public EventViewDto getEventForUser(int eventId) {
-        Event event = eventRepositoryServiceInterface.getById(eventId);
-        return eventViewDtoMapper.getDetailedEventFromEventDto(event);
-    }
-
     public List<EventHeaderDto> getEventHeadersList(int pageIndex, int pageSize) {
         return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
     }
@@ -60,32 +55,33 @@ public class EventService {
         DraftedEvent event = eventCreationUpdationDtoMapper.getEventFromDtoForCreating(eventDTO);
         event.setEventOrganizer(organizer);
         draftedEventRepositoryService.saveWhenCreating(event);
-        return eventViewDtoMapper.getDetailedEventFromEventDto(event);
+        return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
 
     public EventViewDto updateEvent(int id, EventCreationUpdationDto eventDTO) {
         Event event = eventRepositoryServiceInterface.getById(eventDTO.getId());
-        userEventService.getAndHandleNotOrganizerOfEvent(id, event);
+        userEventService.checkOrganizerOfEvent(id, event);
 
         eventCreationUpdationDtoMapper.updateEventAttributesFromDto(event, eventDTO);
         eventRepositoryServiceInterface.update(event);
 
-        return eventViewDtoMapper.getDetailedEventFromEventDto(event);
+        return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
 
     public EventViewDto launchEvent(int id, int eventId) {
         DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
 
-        userEventService.getAndHandleNotOrganizerOfEvent(id, draftedEvent);
+        userEventService.checkOrganizerOfEvent(id, draftedEvent);
         draftedEventRepositoryService.delete(eventId);
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
         launchedEventRepositoryService.saveWhenLaunching(launchedEvent);
-        return eventViewDtoMapper.getDetailedEventFromEventDto(launchedEvent);
+
+        return eventViewDtoMapper.getDetailedDtoFromEvent(launchedEvent);
     }
 
     public void deleteEvent(int id, int eventId, EventType eventType) {
         Event event = eventRepositoryServiceInterface.getById(eventId);
-        userEventService.getAndHandleNotOrganizerOfEvent(id, event);
+        userEventService.checkOrganizerOfEvent(id, event);
         eventRepositoryServiceInterface.delete(eventId, eventType);
     }
 }

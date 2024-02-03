@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Service.EventServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
@@ -52,30 +53,6 @@ public class EventServiceTest {
     @Mock
     private GetUserRepositoryService getUserRepositoryService;
 
-//    @Test
-//    void testGetEventForUser() {
-//        when(launchedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
-//        when(viewEventDtoMapper.getDTOfromViewEvent(any())).thenReturn(new ViewEventDto());
-//        ViewEventDto result = eventService.getEventForUser(1);
-//        Assertions.assertNotNull(result);
-//        Assertions.assertEquals(ViewEventDto.class, result.getClass());
-//    }
-
-    // this function is just updated temporarily until the view event is fixed
-    @Test
-    void testGetEventForUser() {
-        when(launchedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
-        when(draftedEventRepositoryService.getByIdAndHandleNotFound(anyInt())).thenReturn(new DraftedEvent());
-
-        when(eventViewDtoMapper.getDetailedEventFromEventDto(any()))
-                .thenReturn(new EventViewDto());
-        when(eventViewDtoMapper.getDetailedEventFromEventDto(any()))
-                .thenReturn(new EventViewDto());
-
-        EventViewDto result = eventService.getEventForUser(1);
-        Assertions.assertNotNull(result);
-    }
-
     @Test
     void testGetEventHeadersList() {
         when(dashboardRepositoryService.getPage(anyInt(), anyInt())).thenReturn(new ArrayList<>());
@@ -92,7 +69,7 @@ public class EventServiceTest {
         when(getUserRepositoryService.getById(anyInt())).thenReturn(new Organizer());
 
         when(eventCreationUpdationDtoMapper.getEventFromDtoForCreating(any())).thenReturn(new DraftedEvent());
-        when(eventViewDtoMapper.getDetailedEventFromEventDto(any())).thenReturn(new EventViewDto());
+        when(eventViewDtoMapper.getDetailedDtoFromEvent(any())).thenReturn(new EventViewDto());
 
         EventViewDto result = eventService.createEvent(1, eventDTO);
         Assertions.assertNotNull(result);
@@ -109,7 +86,7 @@ public class EventServiceTest {
         when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
 
-        when(eventViewDtoMapper.getDetailedEventFromEventDto(any())).thenReturn(new EventViewDto());
+        when(eventViewDtoMapper.getDetailedDtoFromEvent(any())).thenReturn(new EventViewDto());
 
         EventViewDto result = eventService.updateEvent(1, eventDTO);
         Assertions.assertNotNull(result);

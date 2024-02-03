@@ -2,6 +2,8 @@ package com.EventHorizon.EventHorizon.Services.EventServices;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
@@ -19,15 +21,14 @@ public class UserEventService {
     @Autowired
     GetUserRepositoryService getUserRepositoryService;
 
-    public Organizer getAndHandleNotOrganizerOfEvent(int id, Event event) {
+    public Organizer checkOrganizerOfEvent(int id, Event event) {
         Organizer organizer = getUserRepositoryService.getOrganizerById(id);
-        getAndHandleNotOrganizerOfEvent(organizer, event);
+        checkOrganizerOfEvent(organizer, event);
         return organizer;
     }
 
-    private void getAndHandleNotOrganizerOfEvent(Organizer organizer, Event event) {
-        Event eventFromDB = eventRepositoryServiceInterface.getById(event.getId());
-        if (!eventFromDB.getEventOrganizer().equals(organizer))
+    public void checkOrganizerOfEvent(User user, Event event) {
+        if (!event.getEventOrganizer().equals(user))
             throw new NotOrganizerOfThisEventException();
     }
 }

@@ -1,8 +1,7 @@
 package com.EventHorizon.EventHorizon.Mappers.SeatTypes;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.SeatTypeDto;
+import com.EventHorizon.EventHorizon.DTOs.SeatArchiveDtos.SeatTypeDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

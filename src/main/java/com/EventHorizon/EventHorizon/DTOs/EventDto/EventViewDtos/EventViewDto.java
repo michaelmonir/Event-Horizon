@@ -1,6 +1,8 @@
-package com.EventHorizon.EventHorizon.DTOs.EventDto;
+package com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos;
 
 
+import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
+import com.EventHorizon.EventHorizon.DTOs.SeatArchiveDtos.SeatTypeDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
@@ -27,4 +29,5 @@ public class EventViewDto
     private OrganizerHeaderDto eventOrganizer;
     private List<SeatTypeDto> seatTypes;
     private Date launchedDate;
+    private UserEventRole userEventRole;
 }

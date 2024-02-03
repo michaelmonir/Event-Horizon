@@ -1,10 +1,12 @@
 package com.EventHorizon.EventHorizon.Controllers.EventControllers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
+import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
 import com.EventHorizon.EventHorizon.Services.UserServices.UserTokenInformationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +20,27 @@ import java.util.List;
 @RequestMapping("/event/")
 @CrossOrigin("*")
 public class EventController {
+
     @Autowired
     private EventService eventService;
     @Autowired
     private UserTokenInformationService userTokenInformationService;
     @Autowired
+    private EventViewService eventViewService;
+    @Autowired
     LaunchedEventRepositoryService launchedEventRepositoryService;
 
-    @GetMapping("eventForUser/{eventId}")//any
-    public ResponseEntity<EventViewDto> getEventForUser(@PathVariable int eventId) {
-        EventViewDto detailedEventDto = this.eventService.getEventForUser(eventId);
-        return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
+    @GetMapping("eventForUser/{eventId}/{userInformationId}") //any
+    public ResponseEntity<EventViewDto> getEvent(@PathVariable int eventId,@PathVariable int userInformationId) {
+
+        EventViewDto detailedEventDTO = this.eventViewService.getEventViewDto(userInformationId, eventId);
+        return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @PostMapping("createEvent/{organizerInformationId}")//organizer,admin
+    @PostMapping("createEvent/{organizerId}")//organizer,admin
     public ResponseEntity<EventViewDto> createEvent
-            (@PathVariable int organizerInformationId, @RequestBody EventCreationUpdationDto creationDto) {
-
-        EventViewDto detailedEventDto = eventService.createEvent(organizerInformationId, creationDto);
+            (@PathVariable int organizerId, @RequestBody EventCreationUpdationDto creationDto) {
+        EventViewDto detailedEventDto = eventService.createEvent(organizerId, creationDto);
         return new ResponseEntity<>(detailedEventDto, HttpStatus.OK);
     }
 

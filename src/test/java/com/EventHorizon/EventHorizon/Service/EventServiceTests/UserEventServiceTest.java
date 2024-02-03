@@ -37,7 +37,7 @@ public class UserEventServiceTest {
         when(eventRepositoryServiceInterface.getById(Mockito.any(int.class))).thenReturn(eventt);
         when(getUserRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
         Assertions.assertDoesNotThrow(() ->
-            userEventService.getAndHandleNotOrganizerOfEvent(eventt.getEventOrganizer().getId(), eventt)
+            userEventService.checkOrganizerOfEvent(eventt.getEventOrganizer().getId(), eventt)
         );
     }
 
@@ -48,7 +48,7 @@ public class UserEventServiceTest {
         when(eventRepositoryServiceInterface.getById(Mockito.any(int.class))).thenReturn(event);
 
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() ->
-            userEventService.getAndHandleNotOrganizerOfEvent(10000000, event) //////////////////////////////////
+            userEventService.checkOrganizerOfEvent(10000000, event) //////////////////////////////////
         );
     }
 }

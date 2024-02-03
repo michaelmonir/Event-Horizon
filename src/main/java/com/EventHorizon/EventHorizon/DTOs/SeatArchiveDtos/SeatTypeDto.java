@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.DTOs.EventDto;
+package com.EventHorizon.EventHorizon.DTOs.SeatArchiveDtos;
 
 import lombok.*;
 
