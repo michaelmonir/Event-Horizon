@@ -11,6 +11,7 @@ import com.EventHorizon.EventHorizon.Filter.Factories.FilterFactory;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
 import com.EventHorizon.EventHorizon.Filter.Factories.RelationTypeFactory;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
+import com.EventHorizon.EventHorizon.Repository.Views.ClientGoingViewRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,13 +27,13 @@ public class FilterService {
     private final EventRepository eventRepository;
     private final RelationTypeFactory relationTypeFactory;
     private final DashboardRepositoryService dashboardRepositoryService;
+    private final ClientGoingViewRepository clientGoingViewRepository;
 
     private Specification<Event> getSpecificationForAll() {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.greaterThan(root.get("id"), -1);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("id"), -1);
     }
 
-    public Specification<Event> getSpecifications(List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters, FilterEntityType entityType) {
+    public Specification getSpecifications(List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters, FilterEntityType entityType) {
         Specification<Event> specification = getSpecificationForAll();
         for (FilterRelationList<FilterTypes, FilterRelation, Object> filter : filters) {
             FilterCriteriaInterface filterCriteria = filterFactory.getFilterCriteria(filter);
@@ -48,6 +49,14 @@ public class FilterService {
 
     public List<EventHeaderDto> getFilteredEventHeadersList(int pageIndex, int pageSize, List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
         return this.dashboardRepositoryService.getFilteredPage(pageIndex, pageSize, getSpecifications(filters, FilterEntityType.EVENT));
+    }
+
+    public List<ClientGoingViewRepository> getFilteredClientGoingView(List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
+        return this.clientGoingViewRepository.findAll(getSpecifications(filters, FilterEntityType.CLIENT_GOING_VIEW));
+    }
+
+    public List<EventHeaderDto> getFilteredEventHeadersListFromClientGoingView(int pageIndex, int pageSize, List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
+        return this.dashboardRepositoryService.getFilteredPage(pageIndex, pageSize, getSpecifications(filters, FilterEntityType.CLIENT_GOING_VIEW));
     }
 
 }

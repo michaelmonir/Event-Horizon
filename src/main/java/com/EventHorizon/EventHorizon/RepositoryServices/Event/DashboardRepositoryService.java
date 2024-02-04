@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
@@ -45,4 +46,12 @@ public class DashboardRepositoryService {
         eventHeaderDtos = launchedEventRepositoryService.getFilteredEventsHeaderDto(pageWithRecords, specification);
         return eventHeaderDtos;
     }
+    public List<EventHeaderDto> getFilteredPageFromClientGoingView(int pageIndex, int pageSize, Specification<ClientGoingView> specification) {
+        checkPageIndexAndSize(pageIndex, pageSize);
+        this.pageSize = pageSize;
+        this.pageWithRecords = PageRequest.of(pageIndex, pageSize);
+        eventHeaderDtos = launchedEventRepositoryService.getFilteredEventsHeaderDtoFromClientGoingView(pageWithRecords, specification);
+        return eventHeaderDtos;
+    }
+
 }
