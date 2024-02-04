@@ -33,7 +33,7 @@ public class EventController {
     @GetMapping("eventForUser/{eventId}/{userInformationId}") //any
     public ResponseEntity<EventViewDto> getEvent(@PathVariable int eventId,@PathVariable int userInformationId) {
 
-        EventViewDto detailedEventDTO = this.eventViewService.getEventViewDto(userInformationId, eventId);
+        EventViewDto detailedEventDTO = this.eventViewService.getEventViewDto(eventId, userInformationId);
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
