@@ -111,13 +111,13 @@ create table if not exists sponsor_seat_archive(
     );
 
 create table if not exists buyed_ticket_collection(
-                                                      client_id int,
-                                                      seat_type_id int,
-                                                      number_of_tickets int not null,
-                                                      primary key (client_id, seat_type_id),
-    foreign key (seat_type_id) references seat_type(id),
-    foreign key(client_id) references client(id),
-    check (number_of_tickets >= 0)
+        client_id int,
+        seat_type_id int,
+        number_of_tickets int not null,
+        primary key (client_id, seat_type_id),
+        foreign key (seat_type_id) references seat_type(id),
+        foreign key(client_id) references client(id),
+        check (number_of_tickets >= 0)
     );
 
 
@@ -132,3 +132,31 @@ create table if not exists gifted_ticket_collection(
     foreign key(sponsor_id) references sponsor(id),
     check (number_of_tickets >= 0)
     );
+
+CREATE VIEW user_going_view AS
+    SELECT
+        b.client_id,
+--         e.*
+    FROM
+        event e
+            JOIN seat_type st ON e.id = st.event_id
+            JOIN buyed_ticket_collection b ON st.id = b.seat_type_id
+            AND b.number_of_tickets > 0
+    GROUP BY
+        c.id;
+
+
+
+-- CREATE VIEW user_going_view AS
+-- SELECT
+--     b.client_id,
+--     e.*
+-- FROM
+--     event e
+--         JOIN seat_type st ON e.id = st.event_id
+--         JOIN buyed_ticket_collection b ON st.id = b.seat_type_id
+--         AND b.number_of_tickets > 0
+-- GROUP BY
+--     e.id, c.id;
+
+
