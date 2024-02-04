@@ -133,9 +133,9 @@ create table if not exists gifted_ticket_collection(
     check (number_of_tickets >= 0)
     );
 
-CREATE VIEW user_going_view AS
+CREATE VIEW client_going_view AS
     SELECT
-        b.client_id,
+        b.client_id client_id,
 --         e.*
     FROM
         event e
@@ -143,7 +143,7 @@ CREATE VIEW user_going_view AS
             JOIN buyed_ticket_collection b ON st.id = b.seat_type_id
             AND b.number_of_tickets > 0
     GROUP BY
-        c.id;
+        b.client_id
 
 
 
