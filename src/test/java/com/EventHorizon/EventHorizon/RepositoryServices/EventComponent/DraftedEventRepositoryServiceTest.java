@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;

@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotDraftedEventException;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.DraftedEventRepository;
+import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;

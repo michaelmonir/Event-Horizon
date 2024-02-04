@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities;
+package com.EventHorizon.EventHorizon.Entities.Views;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 

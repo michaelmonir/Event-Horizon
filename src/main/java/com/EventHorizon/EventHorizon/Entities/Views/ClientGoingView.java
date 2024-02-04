@@ -1,8 +1,6 @@
-package com.EventHorizon.EventHorizon.Entities;
+package com.EventHorizon.EventHorizon.Entities.Views;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCompositeKey;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import jakarta.persistence.*;
 import lombok.Data;

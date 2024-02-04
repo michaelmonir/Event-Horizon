@@ -5,11 +5,11 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
-import com.EventHorizon.EventHorizon.Filter.FilterCriteria;
-import com.EventHorizon.EventHorizon.Filter.FilterFactory;
+import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;
+import com.EventHorizon.EventHorizon.Filter.Factories.FilterFactory;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
-import com.EventHorizon.EventHorizon.Filter.RelationTypeFactory;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
+import com.EventHorizon.EventHorizon.Filter.Factories.RelationTypeFactory;
+import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,8 +34,8 @@ public class FilterService {
     public Specification<Event> getSpecifications(List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters) {
         Specification<Event> specification = getSpecificationForAll();
         for (FilterRelationList<FilterTypes, FilterRelation, Object> filter : filters) {
-            FilterCriteria filterCriteria = filterFactory.getFilterCriteria(filter);
-            FilterCriteria relationCriteria = relationTypeFactory.getRelationCriteria(specification, filter.second, filterCriteria);
+            FilterCriteriaInterface filterCriteria = filterFactory.getFilterCriteria(filter);
+            FilterCriteriaInterface relationCriteria = relationTypeFactory.getRelationCriteria(specification, filter.second, filterCriteria);
             specification = relationCriteria.meetCriteria();
         }
         return specification;

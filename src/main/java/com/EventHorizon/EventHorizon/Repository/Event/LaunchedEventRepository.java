@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Repository.EventRepositories;
+package com.EventHorizon.EventHorizon.Repository.Event;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import jakarta.annotation.Nullable;
@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository

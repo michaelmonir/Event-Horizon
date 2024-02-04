@@ -144,18 +144,3 @@ FROM
         AND b.number_of_tickets > 0
 GROUP BY
     b.client_id, e.id;
-
-
--- CREATE VIEW user_going_view AS
--- SELECT
---     b.client_id,
---     e.*
--- FROM
---     event e
---         JOIN seat_type st ON e.id = st.event_id
---         JOIN buyed_ticket_collection b ON st.id = b.seat_type_id
---         AND b.number_of_tickets > 0
--- GROUP BY
---     e.id, c.id;
-
-

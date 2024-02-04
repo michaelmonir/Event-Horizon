@@ -1,15 +1,7 @@
 package com.EventHorizon.EventHorizon;
 
-import com.EventHorizon.EventHorizon.Entities.ClientGoingView;
-import com.EventHorizon.EventHorizon.Repository.ClientGoingViewRepository;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.EventRepository;
-import com.EventHorizon.EventHorizon.Services.EventServices.FilterService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 @SpringBootApplication
 public class EventHorizonApplication {
@@ -29,4 +21,3 @@ public class EventHorizonApplication {
 //        };
 //    }
 }
-

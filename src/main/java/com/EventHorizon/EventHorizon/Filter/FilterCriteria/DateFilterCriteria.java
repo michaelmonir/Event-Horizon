@@ -1,6 +1,7 @@
-package com.EventHorizon.EventHorizon.Filter;
+package com.EventHorizon.EventHorizon.Filter.FilterCriteria;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -9,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @AllArgsConstructor
-public class DateFilterCriteria implements FilterCriteria {
+public class DateFilterCriteria implements FilterCriteriaInterface {
 
     private Date date;
 

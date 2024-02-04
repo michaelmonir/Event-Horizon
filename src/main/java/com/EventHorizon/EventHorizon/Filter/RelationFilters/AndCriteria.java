@@ -1,14 +1,15 @@
-package com.EventHorizon.EventHorizon.Filter;
+package com.EventHorizon.EventHorizon.Filter.RelationFilters;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 @AllArgsConstructor
-public class AndCriteria implements FilterCriteria {
+public class AndCriteria implements FilterCriteriaInterface {
 
     private Specification<Event> last;
-    private FilterCriteria otherCriteria;
+    private FilterCriteriaInterface otherCriteria;
 
     @Override
     public Specification<Event> meetCriteria() {

@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators.Event;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.LocationRepository;
+import com.EventHorizon.EventHorizon.Repository.Event.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

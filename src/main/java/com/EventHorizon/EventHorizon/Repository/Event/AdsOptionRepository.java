@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Repository.EventRepositories;
+package com.EventHorizon.EventHorizon.Repository.Event;
 
 import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
 import org.springframework.data.jpa.repository.JpaRepository;

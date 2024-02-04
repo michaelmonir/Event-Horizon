@@ -10,7 +10,7 @@ import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
-import com.EventHorizon.EventHorizon.Repository.EventRepositories.AdsOptionRepository;
+import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
