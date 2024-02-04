@@ -1,14 +1,32 @@
 package com.EventHorizon.EventHorizon;
 
+import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
+import com.EventHorizon.EventHorizon.Entities.ClientGoingView;
+import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
+import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
+import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeCustomCreator;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuyException;
+import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
+import com.EventHorizon.EventHorizon.Repository.ClientGoingViewRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
+import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -18,36 +36,71 @@ import java.util.List;
 public class test {
 
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private ClientGoingViewRepository clientGoingViewRepository;
+    @Autowired
+    private TicketTransactionsService ticketTransactionService;
+    @Autowired
+    private EventCustomCreator eventCustomCreator;
+    @Autowired
+    private SeatTypeCustomCreator seatTypeCustomCreator;
+    @Autowired
+    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    @Autowired
+    private OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
     @Autowired
     private UserCustomCreator userCustomCreator;
     @Autowired
-    private GetUserRepositoryService getUserRepositoryService;
+    private BuyedTicketCollectionRepositoryService buyedTicketCollectionRepositoryService;
+
+    private BuyedTicketCollection customTicketCollection;
+    private Client customClient;
+    private LaunchedEvent customEvent;
+    private SeatType customSeatType;
+    private OrganizerSeatArchive customOrganizerSeatArchive;
+
+
 
     @Test
-    void test1() {
-        Organizer organizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-        userRepositoryService.create(organizer);
-        Organizer organizer1 = (Organizer) getUserRepositoryService.getById(organizer.getId());
-        Assertions.assertEquals(organizer1.getFirstName(), organizer.getFirstName());
-    }
-    @Test
-    void getRoleById(){
-        Organizer organizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-        userRepositoryService.create(organizer);
-        Role role = userRepositoryService.getRoleAndCheckExists(organizer.getId());
-        Assertions.assertEquals(role, organizer.getRole());
-    }
-    @Test
-    void getAllByRole(){
-        Organizer organizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);;
-        userRepositoryService.create(organizer);
-        Organizer organizer1 = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);;
-        userRepositoryService.create(organizer1);
-        List<?extends User> list = userRepositoryService.findAllByRole(Role.ORGANIZER);
-        Assertions.assertEquals(list.get(list.size()-2).getEmail(), organizer.getEmail());
-        Assertions.assertEquals(list.get(list.size()-1).getEmail(), organizer1.getEmail());
+    public void buyTicketsSuccessful(){
+        this.initializeCustomObjectsForBuying();
+        BuyingAndRefundingDto buyingAndRefundingDto = new BuyingAndRefundingDto(this.customSeatType.getId(), 1);
+
+        List<BuyingAndRefundingDto> dtoList = List.of(buyingAndRefundingDto, buyingAndRefundingDto);
+        this.ticketTransactionService.buyTicketCollections(this.customClient.getId(), dtoList);
+
+        List<ClientGoingView> clientGoingViewList = this.clientGoingViewRepository.findAll();
+        Assertions.assertEquals(1, clientGoingViewList.size());
+        Assertions.assertEquals(this.customClient.getId(), clientGoingViewList.get(0).getClient_id());
     }
 
+    private void initializeCustomObjectsForBuying(){
+        this.initializeCustomEventObjects();
+
+        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 2);
+        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
+
+        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 0);
+        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
+    }
+
+    private void initializeCustomObjectsForRefunding(){
+        this.initializeCustomEventObjects();
+
+        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 0);
+        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
+
+        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 2);
+        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
+    }
+
+    private void initializeCustomEventObjects() {
+        this.customClient = (Client)userCustomCreator.getAndSaveUser(Role.CLIENT);
+
+        this.customSeatType = this.seatTypeCustomCreator.getSeatType();
+
+        this.customEvent = this.eventCustomCreator.getLaunchedEvent();
+        this.customEvent.setSeatTypes(List.of(this.customSeatType));
+        this.eventRepositoryServiceInterface.create(this.customEvent);
+    }
 }
 
