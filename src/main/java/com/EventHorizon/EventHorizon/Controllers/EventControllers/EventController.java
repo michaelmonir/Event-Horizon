@@ -58,12 +58,12 @@ public class EventController {
         return new ResponseEntity<>(detailedEventDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteEvent/{eventId}/{eventType}") //organizer,admin
+    @DeleteMapping("deleteEvent/{eventId}") //organizer,admin
     public ResponseEntity deleteEvent
-            (HttpServletRequest request, @PathVariable int eventId, @PathVariable EventType eventType) {
+            (HttpServletRequest request, @PathVariable int eventId) {
 
         int organizerId = this.userTokenInformationService.getUserIdFromToken(request);
-        this.eventService.deleteEvent(organizerId, eventId, eventType);
+        this.eventService.deleteEvent(organizerId, eventId);
         return new ResponseEntity(HttpStatus.OK);
     }
 

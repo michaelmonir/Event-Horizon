@@ -40,10 +40,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     private EventRepositoryService eventRepositoryService;
     @Autowired
     private ClientGoingViewRepository clientGoingViewRepository;
-    private static <T extends Event> Specification<T> castToLunchedEvents(Specification<? extends Event> obj) {
-        // Warning: Unchecked cast
-        return (Specification<T>) obj;
-    }
 
     public LaunchedEvent saveWhenCreating(Event event) {
         LaunchedEvent launchedEvent = (LaunchedEvent) event;
@@ -81,11 +77,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         launchedEventRepository.deleteById(id);
     }
 
-    public EventHeaderDto getEventHeaderDto(int id) {
-        LaunchedEvent launchedEvent = getByIdAndHandleNotFound(id);
-        return new EventHeaderDto(launchedEvent);
-    }
-
     public List<EventHeaderDto> getAllEventsHeaderDto(PageRequest pageRequest) {
         List<LaunchedEvent> events = launchedEventRepository.findAll(pageRequest).getContent();
         List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
@@ -94,8 +85,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         }
         return eventHeaderDtos;
     }
-
-
 
     private void handleSeatArchivesAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
         LaunchedEvent event = futureEventWrapper.getLaunchedEvent();
@@ -115,7 +104,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public LaunchedEvent getByIdAndHandleNotFound(int id) {
-        Event event = eventRepositoryService.getById(id);
+        Event event = eventRepositoryService.getByIdAndHandleNotFound(id);
         if (event.getEventType() != EventType.LAUNCHEDEVENT)
             throw new NotLaunchedEventException();
         return (LaunchedEvent) event;
@@ -132,6 +121,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         FutureEventWrapper futureEventWrapper = new FutureEventWrapper(event);
         return event;
     }
+
     public List<EventHeaderDto> getFilteredEventsHeaderDto(PageRequest pageWithRecords, Specification<Event> specification) {
         List<Event> events = (List<Event>) getAllEvents(specification, pageWithRecords);
         List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
@@ -140,6 +130,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         }
         return eventHeaderDtos;
     }
+
     public List<EventHeaderDto> getFilteredEventsHeaderDtoFromClientGoingView(PageRequest pageWithRecords, Specification<ClientGoingView> specification) {
         List<ClientGoingView> clientGoingViews =  clientGoingViewRepository.findAll(specification, pageWithRecords).getContent();
         List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();

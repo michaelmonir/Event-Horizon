@@ -15,7 +15,7 @@ public class EventViewService {
     private EventRepositoryServiceInterface eventRepositoryServiceInterface;
 
     public EventViewDto getEventViewDto(int eventId, int userId) {
-        Event event = eventRepositoryServiceInterface.getById(eventId);
+        Event event = eventRepositoryServiceInterface.getByIdAndHandleNotFound(eventId);
         return this.unregisteredUserChain.getDto(event, userId);
     }
 }

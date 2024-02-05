@@ -127,24 +127,24 @@ class LaunchedEventRepositoryServiceTest {
         });
     }
 
-    @Test
-    public void testGetEventHeaderDtoThrowsExceptionWhenEventNotFound() {
-        Assertions.assertThrows(EventNotFoundException.class, () -> {
-            launchedEventRepositoryService.getEventHeaderDto(0);
-        });
-    }
+//    @Test
+//    public void testGetEventHeaderDtoThrowsExceptionWhenEventNotFound() {
+//        Assertions.assertThrows(EventNotFoundException.class, () -> {
+//            launchedEventRepositoryService.getEventHeaderDto(0);
+//        });
+//    }
 
-    @Test
-    public void testGetEventHeaderDtoReturnsCorrectDto() {
-        initialize();
-        tempLaunchedEvent.setEventAds(tempAdsOption);
-        tempLaunchedEvent.setEventLocation(tempLocation);
-        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-        EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
-                launchedEventRepositoryService.getEventHeaderDto(tempLaunchedEvent.getId())
-        );
-        Assertions.assertEquals(tempLaunchedEvent.getName(), eventHeaderDto.getName());
-    }
+//    @Test
+//    public void testGetEventHeaderDtoReturnsCorrectDto() {
+//        initialize();
+//        tempLaunchedEvent.setEventAds(tempAdsOption);
+//        tempLaunchedEvent.setEventLocation(tempLocation);
+//        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
+//        EventHeaderDto eventHeaderDto = Assertions.assertDoesNotThrow(() ->
+//                launchedEventRepositoryService.getEventHeaderDto(tempLaunchedEvent.getId())
+//        );
+//        Assertions.assertEquals(tempLaunchedEvent.getName(), eventHeaderDto.getName());
+//    }
 
     @Test
     public void testGetAllEventsHeaderDtoReturnsCorrectList() {

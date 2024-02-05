@@ -12,8 +12,8 @@ public class EventRepositoryServiceInterface {
     @Autowired
     private EventRepositoryService eventRepositoryService;
 
-    public Event getById(int id) {
-        return eventRepositoryService.getById(id);
+    public Event getByIdAndHandleNotFound(int id) {
+        return eventRepositoryService.getByIdAndHandleNotFound(id);
     }
 
     public Event create(Event Event) {
@@ -28,9 +28,7 @@ public class EventRepositoryServiceInterface {
         return eventRepositoryService.update(newEvent);
     }
 
-    public void delete(int id, EventType eventType) {
-        SuperEventRepositoryService eventRepositoryService
-                = eventRepositoryServiceFactory.getByEventType(eventType);
-        eventRepositoryService.delete(id);
+    public void delete(int id) {
+        this.eventRepositoryService.delete(id);
     }
 }

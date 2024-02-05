@@ -14,10 +14,20 @@ public class EventRepositoryService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Event getById(int id) {
+    Event getByIdAndHandleNotFound(int id) {
         Optional<Event> eventOptional = eventRepository.findById(id);
         if (eventOptional.isEmpty())
             throw new EventNotFoundException();
         return eventOptional.get();
+    }
+
+    void delete(int id) {
+        this.checkExistingEvent(id);
+        eventRepository.deleteById(id);
+    }
+
+    void checkExistingEvent(int id) {
+        if (!eventRepository.existsById(id))
+            throw new EventNotFoundException();
     }
 }

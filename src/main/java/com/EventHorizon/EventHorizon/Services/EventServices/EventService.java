@@ -59,7 +59,7 @@ public class EventService {
     }
 
     public EventViewDto updateEvent(int id, EventCreationUpdationDto eventDTO) {
-        Event event = eventRepositoryServiceInterface.getById(eventDTO.getId());
+        Event event = eventRepositoryServiceInterface.getByIdAndHandleNotFound(eventDTO.getId());
         userEventService.checkOrganizerOfEvent(id, event);
 
         eventCreationUpdationDtoMapper.updateEventAttributesFromDto(event, eventDTO);
@@ -79,9 +79,9 @@ public class EventService {
         return eventViewDtoMapper.getDetailedDtoFromEvent(launchedEvent);
     }
 
-    public void deleteEvent(int id, int eventId, EventType eventType) {
-        Event event = eventRepositoryServiceInterface.getById(eventId);
+    public void deleteEvent(int id, int eventId) {
+        Event event = eventRepositoryServiceInterface.getByIdAndHandleNotFound(eventId);
         userEventService.checkOrganizerOfEvent(id, event);
-        eventRepositoryServiceInterface.delete(eventId, eventType);
+        eventRepositoryServiceInterface.delete(eventId);
     }
 }

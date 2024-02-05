@@ -55,7 +55,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     }
 
     public DraftedEvent getByIdAndHandleNotFound(int id) {
-        Event event = eventRepositoryService.getById(id);
+        Event event = eventRepositoryService.getByIdAndHandleNotFound(id);
         if (event.getEventType() != EventType.DRAFTEDEVENT)
             throw new NotDraftedEventException();
         return (DraftedEvent) event;

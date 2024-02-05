@@ -83,7 +83,7 @@ public class EventServiceTest {
 
         when(getUserRepositoryService.getById(anyInt())).thenReturn(new Organizer());
 
-        when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
         when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
 
         when(eventViewDtoMapper.getDetailedDtoFromEvent(any())).thenReturn(new EventViewDto());
@@ -96,7 +96,7 @@ public class EventServiceTest {
     @Test
     void testDeleteEvent() {
         when(getUserRepositoryService.getById(anyInt())).thenReturn(new Organizer());
-        when(eventRepositoryServiceInterface.getById(anyInt())).thenReturn(new LaunchedEvent());
-        assertDoesNotThrow(() -> eventService.deleteEvent(1, 1, EventType.DRAFTEDEVENT));
+        when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
+        assertDoesNotThrow(() -> eventService.deleteEvent(1, 1));
     }
 }

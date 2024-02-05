@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class EventRepositoryServiceTest {
+public class EventRepositoryServiceInterfaceTest {
 
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
     @Autowired
     private EventCustomCreator eventCustomCreator;
     @Autowired
@@ -28,7 +28,7 @@ public class EventRepositoryServiceTest {
     public void testGetByIdLaunchedEvent() {
         LaunchedEvent launchedEvent = eventCustomCreator.getLaunchedEvent();
         launchedEventRepositoryService.saveWhenCreating(launchedEvent);
-        LaunchedEvent launchedEventFromDb = (LaunchedEvent) eventRepositoryService.getById(launchedEvent.getId());
+        LaunchedEvent launchedEventFromDb = (LaunchedEvent) eventRepositoryServiceInterface.getByIdAndHandleNotFound(launchedEvent.getId());
         Assertions.assertEquals(launchedEventFromDb.getEventType(), EventType.LAUNCHEDEVENT);
         Assertions.assertEquals(launchedEventFromDb, launchedEvent);
     }
@@ -37,7 +37,7 @@ public class EventRepositoryServiceTest {
     public void testGetByIdDraftedEvent() {
         DraftedEvent draftedEvent = eventCustomCreator.getDraftedEvent();
         draftedEventRepositoryService.saveWhenCreating(draftedEvent);
-        DraftedEvent draftedEventFromDb = (DraftedEvent) eventRepositoryService.getById(draftedEvent.getId());
+        DraftedEvent draftedEventFromDb = (DraftedEvent) eventRepositoryServiceInterface.getByIdAndHandleNotFound(draftedEvent.getId());
         Assertions.assertEquals(draftedEventFromDb.getEventType(), EventType.DRAFTEDEVENT);
         Assertions.assertEquals(draftedEventFromDb, draftedEvent);
     }
