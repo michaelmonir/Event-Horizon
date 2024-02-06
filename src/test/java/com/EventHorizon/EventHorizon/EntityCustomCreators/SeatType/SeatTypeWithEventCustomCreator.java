@@ -23,7 +23,6 @@ public class SeatTypeWithEventCustomCreator
     @Autowired
     private DraftedEventRepositoryService draftedEventRepositoryService;
 
-
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {
         SeatType customSeatType = this.seatTypeCustomCreator.getSeatType();
         DraftedEvent customEvent = (DraftedEvent) this.eventCustomCreator.getEvent(EventType.DRAFTEDEVENT);

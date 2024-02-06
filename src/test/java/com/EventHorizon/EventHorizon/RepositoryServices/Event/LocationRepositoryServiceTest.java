@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event;
 
 import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;

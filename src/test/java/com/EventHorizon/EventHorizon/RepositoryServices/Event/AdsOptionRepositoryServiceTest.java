@@ -1,9 +1,8 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event;
 
 import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionAlreadyExistException;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.AdsOptionRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

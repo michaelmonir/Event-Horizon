@@ -11,6 +11,7 @@ import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventAndSeatTypeAndSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
@@ -41,6 +42,9 @@ public class FilterTest {
     private UserRepositoryService userRepositoryService;
     @Autowired
     private AdsOptionRepository adsOptionRepository;
+    @Autowired
+    private EventAndSeatTypeAndSeatArchiveRepositoryService eventAndSeatTypeAndSeatArchiveRepositoryService;
+
     private LaunchedEvent testEvent;
     private Organizer testOrganizer;
     private AdsOption testAdsOption;
@@ -64,7 +68,7 @@ public class FilterTest {
         adsOptionRepository.save(testAdsOption);
         createLaunchedEvent();
         this.testEvent.setEventOrganizer(this.testOrganizer);
-        eventRepositoryService.saveWhenCreating(testEvent);
+        eventAndSeatTypeAndSeatArchiveRepositoryService.saveEventAndSeatTypeAndSeatArchive(testEvent);
     }
 
     private void updateList(List<FilterRelationList<FilterTypes, FilterRelation, Object>> list, FilterRelation relation) {

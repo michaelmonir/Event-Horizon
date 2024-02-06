@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event;
 
 import com.EventHorizon.EventHorizon.Entities.Event.*;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
@@ -59,7 +59,7 @@ class DraftedEventRepositoryServiceTest {
         initialize();
         tempDraftedEvent.setEventAds(tempAdsOption);
         tempDraftedEvent.setEventLocation(tempLocation);
-        tempDraftedEvent.setId(34);
+
         Assertions.assertThrows(EventNotFoundException.class, () -> {
             draftedEventRepositoryService.update(tempDraftedEvent);
         });
@@ -79,23 +79,23 @@ class DraftedEventRepositoryServiceTest {
         });
     }
 
-    @Test
-    public void testDeleteEventThrowsExceptionWhenEventNotFound() {
-        Assertions.assertThrows(EventNotFoundException.class, () -> {
-            draftedEventRepositoryService.delete(0);
-        });
-    }
+//    @Test
+//    public void testDeleteEventThrowsExceptionWhenEventNotFound() {
+//        Assertions.assertThrows(EventNotFoundException.class, () -> {
+//            draftedEventRepositoryService.delete(0);
+//        });
+//    }
 
-    @Test
-    public void testDeleteEventDeletesEventSuccessfully() {
-        initialize();
-        tempDraftedEvent.setEventAds(tempAdsOption);
-        tempDraftedEvent.setEventLocation(tempLocation);
-        draftedEventRepositoryService.saveWhenCreating(tempDraftedEvent);
-        Assertions.assertDoesNotThrow(() -> {
-            draftedEventRepositoryService.delete(tempDraftedEvent.getId());
-        });
-    }
+//    @Test
+//    public void testDeleteEventDeletesEventSuccessfully() {
+//        initialize();
+//        tempDraftedEvent.setEventAds(tempAdsOption);
+//        tempDraftedEvent.setEventLocation(tempLocation);
+//        draftedEventRepositoryService.saveWhenCreating(tempDraftedEvent);
+//        Assertions.assertDoesNotThrow(() -> {
+//            draftedEventRepositoryService.delete(tempDraftedEvent.getId());
+//        });
+//    }
 
 
     private void initialize() {

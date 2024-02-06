@@ -71,7 +71,7 @@ public class EventService {
         DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
 
         userEventService.checkOrganizerOfEvent(id, draftedEvent);
-        draftedEventRepositoryService.delete(eventId);
+        eventRepositoryServiceInterface.delete(eventId);
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
         launchedEventRepositoryService.saveWhenLaunching(launchedEvent);
 

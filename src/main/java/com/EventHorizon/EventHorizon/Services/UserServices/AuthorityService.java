@@ -12,11 +12,10 @@ import java.util.List;
 
 @Service
 public class AuthorityService {
-
     @Autowired
-    LaunchedEventRepositoryService launchedEventRepositoryService;
+    private LaunchedEventRepositoryService launchedEventRepositoryService;
     @Autowired
-    UserRepositoryService userRepositoryService;
+    private UserRepositoryService userRepositoryService;
 
     public void deleteUser(int id) {
         Role role = userRepositoryService.getRoleAndCheckExists(id);
@@ -26,7 +25,7 @@ public class AuthorityService {
     }
 
     public void deleteEvent(int id) {
-        launchedEventRepositoryService.delete(id);
+        launchedEventRepositoryService.deleteLaunchedEvent(id);
     }
 
     public List<? extends User> getAllUsersByRole(Role role) {

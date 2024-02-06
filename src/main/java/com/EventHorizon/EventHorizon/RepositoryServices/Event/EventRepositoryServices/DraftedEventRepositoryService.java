@@ -29,14 +29,9 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     }
 
     public DraftedEvent update(Event event) {
-        this.getByIdAndHandleNotFound(event.getId());
+        eventRepositoryService.checkExistingEvent(event.getId());
         this.savingRepositoryService.saveEventAndSeatTypeAndSeatArchive((DraftedEvent)event);
         return (DraftedEvent) event;
-    }
-
-    public void delete(int id) {
-        getByIdAndHandleNotFound(id);
-        draftedEventRepository.deleteById(id);
     }
 
     public DraftedEvent getByIdAndHandleNotFound(int id) {
