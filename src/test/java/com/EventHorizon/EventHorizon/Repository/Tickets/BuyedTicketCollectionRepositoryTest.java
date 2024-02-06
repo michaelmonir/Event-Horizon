@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Repository.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

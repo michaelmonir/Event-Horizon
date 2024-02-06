@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.Event;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

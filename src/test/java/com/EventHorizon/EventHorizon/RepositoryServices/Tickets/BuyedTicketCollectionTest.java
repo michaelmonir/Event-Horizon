@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
 import com.EventHorizon.EventHorizon.Exceptions.Tickets.BuyedTicketCollectionNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.Tickets.BuyedTicketCollectionRepository;
 import org.junit.jupiter.api.Assertions;

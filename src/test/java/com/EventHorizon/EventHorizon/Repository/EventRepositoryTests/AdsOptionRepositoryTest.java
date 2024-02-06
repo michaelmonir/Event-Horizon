@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.EventRepositoryTests;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import org.junit.jupiter.api.Assertions;

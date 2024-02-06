@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Services.EventServices.EventView;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;

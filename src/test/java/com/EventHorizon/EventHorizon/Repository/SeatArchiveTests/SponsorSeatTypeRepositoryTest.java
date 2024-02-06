@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.User.Sponsor;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeWithEventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

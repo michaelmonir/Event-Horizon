@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.Event;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;

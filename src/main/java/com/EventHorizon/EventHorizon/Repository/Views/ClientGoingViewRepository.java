@@ -1,9 +1,7 @@
 package com.EventHorizon.EventHorizon.Repository.Views;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
 import jakarta.annotation.Nullable;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

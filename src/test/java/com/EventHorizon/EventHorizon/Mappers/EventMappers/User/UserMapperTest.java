@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Mappers.EventMappers.User;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdationDTO;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
+import com.EventHorizon.EventHorizon.Entities.User.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

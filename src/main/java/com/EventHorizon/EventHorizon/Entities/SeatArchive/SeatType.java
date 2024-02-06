@@ -1,9 +1,8 @@
 package com.EventHorizon.EventHorizon.Entities.SeatArchive;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Objects;

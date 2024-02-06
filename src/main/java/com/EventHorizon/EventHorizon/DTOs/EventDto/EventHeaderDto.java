@@ -1,9 +1,8 @@
 package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.OrganizerHeaderDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Location;
 import lombok.*;
 
 import java.util.Date;

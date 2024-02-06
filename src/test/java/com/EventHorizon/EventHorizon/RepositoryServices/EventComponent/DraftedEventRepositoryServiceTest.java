@@ -1,7 +1,8 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.Event.*;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
@@ -53,10 +54,8 @@ class DraftedEventRepositoryServiceTest {
         });
     }
 
-
     @Test
     public void editEventGettingErrorEventAlreadyExisting() {
-
         initialize();
         tempDraftedEvent.setEventAds(tempAdsOption);
         tempDraftedEvent.setEventLocation(tempLocation);
@@ -89,7 +88,6 @@ class DraftedEventRepositoryServiceTest {
 
     @Test
     public void testDeleteEventDeletesEventSuccessfully() {
-
         initialize();
         tempDraftedEvent.setEventAds(tempAdsOption);
         tempDraftedEvent.setEventLocation(tempLocation);
@@ -108,9 +106,7 @@ class DraftedEventRepositoryServiceTest {
     }
 
     private void createOrganizer() {
-        tempOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-
-        userRepository.save(tempOrganizer);
+        tempOrganizer = (Organizer) userCustomCreator.getAndSaveUser(Role.ORGANIZER);
     }
 
     public void createAdsOption() {
@@ -120,7 +116,6 @@ class DraftedEventRepositoryServiceTest {
                 .build();
         adsOptionRepository.save(adsOption);
         tempAdsOption = adsOption;
-
     }
 
     private void createEvent() {
@@ -128,6 +123,7 @@ class DraftedEventRepositoryServiceTest {
                 .name("e5")
                 .eventOrganizer(tempOrganizer)
                 .description("...")
+                .eventType(EventType.DRAFTEDEVENT)
                 .seatTypes(new ArrayList<>()).build();
     }
 

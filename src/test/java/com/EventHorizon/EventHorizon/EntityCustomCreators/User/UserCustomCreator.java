@@ -1,12 +1,10 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators.User;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
-import com.EventHorizon.EventHorizon.Entities.enums.Gender;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

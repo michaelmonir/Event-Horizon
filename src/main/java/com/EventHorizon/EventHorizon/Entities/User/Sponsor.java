@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Entities.UpdateUsers;
+package com.EventHorizon.EventHorizon.Entities.User;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SponsorSeatArchive;
 import jakarta.persistence.*;

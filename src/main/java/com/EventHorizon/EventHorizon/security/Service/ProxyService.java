@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.security.Service;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;
 import com.EventHorizon.EventHorizon.MailSender.EmailSenderService;
 import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;

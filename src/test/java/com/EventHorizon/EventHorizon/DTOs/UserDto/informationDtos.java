@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import org.junit.Assert;

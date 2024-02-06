@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Filter.FilterCriteria;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterEntityType;
 import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;

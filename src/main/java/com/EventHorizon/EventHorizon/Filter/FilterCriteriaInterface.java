@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.Filter;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterEntityType;
 import org.springframework.data.jpa.domain.Specification;
 

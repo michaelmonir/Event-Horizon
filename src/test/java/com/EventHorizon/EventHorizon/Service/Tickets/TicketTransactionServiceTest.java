@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.Service.Tickets;
 
 import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;

@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.SeatArchive;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.User.Sponsor;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Entities.Views;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 
 import java.io.Serializable;
 

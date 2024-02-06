@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Entities.Views;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
 import jakarta.persistence.*;
 import lombok.Data;
 import net.jcip.annotations.Immutable;

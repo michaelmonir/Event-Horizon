@@ -1,6 +1,5 @@
-package com.EventHorizon.EventHorizon.Entities.EventEntities;
+package com.EventHorizon.EventHorizon.Entities.Event;
 
-import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

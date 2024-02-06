@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.User;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
+import com.EventHorizon.EventHorizon.Entities.User.*;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.UserNotFoundException;

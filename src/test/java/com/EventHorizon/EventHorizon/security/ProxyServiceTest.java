@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.security;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingMail;
 import com.EventHorizon.EventHorizon.Exceptions.Securiity.ExistingUserName;

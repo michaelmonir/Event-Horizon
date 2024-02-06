@@ -1,6 +1,5 @@
 package com.EventHorizon.EventHorizon.DTOs.UserDto;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

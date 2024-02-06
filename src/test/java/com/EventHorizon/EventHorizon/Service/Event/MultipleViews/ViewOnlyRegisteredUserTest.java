@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Service.Event.MultipleViews;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

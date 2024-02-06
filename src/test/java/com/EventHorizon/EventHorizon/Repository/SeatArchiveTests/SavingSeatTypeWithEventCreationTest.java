@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
@@ -11,7 +11,7 @@ import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.SeatArchive.SeatTypeRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.List;
 public class SavingSeatTypeWithEventCreationTest
 {
     @Autowired
-    LaunchedEventRepositoryService eventRepositoryService;
+    DraftedEventRepositoryService draftedEventRepositoryService;
     @Autowired
     EventCustomCreator eventCustomCreator;
     @Autowired
@@ -45,7 +45,7 @@ public class SavingSeatTypeWithEventCreationTest
         Event event = this.getEventAndGiveOneSeatType(seatType);;
 
         Assertions.assertDoesNotThrow(() -> {
-            eventRepositoryService.saveWhenCreating(event);
+            draftedEventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -56,7 +56,7 @@ public class SavingSeatTypeWithEventCreationTest
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
-        eventRepositoryService.saveWhenCreating(event);
+        draftedEventRepositoryService.saveWhenCreating(event);
 
         event.setSeatTypes(new ArrayList<>());
         if (event.getEventType() == EventType.LAUNCHEDEVENT)
@@ -101,7 +101,7 @@ public class SavingSeatTypeWithEventCreationTest
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositoryService.saveWhenCreating(event);
+            draftedEventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -112,7 +112,7 @@ public class SavingSeatTypeWithEventCreationTest
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositoryService.saveWhenCreating(event);
+            draftedEventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -123,7 +123,7 @@ public class SavingSeatTypeWithEventCreationTest
         Event event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            eventRepositoryService.saveWhenCreating(event);
+            draftedEventRepositoryService.saveWhenCreating(event);
         });
     }
 
@@ -131,7 +131,7 @@ public class SavingSeatTypeWithEventCreationTest
         List <SeatType> seatTypes = new ArrayList<>();
         seatTypes.add(seatType);
 
-        Event event = this.eventCustomCreator.getLaunchedEvent();
+        Event event = this.eventCustomCreator.getDraftedEvent();
         event.setSeatTypes(seatTypes);
         return event;
     }

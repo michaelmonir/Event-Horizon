@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.entity.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.GiftedTicketCollection;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Sponsor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

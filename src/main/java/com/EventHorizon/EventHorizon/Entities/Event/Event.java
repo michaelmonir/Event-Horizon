@@ -1,7 +1,7 @@
-package com.EventHorizon.EventHorizon.Entities.EventEntities;
+package com.EventHorizon.EventHorizon.Entities.Event;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

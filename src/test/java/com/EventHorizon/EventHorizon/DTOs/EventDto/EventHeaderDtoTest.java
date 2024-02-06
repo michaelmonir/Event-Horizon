@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.DTOs.EventDto;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Location;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;

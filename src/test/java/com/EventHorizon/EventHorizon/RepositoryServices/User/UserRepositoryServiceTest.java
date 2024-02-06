@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.User;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.User.AlreadyFoundException;

@@ -1,10 +1,11 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.EventComponent;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Location;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
@@ -204,7 +205,9 @@ class LaunchedEventRepositoryServiceTest {
                 .eventOrganizer(tempOrganizer)
                 .description("...")
                 .eventDate(new Date(System.currentTimeMillis() + 100000))
-                .seatTypes(new ArrayList<>()).build();
+                .seatTypes(new ArrayList<>())
+                .eventType(EventType.LAUNCHEDEVENT)
+                .build();
     }
 
     private void createLocation() {

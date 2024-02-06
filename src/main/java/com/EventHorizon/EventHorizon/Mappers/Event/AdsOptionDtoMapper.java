@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Service.User.AuthorityServiceTests;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
+import com.EventHorizon.EventHorizon.Entities.User.Moderator;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Dtos.UserCreationDtoCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

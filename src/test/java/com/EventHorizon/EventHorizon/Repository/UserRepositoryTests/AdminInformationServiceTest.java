@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.UserRepositoryTests;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Admin;
+import com.EventHorizon.EventHorizon.Entities.User.Admin;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;

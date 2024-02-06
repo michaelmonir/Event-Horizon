@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
@@ -19,17 +19,17 @@ public class SeatTypeWithEventCustomCreator
     @Autowired
     private EventCustomCreator eventCustomCreator;
     @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
+    private DraftedEventRepositoryService draftedEventRepositoryService;
 
 
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {
         SeatType customSeatType = this.seatTypeCustomCreator.getSeatType();
-        Event customEvent = this.eventCustomCreator.getLaunchedEvent();
+        Event customEvent = this.eventCustomCreator.getDraftedEvent();
         List<SeatType> seatTypesList = new ArrayList<>();
         seatTypesList.add(customSeatType);
 
         customEvent.setSeatTypes(seatTypesList);
-        customEvent = this.launchedEventRepositoryService.saveWhenCreating(customEvent);
+        customEvent = this.draftedEventRepositoryService.saveWhenCreating(customEvent);
 
         return customEvent.getSeatTypes().get(0);
     }

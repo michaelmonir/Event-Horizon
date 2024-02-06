@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FinishedEventWrapper;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FinishedEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
@@ -12,10 +12,8 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdEx
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.Repository.Views.ClientGoingViewRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatArchiveRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.EventSeatTypesRepositoryService;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -31,23 +29,20 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     @Autowired
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
-    private EventSeatTypesRepositoryService eventSeatTypesRepositoryService;
-    @Autowired
-    private EventSeatArchiveRepositoryService eventSeatArchiveRepositoryService;
-    @Autowired
     private EventRepository eventRepository;
     @Autowired
     private EventRepositoryService eventRepositoryService;
     @Autowired
     private ClientGoingViewRepository clientGoingViewRepository;
 
+
     public LaunchedEvent saveWhenCreating(Event event) {
         LaunchedEvent launchedEvent = (LaunchedEvent) event;
         launchedEvent.setLaunchedDate(new Date());
         if (launchedEvent.getId() != 0)
             throw new EventAlreadyExisting();
-        FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
-        handleSeatArchivesAndSaveInRepository(eventWrapper);
+        new FutureEventWrapper(launchedEvent);
+        launchedEventRepository.save(launchedEvent);
         return launchedEvent;
     }
 
@@ -56,8 +51,8 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         launchedEvent.setLaunchedDate(DateFunctions.getCurrentDate());
         if (launchedEvent.getId() == 0)
             throw new InvalidEventIdException();
-        FutureEventWrapper eventWrapper = new FutureEventWrapper(launchedEvent);
-        handleSeatArchivesAndSaveInRepository(eventWrapper);
+        new FutureEventWrapper(launchedEvent);
+        launchedEventRepository.save(launchedEvent);
         return launchedEvent;
     }
 
@@ -67,8 +62,7 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
         int id = newEvent.getId();
         newEvent.setId(id);
         FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
-//        handleSeatArchivesAndSaveInRepository(eventWrapper);
-        handleSeatArchivesAndSaveInRepository(eventWrapper);
+        launchedEventRepository.save(newEvent);
         return newEvent;
     }
 
@@ -84,14 +78,6 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
             eventHeaderDtos.add(new EventHeaderDto(event));
         }
         return eventHeaderDtos;
-    }
-
-    private void handleSeatArchivesAndSaveInRepository(FutureEventWrapper futureEventWrapper) {
-        LaunchedEvent event = futureEventWrapper.getLaunchedEvent();
-        event.setEventType(EventType.LAUNCHEDEVENT);
-        eventSeatTypesRepositoryService.setEventForItsSeatTypes(event);
-        launchedEventRepository.save(event);
-        eventSeatArchiveRepositoryService.setAndSaveSeatArchivesForEvent(event);
     }
 
     public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {

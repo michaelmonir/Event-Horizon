@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.Repository.User;
 
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Admin;
+import com.EventHorizon.EventHorizon.Entities.User.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

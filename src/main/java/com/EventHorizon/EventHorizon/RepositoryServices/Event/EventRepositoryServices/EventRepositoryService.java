@@ -1,6 +1,6 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;

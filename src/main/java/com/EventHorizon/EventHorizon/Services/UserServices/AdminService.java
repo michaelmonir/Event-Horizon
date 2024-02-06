@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Services.UserServices;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Moderator;
+import com.EventHorizon.EventHorizon.Entities.User.Moderator;
 import com.EventHorizon.EventHorizon.Mappers.User.UserMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.security.Service.ProxyService;

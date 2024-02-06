@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.Entities.Tickets;
 
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Client;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Sponsor;
+import com.EventHorizon.EventHorizon.Entities.User.Client;
+import com.EventHorizon.EventHorizon.Entities.User.Sponsor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 

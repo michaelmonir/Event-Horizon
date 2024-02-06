@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.entity.EventEntities.EventWrapper;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.EventWrapper.FutureEventWrapper;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrapper;
+import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.junit.jupiter.api.Assertions;

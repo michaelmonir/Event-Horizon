@@ -1,9 +1,9 @@
 package com.EventHorizon.EventHorizon.Repository.EventRepositoryTests;
 
-import com.EventHorizon.EventHorizon.Entities.EventEntities.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Location;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
+import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Location;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;

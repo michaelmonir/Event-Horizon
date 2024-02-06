@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators.Dtos;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import com.EventHorizon.EventHorizon.Entities.User.User;
 import org.springframework.stereotype.Service;
 
 @Service

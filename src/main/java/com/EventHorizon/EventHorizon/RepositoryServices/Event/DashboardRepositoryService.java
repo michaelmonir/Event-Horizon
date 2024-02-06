@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event;
 
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageIndexException;
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;

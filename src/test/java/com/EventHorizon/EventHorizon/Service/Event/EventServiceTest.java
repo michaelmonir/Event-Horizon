@@ -2,9 +2,8 @@ package com.EventHorizon.EventHorizon.Service.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.*;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
-import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.Entities.Event.*;
+import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;

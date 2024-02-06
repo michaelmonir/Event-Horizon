@@ -2,8 +2,8 @@ package com.EventHorizon.EventHorizon.Mappers.User;
 
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserCreationDto;
 import com.EventHorizon.EventHorizon.DTOs.UserDto.UserUpdationDTO;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.*;
-import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User.UserBuilder;
+import com.EventHorizon.EventHorizon.Entities.User.*;
+import com.EventHorizon.EventHorizon.Entities.User.User.UserBuilder;
 import com.EventHorizon.EventHorizon.Entities.enums.Gender;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.User.RoleNotFoundException;

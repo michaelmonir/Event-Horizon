@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.Mappers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;

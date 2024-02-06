@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Services.EventServices;
 
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
-import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterEntityType;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
