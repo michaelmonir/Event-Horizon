@@ -42,7 +42,7 @@ public class SavingSeatTypeWithEventCreationTest
     @Test
     public void creatingSeatTypeUsingRepositoryService() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-        Event event = this.getEventAndGiveOneSeatType(seatType);;
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);;
 
         Assertions.assertDoesNotThrow(() -> {
             draftedEventRepositoryService.saveWhenCreating(event);
@@ -54,15 +54,12 @@ public class SavingSeatTypeWithEventCreationTest
     @Test
     public void changingEventSeatTypesFromRepositoryDoesNotDeleteOldSeatTypes(){
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
         draftedEventRepositoryService.saveWhenCreating(event);
 
         event.setSeatTypes(new ArrayList<>());
-        if (event.getEventType() == EventType.LAUNCHEDEVENT)
-            launchedEventRepository.save((LaunchedEvent) event);
-        else if (event.getEventType() == EventType.DRAFTEDEVENT)
-            draftedEventRepository.save((DraftedEvent) event);
+        draftedEventRepository.save(event);
 
         Assertions.assertEquals(0, event.getSeatTypes().size());
         Assertions.assertNotEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
@@ -86,7 +83,7 @@ public class SavingSeatTypeWithEventCreationTest
     @Test
     public void creatingSeatTypeUsingRepository() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
         // as then the seatTypes would not have their event initialized
         // which normally takes place in the RepositoryService not the repository
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
@@ -98,7 +95,7 @@ public class SavingSeatTypeWithEventCreationTest
     public void creatingEventWithoutMakingName() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         seatType.setName(null);
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             draftedEventRepositoryService.saveWhenCreating(event);
@@ -109,7 +106,7 @@ public class SavingSeatTypeWithEventCreationTest
     public void creatingEventWithMakingPriceNegative() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         seatType.setPrice(-1);
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             draftedEventRepositoryService.saveWhenCreating(event);
@@ -120,18 +117,18 @@ public class SavingSeatTypeWithEventCreationTest
     public void creatingEventWithMakingNumberOfSeatsNegative() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         seatType.setNumberOfSeats(-1);
-        Event event = this.getEventAndGiveOneSeatType(seatType);
+        DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             draftedEventRepositoryService.saveWhenCreating(event);
         });
     }
 
-    private Event getEventAndGiveOneSeatType(SeatType seatType) {
+    private DraftedEvent getEventAndGiveOneSeatType(SeatType seatType) {
         List <SeatType> seatTypes = new ArrayList<>();
         seatTypes.add(seatType);
 
-        Event event = this.eventCustomCreator.getDraftedEvent();
+        DraftedEvent event = (DraftedEvent) this.eventCustomCreator.getEvent(EventType.DRAFTEDEVENT);
         event.setSeatTypes(seatTypes);
         return event;
     }

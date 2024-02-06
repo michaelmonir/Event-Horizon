@@ -4,11 +4,11 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.User.User;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
 import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,14 +23,11 @@ public class AdminViewTest {
     @Autowired
     private EventCustomCreator eventCustomCreator;
     @Autowired
-    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
-    @Autowired
     private UserCustomCreator userCustomCreator;
 
     @Test
     public void launchedEvent() {
-        Event event = eventCustomCreator.getLaunchedEvent();
-        eventRepositoryServiceInterface.create(event);
+        Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
         User user = userCustomCreator.getAndSaveUser(Role.ADMIN);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), user.getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.ADMIN);
@@ -38,8 +35,7 @@ public class AdminViewTest {
 
     @Test
     public void draftedEvent() {
-        Event event = eventCustomCreator.getDraftedEvent();
-        eventRepositoryServiceInterface.create(event);
+        Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
         User user = userCustomCreator.getAndSaveUser(Role.ADMIN);
         Assertions.assertThrows(InvalidAccessOfEventException.class,
                 () -> eventViewService.getEventViewDto(event.getId(), user.getId()) );

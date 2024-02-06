@@ -15,12 +15,6 @@ public class EventRepositoryServiceInterface {
         return eventRepositoryService.getByIdAndHandleNotFound(id);
     }
 
-    public Event create(Event Event) {
-        SuperEventRepositoryService eventRepositoryService
-                = eventRepositoryServiceFactory.getByEventType(Event.getEventType());
-        return eventRepositoryService.saveWhenCreating(Event);
-    }
-
     public Event update(Event newEvent) {
         SuperEventRepositoryService eventRepositoryService
                 = eventRepositoryServiceFactory.getByEventType(newEvent.getEventType());

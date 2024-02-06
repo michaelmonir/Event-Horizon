@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
@@ -22,7 +23,7 @@ public class EventAndSeatTypeAndSeatArchiveRepositoryService {
     private SeatTypeRepository seatTypeRepository;
 
     // it's important to delete the old seatTypes as they doesn't get deleted automatically
-    void saveEventAndSeatTypeAndSeatArchive(DraftedEvent event) {
+    public void saveEventAndSeatTypeAndSeatArchive(Event event) {
         seatTypeRepository.deleteByEventId(event.getId());
         for (SeatType seatType : event.getSeatTypes())
             seatType.setEvent(event);

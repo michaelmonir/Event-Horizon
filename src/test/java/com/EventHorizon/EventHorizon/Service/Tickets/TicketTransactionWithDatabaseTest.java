@@ -112,33 +112,33 @@ public class TicketTransactionWithDatabaseTest
 //        Assertions.assertEquals(2, buyedTicketCollection.getNumberOfTickets());
 //    }
 
-    private void initializeCustomObjectsForBuying(){
-        this.initializeCustomEventObjects();
-
-        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 2);
-        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
-
-        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 0);
-        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
-    }
-
-    private void initializeCustomObjectsForRefunding(){
-        this.initializeCustomEventObjects();
-
-        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 0);
-        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
-
-        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 2);
-        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
-    }
-
-    private void initializeCustomEventObjects() {
-        this.customClient = (Client)userCustomCreator.getAndSaveUser(Role.CLIENT);
-
-        this.customSeatType = this.seatTypeCustomCreator.getSeatType();
-
-        this.customEvent = this.eventCustomCreator.getLaunchedEvent();
-        this.customEvent.setSeatTypes(List.of(this.customSeatType));
-        this.eventRepositoryServiceInterface.create(this.customEvent);
-    }
+//    private void initializeCustomObjectsForBuying(){
+//        this.initializeCustomEventObjects();
+//
+//        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 2);
+//        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
+//
+//        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 0);
+//        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
+//    }
+//
+//    private void initializeCustomObjectsForRefunding(){
+//        this.initializeCustomEventObjects();
+//
+//        this.customOrganizerSeatArchive = new OrganizerSeatArchive(this.customSeatType, 2, 0);
+//        this.organizerSeatArchiveRepositoryService.save(this.customOrganizerSeatArchive);
+//
+//        this.customTicketCollection = new BuyedTicketCollection(customClient, customSeatType, 2);
+//        this.buyedTicketCollectionRepositoryService.save(this.customTicketCollection);
+//    }
+//
+//    private void initializeCustomEventObjects() {
+//        this.customClient = (Client)userCustomCreator.getAndSaveUser(Role.CLIENT);
+//
+//        this.customSeatType = this.seatTypeCustomCreator.getSeatType();
+//
+//        this.customEvent = this.eventCustomCreator.getLaunchedEvent();
+//        this.customEvent.setSeatTypes(List.of(this.customSeatType));
+//        this.eventRepositoryServiceInterface.create(this.customEvent);
+//    }
 }

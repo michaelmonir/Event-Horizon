@@ -1,6 +1,7 @@
 package com.EventHorizon.EventHorizon.Service.Event;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
@@ -32,7 +33,7 @@ public class UserEventServiceTest {
 
     @Test
     public void organizerOfEvent() {
-        Event eventt = eventCreator.getLaunchedEvent();
+        Event eventt = eventCreator.getEvent(EventType.LAUNCHEDEVENT);
 
         when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(Mockito.any(int.class))).thenReturn(eventt);
         when(getUserRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
@@ -43,7 +44,7 @@ public class UserEventServiceTest {
 
     @Test
     public void notOrganizerOfEvent() {
-        Event event = eventCreator.getLaunchedEvent();
+        Event event = eventCreator.getEvent(EventType.LAUNCHEDEVENT);
 
         when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(Mockito.any(int.class))).thenReturn(event);
 

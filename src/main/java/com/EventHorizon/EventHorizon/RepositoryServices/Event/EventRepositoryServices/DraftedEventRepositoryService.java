@@ -9,6 +9,8 @@ import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Function;
+
 @Service
 public class DraftedEventRepositoryService implements SuperEventRepositoryService {
     @Autowired
@@ -18,13 +20,12 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
     @Autowired
     private EventAndSeatTypeAndSeatArchiveRepositoryService savingRepositoryService;
 
-    public DraftedEvent saveWhenCreating(Event event) {
-        DraftedEvent draftedEvent = (DraftedEvent) event;
-        if (draftedEvent.getId() != 0)
+    public DraftedEvent saveWhenCreating(DraftedEvent event) {
+        if (event.getId() != 0)
             throw new EventAlreadyExisting();
 
-        this.savingRepositoryService.saveEventAndSeatTypeAndSeatArchive((DraftedEvent)event);
-        return draftedEvent;
+        this.savingRepositoryService.saveEventAndSeatTypeAndSeatArchive(event);
+        return event;
     }
 
     public DraftedEvent update(Event event) {
