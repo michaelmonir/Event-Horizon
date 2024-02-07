@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.Event.*;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
@@ -9,7 +9,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExis
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootTest
-class DraftedEventRepositoryServiceTest {
+class DraftedCommonEventRepositoryServiceImplTest {
     @Autowired
-    private DraftedEventRepositoryService draftedEventRepositoryService;
+    private DraftedEventRepositoryServiceImpl draftedEventRepositoryServiceImpl;
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
@@ -39,7 +39,7 @@ class DraftedEventRepositoryServiceTest {
         DraftedEvent event = new DraftedEvent();
         event.setId(5);
         Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-            draftedEventRepositoryService.saveWhenCreating(event);
+            draftedEventRepositoryServiceImpl.saveWhenCreating(event);
         });
     }
 
@@ -49,7 +49,7 @@ class DraftedEventRepositoryServiceTest {
         tempDraftedEvent.setEventAds(tempAdsOption);
         tempDraftedEvent.setEventLocation(tempLocation);
         Assertions.assertDoesNotThrow(() -> {
-            draftedEventRepositoryService.saveWhenCreating(tempDraftedEvent);
+            draftedEventRepositoryServiceImpl.saveWhenCreating(tempDraftedEvent);
             Assertions.assertNotEquals(0, tempDraftedEvent.getId());
         });
     }
@@ -61,7 +61,7 @@ class DraftedEventRepositoryServiceTest {
         tempDraftedEvent.setEventLocation(tempLocation);
 
         Assertions.assertThrows(EventNotFoundException.class, () -> {
-            draftedEventRepositoryService.update(tempDraftedEvent);
+            draftedEventRepositoryServiceImpl.update(tempDraftedEvent);
         });
     }
 
@@ -70,11 +70,11 @@ class DraftedEventRepositoryServiceTest {
         initialize();
         tempDraftedEvent.setEventAds(tempAdsOption);
         tempDraftedEvent.setEventLocation(tempLocation);
-        draftedEventRepositoryService.saveWhenCreating(tempDraftedEvent);
+        draftedEventRepositoryServiceImpl.saveWhenCreating(tempDraftedEvent);
         DraftedEvent newTempDraftedEvent=createSecoundevent();
         newTempDraftedEvent.setId(tempDraftedEvent.getId());
         Assertions.assertDoesNotThrow(() -> {
-            draftedEventRepositoryService.update(newTempDraftedEvent);
+            draftedEventRepositoryServiceImpl.update(newTempDraftedEvent);
             Assertions.assertEquals(newTempDraftedEvent.getId(), tempDraftedEvent.getId());
         });
     }

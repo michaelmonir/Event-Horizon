@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Services.UserServices;
 import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.Exceptions.User.NotModeratorOperationsException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class AuthorityService {
     @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
+    private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
     @Autowired
     private UserRepositoryService userRepositoryService;
 
@@ -25,7 +25,7 @@ public class AuthorityService {
     }
 
     public void deleteEvent(int id) {
-        launchedEventRepositoryService.deleteLaunchedEvent(id);
+        launchedEventRepositoryServiceImpl.delete(id);
     }
 
     public List<? extends User> getAllUsersByRole(Role role) {

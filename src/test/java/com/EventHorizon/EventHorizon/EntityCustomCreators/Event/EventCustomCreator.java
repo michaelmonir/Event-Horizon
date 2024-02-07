@@ -13,7 +13,7 @@ import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NullEventTypeExc
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventAndSeatTypeAndSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventAndSeatTypeAndSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

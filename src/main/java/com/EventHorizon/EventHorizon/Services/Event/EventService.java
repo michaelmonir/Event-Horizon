@@ -11,9 +11,9 @@ import com.EventHorizon.EventHorizon.Mappers.Event.DraftedLaunchedEventMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +24,15 @@ import java.util.List;
 @Service
 public class EventService {
     @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
+    private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
     @Autowired
     private DashboardRepositoryService dashboardRepositoryService;
     @Autowired
     private UserEventService userEventService;
     @Autowired
-    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
+    private EventRepositoryServiceFacadeImpl eventRepositoryServiceFacadeImpl;
     @Autowired
-    private DraftedEventRepositoryService draftedEventRepositoryService;
+    private DraftedEventRepositoryServiceImpl draftedEventRepositoryServiceImpl;
     @Autowired
     private DraftedLaunchedEventMapper draftedLaunchedEventMapper;
     @Autowired
@@ -53,34 +53,34 @@ public class EventService {
 
         DraftedEvent event = eventCreationUpdationDtoMapper.getEventFromDtoForCreating(eventDTO);
         event.setEventOrganizer(organizer);
-        draftedEventRepositoryService.saveWhenCreating(event);
+        draftedEventRepositoryServiceImpl.saveWhenCreating(event);
         return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
 
     public EventViewDto updateEvent(int id, EventCreationUpdationDto eventDTO) {
-        Event event = eventRepositoryServiceFacade.getByIdAndHandleNotFound(eventDTO.getId());
+        Event event = eventRepositoryServiceFacadeImpl.getById(eventDTO.getId());
         userEventService.checkOrganizerOfEvent(id, event);
 
         eventCreationUpdationDtoMapper.updateEventAttributesFromDto(event, eventDTO);
-        eventRepositoryServiceFacade.update(event);
+        eventRepositoryServiceFacadeImpl.update(event);
 
         return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
 
     public EventViewDto launchEvent(int id, int eventId) {
-        DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
+        DraftedEvent draftedEvent = draftedEventRepositoryServiceImpl.getById(eventId);
 
         userEventService.checkOrganizerOfEvent(id, draftedEvent);
-        eventRepositoryServiceFacade.delete(eventId);
+        eventRepositoryServiceFacadeImpl.delete(eventId);
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
-        launchedEventRepositoryService.saveWhenLaunching(launchedEvent);
+        launchedEventRepositoryServiceImpl.saveWhenLaunching(launchedEvent);
 
         return eventViewDtoMapper.getDetailedDtoFromEvent(launchedEvent);
     }
 
     public void deleteEvent(int id, int eventId) {
-        Event event = eventRepositoryServiceFacade.getByIdAndHandleNotFound(eventId);
+        Event event = eventRepositoryServiceFacadeImpl.getById(eventId);
         userEventService.checkOrganizerOfEvent(id, event);
-        eventRepositoryServiceFacade.delete(eventId);
+        eventRepositoryServiceFacadeImpl.delete(eventId);
     }
 }

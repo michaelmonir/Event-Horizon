@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrap
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class EventTypeService
 {
     @Autowired
-    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
+    private EventRepositoryServiceFacadeImpl eventRepositoryServiceFacadeImpl;
 
     public void checkFutureEvent(Event event) {
         this.checkLaunchedEvent(event);

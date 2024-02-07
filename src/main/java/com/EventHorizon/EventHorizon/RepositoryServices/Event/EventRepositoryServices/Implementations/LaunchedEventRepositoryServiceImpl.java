@@ -1,8 +1,7 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
-import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
@@ -13,49 +12,51 @@ import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.Repository.Views.ClientGoingViewRepository;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Interfaces.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LaunchedEventRepositoryService implements SuperEventRepositoryService {
+public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryService, LaunchedEventRepositoryService {
     @Autowired
     private LaunchedEventRepository launchedEventRepository;
     @Autowired
     private EventRepository eventRepository;
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private CommonEventRepositoryService commonEventRepositoryService;
     @Autowired
     private ClientGoingViewRepository clientGoingViewRepository;
 
-    public LaunchedEvent saveWhenLaunching(Event event) {
-        LaunchedEvent launchedEvent = (LaunchedEvent) event;
-        launchedEvent.setLaunchedDate(DateFunctions.getCurrentDate());
-        if (launchedEvent.getId() == 0)
+    @Override
+    @Transactional
+    public LaunchedEvent saveWhenLaunching(LaunchedEvent event) {
+        event.setLaunchedDate(DateFunctions.getCurrentDate());
+        if (event.getId() == 0)
             throw new InvalidEventIdException();
-        new FutureEventWrapper(launchedEvent);
-        launchedEventRepository.save(launchedEvent);
-        return launchedEvent;
+        new FutureEventWrapper(event);
+        launchedEventRepository.save(event);
+        return event;
     }
 
-    public void deleteLaunchedEvent(int id) {
-        this.getByIdAndHandleNotFoundOrWrongType(id);
+    @Override
+    public void delete(int id) {
+        this.checkAndHandleWrongType(id);
         eventRepository.deleteById(id);
     }
 
-    public LaunchedEvent update(Event event) {
-        LaunchedEvent newEvent = (LaunchedEvent) event;
-        getByIdAndHandleNotFoundOrWrongType(newEvent.getId());
-        int id = newEvent.getId();
-        newEvent.setId(id);
-        FutureEventWrapper eventWrapper = new FutureEventWrapper(newEvent);
-        launchedEventRepository.save(newEvent);
-        return newEvent;
+    @Override
+    public LaunchedEvent update(Event newEvent) {
+        this.checkAndHandleWrongType(newEvent.getId());
+        new FutureEventWrapper((LaunchedEvent) newEvent);
+        launchedEventRepository.save((LaunchedEvent) newEvent);
+        return (LaunchedEvent) newEvent;
     }
 
     public List<EventHeaderDto> getAllEventsHeaderDto(PageRequest pageRequest) {
@@ -72,27 +73,8 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
     }
 
     public List<SeatType> getSeatTypeById(int id) {
-        LaunchedEvent launchedEvent = this.getByIdAndHandleNotFoundOrWrongType(id);
+        LaunchedEvent launchedEvent = this.getById(id);
         return launchedEvent.getSeatTypes();
-    }
-
-    public LaunchedEvent getByIdAndHandleNotFoundOrWrongType(int id) {
-        Event event = eventRepositoryService.getByIdAndHandleNotFound(id);
-        if (event.getEventType() != EventType.LAUNCHEDEVENT)
-            throw new NotLaunchedEventException();
-        return (LaunchedEvent) event;
-    }
-
-    public LaunchedEvent getFinishedEvent(int id) {
-        LaunchedEvent event = this.getByIdAndHandleNotFoundOrWrongType(id);
-        FinishedEventWrapper finishedEventWrapper = new FinishedEventWrapper(event);
-        return event;
-    }
-
-    public LaunchedEvent getFutureEvent(int id) {
-        LaunchedEvent event = this.getByIdAndHandleNotFoundOrWrongType(id);
-        FutureEventWrapper futureEventWrapper = new FutureEventWrapper(event);
-        return event;
     }
 
     public List<EventHeaderDto> getFilteredEventsHeaderDto(PageRequest pageWithRecords, Specification<Event> specification) {
@@ -111,6 +93,19 @@ public class LaunchedEventRepositoryService implements SuperEventRepositoryServi
             eventHeaderDtos.add(new EventHeaderDto(clientGoingView.getEvent()));
         }
         return eventHeaderDtos;
+    }
+
+    @Override
+    public LaunchedEvent getById(int id) {
+        Event event = commonEventRepositoryService.getByIdAndHandleNotFound(id);
+        if (event.getEventType() != EventType.LAUNCHEDEVENT)
+            throw new NotLaunchedEventException();
+        return (LaunchedEvent) event;
+    }
+    private void checkAndHandleWrongType(int id) {
+        Event event = commonEventRepositoryService.getByIdAndHandleNotFound(id);
+        if (event.getEventType() != EventType.LAUNCHEDEVENT)
+            throw new NotLaunchedEventException();
     }
 }
 

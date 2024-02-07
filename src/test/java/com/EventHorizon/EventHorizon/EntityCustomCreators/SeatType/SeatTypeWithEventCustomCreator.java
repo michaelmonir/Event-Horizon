@@ -1,12 +1,10 @@
 package com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType;
 
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,7 @@ public class SeatTypeWithEventCustomCreator
     @Autowired
     private EventCustomCreator eventCustomCreator;
     @Autowired
-    private DraftedEventRepositoryService draftedEventRepositoryService;
+    private DraftedEventRepositoryServiceImpl draftedEventRepositoryServiceImpl;
 
     public SeatType getAndCreateCustomSeatTypeFromSavedEvent() {
         SeatType customSeatType = this.seatTypeCustomCreator.getSeatType();
@@ -30,7 +28,7 @@ public class SeatTypeWithEventCustomCreator
         seatTypesList.add(customSeatType);
 
         customEvent.setSeatTypes(seatTypesList);
-        customEvent = this.draftedEventRepositoryService.saveWhenCreating(customEvent);
+        customEvent = this.draftedEventRepositoryServiceImpl.saveWhenCreating(customEvent);
 
         return customEvent.getSeatTypes().get(0);
     }

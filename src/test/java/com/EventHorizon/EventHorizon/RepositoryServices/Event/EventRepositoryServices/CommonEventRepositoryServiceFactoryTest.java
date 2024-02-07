@@ -1,20 +1,20 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFactory;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.SuperEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFactory;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.SuperEventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Method;
 
 @SpringBootTest
-class EventRepositoryServiceFactoryTest {
-    @InjectMocks
+class CommonEventRepositoryServiceFactoryTest {
+    @Autowired
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
 
     @Test
@@ -22,7 +22,7 @@ class EventRepositoryServiceFactoryTest {
         Method method = this.getMethodAndAdjustPublic();
         SuperEventRepositoryService result
                 = (SuperEventRepositoryService) method.invoke(eventRepositoryServiceFactory, EventType.LAUNCHEDEVENT);
-        Assertions.assertEquals(result.getClass(), LaunchedEventRepositoryService.class);
+        Assertions.assertTrue(LaunchedEventRepositoryServiceImpl.class.isAssignableFrom(result.getClass()));
     }
 
     @Test
@@ -30,7 +30,7 @@ class EventRepositoryServiceFactoryTest {
         Method method = this.getMethodAndAdjustPublic();
         SuperEventRepositoryService result
                 = (SuperEventRepositoryService) method.invoke(eventRepositoryServiceFactory, EventType.DRAFTEDEVENT);
-        Assertions.assertEquals(result.getClass(), DraftedEventRepositoryService.class);
+        Assertions.assertTrue(DraftedEventRepositoryServiceImpl.class.isAssignableFrom(result.getClass()));
     }
 
     private Method getMethodAndAdjustPublic() throws NoSuchMethodException {

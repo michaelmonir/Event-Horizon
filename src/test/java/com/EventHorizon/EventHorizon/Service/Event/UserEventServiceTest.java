@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.Event.UserEventService;
@@ -23,7 +23,7 @@ public class UserEventServiceTest {
     @InjectMocks
     private UserEventService userEventService;
     @Mock
-    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
+    private EventRepositoryServiceFacadeImpl eventRepositoryServiceFacadeImpl;
     @Autowired
     private EventCustomCreator eventCreator;
     @Mock
@@ -35,7 +35,7 @@ public class UserEventServiceTest {
     public void organizerOfEvent() {
         Event eventt = eventCreator.getEvent(EventType.LAUNCHEDEVENT);
 
-        when(eventRepositoryServiceFacade.getByIdAndHandleNotFound(Mockito.any(int.class))).thenReturn(eventt);
+        when(eventRepositoryServiceFacadeImpl.getById(Mockito.any(int.class))).thenReturn(eventt);
         when(getUserRepositoryService.getOrganizerById(Mockito.any(int.class))).thenReturn(eventt.getEventOrganizer());
         Assertions.assertDoesNotThrow(() ->
             userEventService.checkOrganizerOfEvent(eventt.getEventOrganizer().getId(), eventt)
@@ -46,7 +46,7 @@ public class UserEventServiceTest {
     public void notOrganizerOfEvent() {
         Event event = eventCreator.getEvent(EventType.LAUNCHEDEVENT);
 
-        when(eventRepositoryServiceFacade.getByIdAndHandleNotFound(Mockito.any(int.class))).thenReturn(event);
+        when(eventRepositoryServiceFacadeImpl.getById(Mockito.any(int.class))).thenReturn(event);
 
         Assertions.assertThrows(NotOrganizerOfThisEventException.class,() ->
             userEventService.checkOrganizerOfEvent(10000000, event) //////////////////////////////////

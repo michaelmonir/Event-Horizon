@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EventRepositoryService {
+public class CommonEventRepositoryService {
 
     @Autowired
     private EventRepository eventRepository;

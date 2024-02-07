@@ -1,6 +1,5 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.Event.Location;
@@ -8,28 +7,20 @@ import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
-import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @SpringBootTest
 class LaunchedEventRepositoryServiceTest {
     @Autowired
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
+    private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
     @Autowired
     private AdsOptionRepository adsOptionRepository;
     @Autowired
@@ -73,7 +64,6 @@ class LaunchedEventRepositoryServiceTest {
 //        });
 //    }
 //
-//
 //    @Test
 //    public void editEventGettingErrorEventAlreadyExisting() {
 //        initialize();
@@ -84,6 +74,7 @@ class LaunchedEventRepositoryServiceTest {
 //            launchedEventRepositoryService.update(tempLaunchedEvent);
 //        });
 //    }
+//
 //    @Test
 //    public void editPastEvent() {
 //        initialize();

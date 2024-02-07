@@ -1,18 +1,19 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Interfaces.EventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EventRepositoryServiceFacade {
+public class EventRepositoryServiceFacadeImpl implements EventRepositoryService {
     @Autowired
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
     @Autowired
-    private EventRepositoryService eventRepositoryService;
+    private CommonEventRepositoryService commonEventRepositoryService;
 
-    public Event getByIdAndHandleNotFound(int id) {
-        return eventRepositoryService.getByIdAndHandleNotFound(id);
+    public Event getById(int id) {
+        return commonEventRepositoryService.getByIdAndHandleNotFound(id);
     }
 
     public Event update(Event newEvent) {
@@ -22,6 +23,6 @@ public class EventRepositoryServiceFacade {
     }
 
     public void delete(int id) {
-        this.eventRepositoryService.delete(id);
+        this.commonEventRepositoryService.delete(id);
     }
 }

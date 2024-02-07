@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers.EventControllers;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.*;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.Services.Event.EventService;
 import com.EventHorizon.EventHorizon.Services.Event.EventView.EventViewService;
 import com.EventHorizon.EventHorizon.Services.UserServices.UserTokenInformationService;
@@ -27,7 +27,7 @@ public class EventController {
     @Autowired
     private EventViewService eventViewService;
     @Autowired
-    LaunchedEventRepositoryService launchedEventRepositoryService;
+    LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
 
     @GetMapping("eventForUser/{eventId}/{userInformationId}") //any
     public ResponseEntity<EventViewDto> getEvent(@PathVariable int eventId,@PathVariable int userInformationId) {
@@ -74,7 +74,7 @@ public class EventController {
 
     @GetMapping("getSeatType/{id}")//any
     public ResponseEntity<List<SeatType>> getEventHeaders(@PathVariable int eventId) {
-        List<SeatType> list = this.launchedEventRepositoryService.getSeatTypeById(eventId);
+        List<SeatType> list = this.launchedEventRepositoryServiceImpl.getSeatTypeById(eventId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

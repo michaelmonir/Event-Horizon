@@ -11,8 +11,8 @@ import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventAndSeatTypeAndSeatArchiveRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventAndSeatTypeAndSeatArchiveRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import com.EventHorizon.EventHorizon.Services.Event.EventService;
 import com.EventHorizon.EventHorizon.Services.Event.FilterService;
@@ -35,7 +35,7 @@ public class FilterTest {
     @Autowired
     private EventService eventService;
     @Autowired
-    private LaunchedEventRepositoryService eventRepositoryService;
+    private LaunchedEventRepositoryServiceImpl eventRepositoryService;
     @Autowired
     private EventRepository eventRepository;
     @Autowired
