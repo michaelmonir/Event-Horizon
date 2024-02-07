@@ -8,12 +8,12 @@ import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMappe
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
-import com.EventHorizon.EventHorizon.Services.EventServices.UserEventService;
+import com.EventHorizon.EventHorizon.Services.Event.EventService;
+import com.EventHorizon.EventHorizon.Services.Event.UserEventService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,7 +38,7 @@ public class EventServiceTest {
     @Mock
     private DraftedEventRepositoryService draftedEventRepositoryService;
     @Mock
-    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
     @Mock
     private UserRepositoryService userRepositoryService;
     @Mock
@@ -82,8 +82,8 @@ public class EventServiceTest {
 
         when(getUserRepositoryService.getById(anyInt())).thenReturn(new Organizer());
 
-        when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
-        when(eventRepositoryServiceInterface.update(any())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceFacade.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceFacade.update(any())).thenReturn(new LaunchedEvent());
 
         when(eventViewDtoMapper.getDetailedDtoFromEvent(any())).thenReturn(new EventViewDto());
 
@@ -95,7 +95,7 @@ public class EventServiceTest {
     @Test
     void testDeleteEvent() {
         when(getUserRepositoryService.getById(anyInt())).thenReturn(new Organizer());
-        when(eventRepositoryServiceInterface.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
+        when(eventRepositoryServiceFacade.getByIdAndHandleNotFound(anyInt())).thenReturn(new LaunchedEvent());
         assertDoesNotThrow(() -> eventService.deleteEvent(1, 1));
     }
 }

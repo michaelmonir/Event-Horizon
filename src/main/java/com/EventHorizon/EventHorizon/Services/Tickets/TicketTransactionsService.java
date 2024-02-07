@@ -7,7 +7,7 @@ import com.EventHorizon.EventHorizon.Entities.User.Client;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.SeatTypeRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventTypeService;
+import com.EventHorizon.EventHorizon.Services.Event.EventTypeService;
 import com.EventHorizon.EventHorizon.Services.SeatArchive.SeatArchiveOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

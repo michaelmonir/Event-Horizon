@@ -9,11 +9,15 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
+import com.EventHorizon.EventHorizon.Services.Event.EventView.EventViewService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.stream.Stream;
 
 @SpringBootTest
 public class ViewOnlyRegisteredUserTest {
@@ -25,19 +29,28 @@ public class ViewOnlyRegisteredUserTest {
     @Autowired
     private UserCustomCreator userCustomCreator;
 
-    @Test
-    public void launchedEvent() {
+    @ParameterizedTest
+    @MethodSource("provideRoles")
+    public void launchedEvent(Role role) {
         Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
-        User user = userCustomCreator.getAndSaveUser(Role.SPONSOR);
+        User user = userCustomCreator.getAndSaveUser(role);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), user.getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.VIEWONLY);
     }
 
-    @Test
-    public void draftedEvent() {
+    @ParameterizedTest
+    @MethodSource("provideRoles")
+    public void draftedEvent(Role role) {
         Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
-        User user = userCustomCreator.getAndSaveUser(Role.SPONSOR);
+        User user = userCustomCreator.getAndSaveUser(role);
         Assertions.assertThrows(InvalidAccessOfEventException.class,
                 () -> eventViewService.getEventViewDto(event.getId(), user.getId()) );
+    }
+
+    private static Stream<Arguments> provideRoles() {
+        return Stream.of(
+                Arguments.of(Role.SPONSOR),
+                Arguments.of(Role.ORGANIZER)
+        );
     }
 }

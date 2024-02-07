@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.EventServices;
+package com.EventHorizon.EventHorizon.Services.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
@@ -12,7 +12,7 @@ import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMappe
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.LaunchedEventRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
@@ -30,7 +30,7 @@ public class EventService {
     @Autowired
     private UserEventService userEventService;
     @Autowired
-    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
     @Autowired
     private DraftedEventRepositoryService draftedEventRepositoryService;
     @Autowired
@@ -58,11 +58,11 @@ public class EventService {
     }
 
     public EventViewDto updateEvent(int id, EventCreationUpdationDto eventDTO) {
-        Event event = eventRepositoryServiceInterface.getByIdAndHandleNotFound(eventDTO.getId());
+        Event event = eventRepositoryServiceFacade.getByIdAndHandleNotFound(eventDTO.getId());
         userEventService.checkOrganizerOfEvent(id, event);
 
         eventCreationUpdationDtoMapper.updateEventAttributesFromDto(event, eventDTO);
-        eventRepositoryServiceInterface.update(event);
+        eventRepositoryServiceFacade.update(event);
 
         return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
@@ -71,7 +71,7 @@ public class EventService {
         DraftedEvent draftedEvent = draftedEventRepositoryService.getByIdAndHandleNotFound(eventId);
 
         userEventService.checkOrganizerOfEvent(id, draftedEvent);
-        eventRepositoryServiceInterface.delete(eventId);
+        eventRepositoryServiceFacade.delete(eventId);
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
         launchedEventRepositoryService.saveWhenLaunching(launchedEvent);
 
@@ -79,8 +79,8 @@ public class EventService {
     }
 
     public void deleteEvent(int id, int eventId) {
-        Event event = eventRepositoryServiceInterface.getByIdAndHandleNotFound(eventId);
+        Event event = eventRepositoryServiceFacade.getByIdAndHandleNotFound(eventId);
         userEventService.checkOrganizerOfEvent(id, event);
-        eventRepositoryServiceInterface.delete(eventId);
+        eventRepositoryServiceFacade.delete(eventId);
     }
 }

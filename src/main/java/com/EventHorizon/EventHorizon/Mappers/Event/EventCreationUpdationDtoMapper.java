@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.AdsOptionRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.DraftedEventRepositoryService;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class EventCreationUpdationDtoMapper
     @Autowired
     private AdsOptionRepositoryService adsOptionRepositoryService;
     @Autowired
-    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
 
     public DraftedEvent getEventFromDtoForCreating(EventCreationUpdationDto eventCreationUpdationDto) {
         return DraftedEvent.builder()

@@ -1,10 +1,10 @@
-package com.EventHorizon.EventHorizon.Services.EventServices;
+package com.EventHorizon.EventHorizon.Services.Event;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.User.User;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserEventService {
 
     @Autowired
-    EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    EventRepositoryServiceFacade eventRepositoryServiceFacade;
     @Autowired
     UserRepositoryService userRepositoryService;
     @Autowired

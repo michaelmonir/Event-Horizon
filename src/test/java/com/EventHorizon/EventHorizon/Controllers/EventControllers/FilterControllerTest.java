@@ -7,8 +7,8 @@ import com.EventHorizon.EventHorizon.DTOs.FilterDto;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventService;
-import com.EventHorizon.EventHorizon.Services.EventServices.FilterService;
+import com.EventHorizon.EventHorizon.Services.Event.EventService;
+import com.EventHorizon.EventHorizon.Services.Event.FilterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
+import com.EventHorizon.EventHorizon.Services.Event.EventView.EventViewService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

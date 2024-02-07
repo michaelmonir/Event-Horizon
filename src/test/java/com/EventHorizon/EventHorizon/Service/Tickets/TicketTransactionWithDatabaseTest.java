@@ -1,27 +1,19 @@
 package com.EventHorizon.EventHorizon.Service.Tickets;
 
-import com.EventHorizon.EventHorizon.DTOs.TicketDto.BuyingAndRefundingDto;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.OrganizerSeatArchive;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Tickets.BuyedTicketCollection;
 import com.EventHorizon.EventHorizon.Entities.User.Client;
-import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.AvailableTicketsIsLessThanRequiredToBuyException;
-import com.EventHorizon.EventHorizon.Exceptions.Ticket.BuyedTicketsIslessThanRequiredToRefund;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceInterface;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.EventRepositoryServiceFacade;
 import com.EventHorizon.EventHorizon.RepositoryServices.SeatArchive.OrganizerSeatArchiveRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Tickets.BuyedTicketCollectionRepositoryService;
 import com.EventHorizon.EventHorizon.Services.Tickets.TicketTransactionsService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class TicketTransactionWithDatabaseTest
@@ -33,7 +25,7 @@ public class TicketTransactionWithDatabaseTest
     @Autowired
     private SeatTypeCustomCreator seatTypeCustomCreator;
     @Autowired
-    private EventRepositoryServiceInterface eventRepositoryServiceInterface;
+    private EventRepositoryServiceFacade eventRepositoryServiceFacade;
     @Autowired
     private OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
     @Autowired

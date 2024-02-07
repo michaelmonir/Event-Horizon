@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.EventServices.EventView;
+package com.EventHorizon.EventHorizon.Services.Event.EventView;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;

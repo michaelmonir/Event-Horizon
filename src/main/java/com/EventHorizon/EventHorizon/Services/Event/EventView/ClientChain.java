@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Services.EventServices.EventView;
+package com.EventHorizon.EventHorizon.Services.Event.EventView;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
@@ -12,19 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminChain {
-    @Autowired
-    private OrganizerChain organizerChain;
+public class ClientChain {
     @Autowired
     private EventViewDtoMapper eventViewDtoMapper;
+    @Autowired
+    private ViewOnlyChain viewOnlyChain;
 
     public EventViewDto getDto(User user, Event event) {
-        if (user.getRole() != Role.ADMIN)
-            return organizerChain.getDto(user, event);
+        if (user.getRole() != Role.CLIENT)
+            return viewOnlyChain.getDto(event);
 
         if (event.getEventType() == EventType.DRAFTEDEVENT)
             throw new InvalidAccessOfEventException();
 
-        return eventViewDtoMapper.getDetailedDtoFromEvent(event, UserEventRole.ADMIN);
+        return eventViewDtoMapper.getDetailedDtoFromEvent(event, UserEventRole.CLIENT);
     }
 }

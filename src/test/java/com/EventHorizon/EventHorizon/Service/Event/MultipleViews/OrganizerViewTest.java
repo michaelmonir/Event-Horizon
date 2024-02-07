@@ -5,7 +5,7 @@ import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.UserEventRole;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
-import com.EventHorizon.EventHorizon.Services.EventServices.EventView.EventViewService;
+import com.EventHorizon.EventHorizon.Services.Event.EventView.EventViewService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
