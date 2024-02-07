@@ -5,16 +5,11 @@ import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotDraftedEventException;
-import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-
 @Service
 public class DraftedEventRepositoryService implements SuperEventRepositoryService {
-    @Autowired
-    private DraftedEventRepository draftedEventRepository;
     @Autowired
     private EventRepositoryService eventRepositoryService;
     @Autowired
@@ -30,7 +25,7 @@ public class DraftedEventRepositoryService implements SuperEventRepositoryServic
 
     public DraftedEvent update(Event event) {
         eventRepositoryService.checkExistingEvent(event.getId());
-        this.savingRepositoryService.saveEventAndSeatTypeAndSeatArchive((DraftedEvent)event);
+        this.savingRepositoryService.saveEventAndSeatTypeAndSeatArchive(event);
         return (DraftedEvent) event;
     }
 

@@ -2,7 +2,6 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySe
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.internal.Function;
 import org.springframework.stereotype.Service;
 
 @Service

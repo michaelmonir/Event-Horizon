@@ -8,19 +8,12 @@ import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySer
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Method;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 @SpringBootTest
 class EventRepositoryServiceFactoryTest {
-    @Mock
-    private LaunchedEventRepositoryService launchedEventRepositoryService;
-    @Mock
-    private DraftedEventRepositoryService draftedEventRepositoryService;
     @InjectMocks
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
 
