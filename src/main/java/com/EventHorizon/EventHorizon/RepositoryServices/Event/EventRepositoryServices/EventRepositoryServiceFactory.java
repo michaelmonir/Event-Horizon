@@ -12,7 +12,7 @@ public class EventRepositoryServiceFactory {
     @Autowired
     private DraftedEventRepositoryService draftedEventRepositoryService;
 
-    public SuperEventRepositoryService getByEventType(EventType eventType){
+    SuperEventRepositoryService getByEventType(EventType eventType){
         if(eventType == EventType.LAUNCHEDEVENT)
             return launchedEventRepositoryService;
         else if (eventType == EventType.DRAFTEDEVENT)

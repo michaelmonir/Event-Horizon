@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Method;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 @SpringBootTest
@@ -23,16 +25,24 @@ class EventRepositoryServiceFactoryTest {
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
 
     @Test
-    void launchedEventRepositoryService() {
+    void launchedEventRepositoryService() throws Exception {
+        Method method = this.getMethodAndAdjustPublic();
         SuperEventRepositoryService result
-                = eventRepositoryServiceFactory.getByEventType(EventType.LAUNCHEDEVENT);
+                = (SuperEventRepositoryService) method.invoke(eventRepositoryServiceFactory, EventType.LAUNCHEDEVENT);
         Assertions.assertEquals(result.getClass(), LaunchedEventRepositoryService.class);
     }
 
     @Test
-    public void draftedRepositoryService() {
+    public void draftedRepositoryService() throws Exception {
+        Method method = this.getMethodAndAdjustPublic();
         SuperEventRepositoryService result
-                = eventRepositoryServiceFactory.getByEventType(EventType.DRAFTEDEVENT);
+                = (SuperEventRepositoryService) method.invoke(eventRepositoryServiceFactory, EventType.DRAFTEDEVENT);
         Assertions.assertEquals(result.getClass(), DraftedEventRepositoryService.class);
+    }
+
+    private Method getMethodAndAdjustPublic() throws NoSuchMethodException {
+        Method method = EventRepositoryServiceFactory.class.getDeclaredMethod("getByEventType", EventType.class);
+        method.setAccessible(true);
+        return method;
     }
 }
