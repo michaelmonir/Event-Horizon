@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions;
+package com.EventHorizon.EventHorizon.Exceptions.Event.EventTypeExceptions;
 
 import com.EventHorizon.EventHorizon.Exceptions.BaseException;
 import org.springframework.http.HttpStatus;

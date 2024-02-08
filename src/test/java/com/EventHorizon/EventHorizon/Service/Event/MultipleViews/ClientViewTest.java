@@ -8,7 +8,7 @@ import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidAccessOfEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.InvalidAccessOfEventException;
 import com.EventHorizon.EventHorizon.Services.Event.EventView.EventViewService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

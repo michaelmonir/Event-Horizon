@@ -4,7 +4,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrapper;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

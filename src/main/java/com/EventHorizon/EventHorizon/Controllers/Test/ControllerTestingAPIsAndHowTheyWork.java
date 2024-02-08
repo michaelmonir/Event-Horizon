@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.Controllers.Test;
 
 import com.EventHorizon.EventHorizon.DTOs.Test.ADTO;
-import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 /*

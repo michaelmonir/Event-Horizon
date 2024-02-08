@@ -1,8 +1,8 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventDataException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.InvalidEventDataException;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

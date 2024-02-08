@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.Service.Event;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotOrganizerOfThisEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.NotOrganizerOfThisEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;

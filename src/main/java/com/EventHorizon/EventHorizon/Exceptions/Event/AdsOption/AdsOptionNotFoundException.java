@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions;
+package com.EventHorizon.EventHorizon.Exceptions.Event.AdsOption;
 
 import com.EventHorizon.EventHorizon.Exceptions.BaseException;
 import org.springframework.http.HttpStatus;

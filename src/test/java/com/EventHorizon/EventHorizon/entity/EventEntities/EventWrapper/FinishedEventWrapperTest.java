@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.entity.EventEntities.EventWrapper;
 
 import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FinishedEventWrapper;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFinishedEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventTypeExceptions.NotFinishedEventException;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -2,7 +2,7 @@ package com.EventHorizon.EventHorizon.Mappers.EventMappers;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.AdsOptionDto;
 import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
-import com.EventHorizon.EventHorizon.Exceptions.AdsOptionExceptions.AdsOptionNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.AdsOption.AdsOptionNotFoundException;
 import com.EventHorizon.EventHorizon.Mappers.Event.AdsOptionDtoMapper;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import org.junit.jupiter.api.Assertions;

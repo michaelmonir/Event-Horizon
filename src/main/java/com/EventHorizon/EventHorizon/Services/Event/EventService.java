@@ -18,6 +18,7 @@ import com.EventHorizon.EventHorizon.RepositoryServices.User.GetUserRepositorySe
 import com.EventHorizon.EventHorizon.RepositoryServices.User.UserRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -67,11 +68,13 @@ public class EventService {
         return eventViewDtoMapper.getDetailedDtoFromEvent(event);
     }
 
+    @Transactional
     public EventViewDto launchEvent(int id, int eventId) {
         DraftedEvent draftedEvent = draftedEventRepositoryServiceImpl.getById(eventId);
 
         userEventService.checkOrganizerOfEvent(id, draftedEvent);
         eventRepositoryServiceFacadeImpl.delete(eventId);
+
         LaunchedEvent launchedEvent = draftedLaunchedEventMapper.getLaunchedEventFromDraftedEvent(draftedEvent);
         launchedEventRepositoryServiceImpl.saveWhenLaunching(launchedEvent);
 

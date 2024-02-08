@@ -6,8 +6,8 @@ import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.Views.ClientGoingView;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventIdException;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NotLaunchedEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventAlreadyExisting;
+import com.EventHorizon.EventHorizon.Exceptions.Event.NotLaunchedEventException;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
 import com.EventHorizon.EventHorizon.Entities.Event.EventWrapper.FutureEventWrapper;
@@ -26,22 +26,22 @@ import java.util.List;
 @Service
 public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryService, LaunchedEventRepositoryService {
     @Autowired
-    private EventRepository eventRepository;
-    @Autowired
     private CommonEventRepositoryService commonEventRepositoryService;
     @Autowired
     private ClientGoingViewRepository clientGoingViewRepository;
     @Autowired
     private LaunchedEventRepository launchedEventRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     @Override
     @Transactional
     public LaunchedEvent saveWhenLaunching(LaunchedEvent event) {
         event.setLaunchedDate(DateFunctions.getCurrentDate());
-        if (event.getId() == 0)
-            throw new InvalidEventIdException();
+        if (event.getId() != 0)
+            throw new EventAlreadyExisting();
         new FutureEventWrapper(event);
-        eventRepository.save(event);
+        commonEventRepositoryService.save(event);
         return event;
     }
 
@@ -55,7 +55,7 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
     public LaunchedEvent update(Event newEvent) {
         this.checkAndHandleWrongType(newEvent.getId());
         new FutureEventWrapper((LaunchedEvent) newEvent);
-        eventRepository.save(newEvent);
+        commonEventRepositoryService.save(newEvent);
         return (LaunchedEvent) newEvent;
     }
 

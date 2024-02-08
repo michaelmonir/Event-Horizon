@@ -1,7 +1,7 @@
 package com.EventHorizon.EventHorizon.Entities.Event.EventWrapper;
 
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotFutureEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventTypeExceptions.NotFutureEventException;
 import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
 import lombok.Data;
 

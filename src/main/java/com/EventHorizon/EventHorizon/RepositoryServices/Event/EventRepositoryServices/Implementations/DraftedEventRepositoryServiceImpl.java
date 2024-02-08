@@ -3,8 +3,8 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySe
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventAlreadyExisting;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventTypeExceptions.NotDraftedEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventAlreadyExisting;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventTypeExceptions.NotDraftedEventException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Interfaces.DraftedEventRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

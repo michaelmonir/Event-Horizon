@@ -9,7 +9,7 @@ import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.NullEventTypeException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.NullEventTypeException;
 import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.User.UserRepository;

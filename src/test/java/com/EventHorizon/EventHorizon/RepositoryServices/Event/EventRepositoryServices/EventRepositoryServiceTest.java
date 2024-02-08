@@ -3,7 +3,7 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySe
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventNotFoundException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Interfaces.EventRepositoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

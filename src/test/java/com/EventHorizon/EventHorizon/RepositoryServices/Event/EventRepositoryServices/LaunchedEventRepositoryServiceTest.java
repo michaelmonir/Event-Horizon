@@ -1,125 +1,103 @@
 package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices;
 
-import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
-import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
-import com.EventHorizon.EventHorizon.Entities.Event.Location;
+import com.EventHorizon.EventHorizon.Entities.Event.*;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
+import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.User.UserCustomCreator;
-import com.EventHorizon.EventHorizon.Repository.Event.AdsOptionRepository;
-import com.EventHorizon.EventHorizon.Repository.User.UserRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventAlreadyExisting;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.EventTypeExceptions.NotFutureEventException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.InvalidEventDataException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.NotLaunchedEventException;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Interfaces.LaunchedEventRepositoryService;
+import com.EventHorizon.EventHorizon.UtilityClasses.DateFunctions;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-
 @SpringBootTest
-class LaunchedEventRepositoryServiceTest {
-    @Autowired
-    private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
-    @Autowired
-    private AdsOptionRepository adsOptionRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    UserCustomCreator userCustomCreator;
+public class LaunchedEventRepositoryServiceTest {
 
-    private AdsOption tempAdsOption;
-    private Organizer tempOrganizer;
-    private Location tempLocation;
-    private LaunchedEvent tempLaunchedEvent;
+    @Autowired
+    private LaunchedEventRepositoryService launchedEventRepositoryService;
+    @Autowired
+    private EventCustomCreator eventCustomCreator;
+    @Autowired
+    private UserCustomCreator userCustomCreator;
 
+    @Test
+    public void getById() {
+        Event event =  eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event1 = launchedEventRepositoryService.getById(event.getId());
+        Assertions.assertEquals(event, event1);
+    }
 
-//    @Test
-//    public void testGettingExceptionOnSendingIdWhenCreating() {
-//        LaunchedEvent event = new LaunchedEvent();
-//        event.setId(5);
-//        Assertions.assertThrows(EventAlreadyExisting.class, () -> {
-//            launchedEventRepositoryService.saveWhenCreating(event);
-//        });
-//    }
-//    @Test
-//    public void addingPastEvent() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
-//        Assertions.assertThrows(NotFutureEventException.class, () -> {
-//            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-//        });
-//    }
-//
-//    @Test
-//    public void addEventNotGettingError() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        Assertions.assertDoesNotThrow(() -> {
-//            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-//            Assertions.assertNotEquals(0, tempLaunchedEvent.getId());
-//        });
-//    }
-//
-//    @Test
-//    public void editEventGettingErrorEventAlreadyExisting() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        tempLaunchedEvent.setId(500);
-//        Assertions.assertThrows(EventNotFoundException.class, () -> {
-//            launchedEventRepositoryService.update(tempLaunchedEvent);
-//        });
-//    }
-//
-//    @Test
-//    public void editPastEvent() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        Assertions.assertThrows(NotFutureEventException.class, () -> {
-//            tempLaunchedEvent.setEventDate(DateFunctions.getYesterDaysDate());
-//            launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-//            launchedEventRepositoryService.update(tempLaunchedEvent);
-//        });
-//    }
-//
-//    @Test
-//    public void editEventWithoutError() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-//        LaunchedEvent newLaunchedEvent =createSecoundevent();
-//        newLaunchedEvent.setId(tempLaunchedEvent.getId());
-//        Assertions.assertDoesNotThrow(() -> {
-//            launchedEventRepositoryService.update(newLaunchedEvent);
-//            Assertions.assertEquals(tempLaunchedEvent.getId(), newLaunchedEvent.getId());
-//        });
-//    }
-//
-//    @Test
-//    public void testDeleteEventThrowsExceptionWhenEventNotFound() {
-//        Assertions.assertThrows(EventNotFoundException.class, () -> {
-//            launchedEventRepositoryService.deleteLaunchedEvent(0);
-//        });
-//    }
-//
-//    @Test
-//    public void testDeleteEventDeletesEventSuccessfully() {
-//        initialize();
-//        tempLaunchedEvent.setEventAds(tempAdsOption);
-//        tempLaunchedEvent.setEventLocation(tempLocation);
-//        launchedEventRepositoryService.saveWhenCreating(tempLaunchedEvent);
-//        Assertions.assertDoesNotThrow(() -> {
-//            launchedEventRepositoryService.deleteLaunchedEvent(tempLaunchedEvent.getId());
-//        });
-//    }
+    @Test
+    public void getByIdNotFound() {
+        Assertions.assertThrows(EventNotFoundException.class,
+                () -> launchedEventRepositoryService.getById(100008));
+    }
 
-//    @Test
+    @Test
+    public void getByIdDraftedEvent() {
+        Event event =  eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Assertions.assertThrows(NotLaunchedEventException.class,
+                () -> launchedEventRepositoryService.getById(event.getId()));
+    }
+
+    @Test
+    public void launchEventSuccessfully() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        launchedEventRepositoryService.saveWhenLaunching(event);
+        Assertions.assertNotEquals(0, event.getId());
+        Assertions.assertEquals(event, launchedEventRepositoryService.getById(event.getId()));
+    }
+
+    @Test
+    public void launchEventWithPositiveId() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        event.setId(5);
+        Assertions.assertThrows(EventAlreadyExisting.class,
+                () -> launchedEventRepositoryService.saveWhenLaunching(event));
+    }
+
+    @Test
+    public void launchEventWithPastDate() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        event.setEventDate(DateFunctions.getYesterDaysDate());
+        Assertions.assertThrows(NotFutureEventException.class,
+                () -> launchedEventRepositoryService.saveWhenLaunching(event));
+    }
+
+    @Test
+    public void launchEventWithUnsavedAdsOptionsGetsError() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        event.setEventAds(new AdsOption(1000000, 1, "h"));
+        Assertions.assertThrows(InvalidEventDataException.class,
+                () -> launchedEventRepositoryService.saveWhenLaunching(event));
+    }
+
+    @Test
+    public void launchEventWithUnsavedOrganizerGetsError() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        Organizer organizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
+        event.setEventOrganizer(organizer);
+        Assertions.assertThrows(InvalidEventDataException.class,
+                () -> launchedEventRepositoryService.saveWhenLaunching(event));
+    }
+
+    @Test
+    public void creatingEventSavesLocation() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        event.setEventLocation(new Location("Egypt", "Cairo", "aaaaaaa"));
+        launchedEventRepositoryService.saveWhenLaunching(event);
+        Assertions.assertNotEquals(0, event.getEventLocation().getId());
+    }
+
+    //    @Test
 //    public void testGetEventHeaderDtoThrowsExceptionWhenEventNotFound() {
 //        Assertions.assertThrows(EventNotFoundException.class, () -> {
 //            launchedEventRepositoryService.getEventHeaderDto(0);
@@ -166,56 +144,4 @@ class LaunchedEventRepositoryServiceTest {
 //            List<EventHeaderDto> eventHeaderDtos = launchedEventRepositoryService.getAllEventsHeaderDto(pageRequest);
 //        });
 //    }
-
-    private void initialize() {
-        createOrganizer();
-        createAdsOption();
-        createLocation();
-        createEvent();
-    }
-
-    private void createOrganizer() {
-        tempOrganizer = (Organizer) userCustomCreator.getUser(Role.ORGANIZER);
-
-        userRepository.save(tempOrganizer);
-    }
-
-    public void createAdsOption() {
-        AdsOption adsOption = AdsOption.builder()
-                .name("p")
-                .priority(1)
-                .build();
-        adsOptionRepository.save(adsOption);
-        tempAdsOption = adsOption;
-
-    }
-
-    private void createEvent() {
-        tempLaunchedEvent = LaunchedEvent.builder()
-                .name("e5")
-                .eventOrganizer(tempOrganizer)
-                .description("...")
-                .eventDate(new Date(System.currentTimeMillis() + 100000))
-                .seatTypes(new ArrayList<>())
-                .eventType(EventType.LAUNCHEDEVENT)
-                .build();
-    }
-
-    private void createLocation() {
-        tempLocation = Location.builder()
-                .country("Egypt")
-                .city("Alex").build();
-    }
-    private LaunchedEvent createSecoundevent(){
-        Location location2 = Location.builder().country("mun").city("cairo").build();
-       return LaunchedEvent.builder()
-                .id(tempLaunchedEvent.getId())
-                .eventAds(tempAdsOption)
-                .eventLocation(location2)
-                .name("e500")
-                .eventDate(new Date(System.currentTimeMillis() + 100000))
-                .eventOrganizer(tempOrganizer)
-               .seatTypes(new ArrayList<>())
-                .build();
-    }
 }

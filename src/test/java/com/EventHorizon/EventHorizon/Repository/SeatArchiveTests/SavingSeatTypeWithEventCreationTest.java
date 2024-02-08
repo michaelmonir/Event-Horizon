@@ -1,12 +1,11 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
-import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeCustomCreator;
-import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventDataException;
+import com.EventHorizon.EventHorizon.Exceptions.Event.InvalidEventDataException;
 import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
