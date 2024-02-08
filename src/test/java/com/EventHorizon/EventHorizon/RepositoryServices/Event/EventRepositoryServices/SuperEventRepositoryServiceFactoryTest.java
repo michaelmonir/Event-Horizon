@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.lang.reflect.Method;
 
 @SpringBootTest
-class CommonEventRepositoryServiceFactoryTest {
+class SuperEventRepositoryServiceFactoryTest {
     @Autowired
     private EventRepositoryServiceFactory eventRepositoryServiceFactory;
 

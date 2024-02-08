@@ -16,18 +16,17 @@ import java.util.List;
 public class EventAndSeatTypeAndSeatArchiveRepositoryService {
 
     @Autowired
-    private EventRepository eventRepository;
+    private CommonEventRepositoryService eventRepositoryService;
     @Autowired
     private OrganizerSeatArchiveRepositoryService organizerSeatArchiveRepositoryService;
     @Autowired
     private SeatTypeRepository seatTypeRepository;
 
-    // it's important to delete the old seatTypes as they doesn't get deleted automatically
     public void saveEventAndSeatTypeAndSeatArchive(Event event) {
         seatTypeRepository.deleteByEventId(event.getId());
         for (SeatType seatType : event.getSeatTypes())
             seatType.setEvent(event);
-        eventRepository.save(event);
+        eventRepositoryService.save(event);
         this.setOrganizerSeatArchives(event.getSeatTypes());
     }
 

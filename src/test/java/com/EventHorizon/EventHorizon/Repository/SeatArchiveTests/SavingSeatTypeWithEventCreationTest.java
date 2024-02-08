@@ -1,10 +1,12 @@
 package com.EventHorizon.EventHorizon.Repository.SeatArchiveTests;
 
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
+import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.Event.EventCustomCreator;
 import com.EventHorizon.EventHorizon.EntityCustomCreators.SeatType.SeatTypeCustomCreator;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventDataException;
 import com.EventHorizon.EventHorizon.Repository.Event.DraftedEventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Event.LaunchedEventRepository;
@@ -47,8 +49,6 @@ public class SavingSeatTypeWithEventCreationTest
         });
     }
 
-    // this is because it doesn't use the repository service which uses the eventSeatReposirotyService
-    // which deletes the old seatTypes
     @Test
     public void changingEventSeatTypesFromRepositoryDoesNotDeleteOldSeatTypes(){
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
@@ -63,27 +63,10 @@ public class SavingSeatTypeWithEventCreationTest
         Assertions.assertNotEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
     }
 
-    // use the repository service instead
-//    @Test
-//    public void updatingEventSeatTypesDeletesOldTypes(){
-//        SeatType seatType = this.seatTypeCustomCreator.getSeatType();
-//        Event event = this.getEventAndGiveOneSeatType(seatType);
-//
-//        eventRepositoryService.saveWhenCreating(event);
-//
-//        event.setSeatTypes(new ArrayList<>());
-//        eventRepositoryService.update(event);
-//
-//        Assertions.assertEquals(0, event.getSeatTypes().size());
-//        Assertions.assertEquals(0, this.seatTypeRepository.findAllByEventId(event.getId()).size());
-//    }
-
     @Test
     public void creatingSeatTypeUsingRepository() {
         SeatType seatType = this.seatTypeCustomCreator.getSeatType();
         DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
-        // as then the seatTypes would not have their event initialized
-        // which normally takes place in the RepositoryService not the repository
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             eventRepository.save(event);
         });
@@ -95,7 +78,7 @@ public class SavingSeatTypeWithEventCreationTest
         seatType.setName(null);
         DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+        Assertions.assertThrows(InvalidEventDataException.class, () -> {
             draftedEventRepositoryServiceImpl.saveWhenCreating(event);
         });
     }
@@ -106,7 +89,7 @@ public class SavingSeatTypeWithEventCreationTest
         seatType.setPrice(-1);
         DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+        Assertions.assertThrows(InvalidEventDataException.class, () -> {
             draftedEventRepositoryServiceImpl.saveWhenCreating(event);
         });
     }
@@ -117,7 +100,7 @@ public class SavingSeatTypeWithEventCreationTest
         seatType.setNumberOfSeats(-1);
         DraftedEvent event = this.getEventAndGiveOneSeatType(seatType);
 
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+        Assertions.assertThrows(InvalidEventDataException.class, () -> {
             draftedEventRepositoryServiceImpl.saveWhenCreating(event);
         });
     }

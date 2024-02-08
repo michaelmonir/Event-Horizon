@@ -26,13 +26,13 @@ import java.util.List;
 @Service
 public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryService, LaunchedEventRepositoryService {
     @Autowired
-    private LaunchedEventRepository launchedEventRepository;
-    @Autowired
     private EventRepository eventRepository;
     @Autowired
     private CommonEventRepositoryService commonEventRepositoryService;
     @Autowired
     private ClientGoingViewRepository clientGoingViewRepository;
+    @Autowired
+    private LaunchedEventRepository launchedEventRepository;
 
     @Override
     @Transactional
@@ -41,7 +41,7 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
         if (event.getId() == 0)
             throw new InvalidEventIdException();
         new FutureEventWrapper(event);
-        launchedEventRepository.save(event);
+        eventRepository.save(event);
         return event;
     }
 
@@ -55,7 +55,7 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
     public LaunchedEvent update(Event newEvent) {
         this.checkAndHandleWrongType(newEvent.getId());
         new FutureEventWrapper((LaunchedEvent) newEvent);
-        launchedEventRepository.save((LaunchedEvent) newEvent);
+        eventRepository.save(newEvent);
         return (LaunchedEvent) newEvent;
     }
 

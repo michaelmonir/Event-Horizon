@@ -2,8 +2,11 @@ package com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositorySe
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.EventNotFoundException;
+import com.EventHorizon.EventHorizon.Exceptions.EventExceptions.InvalidEventDataException;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,5 +32,13 @@ public class CommonEventRepositoryService {
     void checkExistingEvent(int id) {
         if (!eventRepository.existsById(id))
             throw new EventNotFoundException();
+    }
+
+    void save(Event event) {
+        try {
+            eventRepository.save(event);
+        } catch (DataIntegrityViolationException | InvalidDataAccessApiUsageException e) {
+            throw new InvalidEventDataException();
+        }
     }
 }
