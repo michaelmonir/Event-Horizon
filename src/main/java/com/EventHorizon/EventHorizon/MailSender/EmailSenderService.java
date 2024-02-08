@@ -1,5 +1,6 @@
 package com.EventHorizon.EventHorizon.MailSender;
 
+import com.EventHorizon.EventHorizon.DTOs.Notification.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +19,13 @@ public class EmailSenderService {
                         "To verify your email please use the next code" + "\n\n" + "Verification Code :\t" + verifyCode + "\n\n" + "We look forward to see you in next event\n\n" + "Sincerely,\n" +
                         "EventHorizon Team"
         );
+        javaMailSender.send(message);
+    }
+    public void sendMessageToUser(MessageDto messageDto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(messageDto.userEmail);
+        message.setSubject(messageDto.subject);
+        message.setText(messageDto.body);
         javaMailSender.send(message);
     }
 }
