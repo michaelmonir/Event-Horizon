@@ -8,6 +8,8 @@ import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageInde
 import com.EventHorizon.EventHorizon.Exceptions.PagingExceptions.InvalidPageSizeException;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Filter.EventViewType;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Filter.FilterRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,11 +20,14 @@ import java.util.List;
 
 @Service
 public class DashboardRepositoryService {
-    private List<EventHeaderDto> eventHeaderDtos;
+
     @Autowired
     private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
     @Autowired
-    private DraftedEventRepositoryServiceImpl draftedEventRepositoryServiceImpl;
+    FilterRepositoryService filterRepositoryService;
+
+    private List<EventHeaderDto> eventHeaderDtos;
+
     int pageSize;
     PageRequest pageWithRecords;
     private void checkPageIndexAndSize(int pageIndex, int pageSize) {
@@ -31,27 +36,12 @@ public class DashboardRepositoryService {
         if (pageSize < 1)
             throw new InvalidPageSizeException();
     }
-    public List<EventHeaderDto> getPage(int pageIndex, int pageSize) {
-        checkPageIndexAndSize(pageIndex, pageSize);
-        this.pageSize = pageSize;
-        this.pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
-        eventHeaderDtos = launchedEventRepositoryServiceImpl.getAllEventsHeaderDto(pageWithRecords);
-        return eventHeaderDtos;
-    }
 
     public List<EventHeaderDto> getFilteredPage(int pageIndex, int pageSize, Specification<Event> specification) {
         checkPageIndexAndSize(pageIndex, pageSize);
         this.pageSize = pageSize;
         this.pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
-        eventHeaderDtos = launchedEventRepositoryServiceImpl.getFilteredEventsHeaderDto(pageWithRecords, specification);
+        eventHeaderDtos = filterRepositoryService.getFilteredEventsHeaderDto(pageWithRecords, specification, EventViewType.LAUNCHED);
         return eventHeaderDtos;
     }
-    public List<EventHeaderDto> getFilteredPageFromClientGoingView(int pageIndex, int pageSize, Specification<ClientGoingView> specification) {
-        checkPageIndexAndSize(pageIndex, pageSize);
-        this.pageSize = pageSize;
-        this.pageWithRecords = PageRequest.of(pageIndex, pageSize);
-        eventHeaderDtos = launchedEventRepositoryServiceImpl.getFilteredEventsHeaderDtoFromClientGoingView(pageWithRecords, specification);
-        return eventHeaderDtos;
-    }
-
 }

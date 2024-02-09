@@ -45,10 +45,6 @@ public class EventService {
     @Autowired
     private GetUserRepositoryService getUserRepositoryService;
 
-    public List<EventHeaderDto> getEventHeadersList(int pageIndex, int pageSize) {
-        return this.dashboardRepositoryService.getPage(pageIndex, pageSize);
-    }
-
     public EventViewDto createEvent(int id, EventCreationUpdationDto eventDTO) {
         Organizer organizer = getUserRepositoryService.getOrganizerById(id);
 

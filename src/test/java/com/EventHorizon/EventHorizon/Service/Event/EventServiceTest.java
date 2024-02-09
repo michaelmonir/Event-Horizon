@@ -52,13 +52,13 @@ public class EventServiceTest {
     @Mock
     private GetUserRepositoryService getUserRepositoryService;
 
-    @Test
-    void testGetEventHeadersList() {
-        when(dashboardRepositoryService.getPage(anyInt(), anyInt())).thenReturn(new ArrayList<>());
-        List<EventHeaderDto> result = eventService.getEventHeadersList(1, 10);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(ArrayList.class, result.getClass());
-    }
+//    @Test
+//    void testGetEventHeadersList() {
+//        when(dashboardRepositoryService.getPage(anyInt(), anyInt())).thenReturn(new ArrayList<>());
+//        List<EventHeaderDto> result = eventService.getEventHeadersList(1, 10);
+//        Assertions.assertNotNull(result);
+//        Assertions.assertEquals(ArrayList.class, result.getClass());
+//    }
 
     @Test
     void testCreateEvent() {

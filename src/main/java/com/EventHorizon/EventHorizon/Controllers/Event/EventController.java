@@ -66,12 +66,6 @@ public class EventController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("dashboard/{pageIndex}/{pageSize}")//any
-    public ResponseEntity<List<EventHeaderDto>> getEventHeaders(@PathVariable int pageIndex, @PathVariable int pageSize) {
-        List<EventHeaderDto> eventHeaders = this.eventService.getEventHeadersList(pageIndex, pageSize);
-        return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
-    }
-
     @GetMapping("getSeatType/{id}")//any
     public ResponseEntity<List<SeatType>> getEventHeaders(@PathVariable int eventId) {
         List<SeatType> list = this.launchedEventRepositoryServiceImpl.getSeatTypeById(eventId);
