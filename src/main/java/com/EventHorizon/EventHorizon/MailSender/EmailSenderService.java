@@ -6,10 +6,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class EmailSenderService {
+
     @Autowired
     private  JavaMailSender javaMailSender;
+
     public void sendMail(String to,String subject,String name,String verifyCode){
         SimpleMailMessage message=new SimpleMailMessage();
         message.setTo(to);
@@ -21,6 +24,7 @@ public class EmailSenderService {
         );
         javaMailSender.send(message);
     }
+
     public void sendMessageToUser(MessageDto messageDto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(messageDto.userEmail);

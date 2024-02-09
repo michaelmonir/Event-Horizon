@@ -3,16 +3,22 @@ package com.EventHorizon.EventHorizon.Services.Notification.Message;
 import com.EventHorizon.EventHorizon.Entities.EventEntities.Event;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.Organizer;
 import com.EventHorizon.EventHorizon.Entities.UpdateUsers.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class OrganizerToEventUsers {
+
+    @Autowired
+    private MessageSendingFacade messageSendingFacade;
 
     public void createMessageAndSendToUsers(Event event, Organizer organizer, String organizerMessage) {
         List<User> goingUsers = getListOfGoingUsers(event);
         GmailMessage message = createMessage(event, organizer, organizerMessage);
-
+        messageSendingFacade.sendToUsers(message, goingUsers);
     }
 
     private GmailMessage createMessage(Event event, Organizer organizer, String organizerMessage) {
@@ -28,5 +34,4 @@ public class OrganizerToEventUsers {
     private List<User> getListOfGoingUsers(Event event) {
         return new ArrayList<User>();
     }
-
 }
