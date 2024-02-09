@@ -68,7 +68,7 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
         return eventHeaderDtos;
     }
 
-    public List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
+    private List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
         return eventRepository.findAll(specification, pageRequest).getContent();
     }
 
@@ -78,7 +78,7 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
     }
 
     public List<EventHeaderDto> getFilteredEventsHeaderDto(PageRequest pageWithRecords, Specification<Event> specification) {
-        List<Event> events = (List<Event>) getAllEvents(specification, pageWithRecords);
+        List<Event> events = (List<Event>) this.getAllEvents(specification, pageWithRecords);
         List<EventHeaderDto> eventHeaderDtos = new ArrayList<>();
         for (Event event : events) {
             eventHeaderDtos.add(new EventHeaderDto(event));
