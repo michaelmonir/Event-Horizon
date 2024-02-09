@@ -15,7 +15,5 @@ public class AddressFilterCriteria implements FilterCriteriaInterface {
     public Specification meetCriteria(FilterEntityType entityType) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.like(RootFactory.getRoot(entityType,root).get("eventLocation").get("address"), "%" + address + "%");
-//        return (root, query, criteriaBuilder) ->
-//                criteriaBuilder.like(root.get("event").get("eventLocation").get("address"), "%" + address + "%");
     }
 }

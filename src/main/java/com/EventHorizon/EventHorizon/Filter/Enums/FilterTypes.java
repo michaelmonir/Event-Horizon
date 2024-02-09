@@ -10,6 +10,9 @@ public enum FilterTypes {
     DATE,
     ORGANIZER,
     EVENTTYPE,
-    ORGANIZERID
+    ORGANIZERID,
+    FUTURE_DATE,
+    PAST_DATE,
+    CLIENTID,
 
 }

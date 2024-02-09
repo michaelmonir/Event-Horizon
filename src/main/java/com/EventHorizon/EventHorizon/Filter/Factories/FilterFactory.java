@@ -24,6 +24,9 @@ public class FilterFactory {
             case NAME -> new EventNameFilterCriteria((String) filter.third);
             case EVENTTYPE -> new EventTypeFilterCriteria((EventType) filter.third);
             case ORGANIZERID -> new OrganizerIdFilterCriteria((int) filter.third);
+            case FUTURE_DATE -> new FutureDateFilterCriteria((Date) filter.third);
+            case PAST_DATE -> new PastDateFilterCriteria((Date) filter.third);
+            case CLIENTID -> new ClientIdFilterCriteria((int) filter.third);
         };
     }
 }

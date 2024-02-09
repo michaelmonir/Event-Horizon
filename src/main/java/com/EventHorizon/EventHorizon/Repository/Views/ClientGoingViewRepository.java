@@ -23,4 +23,6 @@ public interface ClientGoingViewRepository
 
     @Override
     Page<ClientGoingView> findAll(Specification<ClientGoingView> spec, Pageable pageable);
+
+
 }

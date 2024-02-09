@@ -2,6 +2,7 @@ package com.EventHorizon.EventHorizon.Filter.FilterCriteria;
 
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterEntityType;
+import com.EventHorizon.EventHorizon.Filter.Factories.RootFactory;
 import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,10 +17,10 @@ public class DateFilterCriteria implements FilterCriteriaInterface {
     private Date date;
 
     @Override
-    public Specification<Event> meetCriteria(FilterEntityType entityType) {
+    public Specification meetCriteria(FilterEntityType entityType) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = dateFormat.format(date);
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("eventDate"), "%" + strDate + "%");
+                criteriaBuilder.like(RootFactory.getRoot(entityType,root).get("eventDate"), "%" + strDate + "%");
     }
 }

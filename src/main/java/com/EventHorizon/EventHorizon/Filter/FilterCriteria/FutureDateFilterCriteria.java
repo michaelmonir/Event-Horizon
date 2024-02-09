@@ -7,15 +7,18 @@ import com.EventHorizon.EventHorizon.Filter.FilterCriteriaInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-@AllArgsConstructor
-public class OrganizerNameFilterCriteria implements FilterCriteriaInterface {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    private String organizerName;
+@AllArgsConstructor
+public class FutureDateFilterCriteria implements FilterCriteriaInterface {
+
+    private Date date;
 
     @Override
     public Specification meetCriteria(FilterEntityType entityType) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(RootFactory.getRoot(entityType,root).get("eventOrganizer").get("userName")
-                        , "%" + organizerName + "%");
+                criteriaBuilder.greaterThanOrEqualTo(RootFactory.getRoot(entityType,root).get("eventDate"), date);
     }
 }
