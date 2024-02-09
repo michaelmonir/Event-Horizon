@@ -22,26 +22,19 @@ import java.util.List;
 public class DashboardRepositoryService {
 
     @Autowired
-    private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
-    @Autowired
     FilterRepositoryService filterRepositoryService;
 
-    private List<EventHeaderDto> eventHeaderDtos;
+    public List<EventHeaderDto> getFilteredPage(int pageIndex, int pageSize, Specification<Event> specification) {
+        checkPageIndexAndSize(pageIndex, pageSize);
 
-    int pageSize;
-    PageRequest pageWithRecords;
+        PageRequest pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
+        return filterRepositoryService.getFilteredEventsHeaderDto(pageWithRecords, specification, EventViewType.LAUNCHED);
+    }
+
     private void checkPageIndexAndSize(int pageIndex, int pageSize) {
         if (pageIndex < 0)
             throw new InvalidPageIndexException();
         if (pageSize < 1)
             throw new InvalidPageSizeException();
-    }
-
-    public List<EventHeaderDto> getFilteredPage(int pageIndex, int pageSize, Specification<Event> specification) {
-        checkPageIndexAndSize(pageIndex, pageSize);
-        this.pageSize = pageSize;
-        this.pageWithRecords = PageRequest.of(pageIndex, pageSize, Sort.by(Sort.Direction.DESC, "eventDate"));
-        eventHeaderDtos = filterRepositoryService.getFilteredEventsHeaderDto(pageWithRecords, specification, EventViewType.LAUNCHED);
-        return eventHeaderDtos;
     }
 }
