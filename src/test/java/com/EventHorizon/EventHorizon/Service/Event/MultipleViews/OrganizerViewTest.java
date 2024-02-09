@@ -21,14 +21,14 @@ public class OrganizerViewTest {
 
     @Test
     public void launchedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), event.getEventOrganizer().getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.ORGANIZER);
     }
 
     @Test
     public void draftedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), event.getEventOrganizer().getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.ORGANIZER);
     }

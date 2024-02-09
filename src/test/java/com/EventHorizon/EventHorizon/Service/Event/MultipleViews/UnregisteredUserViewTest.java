@@ -22,14 +22,14 @@ public class UnregisteredUserViewTest {
 
     @Test
     public void launchedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), 0);
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.VIEWONLY);
     }
 
     @Test
     public void draftedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         Assertions.assertThrows(InvalidAccessOfEventException.class, () ->
                 eventViewService.getEventViewDto(event.getId(), 0) );
     }

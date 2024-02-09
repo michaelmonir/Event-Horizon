@@ -30,7 +30,7 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void getById() {
-        Event event =  eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event =  eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         Event event1 = launchedEventRepositoryService.getById(event.getId());
         Assertions.assertEquals(event, event1);
     }
@@ -43,14 +43,14 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void getByIdDraftedEvent() {
-        Event event =  eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event =  eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         Assertions.assertThrows(NotLaunchedEventException.class,
                 () -> launchedEventRepositoryService.getById(event.getId()));
     }
 
     @Test
     public void launchEventSuccessfully() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         launchedEventRepositoryService.saveWhenLaunching(event);
         Assertions.assertNotEquals(0, event.getId());
         Assertions.assertEquals(event, launchedEventRepositoryService.getById(event.getId()));
@@ -58,7 +58,7 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void launchEventWithPositiveId() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         event.setId(5);
         Assertions.assertThrows(EventAlreadyExisting.class,
                 () -> launchedEventRepositoryService.saveWhenLaunching(event));
@@ -66,7 +66,7 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void launchEventWithPastDate() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         event.setEventDate(DateFunctions.getYesterDaysDate());
         Assertions.assertThrows(NotFutureEventException.class,
                 () -> launchedEventRepositoryService.saveWhenLaunching(event));
@@ -74,7 +74,7 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void launchEventWithUnsavedAdsOptionsGetsError() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         event.setEventAds(new AdsOption(1000000, 1, "h"));
         Assertions.assertThrows(InvalidEventDataException.class,
                 () -> launchedEventRepositoryService.saveWhenLaunching(event));
@@ -82,7 +82,7 @@ public class LaunchedEventRepositoryServiceTest {
 
     @Test
     public void launchEventWithUnsavedOrganizerGetsError() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         Organizer organizer = (Organizer) this.userCustomCreator.getUser(Role.ORGANIZER);
         event.setEventOrganizer(organizer);
         Assertions.assertThrows(InvalidEventDataException.class,
@@ -90,8 +90,8 @@ public class LaunchedEventRepositoryServiceTest {
     }
 
     @Test
-    public void creatingEventSavesLocation() {
-        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEvent(EventType.LAUNCHEDEVENT);
+    public void launchingEventSavesLocation() {
+        LaunchedEvent event = (LaunchedEvent) eventCustomCreator.getEventWithoutSeatTypes(EventType.LAUNCHEDEVENT);
         event.setEventLocation(new Location("Egypt", "Cairo", "aaaaaaa"));
         launchedEventRepositoryService.saveWhenLaunching(event);
         Assertions.assertNotEquals(0, event.getEventLocation().getId());

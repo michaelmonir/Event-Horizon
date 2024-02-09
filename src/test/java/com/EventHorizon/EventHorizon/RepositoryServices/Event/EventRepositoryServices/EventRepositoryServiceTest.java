@@ -22,7 +22,7 @@ public class EventRepositoryServiceTest {
     @ParameterizedTest
     @EnumSource(value = EventType.class , names = {"LAUNCHEDEVENT", "DRAFTEDEVENT"})
     public void getById(EventType eventType) {
-        Event event = eventCustomCreator.getandSaveEvent(eventType);
+        Event event = eventCustomCreator.getAndSaveEvent(eventType);
         Event eventFromDb = eventRepositoryService.getById(event.getId());
 
         Assertions.assertEquals(eventFromDb.getEventType(), eventType);
@@ -38,7 +38,7 @@ public class EventRepositoryServiceTest {
     @ParameterizedTest
     @EnumSource(value = EventType.class , names = {"LAUNCHEDEVENT", "DRAFTEDEVENT"})
     public void update(EventType eventType) {
-        Event event = eventCustomCreator.getandSaveEvent(eventType);
+        Event event = eventCustomCreator.getAndSaveEvent(eventType);
         event.setName("Updated Name");
         eventRepositoryService.update(event);
         Event eventFromDb = eventRepositoryService.getById(event.getId());
@@ -49,7 +49,7 @@ public class EventRepositoryServiceTest {
     @ParameterizedTest
     @EnumSource(value = EventType.class , names = {"LAUNCHEDEVENT", "DRAFTEDEVENT"})
     public void delete(EventType eventType) {
-        Event event = eventCustomCreator.getandSaveEvent(eventType);
+        Event event = eventCustomCreator.getAndSaveEvent(eventType);
         eventRepositoryService.delete(event.getId());
         Assertions.assertThrows(EventNotFoundException.class
                 , () -> eventRepositoryService.getById(event.getId()));

@@ -31,7 +31,7 @@ public class DraftedEventRepositoryServiceTest {
 
     @Test
     public void getById() {
-        Event event =  eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event =  eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         Event event1 = draftedEventRepositoryService.getById(event.getId());
         Assertions.assertEquals(event, event1);
     }
@@ -44,7 +44,7 @@ public class DraftedEventRepositoryServiceTest {
 
     @Test
     public void getByIdLaunchedEvent() {
-        Event event =  eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event =  eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         Assertions.assertThrows(NotDraftedEventException.class,
                 () -> draftedEventRepositoryService.getById(event.getId()));
     }

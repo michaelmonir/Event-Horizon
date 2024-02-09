@@ -5,6 +5,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.Event.Event.EventBuilder;
 import com.EventHorizon.EventHorizon.Entities.Event.LaunchedEvent;
+import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Entities.enums.Role;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventCustomCreator
@@ -54,17 +56,39 @@ public class EventCustomCreator
                 .name("Event" + numberOfcreatedEvents)
                 .eventOrganizer(customOrganizer)
                 .description("description" + numberOfcreatedEvents)
-                .seatTypes(new ArrayList<>())
+                .seatTypes(List.of(new SeatType("SeatType1", 1, 10000)))
                 .eventDate(DateFunctions.getCurrentDate())
                 .eventType(eventType)
                 .build();
         return event;
     }
 
-    public Event getandSaveEvent(EventType eventType) {
+    public Event getAndSaveEvent(EventType eventType) {
         Event event = this.getEvent(eventType);
+        this.saveEvent(event);
+        return event;
+    }
+
+    public Event getEvent(EventType eventType, List<SeatType> seatTypeList) {
+        Event event = this.getEvent(eventType);
+        event.setSeatTypes(seatTypeList);
+        return event;
+    }
+
+    public Event getAndSaveEvent(EventType eventType, List<SeatType> seatTypeList) {
+        Event event = this.getEvent(eventType, seatTypeList);
+        this.saveEvent(event);
+        return event;
+    }
+
+    public void saveEvent(Event event) {
         savingEventService.saveEventAndSeatTypeAndSeatArchive(event);
         this.eventRepository.save(event);
+    }
+
+    public Event getEventWithoutSeatTypes(EventType eventType) {
+        Event event = this.getEvent(eventType);
+        event.setSeatTypes(new ArrayList<>());
         return event;
     }
 

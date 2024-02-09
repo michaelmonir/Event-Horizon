@@ -3,6 +3,7 @@ package com.EventHorizon.EventHorizon.Controllers.EventControllers;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.when;
 
+import com.EventHorizon.EventHorizon.Controllers.Event.FilterController;
 import com.EventHorizon.EventHorizon.DTOs.FilterDto;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;

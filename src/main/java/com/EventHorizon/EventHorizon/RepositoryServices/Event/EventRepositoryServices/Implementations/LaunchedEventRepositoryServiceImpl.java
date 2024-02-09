@@ -68,10 +68,6 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
         return eventHeaderDtos;
     }
 
-    private List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
-        return eventRepository.findAll(specification, pageRequest).getContent();
-    }
-
     public List<SeatType> getSeatTypeById(int id) {
         LaunchedEvent launchedEvent = this.getById(id);
         return launchedEvent.getSeatTypes();
@@ -84,6 +80,10 @@ public class LaunchedEventRepositoryServiceImpl implements SuperEventRepositoryS
             eventHeaderDtos.add(new EventHeaderDto(event));
         }
         return eventHeaderDtos;
+    }
+
+    private List<? extends Event> getAllEvents(Specification<Event> specification, PageRequest pageRequest) {
+        return eventRepository.findAll(specification, pageRequest).getContent();
     }
 
     public List<EventHeaderDto> getFilteredEventsHeaderDtoFromClientGoingView(PageRequest pageWithRecords, Specification<ClientGoingView> specification) {

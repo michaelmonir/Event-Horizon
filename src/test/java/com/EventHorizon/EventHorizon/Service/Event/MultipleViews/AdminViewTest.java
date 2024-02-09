@@ -32,7 +32,7 @@ public class AdminViewTest {
     @ParameterizedTest
     @MethodSource("provideRoles")
     public void launchedEvent(Role role) {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         User user = userCustomCreator.getAndSaveUser(role);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), user.getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.ADMIN);
@@ -41,7 +41,7 @@ public class AdminViewTest {
     @ParameterizedTest
     @MethodSource("provideRoles")
     public void draftedEvent(Role role) {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         User user = userCustomCreator.getAndSaveUser(role);
         Assertions.assertThrows(InvalidAccessOfEventException.class,
                 () -> eventViewService.getEventViewDto(event.getId(), user.getId()) );

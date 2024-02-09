@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.Controllers.EventControllers;
+package com.EventHorizon.EventHorizon.Controllers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.FilterDto;

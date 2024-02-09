@@ -26,7 +26,7 @@ public class ClientViewTest {
 
     @Test
     public void launchedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.LAUNCHEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.LAUNCHEDEVENT);
         User user = userCustomCreator.getAndSaveUser(Role.CLIENT);
         EventViewDto eventViewDto = eventViewService.getEventViewDto(event.getId(), user.getId());
         Assertions.assertEquals(eventViewDto.getUserEventRole(), UserEventRole.CLIENT);
@@ -34,7 +34,7 @@ public class ClientViewTest {
 
     @Test
     public void draftedEvent() {
-        Event event = eventCustomCreator.getandSaveEvent(EventType.DRAFTEDEVENT);
+        Event event = eventCustomCreator.getAndSaveEvent(EventType.DRAFTEDEVENT);
         User user = userCustomCreator.getAndSaveUser(Role.CLIENT);
         Assertions.assertThrows(InvalidAccessOfEventException.class,
                 () -> eventViewService.getEventViewDto(event.getId(), user.getId()) );
