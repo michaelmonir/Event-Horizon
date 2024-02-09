@@ -2,12 +2,11 @@ package com.EventHorizon.EventHorizon.Controllers.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.FilterDto;
-import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
-import com.EventHorizon.EventHorizon.Services.Event.EventService;
-import com.EventHorizon.EventHorizon.Services.Event.FilterService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Filter.EventViewType;
+import com.EventHorizon.EventHorizon.Services.Event.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,42 +20,25 @@ import java.util.List;
 public class FilterController {
 
     @Autowired
-    private EventService eventService;
-    @Autowired
-    private FilterService filterService;
+    private DashboardService dashboardService;
 
-    /*
-     * for launched
-     */
     @PostMapping("dashboard/{pageIndex}/{pageSize}")//any
-    public ResponseEntity<List<EventHeaderDto>> getEventHeaders(@PathVariable int pageIndex, @PathVariable int pageSize, @RequestBody FilterDto filterDto) {
-        List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters = filterDto.getFilters();
-        filters.add(new FilterRelationList<>(FilterTypes.EVENTTYPE, FilterRelation.AND, EventType.LAUNCHEDEVENT));
-        List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filterDto.getFilters());
+    public ResponseEntity<List<EventHeaderDto>> getDashBoardLaunchedEvents(@PathVariable int pageIndex, @PathVariable int pageSize, @RequestBody FilterDto filterDto) {
+        List<EventHeaderDto> eventHeaders = dashboardService.getFilteredPage(pageIndex, pageSize, filterDto.getFilters(), EventViewType.LAUNCHED);
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
 
-    /*
-     * for pending
-     */
     @PostMapping("drafted/{pageIndex}/{pageSize}")//any
-    public ResponseEntity<List<EventHeaderDto>> getEventHeadersForPending(@PathVariable int pageIndex, @PathVariable int pageSize, @RequestBody FilterDto filterDto) {
-        List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters = filterDto.getFilters();
-        filters.add(new FilterRelationList<>(FilterTypes.EVENTTYPE, FilterRelation.AND, EventType.DRAFTEDEVENT));
-        List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filters);
+    public ResponseEntity<List<EventHeaderDto>> getDashBoardDraftedEvents(@PathVariable int pageIndex, @PathVariable int pageSize, @RequestBody FilterDto filterDto) {
+        List<EventHeaderDto> eventHeaders = dashboardService.getFilteredPage(pageIndex, pageSize, filterDto.getFilters(), EventViewType.DRAFTED);
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
 
-    /*
-     * for pending
-     */
     @PostMapping("draftedForOrganizer/{pageIndex}/{pageSize}/{organizerId}")//any
-//    @PostMapping("eventsForOrganizer/{pageIndex}/{pageSize}/{organizerId}")//any
-    public ResponseEntity<List<EventHeaderDto>> getEventHeadersForPendingForOrganizer(@PathVariable int pageIndex, @PathVariable int pageSize, @PathVariable int organizerId, @RequestBody FilterDto filterDto) {
+    public ResponseEntity<List<EventHeaderDto>> getEventHeadersForDraftedForOrganizer(@PathVariable int pageIndex, @PathVariable int pageSize, @PathVariable int organizerId, @RequestBody FilterDto filterDto) {
         List<FilterRelationList<FilterTypes, FilterRelation, Object>> filters = filterDto.getFilters();
         filters.add(new FilterRelationList<>(FilterTypes.ORGANIZERID, FilterRelation.AND, organizerId));
-        filters.add(new FilterRelationList<>(FilterTypes.EVENTTYPE, FilterRelation.AND, EventType.DRAFTEDEVENT));
-        List<EventHeaderDto> eventHeaders = this.filterService.getFilteredEventHeadersList(pageIndex, pageSize, filters);
+        List<EventHeaderDto> eventHeaders = dashboardService.getFilteredPage(pageIndex, pageSize, filters, EventViewType.DRAFTED);
         return new ResponseEntity<>(eventHeaders, HttpStatus.OK);
     }
 }

@@ -1,7 +1,6 @@
 package com.EventHorizon.EventHorizon.Services.Event;
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventCreationUpdationDto;
-import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventViewDtos.EventViewDto;
 import com.EventHorizon.EventHorizon.Entities.Event.DraftedEvent;
 import com.EventHorizon.EventHorizon.Entities.Event.Event;
@@ -10,7 +9,6 @@ import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.Event.DraftedLaunchedEventMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;
@@ -20,14 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class EventService {
     @Autowired
     private LaunchedEventRepositoryServiceImpl launchedEventRepositoryServiceImpl;
     @Autowired
-    private DashboardRepositoryService dashboardRepositoryService;
+    private DashboardService dashboardService;
     @Autowired
     private UserEventService userEventService;
     @Autowired

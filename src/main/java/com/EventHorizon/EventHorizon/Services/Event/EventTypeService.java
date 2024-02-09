@@ -12,12 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventTypeService
 {
-    @Autowired
-    private EventRepositoryServiceFacadeImpl eventRepositoryServiceFacadeImpl;
-
     public void checkFutureEvent(Event event) {
         this.checkLaunchedEvent(event);
-        FutureEventWrapper futureEventWrapper = new FutureEventWrapper((LaunchedEvent) event);
+        new FutureEventWrapper((LaunchedEvent) event);
     }
 
     private void checkLaunchedEvent(Event event) {

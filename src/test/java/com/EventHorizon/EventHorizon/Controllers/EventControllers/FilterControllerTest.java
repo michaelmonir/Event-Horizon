@@ -8,6 +8,7 @@ import com.EventHorizon.EventHorizon.DTOs.FilterDto;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterRelation;
 import com.EventHorizon.EventHorizon.Filter.Enums.FilterTypes;
 import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
+import com.EventHorizon.EventHorizon.Services.Event.DashboardService;
 import com.EventHorizon.EventHorizon.Services.Event.EventService;
 import com.EventHorizon.EventHorizon.Services.Event.FilterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,21 +32,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ContextConfiguration(classes = {FilterController.class})
 @ExtendWith(SpringExtension.class)
 class FilterControllerTest {
-    @MockBean
-    private EventService eventService;
 
     @Autowired
     private FilterController filterController;
-
     @MockBean
-    private FilterService filterService;
+    private DashboardService dashboardService;
 
 
     @Test
     void testGetEventHeaders() throws Exception {
         // Arrange
-        when(filterService.getFilteredEventHeadersList(anyInt(), anyInt(),
-                Mockito.<List<FilterRelationList<FilterTypes, FilterRelation, Object>>>any())).thenReturn(new ArrayList<>());
+        when(dashboardService.getFilteredPage(anyInt(), anyInt(),
+                Mockito.any(), Mockito.any())).thenReturn(new ArrayList<>());
 
         FilterDto filterDto = new FilterDto();
         filterDto.setFilters(new ArrayList<>());
@@ -67,8 +65,8 @@ class FilterControllerTest {
     @Test
     void testGetEventHeadersForPending() throws Exception {
         // Arrange
-        when(filterService.getFilteredEventHeadersList(anyInt(), anyInt(),
-                Mockito.<List<FilterRelationList<FilterTypes, FilterRelation, Object>>>any())).thenReturn(new ArrayList<>());
+        when(dashboardService.getFilteredPage(anyInt(), anyInt(),
+                Mockito.any(), Mockito.any())).thenReturn(new ArrayList<>());
 
         FilterDto filterDto = new FilterDto();
         filterDto.setFilters(new ArrayList<>());
@@ -90,8 +88,8 @@ class FilterControllerTest {
     @Test
     void testGetEventHeadersForPendingForOrganizer() throws Exception {
         // Arrange
-        when(filterService.getFilteredEventHeadersList(anyInt(), anyInt(),
-                Mockito.<List<FilterRelationList<FilterTypes, FilterRelation, Object>>>any())).thenReturn(new ArrayList<>());
+        when(dashboardService.getFilteredPage(anyInt(), anyInt(),
+                Mockito.any(), Mockito.any())).thenReturn(new ArrayList<>());
 
         FilterDto filterDto = new FilterDto();
         filterDto.setFilters(new ArrayList<>());
