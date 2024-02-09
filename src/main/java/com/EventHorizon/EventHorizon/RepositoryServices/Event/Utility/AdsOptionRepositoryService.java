@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility;
 
 import com.EventHorizon.EventHorizon.Entities.Event.AdsOption;
 import com.EventHorizon.EventHorizon.Exceptions.Event.AdsOption.AdsOptionAlreadyExistException;

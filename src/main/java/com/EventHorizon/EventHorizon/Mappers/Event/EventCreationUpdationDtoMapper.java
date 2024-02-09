@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.Event;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
 import com.EventHorizon.EventHorizon.Mappers.SeatTypes.SeatTypeListMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.AdsOptionRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility.AdsOptionRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import org.springframework.beans.factory.annotation.Autowired;

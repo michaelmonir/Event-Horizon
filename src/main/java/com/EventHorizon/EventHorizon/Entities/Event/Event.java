@@ -1,8 +1,10 @@
 package com.EventHorizon.EventHorizon.Entities.Event;
 
+import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;
 import com.EventHorizon.EventHorizon.Entities.SeatArchive.SeatType;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Entities.enums.EventType;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Filter.HeaderInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +24,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode
 @Table(name = "event")
-public class Event {
+public class Event implements HeaderInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +62,11 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     protected List<SeatType> seatTypes;
+
+    @Override
+    public EventHeaderDto getHeader() {
+        return new EventHeaderDto(this);
+    }
 
     @Override
     public boolean equals(Object o) {

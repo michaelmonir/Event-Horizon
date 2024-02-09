@@ -6,7 +6,7 @@ import com.EventHorizon.EventHorizon.Entities.Event.*;
 import com.EventHorizon.EventHorizon.Entities.User.Organizer;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventCreationUpdationDtoMapper;
 import com.EventHorizon.EventHorizon.Mappers.Event.EventViewDtoMapper;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility.DashboardRepositoryService;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.DraftedEventRepositoryServiceImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.EventRepositoryServiceFacadeImpl;
 import com.EventHorizon.EventHorizon.RepositoryServices.Event.EventRepositoryServices.Implementations.LaunchedEventRepositoryServiceImpl;

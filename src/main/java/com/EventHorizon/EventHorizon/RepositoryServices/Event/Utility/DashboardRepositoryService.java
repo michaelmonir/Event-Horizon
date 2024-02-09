@@ -1,4 +1,4 @@
-package com.EventHorizon.EventHorizon.RepositoryServices.Event;
+package com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility;
 
 
 import com.EventHorizon.EventHorizon.DTOs.EventDto.EventHeaderDto;

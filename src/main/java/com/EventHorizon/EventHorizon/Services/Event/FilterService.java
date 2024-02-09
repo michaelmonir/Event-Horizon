@@ -12,7 +12,7 @@ import com.EventHorizon.EventHorizon.Filter.FilterRelationList;
 import com.EventHorizon.EventHorizon.Filter.Factories.RelationTypeFactory;
 import com.EventHorizon.EventHorizon.Repository.Event.EventRepository;
 import com.EventHorizon.EventHorizon.Repository.Views.ClientGoingViewRepository;
-import com.EventHorizon.EventHorizon.RepositoryServices.Event.DashboardRepositoryService;
+import com.EventHorizon.EventHorizon.RepositoryServices.Event.Utility.DashboardRepositoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
