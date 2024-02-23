@@ -1,5 +1,3 @@
-michaellllllllllllll
-
 # Event Horizon 
 
 If you are a student and want to eat or a housewife and want to feed your children and husband, this app is made for you.
