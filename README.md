@@ -10,9 +10,9 @@ If you are a student and want to eat or a housewife and want to feed your childr
 
 ## Documentation
 
+- [Architectural Diagram](https://github.com/michaelmonir/Event-Horizon/blob/updating-readme/Documentation/Architectural%20Diagram.md)
 - [Class Diagram](https://github.com/michaelmonir/Event-Horizon/blob/main/Documentation/Class%20Diagram)
-- [Architectural Diagram](https://github.com/michaelmonir/Event-Horizon/blob/updating-readme/Documentation/Architectural%20Design)
-- - [UI/UX Primitive Prototypes]()
+- [UI/UX Primitive Prototypes]()
 - [Class Diagram]()
 - [Deployment Details and Capabilities]()
 ## Environment Variables
