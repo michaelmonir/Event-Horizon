@@ -1,13 +1,13 @@
 # Event Horizon 
 
 If you are a student and want to eat or a housewife and want to feed your children and husband, this app is made for you.
-
+/*
 ## Authors
 - [Faris Mohamed Anwer ](https://github.com/AbdelrahmanMosly)
 - [Michael Monir](https://github.com/Deffo0)
 - [Ryad Mohamed](https://github.com/LouaiZahran)
 - [Ahmed Mohamed Hassan ](https://github.com/MuhammadElkotb)
-
+*/
 
 ## Documentation
 
