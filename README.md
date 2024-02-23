@@ -1,9 +1,3 @@
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/MAMA-LY/Recipe-Recommender/main/docs/assets/Logo.png" alt="Logo" width="35%" height="35%">
-</p>
-
-
 # Event Horizon 
 
 If you are a student and want to eat or a housewife and want to feed your children and husband, this app is made for you.
